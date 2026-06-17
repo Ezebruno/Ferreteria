@@ -1,0 +1,372 @@
+<div class="space-y-6 animate-fade-in-up">
+  <div class="flex justify-between items-center">
+    <div>
+      <h2 class="text-3xl font-black text-white uppercase tracking-tight">
+        Configuración del Negocio
+      </h2>
+      <p class="text-slate-400 mt-1">
+        Administra las integraciones y credenciales de tu ferretería.
+      </p>
+    </div>
+    <button
+      [disabled]="isSaving"
+      (click)="saveSettings()"
+      class="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-red-500 text-white font-bold hover:from-red-500 hover:to-red-400 transition-all shadow-[0_0_20px_rgba(220,38,38,0.3)] disabled:opacity-50"
+    >
+      <lucide-icon [name]="Save" size="18"></lucide-icon>
+      {{ isSaving ? "Guardando..." : "Guardar Cambios" }}
+    </button>
+  </div>
+
+  <div
+    *ngIf="successMessage"
+    class="bg-green-500/10 border border-green-500/20 text-green-400 p-4 rounded-xl flex items-center gap-3"
+  >
+    <lucide-icon [name]="Save" size="20"></lucide-icon>
+    <span class="font-medium">{{ successMessage }}</span>
+  </div>
+
+  <div
+    *ngIf="errorMessage"
+    class="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl flex items-center gap-3"
+  >
+    <span class="font-medium">{{ errorMessage }}</span>
+  </div>
+
+  <form [formGroup]="settingsForm" class="space-y-4">
+    <div
+      class="bg-slate-800/50 backdrop-blur-md rounded-2xl border border-white/5 shadow-xl overflow-hidden"
+    >
+      <button
+        type="button"
+        (click)="toggleSection('afip')"
+        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-slate-700/30 transition-colors cursor-pointer"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400"
+          >
+            <lucide-icon [name]="Store" size="20"></lucide-icon>
+          </div>
+          <h3 class="text-xl font-bold text-white text-left">
+            Datos Fiscales (AFIP)
+          </h3>
+        </div>
+        <lucide-icon
+          [name]="expandedSections['afip'] ? ChevronUp : ChevronDown"
+          size="24"
+          class="text-slate-400 flex-shrink-0 transition-transform"
+        ></lucide-icon>
+      </button>
+
+      <div
+        *ngIf="expandedSections['afip']"
+        class="px-6 pb-6 border-t border-white/5 space-y-4"
+      >
+        <div
+          class="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 flex gap-3 items-start mt-4"
+        >
+          <lucide-icon
+            [name]="AlertCircle"
+            size="20"
+            class="text-blue-400 mt-0.5 flex-shrink-0"
+          ></lucide-icon>
+          <div>
+            <p class="text-sm text-blue-200 font-medium">
+              Configuración de Certificados AFIP
+            </p>
+            <p class="text-xs text-blue-300 mt-1">
+              Descarga tu certificado digital y clave privada desde
+              <a
+                href="https://www.arca.afip.gob.ar/"
+                target="_blank"
+                class="underline hover:text-blue-100"
+                >ARCA (Administración Federal de Ingresos Públicos)</a
+              >. Asegúrate de crear un Punto de Venta exclusivo para Web
+              Services.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-slate-400 mb-2"
+              >CUIT de la Empresa</label
+            >
+            <input
+              type="text"
+              formControlName="afip_cuit"
+              placeholder="Ej: 30123456789"
+              class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
+            />
+            <p class="text-xs text-slate-500 mt-1">
+              Sin guiones ni espacios (11 dígitos).
+            </p>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-slate-400 mb-2"
+              >Punto de Venta (PV)</label
+            >
+            <input
+              type="number"
+              formControlName="afip_punto_venta"
+              placeholder="Ej: 4"
+              min="1"
+              max="9999"
+              class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
+            />
+            <p class="text-xs text-slate-500 mt-1">
+              Número exclusivo para Web Services creado en ARCA.
+            </p>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-slate-400 mb-2"
+              >Certificado Digital (.crt)</label
+            >
+            <div class="relative">
+              <input
+                type="file"
+                (change)="onCertificateSelected($event)"
+                accept=".crt,.pem"
+                class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-bold file:bg-blue-500 file:text-white hover:file:bg-blue-400 cursor-pointer"
+              />
+            </div>
+            <p
+              *ngIf="certificateFileName"
+              class="text-xs text-green-400 mt-1 flex items-center gap-1"
+            >
+              <lucide-icon [name]="CheckCircle" size="12"></lucide-icon>
+              {{ certificateFileName }}
+            </p>
+            <p class="text-xs text-slate-500 mt-1">
+              Archivo en formato .crt o .pem proporcionado por ARCA.
+            </p>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-slate-400 mb-2"
+              >Clave Privada (.key)</label
+            >
+            <div class="relative">
+              <input
+                type="file"
+                (change)="onPrivateKeySelected($event)"
+                accept=".key,.pem"
+                class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-bold file:bg-blue-500 file:text-white hover:file:bg-blue-400 cursor-pointer"
+              />
+            </div>
+            <p
+              *ngIf="privateKeyFileName"
+              class="text-xs text-green-400 mt-1 flex items-center gap-1"
+            >
+              <lucide-icon [name]="CheckCircle" size="12"></lucide-icon>
+              {{ privateKeyFileName }}
+            </p>
+            <p class="text-xs text-slate-500 mt-1">
+              Archivo de clave privada correspondiente al certificado.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="bg-slate-800/50 backdrop-blur-md rounded-2xl border border-white/5 shadow-xl overflow-hidden"
+    >
+      <button
+        type="button"
+        (click)="toggleSection('payment')"
+        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-slate-700/30 transition-colors cursor-pointer"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="w-10 h-10 rounded-lg bg-sky-500/20 flex items-center justify-center text-sky-400"
+          >
+            <lucide-icon [name]="CreditCard" size="20"></lucide-icon>
+          </div>
+          <h3 class="text-xl font-bold text-white">Mercado Pago y Banco</h3>
+        </div>
+        <lucide-icon
+          [name]="expandedSections['payment'] ? ChevronUp : ChevronDown"
+          size="24"
+          class="text-slate-400 flex-shrink-0"
+        ></lucide-icon>
+      </button>
+
+      <div
+        *ngIf="expandedSections['payment']"
+        class="px-6 pb-6 border-t border-white/5 space-y-4"
+      >
+        <div
+          class="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 flex gap-3 items-start mt-4"
+        >
+          <lucide-icon
+            [name]="MessageCircle"
+            size="20"
+            class="text-blue-400 mt-0.5 flex-shrink-0"
+          ></lucide-icon>
+          <div>
+            <p class="text-sm text-blue-200 font-medium">
+              Cobros con Tarjetas (Automático)
+            </p>
+            <p class="text-xs text-blue-300 mt-1 mb-2">
+              Para cobrar automáticamente con tarjetas de crédito y débito,
+              debes vincular tu cuenta de Mercado Pago.
+            </p>
+            <button
+              type="button"
+              (click)="vincularMP()"
+              class="inline-flex items-center gap-2 text-sm font-bold bg-blue-500 hover:bg-blue-400 text-white px-4 py-2 rounded-xl transition-all shadow-lg"
+            >
+              <lucide-icon
+                [name]="hasMpLinked ? CheckCircle : Link"
+                size="18"
+              ></lucide-icon>
+              {{
+                hasMpLinked
+                  ? "Actualizar conexión con Mercado Pago"
+                  : "Vincular cuenta de Mercado Pago"
+              }}
+            </button>
+            <p
+              *ngIf="hasMpLinked"
+              class="text-xs text-green-400 mt-2 flex items-center gap-1 font-medium"
+            >
+              <lucide-icon [name]="CheckCircle" size="14"></lucide-icon> Cuenta
+              de Mercado Pago vinculada. ¡Lista para cobrar!
+            </p>
+          </div>
+        </div>
+
+        <hr class="border-white/5" />
+
+        <div>
+          <label class="block text-sm font-medium text-slate-400 mb-2"
+            >CVU / CBU (Transferencias)</label
+          >
+          <input
+            type="text"
+            formControlName="bank_cvu"
+            placeholder="00000031000..."
+            class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-red-500/50 transition-all font-mono"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-slate-400 mb-2"
+            >Alias Bancario</label
+          >
+          <input
+            type="text"
+            formControlName="bank_alias"
+            placeholder="FERRE.TORNILLO.MP"
+            class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-red-500/50 transition-all"
+          />
+        </div>
+
+        <p class="text-xs text-slate-500">
+          Estos datos se mostrarán al cliente que elija abonar con Transferencia
+          Bancaria.
+        </p>
+      </div>
+    </div>
+
+    <div
+      class="bg-slate-800/50 backdrop-blur-md rounded-2xl border border-white/5 shadow-xl overflow-hidden"
+    >
+      <button
+        type="button"
+        (click)="toggleSection('mercadolibre')"
+        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-slate-700/30 transition-colors cursor-pointer"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="w-10 h-10 rounded-lg bg-yellow-500/20 flex items-center justify-center text-yellow-400"
+          >
+            <lucide-icon [name]="ShoppingBag" size="20"></lucide-icon>
+          </div>
+          <h3 class="text-xl font-bold text-white">Mercado Libre</h3>
+        </div>
+        <lucide-icon
+          [name]="expandedSections['mercadolibre'] ? ChevronUp : ChevronDown"
+          size="24"
+          class="text-slate-400 flex-shrink-0"
+        ></lucide-icon>
+      </button>
+
+      <div
+        *ngIf="expandedSections['mercadolibre']"
+        class="px-6 pb-6 border-t border-white/5 space-y-4"
+      >
+        <div
+          class="bg-yellow-400/5 border border-yellow-400/20 rounded-xl p-4 mt-4"
+        >
+          <p class="text-sm text-slate-300">
+            La integración con Mercado Libre ya no requiere copiar códigos
+            difíciles. Está automatizada mediante una conexión segura (OAuth).
+          </p>
+        </div>
+        <a
+          routerLink="/admin/meli"
+          class="inline-flex items-center justify-center gap-2 w-full bg-slate-700/50 hover:bg-slate-700 text-white font-bold py-3 rounded-xl border border-slate-600 transition-all"
+        >
+          <lucide-icon
+            [name]="Zap"
+            size="18"
+            class="text-yellow-400"
+          ></lucide-icon>
+          Gestionar mi cuenta de Mercado Libre
+        </a>
+      </div>
+    </div>
+
+    <div
+      class="bg-slate-800/50 backdrop-blur-md rounded-2xl border border-white/5 shadow-xl overflow-hidden"
+    >
+      <button
+        type="button"
+        (click)="toggleSection('whatsapp')"
+        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-slate-700/30 transition-colors cursor-pointer"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400"
+          >
+            <lucide-icon [name]="MessageCircle" size="20"></lucide-icon>
+          </div>
+          <h3 class="text-xl font-bold text-white">
+            WhatsApp de la Ferretería
+          </h3>
+        </div>
+        <lucide-icon
+          [name]="expandedSections['whatsapp'] ? ChevronUp : ChevronDown"
+          size="24"
+          class="text-slate-400 flex-shrink-0"
+        ></lucide-icon>
+      </button>
+
+      <div
+        *ngIf="expandedSections['whatsapp']"
+        class="px-6 pb-6 border-t border-white/5 space-y-4"
+      >
+        <div class="mt-4">
+          <label class="block text-sm font-medium text-slate-400 mb-2"
+            >Número de WhatsApp</label
+          >
+          <input
+            type="text"
+            formControlName="whatsapp_number"
+            placeholder="Ej: 5491123456789"
+            class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-red-500/50 transition-all font-mono"
+          />
+          <p class="text-xs text-slate-500 mt-2">
+            Ingresá el número completo con código de país (Ej: 5491112345678).
+            El widget redirigirá consultas a este número.
+          </p>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

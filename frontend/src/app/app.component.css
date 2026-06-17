@@ -1,0 +1,20 @@
+/* Add root component styles here */
+
+.whatsapp-fab {
+  position: fixed;
+  right: 16px;
+  bottom: 20px;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.12);
+  z-index: 9999;
+  text-decoration: none;
+}
+
+.whatsapp-fab img {
+  display: block;
+}

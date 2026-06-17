@@ -1,0 +1,670 @@
+<!-- p-toast removed as per user request -->
+<!-- Premium Navbar moved to HeaderComponent -->
+
+<!-- Premium Hero Carousel -->
+<div
+  class="relative overflow-hidden bg-slate-900 h-[420px] md:h-[600px] lg:h-[700px]"
+>
+  <!-- Background Effects (Constant) -->
+  <div
+    class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-red-900/20 via-slate-900 to-slate-900"
+  ></div>
+
+  <!-- Slides Container -->
+  <div
+    class="relative h-full w-full"
+    (touchstart)="onTouchStart($event)"
+    (touchend)="onTouchEnd($event)"
+  >
+    <div
+      *ngFor="let slide of heroSlides; let i = index"
+      class="absolute inset-0 transition-all duration-1000 ease-in-out transform"
+      [class.opacity-100]="currentSlide === i"
+      [class.opacity-0]="currentSlide !== i"
+      [class.translate-x-0]="currentSlide === i"
+      [class.translate-x-full]="currentSlide < i"
+      [class.-translate-x-full]="currentSlide > i"
+      [class.pointer-events-none]="currentSlide !== i"
+    >
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center relative z-10"
+      >
+        <div class="grid lg:grid-cols-2 gap-12 items-center w-full">
+          <!-- Content Side -->
+          <div class="space-y-8">
+            <h1
+              class="text-6xl md:text-7xl lg:text-8xl font-black text-white leading-tight tracking-tight"
+            >
+              {{ slide.title }}
+              <span
+                class="block text-transparent bg-clip-text bg-gradient-to-r {{
+                  slide.color
+                }}"
+              >
+                {{ slide.highlight }}
+              </span>
+            </h1>
+
+            <p
+              class="text-xl text-slate-400 font-medium max-w-xl leading-relaxed"
+            >
+              {{ slide.description }}
+            </p>
+
+            <button
+              (click)="scrollToCategory('todos')"
+              class="group relative px-8 py-4 bg-red-500 text-black font-black text-lg rounded-xl overflow-hidden hover:scale-105 transition-all w-full sm:w-auto shadow-[0_0_40px_-10px_rgba(220,38,38,0.5)]"
+            >
+              <div
+                class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out"
+              ></div>
+              <span class="relative flex items-center justify-center gap-2">
+                {{ slide.cta }}
+                <lucide-icon
+                  [name]="ArrowRight"
+                  size="20"
+                  class="group-hover:translate-x-2 transition-transform"
+                ></lucide-icon>
+              </span>
+            </button>
+          </div>
+
+          <!-- Image Side -->
+          <div class="relative block h-48 md:h-[400px] lg:h-[500px]">
+            <div
+              class="relative h-full w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 group transition-all duration-700"
+            >
+              <img
+                [src]="slide.image"
+                [alt]="slide.title"
+                class="w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-700 ease-out"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Carousel Indicators -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-20">
+    <button
+      *ngFor="let slide of heroSlides; let i = index"
+      type="button"
+      (click)="setSlide(i)"
+      class="w-12 h-1.5 rounded-full transition-all duration-300"
+      [ngClass]="currentSlide === i ? 'bg-red-500' : 'bg-white/20'"
+    ></button>
+  </div>
+
+  <!-- Mobile prev/next buttons -->
+  <div class="absolute inset-y-0 left-0 right-0 pointer-events-none md:hidden">
+    <div class="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-auto">
+      <button
+        (click)="userPrevSlide()"
+        class="bg-white/10 text-white p-3 rounded-full shadow-lg"
+      >
+        ‹
+      </button>
+    </div>
+    <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-auto">
+      <button
+        (click)="userNextSlide()"
+        class="bg-white/10 text-white p-3 rounded-full shadow-lg"
+      >
+        ›
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Benefits Section -->
+<div
+  class="bg-slate-900 py-12 border-b border-red-500/20 relative overflow-hidden"
+>
+  <div
+    class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-red-900/10 via-transparent to-transparent"
+  ></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="grid md:grid-cols-3 gap-8">
+      <div
+        class="flex items-center gap-5 bg-white/5 border border-red-500/30 backdrop-blur-md p-7 rounded-2xl shadow-xl hover:bg-white/10 transition-all duration-500 group"
+      >
+        <div
+          class="p-3 rounded-xl bg-red-500/10 text-red-500 group-hover:scale-110 transition-transform duration-500"
+        >
+          <lucide-icon [name]="Map" size="32"></lucide-icon>
+        </div>
+        <div>
+          <h3 class="font-black text-white tracking-wide">
+            Envíos a todo el país
+          </h3>
+        </div>
+      </div>
+      <div
+        class="flex items-center gap-5 bg-white/5 border border-red-500/30 backdrop-blur-md p-7 rounded-2xl shadow-xl hover:bg-white/10 transition-all duration-500 group"
+      >
+        <div
+          class="p-3 rounded-xl bg-blue-500/10 text-blue-500 group-hover:scale-110 transition-transform duration-500"
+        >
+          <lucide-icon [name]="ShieldCheck" size="32"></lucide-icon>
+        </div>
+        <div>
+          <h3 class="font-black text-white tracking-wide">
+            Compra 100% Segura
+          </h3>
+        </div>
+      </div>
+      <div
+        class="flex items-center gap-5 bg-white/5 border border-red-500/30 backdrop-blur-md p-7 rounded-2xl shadow-xl hover:bg-white/10 transition-all duration-500 group"
+      >
+        <div
+          class="p-3 rounded-xl bg-emerald-500/10 text-emerald-500 group-hover:scale-110 transition-transform duration-500"
+        >
+          <lucide-icon [name]="Store" size="32"></lucide-icon>
+        </div>
+        <div>
+          <h3 class="font-black text-white tracking-wide">
+            Retiro Gratis en Sucursal
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Products Section -->
+<div id="catalog" class="bg-slate-900 py-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Title & Sort -->
+    <div
+      class="mb-12 flex flex-col md:flex-row md:justify-between md:items-end gap-6"
+    >
+      <div>
+        <div class="flex items-center gap-3 mb-2">
+          <lucide-icon
+            [name]="Star"
+            class="text-red-500 fill-red-500 filter drop-shadow-[0_0_10px_rgba(220,38,38,0.5)]"
+            size="28"
+          ></lucide-icon>
+          <h2 class="text-4xl font-black text-white">Productos Destacados</h2>
+        </div>
+        <p class="text-slate-400 font-medium">
+          Explora nuestro completo catálogo de herramientas y materiales de
+          construcción de grado profesional
+        </p>
+      </div>
+
+      <!-- Sort Dropdown -->
+      <div class="w-full md:w-auto flex items-center gap-3">
+        <label
+          class="text-sm font-bold text-slate-400 whitespace-nowrap hidden sm:block"
+        >
+          Ordenar por:
+        </label>
+        <div class="relative w-full sm:w-64 tracking-wide">
+          <select
+            [(ngModel)]="sortBy"
+            (ngModelChange)="setSortBy($event)"
+            class="w-full appearance-none bg-slate-900 border border-red-500/30 hover:border-red-500/50 text-white font-bold text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500/50 transition-all cursor-pointer shadow-lg"
+          >
+            <option value="todos">Ver todos</option>
+            <option value="relevancia">Relevancia</option>
+            <option value="precio-asc">Menor Precio</option>
+            <option value="precio-desc">Mayor Precio</option>
+            <option value="vendido">Más Vendido</option>
+            <option value="nuevo">Novedades</option>
+          </select>
+          <div
+            class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-red-500"
+          >
+            <lucide-icon
+              [name]="ChevronRight"
+              size="16"
+              class="rotate-90 transform opacity-80"
+            ></lucide-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- No Results -->
+    <div *ngIf="filteredProducts.length === 0" class="text-center py-20">
+      <div class="text-6xl mb-4 opacity-50">🔍</div>
+      <h3 class="text-2xl font-black text-white mb-2">
+        No encontramos productos
+      </h3>
+      <p class="text-slate-500 font-medium mb-8">
+        Intenta ajustar tu búsqueda o filtro
+      </p>
+    </div>
+
+    <!-- Product Grid -->
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+    >
+      <article
+        *ngFor="
+          let product of displayedProducts;
+          let i = index;
+          trackBy: trackByProductId
+        "
+        [routerLink]="['/product', product.id]"
+        class="group bg-slate-800 rounded-3xl overflow-hidden border border-red-500/20 hover:border-red-500/50 shadow-xl shadow-black/50 hover:shadow-[0_0_30px_rgba(220,38,38,0.15)] transition-all duration-300 transform flex flex-col cursor-pointer relative"
+        [class.animate-in-delay]="i"
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-0 pointer-events-none"
+        ></div>
+
+        <!-- Discount Badge -->
+        <div
+          *ngIf="(product.discount_percentage || 0) > 0"
+          class="absolute top-4 left-4 bg-red-500 text-white text-xs font-black px-3 py-1.5 rounded-lg z-20 shadow-[0_0_15px_rgba(239,68,68,0.5)]"
+        >
+          🔥 -{{ product.discount_percentage }}%
+        </div>
+
+        <!-- Product Image -->
+        <div
+          class="relative aspect-square bg-slate-800 overflow-hidden flex items-center justify-center p-6 z-10"
+        >
+          <img
+            *ngIf="product.image"
+            [src]="product.image"
+            [alt]="product.name"
+            (error)="product.image = ''"
+            loading="lazy"
+            class="w-full h-full object-contain group-hover:scale-125 transition-transform duration-500 drop-shadow-2xl brightness-90 group-hover:brightness-110"
+          />
+          <div
+            *ngIf="!product.image"
+            class="absolute inset-0 flex items-center justify-center bg-slate-800 overflow-hidden"
+          >
+            <lucide-icon
+              [name]="Hammer"
+              size="48"
+              class="text-red-500/30 drop-shadow-[0_0_15px_rgba(220,38,38,0.2)]"
+            ></lucide-icon>
+          </div>
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-50 pointer-events-none"
+          ></div>
+        </div>
+
+        <!-- Product Content -->
+        <header class="p-6 flex flex-col flex-1 z-10">
+          <span
+            class="text-[10px] font-black text-red-500 uppercase tracking-widest mb-3 bg-red-500/10 border border-red-500/20 px-3 py-1 rounded-full w-fit"
+          >
+            {{ product.category_name }}
+          </span>
+          <h3
+            class="text-base font-bold text-white leading-tight mb-3 line-clamp-2 group-hover:text-red-400 transition-colors"
+          >
+            {{ product.name }}
+          </h3>
+
+          <!-- Rating -->
+          <div
+            class="flex items-center gap-1 mb-4"
+            aria-label="Calificación de producto"
+          >
+            <span
+              *ngFor="let star of [1, 2, 3, 4, 5]; let i = index"
+              [ngClass]="
+                i < Math.round(product.rating || 0)
+                  ? 'text-red-400 drop-shadow-[0_0_5px_rgba(220,38,38,0.5)]'
+                  : 'text-slate-700'
+              "
+              >⭐</span
+            >
+            <span
+              *ngIf="(product.reviews_count || 0) > 0"
+              class="text-xs text-slate-500 font-medium ml-2"
+              >({{ product.reviews_count }})</span
+            >
+          </div>
+
+          <!-- Price and Stock -->
+          <div class="mt-auto">
+            <div class="flex items-baseline gap-2 mb-4">
+              <span class="text-3xl font-black text-white"
+                >${{ product.price_retail }}</span
+              >
+              <span
+                class="text-sm text-slate-500 line-through decoration-red-500/50"
+                >${{ getOriginalPrice(product) }}</span
+              >
+            </div>
+            <p
+              class="text-xs text-emerald-400 font-bold mb-4 flex items-center gap-1"
+            >
+              <span
+                class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse inline-block"
+              ></span>
+              {{ product.stock_current || 0 }} en stock
+            </p>
+
+            <!-- Add to Cart Button -->
+            <button
+              (click)="addToCart(product); $event.stopPropagation()"
+              aria-label="Agregar al carrito"
+              class="w-full bg-red-500 hover:bg-red-400 text-black font-black py-3 rounded-xl transition-all shadow-[0_0_15px_rgba(220,38,38,0.3)] hover:shadow-[0_0_25px_rgba(220,38,38,0.5)] flex items-center justify-center gap-2 transform hover:scale-105 group/btn"
+            >
+              <lucide-icon
+                [name]="ShoppingCart"
+                size="20"
+                class="group-hover/btn:scale-110 transition-transform"
+              ></lucide-icon>
+              <span>Agregar</span>
+            </button>
+          </div>
+        </header>
+      </article>
+    </div>
+
+    <!-- Load More Button -->
+    <div
+      class="text-center mt-16"
+      *ngIf="filteredProducts.length > displayLimit"
+    >
+      <button
+        (click)="loadMore()"
+        class="bg-white/5 hover:bg-white/10 border border-red-500/30 text-white px-12 py-4 rounded-xl font-bold text-lg transition-all shadow-xl hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] flex items-center gap-2 mx-auto"
+      >
+        Ver más productos
+        <lucide-icon
+          [name]="ChevronRight"
+          size="20"
+          class="text-red-500 transform rotate-90"
+        ></lucide-icon>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- CTA Section -->
+<div
+  class="relative py-20 overflow-hidden bg-slate-900 border-y border-red-500/20"
+>
+  <div
+    class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-red-500/10 via-slate-900 to-slate-900"
+  ></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+    <h2 class="text-4xl md:text-5xl font-black text-white mb-4">
+      ¿Necesitas asesoría
+      <span
+        class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600"
+        >profesional?</span
+      >
+    </h2>
+    <p class="text-slate-400 text-lg font-medium mb-10 max-w-2xl mx-auto">
+      Contáctanos y nuestro equipo de expertos te ayudará a encontrar el
+      equipamiento y los materiales exactos que necesitas para tu proyecto.
+    </p>
+    <a
+      [href]="whatsappHrefConsult"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="group relative bg-gradient-to-r from-red-500 to-red-600 text-black font-black px-8 py-3 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(220,38,38,0.2)] hover:shadow-[0_0_35px_rgba(220,38,38,0.5)] hover:-translate-y-0.5 hover:scale-105 flex items-center justify-center gap-3 border border-red-400/30 mx-auto w-fit overflow-hidden"
+    >
+      <!-- Efecto de brillo -->
+      <div
+        class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"
+      ></div>
+
+      <!-- WhatsApp Original Icon -->
+      <div
+        class="relative z-10 flex items-center justify-center group-hover:scale-110 transition-transform"
+      >
+        <img 
+  src="assets/whatsapp.png" 
+  alt="WhatsApp" 
+  class="w-7 h-7 object-contain hover:scale-110 transition-transform drop-shadow-[0_0_10px_rgba(37,211,102,0.5)]" 
+/>
+      </div>
+
+      <!-- Texto -->
+      <span class="relative z-10 tracking-wider uppercase text-sm"
+        >Consultar Asesor</span
+      >
+    </a>
+  </div>
+</div>
+
+<!-- Material Calculator Section -->
+<div id="material-calculator-section" class="relative py-20 bg-slate-950 border-t border-red-500/20 overflow-hidden">
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-red-900/10 via-transparent to-transparent"></div>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+    <div class="inline-flex p-3.5 bg-red-500/10 text-red-500 rounded-2xl border border-red-500/20 mb-6">
+      <lucide-icon [name]="Hammer" size="32" class="text-red-500 animate-pulse"></lucide-icon>
+    </div>
+    <h2 class="text-4xl font-black text-white mb-4 tracking-tight">
+      Calculadora de Materiales <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">Inteligente</span>
+    </h2>
+    <p class="text-slate-400 text-base font-medium mb-10 max-w-xl mx-auto leading-relaxed">
+      ¿Estás planificando pintar, colocar cerámicos o realizar un contrapiso? Calculá al instante las cantidades necesarias y evitá comprar de más.
+    </p>
+    <div class="max-w-md mx-auto">
+      <app-material-calculator categoryName="todos" productName="Proyecto General"></app-material-calculator>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer
+  class="bg-slate-900 py-16 text-slate-400 border-t border-red-500/20 relative"
+>
+  <div
+    class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-red-500/20 to-transparent"
+  ></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16 text-slate-400"
+    >
+      <div class="space-y-6">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl font-black tracking-wider text-white">
+            Ferre<span class="text-red-500">Nexo</span>
+          </span>
+        </div>
+        <p class="text-sm font-medium leading-relaxed">
+          Tu proveedor líder en herramientas de grado industrial y materiales de
+          construcción premium.
+        </p>
+      </div>
+      <div>
+        <h4 class="font-black text-white mb-6 uppercase tracking-wider text-sm">
+          Productos
+        </h4>
+        <ul class="space-y-3 text-sm font-medium">
+          <li>
+            <button
+              (click)="scrollToCategory('herramientas-electricas')"
+              class="hover:text-red-400 hover:translate-x-1 transition-all"
+            >
+              Herramientas Eléctricas
+            </button>
+          </li>
+          <li>
+            <button
+              (click)="scrollToCategory('materiales')"
+              class="hover:text-red-400 hover:translate-x-1 transition-all"
+            >
+              Construcción
+            </button>
+          </li>
+          <li>
+            <button
+              (click)="scrollToCategory('herramientas-manuales')"
+              class="hover:text-red-400 hover:translate-x-1 transition-all"
+            >
+              Herramientas Manuales
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-black text-white mb-6 uppercase tracking-wider text-sm">
+          Ayuda
+        </h4>
+        <ul class="space-y-3 text-sm font-medium">
+          <li>
+            <button
+              (click)="openLegal('soporte')"
+              class="hover:text-red-400 hover:translate-x-1 transition-all"
+            >
+              Soporte Técnico
+            </button>
+          </li>
+          <li>
+            <button
+              (click)="openLegal('garantias')"
+              class="hover:text-red-400 hover:translate-x-1 transition-all"
+            >
+              Garantías
+            </button>
+          </li>
+          <li>
+            <button
+              (click)="openLegal('envios')"
+              class="hover:text-red-400 hover:translate-x-1 transition-all"
+            >
+              Envíos y Entregas
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-black text-white mb-6 uppercase tracking-wider text-sm">
+          Comunidad
+        </h4>
+        <div class="flex gap-4 mb-4">
+          <a
+            [href]="whatsappHref"
+            target="_blank"
+            aria-label="Contactar por WhatsApp"
+            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-red-500 hover:text-black transition-all"
+          >
+            📱
+          </a>
+          <button
+            aria-label="Nuestro Instagram"
+            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-red-500 hover:text-black transition-all"
+          >
+            📸
+          </button>
+          <button
+            aria-label="Nuestro LinkedIn"
+            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-red-500 hover:text-black transition-all"
+          >
+            💼
+          </button>
+        </div>
+      </div>
+      <div>
+        <h4
+          class="font-black text-white mb-4 uppercase tracking-wider text-xs flex items-center gap-2"
+        >
+          <div class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
+          Sucursal Junín
+        </h4>
+        <a
+          href="https://maps.google.com/?q=Padre+Ghio+87,+Junin,+Buenos+Aires"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="relative block rounded-2xl overflow-hidden border border-red-500/30 h-40 w-full grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-700 shadow-xl group cursor-pointer animate-in"
+          title="Ver en Google Maps"
+        >
+          <!-- Map Hover Overlay -->
+          <div class="absolute inset-0 bg-slate-950/40 group-hover:bg-transparent transition-all flex items-center justify-center z-10">
+            <span class="bg-red-600 text-white text-[11px] font-black px-3 py-1.5 rounded-lg shadow-lg flex items-center gap-1.5 transform scale-90 group-hover:scale-100 transition-all">
+              📍 Ver en Google Maps
+            </span>
+          </div>
+          <iframe
+            width="100%"
+            height="100%"
+            frameborder="0"
+            style="border: 0; pointer-events: none;"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=-60.96,-34.60,-60.94,-34.58&layer=mapnik&marker=-34.59,-60.95"
+          >
+          </iframe>
+        </a>
+        <p class="mt-3 text-[10px] font-bold text-slate-500">
+          Padre Ghio 87, Junín, Buenos Aires.
+        </p>
+      </div>
+    </div>
+    <div
+      class="border-t border-red-500/20 pt-8 flex flex-col md:flex-row justify-between items-center text-xs font-medium text-slate-500"
+    >
+      <p>© 2026 FerreNexo. Tecnología para construir el futuro. <br><span class="text-xs text-slate-400 mt-2 block">Powered by VectraWeb</span></p>
+      <div class="flex gap-6 mt-4 md:mt-0">
+        <button
+          (click)="openLegal('privacidad')"
+          class="hover:text-white transition-colors"
+        >
+          Privacidad
+        </button>
+        <button
+          (click)="openLegal('terminos')"
+          class="hover:text-white transition-colors"
+        >
+          Términos
+        </button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Modal Legal Dinámico -->
+<div
+  *ngIf="selectedLegal"
+  class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 backdrop-blur-md bg-slate-800/60 transition-all duration-300"
+>
+  <div
+    class="bg-slate-800 border border-red-500/30 w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300"
+  >
+    <div class="p-8">
+      <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-3">
+          <div
+            class="w-12 h-12 bg-red-500/10 rounded-2xl flex items-center justify-center text-2xl"
+          >
+            {{ legalContent[selectedLegal].icon }}
+          </div>
+          <h2 class="text-2xl font-black text-white tracking-tight">
+            {{ legalContent[selectedLegal].title }}
+          </h2>
+        </div>
+        <button
+          (click)="closeLegal()"
+          aria-label="Cerrar ventana legal"
+          class="text-slate-500 hover:text-white p-2 rounded-full hover:bg-white/5 transition-all"
+        >
+          <lucide-icon [name]="X" size="24"></lucide-icon>
+        </button>
+      </div>
+
+      <div class="prose prose-invert max-w-none">
+        <p class="text-slate-400 leading-relaxed text-lg font-medium">
+          {{ legalContent[selectedLegal].content }}
+        </p>
+      </div>
+
+      <div class="mt-10">
+        <button
+          (click)="closeLegal()"
+          class="w-full bg-red-500 hover:bg-red-400 text-slate-950 font-black py-4 rounded-2xl transition-all shadow-[0_0_20px_rgba(220,38,38,0.2)]"
+        >
+          ENTENDIDO
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

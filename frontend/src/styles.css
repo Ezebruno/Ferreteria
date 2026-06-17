@@ -1,0 +1,181 @@
+/* Estilos globales de la aplicación
+   Importa directivas base de Tailwind y componentes globales */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.min.css";
+@import "primeicons/primeicons.css";
+
+:root {
+  --primary-color: #dc2626; /* Industrial Red (Hardware Style) */
+  --secondary-color: #1e293b; /* Professional Slate 800 (Less Dark) */
+  --accent-color: #f59e0b; /* Amber/Yellow accent for balance */
+}
+
+/* Glassmorphism Classes */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dark-glass {
+  background: rgba(30, 41, 59, 0.85); /* Slate 800 glass */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Premium Gradients */
+.gradient-primary {
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+}
+
+.gradient-dark {
+  background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+}
+
+/* Transitions */
+.hover-scale {
+  @apply transition-transform duration-300 hover:scale-105;
+}
+
+/* Button Variants */
+.btn-premium {
+  @apply px-6 py-3 rounded-xl font-bold text-white shadow-lg hover:shadow-xl transition-all duration-300;
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+}
+
+/* Custom Paginator Styles */
+.p-paginator {
+  background: transparent !important;
+  border: none !important;
+  padding: 1.5rem !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+}
+
+.p-paginator-pages {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 0.25rem !important;
+}
+
+.p-paginator .p-paginator-pages .p-paginator-page {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(220, 38, 38, 0.1) !important;
+  color: #94a3b8 !important;
+  border-radius: 12px !important;
+  min-width: 2.5rem !important;
+  height: 2.5rem !important;
+  transition: all 0.3s ease !important;
+  font-weight: 700 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+  background: #dc2626 !important;
+  border-color: #dc2626 !important;
+  color: #000 !important;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2) !important;
+}
+
+.p-paginator .p-paginator-pages .p-paginator-page:not(.p-highlight):hover {
+  background: rgba(220, 38, 38, 0.1) !important;
+  color: #fff !important;
+  border-color: rgba(220, 38, 38, 0.3) !important;
+}
+
+.p-paginator .p-link {
+  color: #64748b !important;
+  border-radius: 12px !important;
+  transition: all 0.3s ease !important;
+  min-width: 2.5rem !important;
+  height: 2.5rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.p-paginator .p-link:not(.p-disabled):hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #dc2626 !important;
+}
+
+.p-paginator-current {
+  margin-left: auto !important;
+  color: #475569 !important;
+  font-size: 0.75rem !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+/* Hide redundant elements for a cleaner look */
+.p-paginator .p-paginator-first, 
+.p-paginator .p-paginator-last,
+.p-paginator .p-dropdown {
+  display: none !important;
+}
+
+/* Status Dropdown Customization */
+.custom-status-dropdown {
+  background: transparent !important;
+  border: none !important;
+  min-width: 140px !important;
+}
+
+.custom-status-dropdown .p-dropdown-label {
+  padding: 0 !important;
+}
+
+.custom-status-dropdown .p-dropdown-trigger {
+  width: 2rem !important;
+  color: #64748b !important;
+}
+
+.p-dropdown-panel {
+  background: #1e293b !important;
+  border: 1px solid rgba(220, 38, 38, 0.3) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
+  margin-top: 5px !important;
+}
+
+.p-dropdown-panel .p-dropdown-items-wrapper {
+  overflow-y: auto !important;
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE/Edge */
+}
+
+.p-dropdown-panel .p-dropdown-items-wrapper::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, Edge */
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+  color: #94a3b8 !important;
+  padding: 0.5rem 0.75rem !important;
+  margin: 0.1rem 0 !important;
+  border-radius: 6px !important;
+  transition: all 0.2s ease !important;
+  font-size: 0.85rem !important;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item:hover {
+  background: rgba(220, 38, 38, 0.1) !important;
+  color: #fff !important;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+  background: #dc2626 !important;
+  color: #000 !important;
+}

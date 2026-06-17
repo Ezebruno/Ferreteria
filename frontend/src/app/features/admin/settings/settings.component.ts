@@ -1,0 +1,262 @@
+import { Component, OnInit, inject } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from "@angular/forms";
+import { ApiService } from "src/app/core/services/api.service";
+import {
+  LucideAngularModule,
+  Save,
+  Store,
+  CreditCard,
+  MessageCircle,
+  ShoppingBag,
+  Zap,
+  Link,
+  CheckCircle,
+  FileUp,
+  AlertCircle,
+  ChevronUp,
+  ChevronDown,
+} from "lucide-angular";
+
+import { RouterModule, ActivatedRoute, Router } from "@angular/router";
+
+@Component({
+  selector: "app-settings",
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    LucideAngularModule,
+    RouterModule,
+  ],
+  templateUrl: "./settings.component.html",
+  styles: [
+    `
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-fade-in-up {
+        animation: fadeInUp 0.5s ease-out forwards;
+      }
+    `,
+  ],
+})
+export class SettingsComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private api = inject(ApiService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
+  settingsForm: FormGroup;
+  isSaving = false;
+  successMessage = "";
+  errorMessage = "";
+  hasMpLinked = false;
+  certificateFileName = "";
+  privateKeyFileName = "";
+  certificateFile: File | null = null;
+  privateKeyFile: File | null = null;
+
+  // Accordion state
+  expandedSections: { [key: string]: boolean } = {
+    afip: false,
+    payment: false,
+    mercadolibre: false,
+    whatsapp: false,
+  };
+  // Icons
+  Save = Save;
+  Store = Store;
+  CreditCard = CreditCard;
+  MessageCircle = MessageCircle;
+  ShoppingBag = ShoppingBag;
+  Zap = Zap;
+  Link = Link;
+  CheckCircle = CheckCircle;
+  FileUp = FileUp;
+  AlertCircle = AlertCircle;
+  ChevronUp = ChevronUp;
+  ChevronDown = ChevronDown;
+
+  constructor() {
+    this.settingsForm = this.fb.group({
+      afip_cuit: [""],
+      afip_punto_venta: [""],
+      bank_cvu: [""],
+      bank_alias: [""],
+      whatsapp_number: [""],
+    });
+  }
+
+  ngOnInit() {
+    this.loadSettings();
+
+    // Comprobar si venimos de un redirect de MP
+    this.route.queryParams.subscribe((params) => {
+      const code = params["code"];
+      const state = params["state"];
+
+      // Removed subdomain redirect since this is no longer a SaaS
+
+      if (code) {
+        this.finishMpAuth(code);
+      } else {
+        this.checkMpStatus(); // Only fetch status if not redirecting
+      }
+    });
+  }
+
+  checkMpStatus() {
+    // We check if MP is currently linked
+    this.api.get<any>("/integrations/mercadopago/auth-url/").subscribe({
+      next: (data) => {
+        this.hasMpLinked = data.is_linked;
+      },
+    });
+  }
+
+  finishMpAuth(code: string) {
+    // El puerto 4200 local (es el redirect URI que pasamos)
+    let currentRedirectUrl = window.location.origin + "/admin/settings";
+    if (currentRedirectUrl.includes(":4200")) {
+      currentRedirectUrl = "http://localhost:4200/admin/settings";
+    }
+
+    this.api
+      .post<any>("/integrations/mercadopago/authorize/", {
+        code,
+        redirect_uri: currentRedirectUrl,
+      })
+      .subscribe({
+        next: () => {
+          this.hasMpLinked = true;
+          this.successMessage = "¡Mercado Pago vinculado exitosamente!";
+          // Remove code from URL completely so it doesn't try to auth again on refresh
+          this.router.navigate([], {
+            queryParams: { code: null },
+            queryParamsHandling: "merge",
+          });
+          setTimeout(() => (this.successMessage = ""), 4000);
+        },
+        error: (err) => {
+          this.errorMessage = "Hubo un error al vincular Mercado Pago.";
+          console.error(err);
+        },
+      });
+  }
+
+  vincularMP() {
+    this.api.get<any>("/integrations/mercadopago/auth-url/").subscribe({
+      next: (data) => {
+        if (data.auth_url) {
+          window.location.href = data.auth_url;
+        } else {
+          alert("Hubo un problema recuperando la URL de autorización");
+        }
+      },
+      error: (err) => {
+        console.error(err);
+        const backendMsg = err.error?.error || "Error conectando al servidor.";
+        alert(backendMsg);
+      },
+    });
+  }
+
+  loadSettings() {
+    this.api.get<any>("/tenant/settings/").subscribe({
+      next: (data) => {
+        this.settingsForm.patchValue({
+          afip_cuit: data.afip_cuit || "",
+          afip_punto_venta: data.afip_punto_venta || "",
+          bank_cvu: data.bank_cvu || "",
+          bank_alias: data.bank_alias || "",
+          whatsapp_number: data.whatsapp_number || "",
+        });
+      },
+      error: (err) => {
+        console.error("Error loading settings", err);
+      },
+    });
+  }
+
+  saveSettings() {
+    this.isSaving = true;
+    this.successMessage = "";
+    this.errorMessage = "";
+
+    const formValues = this.settingsForm.value;
+
+    // Create FormData to support file uploads
+    const formData = new FormData();
+    formData.append("afip_cuit", formValues.afip_cuit);
+    formData.append("afip_punto_venta", formValues.afip_punto_venta || "");
+    formData.append("bank_cvu", formValues.bank_cvu);
+    formData.append("bank_alias", formValues.bank_alias);
+    formData.append("whatsapp_number", formValues.whatsapp_number);
+
+    if (this.certificateFile) {
+      formData.append("afip_certificate", this.certificateFile);
+    }
+    if (this.privateKeyFile) {
+      formData.append("afip_private_key", this.privateKeyFile);
+    }
+
+    // Use POST with FormData (not PATCH, to support multipart)
+    this.api.post("/tenant/settings/", formData).subscribe({
+      next: () => {
+        this.isSaving = false;
+        this.successMessage = "¡Configuración guardada exitosamente!";
+        // Clear file references after successful save
+        this.certificateFile = null;
+        this.privateKeyFile = null;
+        // Close all sections after saving
+        this.closeAllSections();
+        setTimeout(() => (this.successMessage = ""), 3000);
+      },
+      error: (err) => {
+        this.isSaving = false;
+        this.errorMessage =
+          err.error?.error || "Hubo un error al guardar la configuración.";
+        console.error("Error saving settings:", err);
+      },
+    });
+  }
+
+  onCertificateSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.certificateFile = input.files[0];
+      this.certificateFileName = this.certificateFile.name;
+    }
+  }
+
+  onPrivateKeySelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.privateKeyFile = input.files[0];
+      this.privateKeyFileName = this.privateKeyFile.name;
+    }
+  }
+
+  toggleSection(section: string): void {
+    this.expandedSections[section] = !this.expandedSections[section];
+  }
+
+  closeAllSections(): void {
+    Object.keys(this.expandedSections).forEach((key) => {
+      this.expandedSections[key] = false;
+    });
+  }
+}

@@ -1,0 +1,279 @@
+<div class="space-y-8 animate-in">
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div>
+      <h2 class="text-3xl font-black text-white tracking-tight">
+        Estadísticas Generales
+      </h2>
+      <p class="text-slate-400 font-medium mt-1">
+        Monitorea el rendimiento de tu ferretería en tiempo real.
+      </p>
+    </div>
+    <div
+      class="px-4 py-2 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center gap-2"
+    >
+      <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+      <span class="text-red-400 text-sm font-bold uppercase tracking-wider"
+        >Sistema en Línea</span
+      >
+    </div>
+  </div>
+  <!-- Low stock alerts banner -->
+  <div
+    *ngIf="lowStockAlerts.length > 0"
+    class="px-4 py-3 bg-rose-900/10 border border-rose-700/20 rounded-xl flex items-center justify-between gap-4"
+  >
+    <div class="flex items-center gap-3">
+      <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+      <div>
+        <div class="text-sm font-bold text-rose-300">
+          Productos con stock bajo:
+          <span class="text-white font-black">{{ lowStockAlerts.length }}</span>
+        </div>
+        <div class="text-xs text-rose-200">
+          Revisa los productos que requieren reposición.
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <button
+        (click)="viewAlerts()"
+        class="text-rose-200 hover:text-white text-sm font-bold"
+      >
+        Ver alertas
+      </button>
+    </div>
+  </div>
+
+  <!-- Key Metrics -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div
+      *ngFor="let metric of metrics"
+      class="group bg-slate-800/40 backdrop-blur-xl p-6 rounded-3xl border border-red-500/20 hover:border-red-500/30 transition-all duration-500 shadow-xl"
+    >
+      <div class="flex items-start justify-between">
+        <div class="space-y-2">
+          <p class="text-slate-500 font-bold text-xs uppercase tracking-widest">
+            {{ metric.label }}
+          </p>
+          <p class="text-3xl font-black text-white tracking-tighter">
+            {{ metric.value }}
+          </p>
+          <div
+            [ngClass]="
+              metric.change >= 0 ? 'text-emerald-400' : 'text-rose-400'
+            "
+            class="flex items-center gap-1 text-sm font-bold"
+          >
+            <span class="text-xs">{{ metric.change >= 0 ? "▲" : "▼" }}</span>
+            {{ Math.abs(metric.change) }}%
+            <span class="text-slate-600 font-medium ml-1">vs mes ant.</span>
+          </div>
+        </div>
+        <div
+          class="w-12 h-12 rounded-2xl bg-gradient-to-br from-red-500/20 to-red-600/20 flex items-center justify-center border border-red-500/20 group-hover:scale-110 transition-transform"
+        >
+          <lucide-icon
+            [name]="metric.icon"
+            size="24"
+            class="text-red-400"
+          ></lucide-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts & Lists Group -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Main Activity Chart -->
+    <div
+      class="lg:col-span-2 bg-slate-800/40 backdrop-blur-xl p-8 rounded-3xl border border-red-500/20 shadow-2xl relative overflow-hidden group"
+    >
+      <div
+        class="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+      ></div>
+
+      <div class="flex items-center justify-between mb-8 relative z-10">
+        <h3 class="text-xl font-black text-white">Actividad de Ventas</h3>
+        <select
+          class="bg-slate-800 border-none text-slate-300 text-xs font-bold rounded-lg px-3 py-1.5 focus:ring-red-500 focus:outline-none"
+        >
+          <option>Últimos 7 días</option>
+          <option>Este mes</option>
+        </select>
+      </div>
+
+      <div
+        class="h-64 rounded-2xl bg-slate-800/50 border border-red-500/20 flex flex-col items-center justify-center relative group/chart"
+      >
+        <div class="flex items-end gap-3 h-40">
+          <div
+            *ngFor="let h of [40, 70, 45, 90, 65, 80, 55]"
+            [style.height.%]="h"
+            class="w-8 bg-gradient-to-t from-red-600/40 to-red-400/80 rounded-t-lg transition-all hover:scale-110 hover:brightness-125 cursor-pointer relative group/bar"
+          >
+            <div
+              class="absolute -top-10 left-1/2 -translate-x-1/2 bg-white text-black text-[10px] font-black px-2 py-1 rounded opacity-0 group-hover/bar:opacity-100 transition-opacity whitespace-nowrap shadow-xl z-20"
+            >
+              $ {{ h * 150 }}
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-3 mt-4 w-full justify-center px-4">
+          <span
+            *ngFor="let d of ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom']"
+            class="w-8 text-center text-[10px] font-bold text-slate-600"
+            >{{ d }}</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Products -->
+    <div
+      class="bg-slate-800/40 backdrop-blur-xl p-8 rounded-3xl border border-red-500/20 shadow-2xl"
+    >
+      <h3 class="text-xl font-black text-white mb-6">Más Vendidos</h3>
+
+      <div class="space-y-4">
+        <div
+          *ngIf="topProducts.length === 0"
+          class="flex flex-col items-center justify-center py-12 text-slate-600"
+        >
+          <lucide-icon
+            [name]="Package"
+            size="48"
+            class="opacity-20 mb-4"
+          ></lucide-icon>
+          <p class="font-bold">Sin datos de ventas</p>
+        </div>
+
+        <div
+          *ngFor="let product of topProducts; let i = index"
+          class="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-red-500/20 hover:bg-white/10 transition-all cursor-pointer group"
+        >
+          <div class="flex items-center gap-3">
+            <div
+              class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-xs font-black text-red-500 border border-red-500/20 group-hover:bg-red-500 group-hover:text-black transition-colors"
+            >
+              {{ i + 1 }}
+            </div>
+            <span
+              class="font-bold text-slate-200 text-sm truncate max-w-[120px]"
+              >{{ product.name }}</span
+            >
+          </div>
+          <span class="text-red-400 font-black text-sm"
+            >{{ product.sales }}u.</span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Orders Table -->
+  <div
+    class="bg-slate-800/40 backdrop-blur-xl rounded-3xl border border-red-500/20 shadow-2xl overflow-hidden"
+  >
+    <div class="p-8 pb-4 flex items-center justify-between">
+      <h3 class="text-xl font-black text-white uppercase tracking-wider">
+        Órdenes Recientes
+      </h3>
+      <button
+        class="text-red-500 hover:text-red-400 font-bold text-sm transition-colors"
+      >
+        Ver todas
+      </button>
+    </div>
+
+    <div
+      *ngIf="recentOrders.length === 0"
+      class="flex flex-col items-center justify-center py-20 text-slate-600"
+    >
+      <lucide-icon
+        [name]="ShoppingCart"
+        size="64"
+        class="opacity-10 mb-4"
+      ></lucide-icon>
+      <p class="font-black text-lg">No hay órdenes registradas</p>
+    </div>
+
+    <div class="overflow-x-auto" *ngIf="recentOrders.length > 0">
+      <table class="w-full text-left">
+        <thead>
+          <tr class="bg-white/5">
+            <th
+              class="px-8 py-4 font-black text-slate-400 text-xs uppercase tracking-widest border-b border-red-500/20"
+            >
+              Referencia
+            </th>
+            <th
+              class="px-8 py-4 font-black text-slate-400 text-xs uppercase tracking-widest border-b border-red-500/20"
+            >
+              Cliente
+            </th>
+            <th
+              class="px-8 py-4 font-black text-slate-400 text-xs uppercase tracking-widest border-b border-red-500/20"
+            >
+              Monto Total
+            </th>
+            <th
+              class="px-8 py-4 font-black text-slate-400 text-xs uppercase tracking-widest border-b border-red-500/20"
+            >
+              Estado
+            </th>
+            <th
+              class="px-8 py-4 font-black text-slate-400 text-xs uppercase tracking-widest border-b border-red-500/20"
+            >
+              Fecha
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let order of recentOrders"
+            class="group border-b border-red-500/20 hover:bg-white/[0.02] transition-colors"
+          >
+            <td class="px-8 py-6">
+              <span class="font-mono text-red-500 font-bold"
+                >#{{ order.id.toString().substring(0, 8) }}</span
+              >
+            </td>
+            <td class="px-8 py-6">
+              <div class="flex items-center gap-3">
+                <div
+                  class="w-8 h-8 rounded-full bg-gradient-to-br from-slate-700 to-slate-800 flex items-center justify-center text-[10px] font-black text-white border border-red-500/30"
+                >
+                  {{ order.customer.substring(0, 1) }}
+                </div>
+                <span class="text-slate-200 font-bold">{{
+                  order.customer
+                }}</span>
+              </div>
+            </td>
+            <td class="px-8 py-6">
+              <span class="text-white font-black"
+                >$ {{ order.total.toLocaleString("es-AR") }}</span
+              >
+            </td>
+            <td class="px-8 py-6">
+              <span
+                [ngClass]="
+                  order.status === 'entregado'
+                    ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
+                    : 'bg-red-500/20 text-red-400 border-red-500/30'
+                "
+                class="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-tighter border"
+              >
+                {{ order.status }}
+              </span>
+            </td>
+            <td class="px-8 py-6 text-slate-500 font-medium text-sm">
+              {{ order.date | date: "dd/MM/yyyy" }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

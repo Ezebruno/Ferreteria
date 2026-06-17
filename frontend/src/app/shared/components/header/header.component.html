@@ -1,0 +1,105 @@
+<nav 
+  class="fixed w-full top-0 z-50 transition-all duration-300 border-b border-red-500/20"
+  [ngClass]="isScrolled ? 'bg-slate-900/80 backdrop-blur-3xl py-2 shadow-2xl' : 'bg-slate-900 border-transparent py-4'"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-20">
+      <!-- Premium Logo -->
+      <div class="flex-shrink-0 flex items-center cursor-pointer group" routerLink="/">
+        <div class="flex items-center gap-2 transition-transform group-hover:scale-105">
+          <span class="text-3xl font-black tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-red-600">
+            Ferre<span class="text-white">Nexo</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Center Navigation -->
+      <div class="hidden lg:flex flex-1 justify-center items-center mx-8">
+        <button
+          (click)="filterByCategory('todos')"
+          class="px-3 xl:px-5 py-2 text-slate-300 hover:text-red-400 font-bold text-sm transition-all relative group"
+        >
+          Todos
+          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-red-400 to-red-600 group-hover:w-full transition-all duration-300"></span>
+        </button>
+
+        <div class="relative group" (mouseenter)="activeDropdown = 'categorias'" (mouseleave)="activeDropdown = null">
+          <button class="px-3 xl:px-5 py-8 flex items-center gap-1 text-slate-300 hover:text-red-400 font-bold text-sm transition-all relative group-hover:text-red-400 whitespace-nowrap">
+            Categorías
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transform transition-transform duration-200" [ngClass]="{'rotate-180': activeDropdown === 'categorias'}"><path d="m6 9 6 6 6-6"/></svg>
+            <span class="absolute bottom-4 left-3 right-3 w-0 h-0.5 bg-gradient-to-r from-red-400 to-red-600 transition-all duration-300" [ngClass]="{'w-auto inset-x-3': activeDropdown === 'categorias'}"></span>
+          </button>
+          
+          <div *ngIf="activeDropdown === 'categorias'" class="absolute left-0 top-[80px] w-64 bg-slate-800 border border-red-500/30 shadow-2xl rounded-b-2xl py-2 z-50 animate-in fade-in slide-in-from-top-2">
+            <button *ngFor="let cat of categories" (click)="filterByCategory(cat.name); activeDropdown = null" class="w-full text-left px-6 py-3 text-sm text-slate-300 hover:bg-red-500/10 hover:text-red-400 transition-colors relative block cursor-pointer">
+              {{ cat.name }}
+            </button>
+            <div *ngIf="categories.length === 0" class="px-6 py-3 text-sm text-slate-500">
+              No hay categorías cargadas.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Actions -->
+      <div class="flex items-center space-x-4">
+        <!-- Search -->
+        <div class="relative" data-search-container *ngIf="!isSearchExpanded">
+          <button
+            (click)="toggleSearchExpanded()"
+            class="p-2.5 text-slate-400 hover:text-red-400 transition-all relative group rounded-lg hover:bg-white/5"
+          >
+            <lucide-icon [name]="Search" size="24"></lucide-icon>
+          </button>
+        </div>
+
+        <!-- Search Expanded -->
+        <div
+          class="absolute left-0 right-0 top-full z-50 px-4 sm:px-6 lg:px-8"
+          data-search-container
+          *ngIf="isSearchExpanded"
+        >
+          <div class="max-w-7xl mx-auto">
+            <div class="bg-slate-800 rounded-2xl shadow-2xl p-4 border border-red-500/30 mt-2">
+              <div class="flex items-center gap-2">
+                <lucide-icon [name]="Search" size="20" class="text-red-500"></lucide-icon>
+                <input
+                  [(ngModel)]="searchQuery"
+                  (input)="onSearchChange()"
+                  type="text"
+                  placeholder="Busca productos..."
+                  class="flex-1 outline-none bg-transparent text-white placeholder-slate-500 font-medium"
+                />
+                <button (click)="closeSearch()" class="text-slate-400 hover:text-white font-bold">✕</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cart Button -->
+        <button
+          (click)="openCart()"
+          class="p-2.5 text-slate-400 hover:text-red-400 transition-all relative group rounded-lg hover:bg-white/5"
+        >
+          <lucide-icon [name]="ShoppingCart" size="24"></lucide-icon>
+          <span
+            *ngIf="cartCount > 0"
+            class="absolute -top-1 -right-1 h-6 w-6 bg-red-500 rounded-full text-xs text-black flex items-center justify-center font-black shadow-[0_0_10px_rgba(220,38,38,0.5)] animate-pulse"
+          >
+            {{ cartCount }}
+          </span>
+        </button>
+
+        <span class="w-px h-6 bg-white/10 hidden sm:block"></span>
+
+        <a
+          routerLink="/auth/login"
+          class="hidden sm:flex items-center space-x-2 bg-white/5 hover:bg-white/10 border border-red-500/30 text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transform hover:-translate-y-1"
+        >
+          <lucide-icon [name]="User" size="18"></lucide-icon>
+          <span>Admin</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>

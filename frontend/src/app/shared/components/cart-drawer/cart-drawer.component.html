@@ -1,0 +1,193 @@
+<div
+  *ngIf="isOpen$ | async"
+  class="fixed inset-0 z-[100] overflow-hidden"
+  aria-labelledby="slide-over-title"
+  role="dialog"
+  aria-modal="true"
+>
+  <!-- Backdrop con blur premium -->
+  <div
+    class="absolute inset-0 bg-slate-800/60 backdrop-blur-sm transition-opacity animate-fade-in"
+    (click)="close()"
+  ></div>
+
+  <div class="fixed inset-y-0 right-0 flex max-w-full pl-10">
+    <!-- Panel del Drawer con diseño Premium -->
+    <div
+      class="w-screen max-w-md transform transition-all duration-500 ease-in-out border-l border-red-500/30 animate-slide-in"
+      [style.background]="'rgba(10, 15, 25, 0.98)'"
+      class="flex h-full flex-col bg-slate-800 shadow-2xl backdrop-blur-2xl"
+    >
+      <!-- Header del Drawer -->
+      <div class="flex items-center justify-between px-6 py-6 border-b border-red-500/20">
+        <div class="flex items-center gap-3">
+          <div class="p-2 bg-red-500/10 rounded-lg border border-red-500/20">
+            <lucide-icon [name]="ShoppingCart" size="20" class="text-red-500"></lucide-icon>
+          </div>
+          <h2 class="text-xl font-black text-white tracking-tight" id="slide-over-title">
+            Tu Carrito
+          </h2>
+        </div>
+        <button
+          (click)="close()"
+          class="p-2 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl transition-all"
+        >
+          <lucide-icon [name]="X" size="24"></lucide-icon>
+        </button>
+      </div>
+
+      <!-- Contenido del Carrito -->
+      <div class="flex-1 overflow-y-auto px-6 py-6 custom-scrollbar">
+        <ng-container *ngIf="cart$ | async as cart; else emptyCart">
+          <div *ngIf="cart.items.length > 0; else emptyCart" class="space-y-6">
+            <div *ngFor="let item of cart.items" class="group flex gap-4 bg-white/5 p-4 rounded-2xl border border-red-500/20 hover:border-red-500/30 transition-all">
+              <!-- Imagen del Producto -->
+              <div class="h-20 w-20 flex-shrink-0 overflow-hidden rounded-xl bg-slate-800 border border-red-500/20 p-2">
+                <img [src]="item.image" [alt]="item.product_name" class="h-full w-full object-contain brightness-90 group-hover:scale-110 transition-transform">
+              </div>
+
+              <!-- Info & Controles -->
+              <div class="flex flex-1 flex-col justify-between">
+                <div>
+                  <div class="flex justify-between text-sm">
+                    <h3 class="font-bold text-white line-clamp-1 group-hover:text-red-400 transition-colors">
+                      {{ item.product_name }}
+                    </h3>
+                    <p class="ml-4 font-black text-red-500">${{ item.price }}</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-end justify-between mt-2">
+                  <div class="flex items-center bg-slate-800/40 rounded-lg border border-red-500/20 p-1">
+                    <button (click)="updateQuantity(item.id, item.quantity - 1)" class="p-1 text-slate-400 hover:text-red-400">
+                      <lucide-icon [name]="Minus" size="14"></lucide-icon>
+                    </button>
+                    <span class="mx-3 text-xs font-black text-white w-4 text-center">{{ item.quantity }}</span>
+                    <button (click)="updateQuantity(item.id, item.quantity + 1)" class="p-1 text-slate-400 hover:text-red-400">
+                      <lucide-icon [name]="Plus" size="14"></lucide-icon>
+                    </button>
+                  </div>
+
+                  <button (click)="removeItem(item.id)" class="text-slate-500 hover:text-red-500 transition-colors">
+                    <lucide-icon [name]="Trash2" size="16"></lucide-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-template #emptyCart>
+          <div class="flex flex-col items-center justify-center h-full text-center space-y-6 animate-fade-in">
+            <div class="w-24 h-24 bg-slate-800 rounded-full flex items-center justify-center text-5xl opacity-40 grayscale">
+              🛒
+            </div>
+            <div>
+              <h3 class="text-xl font-black text-white mb-2">Tu carrito está vacío</h3>
+              <p class="text-slate-400 text-sm max-w-[200px] mx-auto font-medium">
+                ¡Empieza a agregar herramientas increíbles a tu proyecto!
+              </p>
+            </div>
+            <button (click)="exploreCatalog()" class="text-red-500 font-black hover:text-red-400 transition-colors flex items-center gap-2 group">
+              Explorar Catálogo
+              <lucide-icon [name]="ArrowRight" size="16" class="group-hover:translate-x-1 transition-transform"></lucide-icon>
+            </button>
+          </div>
+        </ng-template>
+      </div>
+
+      <!-- Footer con Resumen de Compra Premium Dark -->
+      <div *ngIf="cart$ | async as cart" class="border-t border-red-500/20 px-6 py-8 bg-slate-800/40 backdrop-blur-xl">
+        <div *ngIf="cart.items.length > 0" class="space-y-6">
+          
+          <!-- Calculador de Envío -->
+          <div class="bg-slate-800/40 p-4 rounded-2xl border border-red-500/20 mb-2">
+            <h4 class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3 flex items-center gap-2">
+              <lucide-icon [name]="Truck" size="12"></lucide-icon>
+              Calcular Envío
+            </h4>
+            <div class="flex gap-2">
+              <input 
+                type="text" 
+                [(ngModel)]="zipCode" 
+                placeholder="Código Postal (Ej: 2600)"
+                class="flex-1 bg-slate-800/60 border border-red-500/30 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-red-500/50 transition-all font-medium"
+              >
+              <button 
+                (click)="updateShipping()"
+                [disabled]="isCalculatingShipping"
+                class="bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-black px-4 py-2 rounded-xl text-xs font-black transition-all border border-red-500/20 disabled:opacity-50"
+              >
+                {{ isCalculatingShipping ? '...' : 'CALCULAR' }}
+              </button>
+            </div>
+            <p *ngIf="shippingError" class="text-[10px] text-red-500 mt-2 font-bold">{{ shippingError }}</p>
+          </div>
+
+          <!-- Opciones de Envío (Solo si hay métodos calculados) -->
+          <div *ngIf="cart.shipping_methods && cart.shipping_methods.length > 0" class="space-y-2 mb-4 animate-in fade-in slide-in-from-top-2 duration-300">
+            <h4 class="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">Selecciona una opción</h4>
+            <div 
+              *ngFor="let method of cart.shipping_methods"
+              (click)="selectShipping(method.id)"
+              class="relative bg-slate-800/40 p-4 rounded-xl border transition-all cursor-pointer group"
+              [ngClass]="cart.selected_shipping_id === method.id ? 'border-red-500 shadow-[0_0_15px_rgba(220,38,38,0.1)]' : 'border-red-500/20 hover:border-white/20'"
+            >
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                   <div class="w-2 h-2 rounded-full transition-all" [ngClass]="cart.selected_shipping_id === method.id ? 'bg-red-500 scale-125' : 'bg-slate-700'"></div>
+                   <div>
+                     <p class="text-sm font-bold" [ngClass]="cart.selected_shipping_id === method.id ? 'text-white' : 'text-slate-400'">{{ method.name }}</p>
+                     <p class="text-[10px] font-medium text-slate-500">{{ method.time }}</p>
+                   </div>
+                </div>
+                <span class="text-sm font-black" [ngClass]="cart.selected_shipping_id === method.id ? 'text-red-500' : 'text-slate-500'">
+                  {{ method.price === 0 ? 'GRATIS' : '$' + method.price }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Resumen con Estética del Sitio -->
+          <div class="space-y-3">
+            <h3 class="text-white font-black text-xs uppercase tracking-widest opacity-60">Resumen de compra</h3>
+            
+            <div class="space-y-2.5 pt-2">
+              <div class="flex justify-between text-sm font-medium text-slate-400">
+                <span>Productos ({{ cartService.getCartItemCount() }})</span>
+                <span class="text-white font-bold">${{ cart.total | number:'1.0-0' }}</span>
+              </div>
+              
+              <div class="flex justify-between text-sm font-medium text-slate-400">
+                <span>Envío</span>
+                <div class="flex items-center gap-2">
+                  <span *ngIf="!cart.selected_shipping_id" class="text-emerald-400 font-bold uppercase text-[10px] tracking-wider">A calcular</span>
+                  <span *ngIf="cart.selected_shipping_id && cart.shipping_cost === 0" class="text-emerald-400 font-bold uppercase text-[10px] tracking-wider">¡Gratis!</span>
+                  <span *ngIf="cart.selected_shipping_id && cart.shipping_cost! > 0" class="text-white font-bold">${{ cart.shipping_cost | number:'1.0-0' }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-between text-xl font-black text-white pt-5 border-t border-red-500/20 mt-4">
+              <span class="text-lg">Total</span>
+              <span class="tracking-tight text-2xl text-red-500">${{ getFinalTotal(cart) | number:'1.0-0' }}</span>
+            </div>
+
+            <button
+              (click)="checkout()"
+              class="w-full bg-red-500 hover:bg-red-400 text-black font-black py-4 rounded-2xl transition-all shadow-[0_0_30px_rgba(220,38,38,0.2)] mt-6 flex items-center justify-center text-sm uppercase tracking-wider gap-2 group"
+            >
+              <span>Continuar ({{ cartService.getCartItemCount() }})</span>
+              <lucide-icon [name]="ArrowRight" size="18" class="group-hover:translate-x-1 transition-transform"></lucide-icon>
+            </button>
+          </div>
+          
+          <div class="flex items-center justify-center gap-2 text-[10px] font-bold text-slate-600 uppercase tracking-widest">
+            <lucide-icon [name]="ShieldCheck" size="12"></lucide-icon>
+            <span>Pago seguro con encriptación SSL</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
