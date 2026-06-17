@@ -8,7 +8,7 @@ db_url = os.environ.get('DATABASE_URL')
 if db_url:
     # Desarmamos la URL para extraerte los datos limpios de conexión
     from psycopg.engine import ConnectionInfo
-    info = ConnectionInfo(db_url)
+    from psycopg.conninfo import ConnectionInfo
     
     # Configuramos Django antes de que inicialice sus modelos
     from django.conf import settings
