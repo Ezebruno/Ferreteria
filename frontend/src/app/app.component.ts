@@ -7,7 +7,7 @@ import { CartDrawerComponent } from "./shared/components/cart-drawer/cart-drawer
 import { CommonModule } from "@angular/common";
 import { filter } from "rxjs/operators";
 import { ApiService } from "./core/services/api.service";
-//import { whatsappConfig } from "../environments/environment";
+import { whatsappConfig } from "../environments/environment";
 
 @Component({
   selector: "app-root",
