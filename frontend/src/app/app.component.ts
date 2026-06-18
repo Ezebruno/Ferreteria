@@ -7,7 +7,6 @@ import { CartDrawerComponent } from "./shared/components/cart-drawer/cart-drawer
 import { CommonModule } from "@angular/common";
 import { filter } from "rxjs/operators";
 import { ApiService } from "./core/services/api.service";
-import { whatsappConfig } from "../environments/environment";
 
 @Component({
   selector: "app-root",
@@ -19,7 +18,11 @@ import { whatsappConfig } from "../environments/environment";
 export class AppComponent implements OnInit {
   title = "ferre-saas-frontend";
   showLayout = true;
-  whatsappHref = `https://wa.me/${whatsappConfig.number}?text=${encodeURIComponent(whatsappConfig.defaultMessage)}`;
+  
+  // Mensaje y link por defecto sin depender de los archivos de entorno (evita el error TS2304)
+  defaultMsg = "Hola, tengo una consulta sobre un producto.";
+  whatsappHref = `https://wa.me/5491123456789?text=${encodeURIComponent(this.defaultMsg)}`;
+  
   private api = inject(ApiService);
 
   constructor(private router: Router) {
@@ -38,9 +41,9 @@ export class AppComponent implements OnInit {
     this.api.get<any>('/tenant/info/').subscribe({
       next: (data) => {
         if (data.whatsapp_number) {
-          // Clean the number from non-numeric characters for the href
+          // Limpia el número que viene de la API y arma el link real dinámicamente
           const cleanNumber = data.whatsapp_number.replace(/\D/g, '');
-          this.whatsappHref = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(whatsappConfig.defaultMessage)}`;
+          this.whatsappHref = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(this.defaultMsg)}`;
         }
       },
       error: (err) => {
