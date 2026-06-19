@@ -22,13 +22,13 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["*"])
 MP_ACCESS_TOKEN = env("MP_ACCESS_TOKEN", default="")
 MP_WEBHOOK_URL = env("MP_WEBHOOK_URL", default="http://localhost:8000/api/integrations/mercadopago/webhook/")
 
-# Mercado Libre
-MELI_CLIENT_ID = env("MELI_CLIENT_ID", default="1234567890123")
-MELI_CLIENT_SECRET = env("MELI_CLIENT_SECRET", default="dummy_secret")
+# Mercado Libre (Sin valores por defecto para forzar la lectura real desde Railway)
+MELI_CLIENT_ID = env("MELI_CLIENT_ID")
+MELI_CLIENT_SECRET = env("MELI_CLIENT_SECRET")
 
 MP_APP_ID = env("MP_APP_ID", default="5290749274833858")
 MP_CLIENT_SECRET = env("MP_CLIENT_SECRET", default="p4CsJJE6Fq")
-MELI_REDIRECT_URI = env("MELI_REDIRECT_URI", default="https://127.0.0.1:4200/admin/meli")
+MELI_REDIRECT_URI = env("MELI_REDIRECT_URI", default="https://ferreteria-4n8s.vercel.app/admin/meli")
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -85,8 +85,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ferre_saas.wsgi.application'
 
+# Configuración híbrida de Base de Datos (Local vs Producción)
 if DEBUG:
-    # Entorno Local (Desarrollo con SQLite para trabajar en tu máquina)
+    # Entorno Local
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -94,7 +95,7 @@ if DEBUG:
         }
     }
 else:
-    # Entorno de Producción (Railway conectado impecable al Pooler IPv4 de Supabase)
+    # Entorno de Producción (Railway + Pooler IPv4 de Supabase sin conflictos)
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -102,7 +103,7 @@ else:
             'USER': env('DB_USER', default='postgres.clugnqhxblhqvegomsbv'),
             'PASSWORD': env('DB_PASSWORD', default='ferre123.eze'),
             'HOST': env('DB_HOST', default='aws-0-us-east-1.pooler.supabase.com'),
-            'PORT': env.int('DB_PORT', default=6543),
+            'PORT': env.int('DB_PORT', default=6543),  # El casillero se convierte a entero automáticamente
         }
     }
 
@@ -230,12 +231,10 @@ if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
 else:
     CORS_ALLOW_ALL_ORIGINS = False
-    # Dejamos tus dominios fijos grabados por código para evitar fallos de lectura de strings
     CORS_ALLOWED_ORIGINS = [
         "https://ferreteria-4n8s.vercel.app",
         "http://localhost:4200",
     ]
-    # Si agregás más dominios en las variables de Railway, se suman acá automáticamente:
     CORS_ALLOWED_ORIGINS += env.list("CORS_ALLOWED_ORIGINS", default=[])
     
 CORS_ALLOW_CREDENTIALS = True
