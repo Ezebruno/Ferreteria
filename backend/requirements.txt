@@ -20,3 +20,4 @@ django-axes==6.1.1
 django-ratelimit==4.1.0
 django-admin-honeypot>=1.1.0
 django-simple-history==3.4.0
+dj-database-url==2.1.0
