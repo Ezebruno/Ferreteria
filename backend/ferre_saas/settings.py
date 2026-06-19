@@ -246,3 +246,6 @@ else:
     EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="")
     EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="")
     DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default=EMAIL_HOST_USER)
+    
+# Desactiva la redirección automática de Django para evitar barras extra en las URLs
+APPEND_SLASH = False
