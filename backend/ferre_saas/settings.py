@@ -25,7 +25,7 @@ MP_WEBHOOK_URL = env("MP_WEBHOOK_URL", default="http://localhost:8000/api/integr
 # Mercado Libre - Configuración fija para Producción (Ignora variables externas)
 MELI_CLIENT_ID = "3644837068470032"
 MELI_CLIENT_SECRET = "4YRCvqfSCcfwPUTyobGAcQwAwg4a7SuZ"
-MELI_REDIRECT_URI = "https://ferreteria-4n8s.vercel.app/admin/meli"
+MELI_REDIRECT_URI = "https://ferreteria-4n8s.vercel.app/admin/meli/"
 
 # Mercado Pago
 MP_APP_ID = "5290749274833858"
@@ -246,6 +246,3 @@ else:
     EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="")
     EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="")
     DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default=EMAIL_HOST_USER)
-    
-# Desactiva la redirección automática de Django para evitar barras extra en las URLs
-APPEND_SLASH = False
