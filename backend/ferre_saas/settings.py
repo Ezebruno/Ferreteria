@@ -22,13 +22,14 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["*"])
 MP_ACCESS_TOKEN = env("MP_ACCESS_TOKEN", default="")
 MP_WEBHOOK_URL = env("MP_WEBHOOK_URL", default="http://localhost:8000/api/integrations/mercadopago/webhook/")
 
-# Mercado Libre - Configuración dinámica para Desarrollo y Producción
-MELI_CLIENT_ID = env("MELI_CLIENT_ID", default="3644837068470032")
-MELI_CLIENT_SECRET = env("MELI_CLIENT_SECRET", default="4YRCvqfSCcfwPUTyobGAcQwAwg4a7SuZ")
-MELI_REDIRECT_URI = env("MELI_REDIRECT_URI", default="https://ferreteria-4n8s.vercel.app/admin/meli")
+# Mercado Libre - Configuración fija para Producción (Ignora variables externas)
+MELI_CLIENT_ID = "3644837068470032"
+MELI_CLIENT_SECRET = "4YRCvqfSCcfwPUTyobGAcQwAwg4a7SuZ"
+MELI_REDIRECT_URI = "https://ferreteria-4n8s.vercel.app/admin/meli"
 
-MP_APP_ID = env("MP_APP_ID", default="5290749274833858")
-MP_CLIENT_SECRET = env("MP_CLIENT_SECRET", default="p4CsJJE6Fq")
+# Mercado Pago
+MP_APP_ID = "5290749274833858"
+MP_CLIENT_SECRET = "p4CsJJE6Fq"
 
 INSTALLED_APPS = [
     'django.contrib.admin',
