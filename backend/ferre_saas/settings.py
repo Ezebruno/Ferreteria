@@ -85,27 +85,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ferre_saas.wsgi.application'
 
-# Configuración híbrida de Base de Datos (Local vs Producción)
-if DEBUG:
-    # Entorno Local
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
+# Configuración Híbrida de Base de Datos (SQLite Fijo para evitar problemas de ruteo IPv6)
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-else:
-    # Entorno de Producción - Conexión Directa Fija (Evita los formatos estrictos del pooler)
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': env('DB_NAME', default='postgres'),
-            'USER': env('DB_USER', default='postgres.clugnqhxblhqvegomsbv'),
-            'PASSWORD': env('DB_PASSWORD', default='ferre123.eze'),
-            'HOST': 'db.clugnqhxblhqvegomsbv.supabase.co',  # Host directo de tu base de datos
-            'PORT': 5432,                                   # Puerto clásico directo
-        }
-    }
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
