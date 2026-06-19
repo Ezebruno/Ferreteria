@@ -25,7 +25,7 @@ MP_WEBHOOK_URL = env("MP_WEBHOOK_URL", default="http://localhost:8000/api/integr
 MELI_CLIENT_ID = env("MELI_CLIENT_ID", default="1234567890123")
 MELI_CLIENT_SECRET = env("MELI_CLIENT_SECRET", default="dummy_secret")
 
-MP_APP_ID = env("MP_APP_ID", default="529074927483385​8")
+MP_APP_ID = env("MP_APP_ID", default="5290749274833858")
 MP_CLIENT_SECRET = env("MP_CLIENT_SECRET", default="p4CsJJE6Fq")
 MELI_REDIRECT_URI = env("MELI_REDIRECT_URI", default="https://127.0.0.1:4200/admin/meli")
 
@@ -139,7 +139,7 @@ SIMPLE_JWT = {
 SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=not DEBUG)
 SESSION_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE", default=not DEBUG)
 CSRF_COOKIE_SECURE = env.bool("CSRF_COOKIE_SECURE", default=not DEBUG)
-MOCK_EXTERNAL_SERVICES = env.bool("MOCK_EXTERNAL_SERVICES", default=True)
+MOCK_EXTERNAL_SERVICES = env.bool("MOCK_EXTERNAL_SERVICES", default=False)  # Seteado en False para producción
 SESSION_COOKIE_HTTPONLY = True
 CSRF_COOKIE_HTTPONLY = True
 SECURE_BROWSER_XSS_FILTER = True
@@ -214,11 +214,18 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
 
+# Configuración de CORS blindada para desarrollo y producción
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
 else:
     CORS_ALLOW_ALL_ORIGINS = False
-    CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", default=[])
+    # Dejamos tus dominios fijos grabados por código para evitar fallos de lectura de strings
+    CORS_ALLOWED_ORIGINS = [
+        "https://ferreteria-4n8s.vercel.app",
+        "http://localhost:4200",
+    ]
+    # Si agregás más dominios en las variables de Railway, se suman acá automáticamente:
+    CORS_ALLOWED_ORIGINS += env.list("CORS_ALLOWED_ORIGINS", default=[])
     
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = (
