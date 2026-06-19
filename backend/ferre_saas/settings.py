@@ -95,15 +95,15 @@ if DEBUG:
         }
     }
 else:
-    # Entorno de Producción (Railway + Pooler IPv4 de Supabase sin conflictos)
+    # Entorno de Producción - Conexión Directa Fija (Evita los formatos estrictos del pooler)
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': env('DB_NAME', default='postgres'),
             'USER': env('DB_USER', default='postgres.clugnqhxblhqvegomsbv'),
             'PASSWORD': env('DB_PASSWORD', default='ferre123.eze'),
-            'HOST': env('DB_HOST', default='aws-0-us-east-1.pooler.supabase.com'),
-            'PORT': env.int('DB_PORT', default=6543),  # El casillero se convierte a entero automáticamente
+            'HOST': 'db.clugnqhxblhqvegomsbv.supabase.co',  # Host directo de tu base de datos
+            'PORT': 5432,                                   # Puerto clásico directo
         }
     }
 
