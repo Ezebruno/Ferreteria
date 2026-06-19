@@ -28,7 +28,7 @@ MELI_CLIENT_SECRET = "4YRCvqfSCcfwPUTyobGAcQwAwg4a7SuZ"
 
 MP_APP_ID = env("MP_APP_ID", default="5290749274833858")
 MP_CLIENT_SECRET = env("MP_CLIENT_SECRET", default="p4CsJJE6Fq")
-MELI_REDIRECT_URI = "https://ferreteria-production-2638.up.railway.app/admin/meli"
+MELI_REDIRECT_URI = "https://ferreteria-4n8s.vercel.app/admin/meli"
 
 INSTALLED_APPS = [
     'django.contrib.admin',
