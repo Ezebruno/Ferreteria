@@ -273,16 +273,14 @@ class MercadoPagoAuthUrlView(APIView):
     def get(self, request):
         app_id = getattr(settings, 'MP_APP_ID', '')
         if not app_id:
-            return Response({'error': 'MP_APP_ID no configurado en el servidor master'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': 'MP_APP_ID no configurado'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
-        # We redirect back to the frontend settings page
-        redirect_uri = f"{request.scheme}://{request.get_host()}/admin/settings"
-        # Since the frontend runs on port 4200 during dev, fix it:
-        if ':8000' in redirect_uri:
-            # Force exactly localhost for Mercado Pago developers panel to accept it without complain
-            redirect_uri = "http://localhost:4200/admin/settings"
-            
+        # CAMBIO: Esta URL debe ser idéntica a la que registraste en el panel de Mercado Pago
+        # Debe apuntar al endpoint que procesa el código (MercadoPagoAuthorizeView)
+        redirect_uri = f"{request.scheme}://{request.get_host()}/api/integrations/mercadopago/authorize/"
+        
         tenant_schema = 'default'
+        # Construimos la URL de autorización de Mercado Pago
         url = f"https://auth.mercadopago.com/authorization?client_id={app_id}&response_type=code&platform_id=mp&redirect_uri={redirect_uri}&state={tenant_schema}"
         
         has_mp = bool(StoreConfig.objects.first().mp_access_token if StoreConfig.objects.first() else None)
