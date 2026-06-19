@@ -8,6 +8,8 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from apps.inventory.views import ProductViewSet, CategoryViewSet, KitViewSet, StockMovementViewSet, DashboardViewSet
 from apps.sales.views import SaleViewSet, CustomerViewSet, TicketViewSet, BudgetViewSet
 from apps.users.views import CustomerRegisterView, UserProfileView, RateLimitedTokenObtainPairView, StoreSettingsView, StoreInfoView
+# Importamos la vista específica para el callback de Mercado Libre
+from apps.integrations.views import MeliCallbackView 
 
 router = DefaultRouter()
 router.register(r'products', ProductViewSet, basename='product')
@@ -24,6 +26,11 @@ router.register(r'dashboard', DashboardViewSet, basename='dashboard')
 urlpatterns = [
     # path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),  # Disabled due to Django 5 compatibility
     path('admin-secure-ferre/', admin.site.urls),
+    
+    # RUTA CRÍTICA: Definimos explícitamente la ruta de retorno de MeLi
+    # Debe coincidir exactamente con MELI_REDIRECT_URI en settings.py
+    path('admin/meli/', MeliCallbackView.as_view(), name='meli_callback'),
+    
     path('api/', include(router.urls)),
     
     # Auth
