@@ -85,12 +85,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ferre_saas.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if DEBUG:
+    # Entorno Local (Desarrollo con SQLite para trabajar en tu máquina)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    # Entorno de Producción (Railway conectado impecable al Pooler IPv4 de Supabase)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': env('DB_NAME', default='postgres'),
+            'USER': env('DB_USER', default='postgres.clugnqhxblhqvegomsbv'),
+            'PASSWORD': env('DB_PASSWORD', default='ferre123.eze'),
+            'HOST': env('DB_HOST', default='aws-0-us-east-1.pooler.supabase.com'),
+            'PORT': env.int('DB_PORT', default=6543),
+        }
+    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
