@@ -85,16 +85,31 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ferre_saas.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_NAME', default='postgres'),
-        'USER': env('DB_USER', default='postgres'),
-        'PASSWORD': env('DB_PASSWORD', default=''),
-        'HOST': env('DB_HOST', default='127.0.0.1'),
-        'PORT': env('DB_PORT', default='5432'),
+if DEBUG:
+    # Entorno Local (Tu máquina)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': env('DB_NAME', default='ferre-db'),
+            'USER': env('DB_USER', default='postgres'),
+            'PASSWORD': env('DB_PASSWORD', default=''),
+            'HOST': env('DB_HOST', default='127.0.0.1'),
+            'PORT': env('DB_PORT', default='5432'),
+        }
     }
-}
+else:
+    # Entorno de Producción (Railway + Pooler IPv4 de Supabase)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': env('DB_NAME', default='postgres'),
+            'USER': env('DB_USER', default='postgres.clugnqhxblhqvegomsbv'),
+            'PASSWORD': env('DB_PASSWORD', default='ferre123.eze'),
+            'HOST': env('DB_HOST', default='aws-0-us-east-1.pooler.supabase.com'),
+            # Forzamos a que el puerto sea un número real (Integer) para evitar fallos de psycopg
+            'PORT': env.int('DB_PORT', default=6543),
+        }
+    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
