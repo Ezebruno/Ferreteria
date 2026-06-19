@@ -7,9 +7,8 @@ def crear_superusuario_automatico(sender, **kwargs):
     
     # Datos para tu inicio de sesión en producción
     email_admin = "admin@ferre.com"
-    password_admin = "FerreAdmin2026!" # Cambiala si querés
+    password_admin = "FerreAdmin2026!"
     
-    # Al no usar 'username', filtramos y creamos solo con el email
     if not User.objects.filter(email=email_admin).exists():
         print("Creando superusuario personalizado por código...")
         User.objects.create_superuser(
@@ -18,9 +17,9 @@ def crear_superusuario_automatico(sender, **kwargs):
         )
         print("¡Superusuario personalizado creado con éxito!")
 
-class CoreConfig(AppConfig):
+class UsersConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'apps.core' # Asegurate de que sea el nombre de tu carpeta de app
+    name = 'apps.users'  # <--- ESTO CORRIGE EL ERROR (Debe decir apps.users)
 
     def ready(self):
         post_migrate.connect(crear_superusuario_automatico, sender=self)
