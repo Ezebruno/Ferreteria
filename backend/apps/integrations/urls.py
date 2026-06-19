@@ -17,5 +17,6 @@ urlpatterns = [
     path('mercadopago/auth-url/', MercadoPagoAuthUrlView.as_view(), name='mp_auth_url'),
     path('mercadopago/authorize/', MercadoPagoAuthorizeView.as_view(), name='mp_authorize'),
     path('mercadopago/preference/', MercadoPagoPreferenceView.as_view(), name='mp_preference'),
+    path('meli/callback/', MeliAuthorizeView.as_view(), name='meli_callback'),
     path('mercadopago/webhook/', MercadoPagoWebhookView.as_view(), name='mp_webhook'),
 ]
