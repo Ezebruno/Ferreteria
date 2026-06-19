@@ -85,13 +85,35 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ferre_saas.wsgi.application'
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default=f"postgres://{env('DB_USER', default='postgres')}:{env('DB_PASSWORD', default='')}@{env('DB_HOST', default='127.0.0.1')}:{env('DB_PORT', default='5432')}/{env('DB_NAME', default='ferre-db')}",
-        conn_max_age=600,
-        ssl_require=True
-    )
-}
+# Configuración explícita para evitar fallos de parseo con caracteres especiales o puntos
+if DEBUG:
+    # Entorno Local (Desarrollo)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': env('DB_NAME', default='ferre-db'),
+            'USER': env('DB_USER', default='postgres'),
+            'PASSWORD': env('DB_PASSWORD', default=''),
+            'HOST': env('DB_HOST', default='127.0.0.1'),
+            'PORT': env('DB_PORT', default='5432'),
+        }
+    }
+else:
+    # Entorno de Producción (Railway + Pooler de Supabase)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': env('DB_NAME', default='postgres'),
+            'USER': env('DB_USER', default='postgres.clugnqhxblhqvegomsbv'),
+            'PASSWORD': env('DB_PASSWORD', default='ferre123.eze'),
+            'HOST': 'aws-0-us-east-1.pooler.supabase.com', 
+            'PORT': '6543',
+            'OPTIONS': {
+                'sslmode': 'require',
+            },
+            'CONN_MAX_AGE': 600,
+        }
+    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
