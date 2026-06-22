@@ -90,7 +90,7 @@
   </div>
 
   <!-- Carousel Indicators -->
-  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-20">
+  <div class="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 gap-3 z-20">
     <button
       *ngFor="let slide of heroSlides; let i = index"
       type="button"
@@ -98,26 +98,6 @@
       class="w-12 h-1.5 rounded-full transition-all duration-300"
       [ngClass]="currentSlide === i ? 'bg-red-500' : 'bg-white/20'"
     ></button>
-  </div>
-
-  <!-- Mobile prev/next buttons -->
-  <div class="absolute inset-y-0 left-0 right-0 pointer-events-none md:hidden">
-    <div class="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-auto">
-      <button
-        (click)="userPrevSlide()"
-        class="bg-white/10 text-white p-3 rounded-full shadow-lg"
-      >
-        ‹
-      </button>
-    </div>
-    <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-auto">
-      <button
-        (click)="userNextSlide()"
-        class="bg-white/10 text-white p-3 rounded-full shadow-lg"
-      >
-        ›
-      </button>
-    </div>
   </div>
 </div>
 
