@@ -15,6 +15,8 @@ import {
   Home,
   Layers,
   Globe,
+  Menu,
+  X,
 } from "lucide-angular";
 
 
@@ -54,25 +56,41 @@ import {
         <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-red-600/10 rounded-full blur-[120px] animate-blob animation-delay-2000"></div>
       </div>
 
+      <!-- Mobile Overlay -->
+      <div
+        *ngIf="sidebarOpen"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 lg:hidden"
+        (click)="sidebarOpen = false"
+      ></div>
+
       <!-- Sidebar -->
       <aside
-        class="w-64 bg-slate-800/80 backdrop-blur-2xl text-slate-400 flex flex-col border-r border-red-500/20 z-20 transition-all duration-300"
+        class="fixed lg:static inset-y-0 left-0 w-64 bg-slate-800/80 backdrop-blur-2xl text-slate-400 flex flex-col border-r border-red-500/20 z-40 transition-transform duration-300 lg:translate-x-0"
+        [class.-translate-x-full]="!sidebarOpen"
+        [class.translate-x-0]="sidebarOpen"
       >
         <div
-          class="h-20 flex items-center px-8 border-b border-red-500/20"
+          class="h-16 lg:h-20 flex items-center justify-between px-6 lg:px-8 border-b border-red-500/20"
         >
           <span
             class="text-xl font-black text-white tracking-widest uppercase bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-red-500"
           >
             {{ tenantName }}
           </span>
+          <button
+            (click)="sidebarOpen = false"
+            class="lg:hidden p-1 text-slate-400 hover:text-white"
+          >
+            <lucide-icon [name]="X" size="20"></lucide-icon>
+          </button>
         </div>
 
-        <nav class="flex-1 py-8 px-4 space-y-2 overflow-y-auto">
+        <nav class="flex-1 py-6 lg:py-8 px-4 space-y-2 overflow-y-auto">
           <a
             routerLink="/admin/dashboard"
             routerLinkActive="bg-red-500/10 text-red-400 border border-red-500/20 shadow-[0_0_20px_rgba(220,38,38,0.1)]"
             class="flex items-center space-x-3 px-4 py-3 rounded-xl transition-all hover:bg-white/5 hover:text-white group relative overflow-hidden"
+            (click)="closeSidebarOnMobile()"
           >
             <lucide-icon
               [name]="LayoutDashboard"
@@ -86,6 +104,7 @@ import {
             routerLink="/admin/products"
             routerLinkActive="bg-red-500/10 text-red-400 border border-red-500/20 shadow-[0_0_20px_rgba(220,38,38,0.1)]"
             class="flex items-center space-x-3 px-4 py-3 rounded-xl transition-all hover:bg-white/5 hover:text-white group relative overflow-hidden"
+            (click)="closeSidebarOnMobile()"
           >
             <lucide-icon
               [name]="Package"
@@ -99,6 +118,7 @@ import {
             routerLink="/admin/pos"
             routerLinkActive="bg-red-500/10 text-red-400 border border-red-500/20 shadow-[0_0_20px_rgba(220,38,38,0.1)]"
             class="flex items-center space-x-3 px-4 py-3 rounded-xl transition-all hover:bg-white/5 hover:text-white group relative overflow-hidden"
+            (click)="closeSidebarOnMobile()"
           >
             <lucide-icon
               [name]="ShoppingCart"
@@ -112,6 +132,7 @@ import {
             routerLink="/admin/orders"
             routerLinkActive="bg-red-500/10 text-red-400 border border-red-500/20 shadow-[0_0_20px_rgba(220,38,38,0.1)]"
             class="flex items-center space-x-3 px-4 py-3 rounded-xl transition-all hover:bg-white/5 hover:text-white group relative overflow-hidden"
+            (click)="closeSidebarOnMobile()"
           >
             <lucide-icon
               [name]="ClipboardList"
@@ -124,6 +145,7 @@ import {
             routerLink="/admin/categories"
             routerLinkActive="bg-red-500/10 text-red-400 border border-red-500/20 shadow-[0_0_20px_rgba(220,38,38,0.1)]"
             class="flex items-center space-x-3 px-4 py-3 rounded-xl transition-all hover:bg-white/5 hover:text-white group relative overflow-hidden"
+            (click)="closeSidebarOnMobile()"
           >
             <lucide-icon
               [name]="Layers"
@@ -133,14 +155,13 @@ import {
             <span class="font-bold">Categorías</span>
           </a>
 
-
-
           <div class="h-px w-full bg-white/5 my-2"></div>
 
           <a
             routerLink="/admin/settings"
             routerLinkActive="bg-red-500/10 text-red-400 border border-red-500/20 shadow-[0_0_20px_rgba(220,38,38,0.1)]"
             class="flex items-center space-x-3 px-4 py-3 rounded-xl transition-all hover:bg-white/5 hover:text-white group relative overflow-hidden"
+            (click)="closeSidebarOnMobile()"
           >
             <lucide-icon
               [name]="Settings"
@@ -152,7 +173,7 @@ import {
         </nav>
 
 
-        <div class="p-6 border-t border-red-500/20 text-xs text-slate-500">
+        <div class="p-4 lg:p-6 border-t border-red-500/20 text-xs text-slate-500">
           <p>© 2026 FerreNexo Admin - Powered by VectraWeb</p>
         </div>
       </aside>
@@ -163,24 +184,32 @@ import {
       >
         <!-- Top Header -->
         <div
-          class="h-20 bg-slate-800/40 backdrop-blur-md border-b border-red-500/20 flex items-center justify-between px-8"
+          class="h-16 lg:h-20 bg-slate-800/40 backdrop-blur-md border-b border-red-500/20 flex items-center justify-between px-4 lg:px-8"
         >
-          <h1 class="text-xl font-black text-white uppercase tracking-wider">
-            Consola de Administración
-          </h1>
+          <div class="flex items-center gap-3">
+            <button
+              (click)="sidebarOpen = true"
+              class="lg:hidden p-2 text-slate-400 hover:text-white rounded-lg hover:bg-white/5 transition-all"
+            >
+              <lucide-icon [name]="MenuIcon" size="24"></lucide-icon>
+            </button>
+            <h1 class="text-sm lg:text-xl font-black text-white uppercase tracking-wider">
+              Consola de Administración
+            </h1>
+          </div>
           <div class="flex items-center gap-4">
             <button
               (click)="logout()"
-              class="flex items-center gap-2 px-8 py-3 rounded-2xl bg-gradient-to-r from-red-500 to-red-600 text-black font-black hover:from-red-400 hover:to-red-500 transition-all shadow-lg shadow-red-500/30 transform hover:scale-105 active:scale-95 group"
+              class="flex items-center gap-2 px-4 lg:px-8 py-2 lg:py-3 rounded-2xl bg-gradient-to-r from-red-500 to-red-600 text-black font-black hover:from-red-400 hover:to-red-500 transition-all shadow-lg shadow-red-500/30 transform hover:scale-105 active:scale-95 group text-sm lg:text-base"
             >
               <lucide-icon [name]="LogOut" size="20" class="group-hover:rotate-12 transition-transform"></lucide-icon>
-              <span>Cerrar Sesión</span>
+              <span class="hidden sm:inline">Cerrar Sesión</span>
             </button>
           </div>
         </div>
         <!-- Content Area -->
         <div class="flex-1 overflow-y-auto w-full custom-scrollbar">
-          <div class="max-w-7xl mx-auto p-8">
+          <div class="max-w-7xl mx-auto p-4 lg:p-8">
             <router-outlet></router-outlet>
           </div>
         </div>
@@ -193,6 +222,7 @@ export class AdminLayoutComponent implements OnInit {
   api = inject(ApiService);
 
   tenantName: string = "Cargando...";
+  sidebarOpen = false;
 
   LayoutDashboard = LayoutDashboard;
   Package = Package;
@@ -202,6 +232,8 @@ export class AdminLayoutComponent implements OnInit {
   Layers = Layers;
   Globe = Globe;
   LogOut = LogOut;
+  MenuIcon = Menu;
+  X = X;
 
   Home = Home;
 
@@ -216,6 +248,13 @@ export class AdminLayoutComponent implements OnInit {
     });
   }
 
+  closeSidebarOnMobile(): void {
+    // Close sidebar only on mobile (< lg breakpoint = 1024px)
+    if (window.innerWidth < 1024) {
+      this.sidebarOpen = false;
+    }
+  }
+
   logout(): void {
     // Clear the auth token from localStorage
     localStorage.removeItem("authToken");
@@ -226,3 +265,4 @@ export class AdminLayoutComponent implements OnInit {
     this.router.navigate(["/"]);
   }
 }
+
