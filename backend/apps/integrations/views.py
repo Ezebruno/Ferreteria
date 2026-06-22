@@ -121,6 +121,9 @@ class MeLiSyncView(APIView):
                 else:
                     result = MeLiService.publish_product(product_id, access_token)
                     if isinstance(result, dict):
+                        # Return with error status if MeLi failed
+                        if result.get('status') == 'error':
+                            return Response(result, status=status.HTTP_400_BAD_REQUEST)
                         return Response(result)
                     return Response({'status': 'success', 'message': result})
             except Product.DoesNotExist:

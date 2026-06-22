@@ -376,16 +376,22 @@ export class ProductListComponent implements OnInit {
     this.api.post(`/integrations/meli/sync/${product.id}/`, {}).subscribe({
       next: (res: any) => {
         this.isSyncing = false;
+        if (res.status === 'error') {
+          const detail = res.details ? `\nDetalles: ${JSON.stringify(res.details)}` : '';
+          alert(`❌ Error al sincronizar: ${res.message}${detail}`);
+          return;
+        }
         alert(`✅ ${res.message || 'Sincronización exitosa'}`);
         if (res.url) {
           window.open(res.url, '_blank');
         }
         this.loadProducts();
       },
-      error: (err) => {
+      error: (err: any) => {
         this.isSyncing = false;
-        const msg = err.error?.detail || JSON.stringify(err.error) || 'Error desconocido';
-        alert(`❌ Error al sincronizar: ${msg}`);
+        const msg = err.error?.message || err.error?.detail || JSON.stringify(err.error) || 'Error desconocido';
+        const detail = err.error?.details ? `\n\nDetalles MeLi: ${typeof err.error.details === 'string' ? err.error.details : JSON.stringify(err.error.details)}` : '';
+        alert(`❌ Error al sincronizar: ${msg}${detail}`);
       }
     });
   }
