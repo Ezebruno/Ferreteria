@@ -98,18 +98,24 @@ class MeLiService:
             "attributes": [
                 {"id": "BRAND", "value_name": product.brand or 'Genérica'},
                 {"id": "MODEL", "value_name": product.sku},
-            ]
+                {"id": "IS_FACTORY_KIT", "value_name": "No"}, # Default for most products
+            ],
+            "shipping": {
+                "mode": "me2", # Mandatory for many users
+                "local_pick_up": True,
+                "free_shipping": False
+            }
         }
 
         # Add GTIN (Universal Code) if available
         if product.barcode:
             payload["attributes"].append({"id": "GTIN", "value_name": product.barcode})
 
-        # Selling Format
+        # Selling Format (Using correct ID: SALE_FORMAT)
         if getattr(product, 'meli_format', 'unidades') == 'pack':
-            payload["attributes"].append({"id": "SELLING_FORMAT", "value_name": "Pack"})
+            payload["attributes"].append({"id": "SALE_FORMAT", "value_name": "Pack"})
         else:
-            payload["attributes"].append({"id": "SELLING_FORMAT", "value_name": "Unidad"})
+            payload["attributes"].append({"id": "SALE_FORMAT", "value_name": "Unidad"})
         
         url = f"https://api.mercadolibre.com/items?access_token={access_token}"
         resp = requests.post(url, json=payload)

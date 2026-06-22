@@ -455,6 +455,14 @@ import { CheckboxModule } from "primeng/checkbox";
                   >
                     <lucide-icon [name]="Search" size="20"></lucide-icon>
                   </button>
+                  <button
+                    type="button"
+                    (click)="openMeLiSell()"
+                    class="p-4 bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 rounded-2xl border border-yellow-500/30 transition-all flex items-center justify-center shadow-lg"
+                    title="Ir a Publicar en Mercado Libre (Web)"
+                  >
+                    <lucide-icon [name]="ExternalLink" size="20"></lucide-icon>
+                  </button>
                 </div>
               </div>
 
@@ -504,11 +512,26 @@ import { CheckboxModule } from "primeng/checkbox";
                   optionValue="value"
                   styleClass="w-full custom-dark-dropdown"
                 ></p-dropdown>
+                  <div class="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl">
+                <p class="text-[10px] font-black text-emerald-400 uppercase tracking-widest mb-2">ID de Item Mercado Libre (Vincular Manualmente)</p>
+                <div class="flex gap-2">
+                  <input
+                    type="text"
+                    formControlName="meli_item_id"
+                    placeholder="MLA12345678"
+                    class="flex-1 p-3 bg-slate-900 border border-emerald-500/20 rounded-xl text-white font-mono text-sm focus:outline-none focus:border-emerald-500"
+                  />
+                  <a 
+                    *ngIf="form.get('meli_item_id')?.value"
+                    [href]="'https://articulo.mercadolibre.com.ar/' + form.get('meli_item_id')?.value" 
+                    target="_blank"
+                    class="p-3 bg-emerald-500/20 text-emerald-400 rounded-xl hover:bg-emerald-500/30 transition-all"
+                  >
+                    <lucide-icon [name]="ExternalLink" size="18"></lucide-icon>
+                  </a>
+                </div>
+                <p class="text-[10px] text-slate-500 mt-2 italic">Si publicas directamente en Mercado Libre, pega aquí el ID (ej: MLA...) para vincular el stock.</p>
               </div>
-
-              <div *ngIf="form.get('meli_item_id')?.value" class="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl">
-                <p class="text-[10px] font-black text-emerald-400 uppercase tracking-widest mb-1">Vinculado a MeLi</p>
-                <p class="text-xs text-white font-mono">{{ form.get('meli_item_id')?.value }}</p>
               </div>
             </div>
           </div>
@@ -610,8 +633,8 @@ export class ProductFormComponent implements OnInit {
 
   loadCategories() {
     // Always load from API to ensure IDs match the database
-    this.api.get<any[]>(`/inventory/categories/`).subscribe({
-      next: (res: any[]) => {
+    this.api.get<any>(`/inventory/categories/`).subscribe({
+      next: (res: any) => {
         this.categories = res.results || res;
       },
       error: () => {
@@ -850,5 +873,12 @@ export class ProductFormComponent implements OnInit {
     this.form.patchValue({ meli_category_id: cat.category_id });
     this.categorySearchResults = [];
     alert(`✅ Categoría seleccionada: ${cat.category_name}`);
+  }
+
+  openMeLiSell() {
+    const query = this.form.get("name")?.value || "";
+    const url = `https://www.mercadolibre.com.ar/publicar#label=sell&q=${encodeURIComponent(query)}`;
+    window.open(url, "_blank");
+    alert("Se ha abierto el publicador de Mercado Libre. Una vez publicado, pega el ID del item aquí abajo para vincularlo.");
   }
 }
