@@ -16,7 +16,11 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 SECRET_KEY = env("SECRET_KEY", default="django-insecure-key-for-dev")
 DEBUG = env.bool("DEBUG", default=True)
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["*"])
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[
+    "ferreteria-production-fc73.up.railway.app", 
+    "localhost", 
+    "127.0.0.1"
+])
 
 # Mercado Pago
 MP_ACCESS_TOKEN = env("MP_ACCESS_TOKEN", default="")
