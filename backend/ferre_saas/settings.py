@@ -58,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'axes.middleware.AxesMiddleware',  # Corregido: agregado middleware de axes
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -193,6 +194,7 @@ ADMIN_URL = 'admin-secure-ferre/'
 ADMIN_SITE_HEADER = "VectraWeb Admin Panel"
 
 AUTHENTICATION_BACKENDS = [
+    'axes.backends.AxesStandaloneBackend', # Corregido: agregado backend de axes
     'django.contrib.auth.backends.ModelBackend',
 ]
 
