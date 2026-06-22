@@ -16,19 +16,9 @@ export class CategoriesService {
   private categoriesSubject = new BehaviorSubject<Category[]>([]);
   public categories$ = this.categoriesSubject.asObservable();
 
-  // Fallback hardcoded categories
-  private hardcodedCategories: Category[] = [
-    { id: "1", name: "Herramientas Eléctricas" },
-    { id: "2", name: "Herramientas Manuales" },
-    { id: "3", name: "Materiales de Construcción" },
-    { id: "4", name: "Pinturas y Acabados" },
-    { id: "5", name: "Tuberías" },
-    { id: "6", name: "Tornillos y Clavos" },
-    { id: "7", name: "Equipamiento" },
-    { id: "8", name: "Suministros" },
-    { id: "9", name: "Jardín y Exterior" },
-  ];
-
+  // Categories are loaded from the API. We no longer use hardcoded fallback categories
+  // to ensure that the owner has full control over their own category structure.
+  
   constructor() {
     this.loadCategories();
   }
@@ -42,11 +32,11 @@ export class CategoriesService {
       }),
       catchError((error) => {
         console.warn(
-          "Failed to load categories from API, using fallback",
+          "Failed to load categories from API",
           error,
         );
-        this.categoriesSubject.next(this.hardcodedCategories);
-        return of(this.hardcodedCategories);
+        this.categoriesSubject.next([]);
+        return of([]);
       }),
     );
   }
@@ -56,8 +46,7 @@ export class CategoriesService {
   }
 
   getCategoriesArray(): Category[] {
-    const current = this.categoriesSubject.getValue();
-    return current.length > 0 ? current : this.hardcodedCategories;
+    return this.categoriesSubject.getValue();
   }
 
   getCategoryName(id: number | string): string {

@@ -24,6 +24,7 @@ import {
   Zap,
   Globe,
   Search,
+  Plus,
 } from "lucide-angular";
 import { CheckboxModule } from "primeng/checkbox";
 
@@ -181,20 +182,28 @@ import { CheckboxModule } from "primeng/checkbox";
                   class="w-full p-4 rounded-2xl bg-slate-800/50 border-red-500/30 text-white focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all placeholder-slate-700 font-mono uppercase outline-none"
                 />
               </div>
-              <div class="flex flex-col gap-3">
                 <label
                   class="font-bold text-slate-400 text-sm ml-1 uppercase tracking-tighter"
                   >Categoría Asignada *</label
                 >
-                <p-dropdown
-                  [options]="categories"
-                  formControlName="category"
-                  optionLabel="name"
-                  optionValue="id"
-                  placeholder="Selecciona una categoría"
-                  styleClass="w-full custom-dark-dropdown"
-                ></p-dropdown>
-              </div>
+                <div class="flex gap-2">
+                  <p-dropdown
+                    [options]="categories"
+                    formControlName="category"
+                    optionLabel="name"
+                    optionValue="id"
+                    placeholder="Selecciona una categoría"
+                    styleClass="flex-1 custom-dark-dropdown"
+                  ></p-dropdown>
+                  <button
+                    type="button"
+                    (click)="quickAddCategory()"
+                    title="Nueva Categoría"
+                    class="p-4 bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/30 rounded-2xl transition-all"
+                  >
+                    <lucide-icon [name]="Plus" size="20"></lucide-icon>
+                  </button>
+                </div>
             </div>
 
             <div class="flex flex-col gap-3">
@@ -468,6 +477,7 @@ export class ProductFormComponent implements OnInit {
   UploadCloud = UploadCloud;
   ExternalLink = ExternalLink;
   Globe = Globe;
+  Plus = Plus;
 
   form: FormGroup;
   isEditMode = false;
@@ -524,14 +534,31 @@ export class ProductFormComponent implements OnInit {
     return result;
   }
 
-  loadCategories() {
+  loadCategories(selectId?: number) {
     this.api.get<any>("/categories/").subscribe({
       next: (res: any) => {
         this.categories = res.results || res;
+        if (selectId) {
+          this.form.patchValue({ category: selectId });
+        }
       },
       error: () => {
         this.categories = this.categoriesService.getCategoriesArray();
       },
+    });
+  }
+
+  quickAddCategory() {
+    const name = prompt("Ingrese el nombre de la nueva categoría:");
+    if (!name || !name.trim()) return;
+
+    this.api.post<any>("/categories/", { name: name.trim() }).subscribe({
+      next: (res: any) => {
+        this.loadCategories(res.id);
+      },
+      error: (err: any) => {
+        alert("Error al crear la categoría: " + (err.error?.detail || "Error desconocido"));
+      }
     });
   }
 
