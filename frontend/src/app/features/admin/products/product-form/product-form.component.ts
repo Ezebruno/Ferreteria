@@ -428,82 +428,8 @@ import { CheckboxModule } from "primeng/checkbox";
                 labelStyleClass="text-xs font-bold text-slate-400 uppercase tracking-widest ml-2"
               ></p-checkbox>
             </div>
-                   <div *ngIf="form.get('meli_sync')?.value" class="space-y-4 animate-in">
-              <div class="flex flex-col gap-2">
-                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">Categoría ML (ID)</label>
-                <div class="flex gap-2">
-                  <input
-                    formControlName="meli_category_id"
-                    placeholder="Ej. MLA1234"
-                    class="flex-1 p-4 bg-slate-900/50 border border-slate-700/50 rounded-2xl text-slate-300 focus:outline-none focus:border-blue-500/50 transition-all font-mono"
-                  />
-                  <button
-                    type="button"
-                    (click)="predictCategory()"
-                    class="p-4 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 rounded-2xl border border-blue-500/30 transition-all"
-                    title="Predecir Categoría"
-                  >
-                    <lucide-icon [name]="Zap" size="20"></lucide-icon>
-                  </button>
-                  <button
-                    type="button"
-                    (click)="searchCategories()"
-                    class="p-4 bg-slate-500/10 hover:bg-slate-500/20 text-slate-400 rounded-2xl border border-slate-500/30 transition-all"
-                    title="Buscar Categoría"
-                  >
-                    <lucide-icon [name]="Search" size="20"></lucide-icon>
-                  </button>
-                  <button
-                    type="button"
-                    (click)="openMeLiSell()"
-                    class="p-4 bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 rounded-2xl border border-yellow-500/30 transition-all"
-                    title="Ir a Publicar en Mercado Libre (Web)"
-                  >
-                    <lucide-icon [name]="ExternalLink" size="20"></lucide-icon>
-                  </button>
-                </div>
-              </div>
 
-              <!-- List of predicted/searched categories if multiple -->
-              <div *ngIf="categorySearchResults.length > 0" class="p-2 bg-slate-900/50 rounded-2xl border border-blue-500/20 space-y-2">
-                <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest px-2 pt-1">Resultados:</p>
-                <div 
-                  *ngFor="let cat of categorySearchResults" 
-                  (click)="selectCategory(cat)"
-                  class="p-3 hover:bg-blue-500/10 rounded-xl cursor-pointer border border-transparent hover:border-blue-500/20 transition-all group"
-                >
-                  <p class="text-xs font-bold text-white group-hover:text-blue-400">{{ cat.category_name }}</p>
-                  <p class="text-[10px] text-slate-400 italic mb-1">{{ cat.category_path }}</p>
-                  <p class="text-[10px] text-slate-500 font-mono">{{ cat.category_id }}</p>
-                </div>
-                <button (click)="categorySearchResults = []" class="w-full py-2 text-[10px] font-black text-rose-500 uppercase hover:bg-rose-500/10 rounded-xl">Cerrar</button>
-              </div>
-
-              <div class="grid grid-cols-2 gap-4">
-                <!-- MeLi Listing Type -->
-                <div class="flex flex-col gap-2">
-                  <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">Publicación</label>
-                  <select
-                    formControlName="meli_listing_type"
-                    class="w-full p-4 bg-slate-900/50 border border-slate-700/50 rounded-2xl text-slate-300 focus:outline-none focus:border-blue-500/50 transition-all appearance-none"
-                  >
-                    <option *ngFor="let type of meliListingTypes" [value]="type.value">{{ type.label }}</option>
-                  </select>
-                </div>
-
-                <!-- MeLi Format -->
-                <div class="flex flex-col gap-2">
-                  <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">Formato</label>
-                  <select
-                    formControlName="meli_format"
-                    class="w-full p-4 bg-slate-900/50 border border-slate-700/50 rounded-2xl text-slate-300 focus:outline-none focus:border-blue-500/50 transition-all appearance-none"
-                  >
-                    <option value="unidades">Unidad</option>
-                    <option value="pack">Pack</option>
-                  </select>
-                </div>
-              </div>
-
+            <div *ngIf="form.get('meli_sync')?.value" class="space-y-4 animate-in">
               <div class="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl">
                 <p class="text-[10px] font-black text-emerald-400 uppercase tracking-widest mb-2">ID de Item (Vincular Manualmente)</p>
                 <div class="flex gap-2">
@@ -524,8 +450,6 @@ import { CheckboxModule } from "primeng/checkbox";
                 </div>
               </div>
             </div>
-             </div>
-            </div>
           </div>
         </div>
       </form>
@@ -543,29 +467,13 @@ export class ProductFormComponent implements OnInit {
   Save = Save;
   UploadCloud = UploadCloud;
   ExternalLink = ExternalLink;
-  Zap = Zap;
   Globe = Globe;
-  Search = Search;
 
   form: FormGroup;
   isEditMode = false;
   productId: number | null = null;
   categories: any[] = [];
   isSaving = false;
-  categorySearchResults: any[] = [];
-
-  meliConditions = [
-    { label: "Nuevo", value: "new" },
-    { label: "Usado", value: "used" },
-    { label: "No especificado", value: "not_specified" },
-  ];
-
-  meliListingTypes = [
-    { label: "Premium (Cuotas)", value: "gold_special" },
-    { label: "Clásica", value: "gold_pro" },
-    { label: "Plata", value: "silver" },
-    { label: "Bronce", value: "bronze" },
-  ];
 
   selectedFile: File | null = null;
   previewUrl: string | ArrayBuffer | null = null;
@@ -577,7 +485,7 @@ export class ProductFormComponent implements OnInit {
       description: [""],
       category: [null, Validators.required],
       price_retail: [0, Validators.min(0)],
-      price_wholesale: [0], // Default values for backend
+      price_wholesale: [0], 
       cost_price: [0],
       discount_percentage: [0, [Validators.min(0), Validators.max(100)]],
       stock_current: [0, Validators.min(0)],
@@ -586,12 +494,7 @@ export class ProductFormComponent implements OnInit {
       material: [""],
       weight: [""],
       dimensions: [""],
-      warranty: [""],
-      specifications: [""],
       meli_sync: [false],
-      meli_condition: ["new"],
-      meli_listing_type: ["gold_pro"],
-      meli_format: ["unidades"],
       meli_item_id: [null],
     });
   }
@@ -605,7 +508,6 @@ export class ProductFormComponent implements OnInit {
         this.productId = +params["id"];
         this.loadProduct(this.productId);
       } else {
-        // Auto-generate SKU for new products
         this.form.patchValue({
           sku: this.generateUniqueSKU(),
         });
@@ -616,7 +518,6 @@ export class ProductFormComponent implements OnInit {
   generateUniqueSKU(): string {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     let result = "PRD-";
-    // Add 8 random characters
     for (let i = 0; i < 8; i++) {
       result += chars.charAt(Math.floor(Math.random() * chars.length));
     }
@@ -624,13 +525,11 @@ export class ProductFormComponent implements OnInit {
   }
 
   loadCategories() {
-    // Always load from API to ensure IDs match the database
     this.api.get<any>("/categories/").subscribe({
       next: (res: any) => {
         this.categories = res.results || res;
       },
       error: () => {
-        // Fallback to cached if API fails
         this.categories = this.categoriesService.getCategoriesArray();
       },
     });
@@ -647,19 +546,12 @@ export class ProductFormComponent implements OnInit {
           price_retail: product.price_retail,
           discount_percentage: product.discount_percentage || 0,
           stock_current: product.stock_current,
-          stock_minimum: product.stock_min || product.stock_minimum, // map stock_min from db
+          stock_minimum: product.stock_min || product.stock_minimum,
           brand: product.brand || "",
           material: product.material || "",
           weight: product.weight || "",
           dimensions: product.dimensions || "",
-          warranty: product.warranty || "",
-          specifications: Array.isArray(product.specifications)
-            ? product.specifications.join("\n")
-            : product.specifications || "",
           meli_sync: product.meli_sync || false,
-          meli_category_id: product.meli_category_id || "",
-          meli_condition: product.meli_condition || "new",
-          meli_listing_type: product.meli_listing_type || "gold_special",
           meli_item_id: product.meli_item_id || null,
         });
         if (product.image) {
@@ -690,184 +582,52 @@ export class ProductFormComponent implements OnInit {
     this.isSaving = true;
     const formValue = this.form.value;
 
-    // Use FormData for image upload support
     const formData = new FormData();
     formData.append("name", formValue.name);
     formData.append("sku", formValue.sku);
     formData.append("description", formValue.description || "Sin descripción.");
-    formData.append("category", formValue.category); // category ID
+    formData.append("category", formValue.category);
     formData.append("price_retail", (formValue.price_retail || 0).toString());
-    formData.append(
-      "price_wholesale",
-      (formValue.price_wholesale || formValue.price_retail || 0).toString(),
-    );
+    formData.append("price_wholesale", (formValue.price_retail || 0).toString());
     formData.append("cost_price", (formValue.cost_price || 0).toString());
     formData.append("stock_current", (formValue.stock_current || 0).toString());
     formData.append("stock_min", (formValue.stock_minimum || 5).toString());
-    formData.append(
-      "discount_percentage",
-      (formValue.discount_percentage || 0).toString(),
-    );
+    formData.append("discount_percentage", (formValue.discount_percentage || 0).toString());
     formData.append("is_active", "true");
     formData.append("is_ecommerce", "true");
-    formData.append("featured", "false");
 
-    // Specification Fields
     formData.append("brand", formValue.brand || "");
     formData.append("material", formValue.material || "");
     formData.append("weight", formValue.weight || "");
     formData.append("dimensions", formValue.dimensions || "");
-    formData.append("warranty", formValue.warranty || "");
-    formData.append("specifications", formValue.specifications || "");
 
-    // MeLi Integration fields
     formData.append("meli_sync", formValue.meli_sync ? "true" : "false");
-    if (formValue.meli_sync) {
-      formData.append("meli_category_id", formValue.meli_category_id || "");
-      formData.append("meli_condition", formValue.meli_condition || "new");
-      formData.append(
-        "meli_listing_type",
-        formValue.meli_listing_type || "gold_special",
-      );
-    }
+    formData.append("meli_item_id", formValue.meli_item_id || "");
 
-    // Only append image if a new file was selected
     if (this.selectedFile) {
       formData.append("image", this.selectedFile);
     }
 
-    if (this.isEditMode && this.productId) {
-      // Update existing product
-      this.api.put(`/products/${this.productId}/`, formData).subscribe({
-        next: (response: any) => {
-          this.isSaving = false;
-          alert("✅ Producto actualizado exitosamente");
-          if (response && response.meli_url) {
-            window.open(response.meli_url, "_blank");
-          }
-          this.router.navigate(["/admin/products"]);
-        },
-        error: (error: any) => {
-          this.isSaving = false;
-          console.error("Error updating product", error);
-          const errorMsg =
-            error.error?.detail || JSON.stringify(error.error) || error.message;
-          alert("Error al actualizar el producto: " + errorMsg);
-        },
-      });
-    } else {
-      // Create new product
-      this.api.post("/products/", formData).subscribe({
-        next: (response: any) => {
-          this.isSaving = false;
-          alert("✅ Producto creado exitosamente");
-          if (response && response.meli_url) {
-            window.open(response.meli_url, "_blank");
-          }
-          this.router.navigate(["/admin/products"]);
-        },
-        error: (error: any) => {
-          this.isSaving = false;
-          console.error("Error creating product", error);
-          const errorMsg =
-            error.error?.detail ||
-            (error.error?.non_field_errors
-              ? error.error.non_field_errors[0]
-              : JSON.stringify(error.error)) ||
-            error.message;
-          alert("Error al crear el producto: " + errorMsg);
-        },
-      });
-    }
-  }
+    const endpoint = this.isEditMode && this.productId 
+      ? `/products/${this.productId}/` 
+      : `/products/`;
+    
+    const request = this.isEditMode && this.productId
+      ? this.api.put(endpoint, formData)
+      : this.api.post(endpoint, formData);
 
-  predictCategory() {
-    const categoryId = this.form.get("category")?.value;
-    const productName = this.form.get("name")?.value;
-
-    // 1. If the selected category already has a MeLi ID mapped, use it directly
-    if (categoryId) {
-      const selectedCategory = this.categories.find(
-        (c) => c.id === categoryId || c.id === Number(categoryId),
-      );
-      if (selectedCategory && (selectedCategory as any).meli_category_id) {
-        this.form.patchValue({
-          meli_category_id: (selectedCategory as any).meli_category_id,
-        });
-        alert(
-          `✅ Categoría tomada del mapeo de "${selectedCategory.name}":\nID: ${(selectedCategory as any).meli_category_id}\n\nPodés verificarla en la sección Categorías del menú.`,
-        );
-        return;
-      }
-    }
-
-    // 2. Predict using category name (more accurate) or product name as fallback
-    const selectedCat = this.categories.find(
-      (c) => c.id === categoryId || c.id === Number(categoryId),
-    );
-    const queryTitle = selectedCat ? selectedCat.name : productName;
-
-    if (!queryTitle) {
-      alert(
-        "Seleccioná una categoría o ingresá un nombre de producto para predecir.",
-      );
-      return;
-    }
-
-    this.api
-      .get<any>(
-        `/integrations/meli/predict-category/?title=${encodeURIComponent(queryTitle)}`,
-      )
-      .subscribe({
-        next: (res: any) => {
-          if (res && res.category_id) {
-            this.form.patchValue({ meli_category_id: res.category_id });
-            const domainLabel = res.domain_name ? ` (${res.domain_name})` : "";
-            const source = selectedCat
-              ? `categoría "${selectedCat.name}"`
-              : `"${queryTitle}"`;
-            alert(
-              `✅ Categoría detectada para ${source}:\n${res.category_name}${domainLabel}\nID: ${res.category_id}`,
-            );
-          } else {
-            alert("No se encontró una categoría. Ingresá el ID manualmente.");
-          }
-        },
-        error: (err: any) => {
-          console.error("Category prediction error:", err);
-          alert(
-            "No se pudo predecir la categoría. Por favor ingresa el ID manualmente.",
-          );
-        },
-      });
-  }
-
-  searchCategories() {
-    const query = prompt("Ingresá palabras clave para buscar la categoría (ej: Taladro percutor):");
-    if (!query) return;
-
-    this.api.get<any[]>(`/integrations/meli/search-category/?q=${encodeURIComponent(query)}`).subscribe({
-      next: (res: any[]) => {
-        if (res && res.length > 0) {
-          this.categorySearchResults = res;
-        } else {
-          alert("No se encontraron categorías para esa búsqueda.");
-        }
+    request.subscribe({
+      next: (response: any) => {
+        this.isSaving = false;
+        alert(`✅ Producto ${this.isEditMode ? 'actualizado' : 'creado'} exitosamente`);
+        this.router.navigate(["/admin/products"]);
       },
-      error: (err: any) => {
-        console.error("Category search error:", err);
-        alert("Error al buscar categorías.");
-      }
+      error: (error: any) => {
+        this.isSaving = false;
+        console.error("Error saving product", error);
+        const errorMsg = error.error?.detail || JSON.stringify(error.error) || error.message;
+        alert("Error al guardar el producto: " + errorMsg);
+      },
     });
-  }
-
-  selectCategory(cat: any) {
-    this.form.patchValue({ meli_category_id: cat.category_id });
-    this.categorySearchResults = [];
-    alert(`✅ Categoría seleccionada: ${cat.category_name}`);
-  }
-
-  openMeLiSell() {
-    window.open("https://www.mercadolibre.com.ar/publicar", "_blank");
   }
 }
