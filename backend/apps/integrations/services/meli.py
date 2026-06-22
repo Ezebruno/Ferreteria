@@ -80,8 +80,11 @@ class MeLiService:
 
         product = Product.objects.get(id=product_id)
         
+        # Improved Title: [Brand] + [Name]
+        full_title = f"{product.brand} {product.name}" if product.brand and product.brand.lower() not in product.name.lower() else product.name
+        
         payload = {
-            "title": product.name,
+            "title": full_title[:60], # MeLi limit 60 chars
             "category_id": product.meli_category_id or "MLA1234", 
             "price": float(product.price_retail),
             "currency_id": "ARS",
@@ -93,7 +96,8 @@ class MeLiService:
             "description": {"plain_text": product.description or "Sin descripción."},
             "pictures": [{"source": product.image.url if product.image else ""}],
             "attributes": [
-                {"id": "BRAND", "value_name": getattr(product, 'brand', 'Genérica')},
+                {"id": "BRAND", "value_name": product.brand or 'Genérica'},
+                {"id": "MODEL", "value_name": product.sku}, # Use SKU as model if none available
             ]
         }
         
