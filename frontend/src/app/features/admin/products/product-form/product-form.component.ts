@@ -406,6 +406,77 @@ import { CheckboxModule } from "primeng/checkbox";
               </div>
             </div>
           </div>
+
+          <!-- Mercado Libre Integration -->
+          <div
+            class="bg-slate-800/40 backdrop-blur-xl p-8 rounded-[2rem] border border-blue-500/20 shadow-2xl space-y-6 overflow-hidden relative group"
+          >
+            <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+              <lucide-icon [name]="Globe" size="64"></lucide-icon>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <h2 class="text-sm font-black text-white uppercase tracking-widest opacity-80 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                Mercado Libre
+              </h2>
+              <p-checkbox 
+                formControlName="meli_sync" 
+                [binary]="true" 
+                label="Sincronizar"
+                labelStyleClass="text-xs font-bold text-slate-400 uppercase tracking-widest ml-2"
+              ></p-checkbox>
+            </div>
+
+            <div *ngIf="form.get('meli_sync')?.value" class="space-y-6 animate-in">
+              <div class="flex flex-col gap-3">
+                <label class="font-bold text-slate-400 text-sm ml-1 uppercase tracking-tighter">Categoría ML</label>
+                <div class="flex gap-2">
+                  <input
+                    pInputText
+                    formControlName="meli_category_id"
+                    placeholder="Ej. MLA1234"
+                    class="flex-1 p-4 rounded-2xl bg-slate-800/50 border-blue-500/30 text-white focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all outline-none font-mono"
+                  />
+                  <button
+                    type="button"
+                    (click)="predictCategory()"
+                    class="p-4 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 rounded-2xl border border-blue-500/30 transition-all flex items-center justify-center shadow-lg"
+                    title="Predecir Categoría"
+                  >
+                    <lucide-icon [name]="Zap" size="20"></lucide-icon>
+                  </button>
+                </div>
+              </div>
+
+              <div class="flex flex-col gap-3">
+                <label class="font-bold text-slate-400 text-sm ml-1 uppercase tracking-tighter">Condición</label>
+                <p-dropdown
+                  [options]="meliConditions"
+                  formControlName="meli_condition"
+                  optionLabel="label"
+                  optionValue="value"
+                  styleClass="w-full custom-dark-dropdown"
+                ></p-dropdown>
+              </div>
+
+              <div class="flex flex-col gap-3">
+                <label class="font-bold text-slate-400 text-sm ml-1 uppercase tracking-tighter">Tipo de Publicación</label>
+                <p-dropdown
+                  [options]="meliListingTypes"
+                  formControlName="meli_listing_type"
+                  optionLabel="label"
+                  optionValue="value"
+                  styleClass="w-full custom-dark-dropdown"
+                ></p-dropdown>
+              </div>
+
+              <div *ngIf="form.get('meli_item_id')?.value" class="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl">
+                <p class="text-[10px] font-black text-emerald-400 uppercase tracking-widest mb-1">Vinculado a MeLi</p>
+                <p class="text-xs text-white font-mono">{{ form.get('meli_item_id')?.value }}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </form>
     </div>

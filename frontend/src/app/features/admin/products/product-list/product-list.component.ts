@@ -13,8 +13,10 @@ import {
   Edit3,
   Trash2,
   PackageSearch,
+  Globe,
+  RefreshCw,
 } from "lucide-angular";
-import { RouterModule } from "@angular/router";
+import { RouterModule, Router } from "@angular/router";
 import { FormsModule } from "@angular/forms";
 
 @Component({
@@ -226,6 +228,17 @@ import { FormsModule } from "@angular/forms";
               <td class="px-6 py-4 text-center">
                 <div class="flex items-center justify-center gap-3">
                   <button
+                    (click)="syncWithMeLi(product)"
+                    class="w-10 h-10 rounded-xl bg-white/5 border transition-all flex items-center justify-center p-0"
+                    [ngClass]="{
+                      'border-blue-500/20 text-blue-400 hover:bg-blue-500 hover:text-white': !product.meli_item_id,
+                      'border-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-white': product.meli_item_id
+                    }"
+                    [title]="product.meli_item_id ? 'Sincronizar Stock/Precio' : 'Publicar en MeLi'"
+                  >
+                    <lucide-icon [name]="product.meli_item_id ? RefreshCw : Globe" size="18"></lucide-icon>
+                  </button>
+                  <button
                     [routerLink]="[product.id, 'edit']"
                     class="w-10 h-10 rounded-xl bg-white/5 border border-red-500/20 text-slate-300 hover:text-white hover:bg-red-500 hover:border-red-500 transition-all flex items-center justify-center"
                     title="Editar"
@@ -264,6 +277,7 @@ import { FormsModule } from "@angular/forms";
 })
 export class ProductListComponent implements OnInit {
   api = inject(ApiService);
+  router = inject(Router);
   products: any[] = [];
   loading = true;
   searchQuery = "";
@@ -275,6 +289,10 @@ export class ProductListComponent implements OnInit {
   Edit3 = Edit3;
   Trash2 = Trash2;
   PackageSearch = PackageSearch;
+  Globe = Globe;
+  RefreshCw = RefreshCw;
+
+  isSyncing = false;
 
   ngOnInit() {
     this.loadProducts();
@@ -343,5 +361,32 @@ export class ProductListComponent implements OnInit {
         },
       );
     }
+  }
+
+  syncWithMeLi(product: any) {
+    if (this.isSyncing) return;
+
+    if (!product.meli_item_id && !product.meli_category_id) {
+      alert("⚠️ Falta configurar la Categoría MeLi para este producto. Por favor edítalo primero.");
+      this.router.navigate(['/admin/products', product.id, 'edit']);
+      return;
+    }
+
+    this.isSyncing = true;
+    this.api.post(`/integrations/meli/sync/${product.id}/`, {}).subscribe({
+      next: (res: any) => {
+        this.isSyncing = false;
+        alert(`✅ ${res.message || 'Sincronización exitosa'}`);
+        if (res.url) {
+          window.open(res.url, '_blank');
+        }
+        this.loadProducts();
+      },
+      error: (err) => {
+        this.isSyncing = false;
+        const msg = err.error?.detail || JSON.stringify(err.error) || 'Error desconocido';
+        alert(`❌ Error al sincronizar: ${msg}`);
+      }
+    });
   }
 }
