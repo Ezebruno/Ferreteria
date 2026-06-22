@@ -112,9 +112,9 @@ import { FormsModule } from "@angular/forms";
     <div class="h-full flex flex-col space-y-8 animate-in">
       <!-- Header Area -->
       <div
-        class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-slate-800/40 backdrop-blur-xl p-8 rounded-3xl border border-red-500/20 shadow-2xl relative overflow-hidden group"
+        class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 bg-slate-800/40 backdrop-blur-xl p-8 rounded-3xl border border-red-500/20 shadow-2xl relative group"
       >
-        <div class="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none rounded-3xl"></div>
         
         <div class="relative z-10 flex items-center gap-4">
           <div class="w-14 h-14 rounded-2xl bg-red-500/10 flex items-center justify-center border border-red-500/20">
@@ -144,11 +144,12 @@ import { FormsModule } from "@angular/forms";
             />
           </div>
           <button
+            id="btn-vender-meli"
             (click)="onVenderMeLi()"
-            class="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-400 hover:to-yellow-500 text-black px-6 py-3.5 rounded-2xl font-black shadow-lg shadow-yellow-500/20 transition-all flex items-center justify-center gap-2 transform hover:scale-105 active:scale-95"
+            class="bg-yellow-500 hover:bg-yellow-400 text-black px-6 py-3.5 rounded-2xl font-black shadow-lg shadow-yellow-500/40 transition-all flex items-center justify-center gap-2 transform hover:scale-105 active:scale-95"
           >
             <lucide-icon [name]="Globe" size="20"></lucide-icon>
-            Vender en Mercado Libre
+            Vender en MeLi
           </button>
           <button
             routerLink="new"
@@ -235,7 +236,7 @@ import { FormsModule } from "@angular/forms";
               <td class="px-6 py-4 text-center">
                 <div class="flex items-center justify-center gap-3">
                   <button
-                    [routerLink]="['/admin/products/edit', product.id]"
+                    [routerLink]="['/admin/products', product.id, 'edit']"
                     class="p-2 bg-slate-500/10 hover:bg-slate-500/20 text-slate-400 rounded-xl transition-all"
                     title="Editar Producto"
                   >
@@ -290,7 +291,16 @@ export class ProductListComponent implements OnInit {
   isSyncing = false;
 
   ngOnInit() {
+    console.log("ProductListComponent initialized");
     this.loadProducts();
+    this.checkMeLiStatus();
+  }
+
+  checkMeLiStatus() {
+    this.api.get<any>("/integrations/meli/auth-url/").subscribe({
+      next: (res) => console.log("MeLi Linked Status:", res.is_linked),
+      error: (err) => console.error("Error checking MeLi status in init", err)
+    });
   }
 
   loadProducts() {
