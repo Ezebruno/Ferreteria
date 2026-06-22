@@ -428,21 +428,19 @@ import { CheckboxModule } from "primeng/checkbox";
                 labelStyleClass="text-xs font-bold text-slate-400 uppercase tracking-widest ml-2"
               ></p-checkbox>
             </div>
-
-            <div *ngIf="form.get('meli_sync')?.value" class="space-y-6 animate-in">
-              <div class="flex flex-col gap-3">
-                <label class="font-bold text-slate-400 text-sm ml-1 uppercase tracking-tighter">Categoría ML</label>
+                   <div *ngIf="form.get('meli_sync')?.value" class="space-y-4 animate-in">
+              <div class="flex flex-col gap-2">
+                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">Categoría ML (ID)</label>
                 <div class="flex gap-2">
                   <input
-                    pInputText
                     formControlName="meli_category_id"
                     placeholder="Ej. MLA1234"
-                    class="flex-1 p-4 rounded-2xl bg-slate-800/50 border-blue-500/30 text-white focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all outline-none font-mono"
+                    class="flex-1 p-4 bg-slate-900/50 border border-slate-700/50 rounded-2xl text-slate-300 focus:outline-none focus:border-blue-500/50 transition-all font-mono"
                   />
                   <button
                     type="button"
                     (click)="predictCategory()"
-                    class="p-4 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 rounded-2xl border border-blue-500/30 transition-all flex items-center justify-center shadow-lg"
+                    class="p-4 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 rounded-2xl border border-blue-500/30 transition-all"
                     title="Predecir Categoría"
                   >
                     <lucide-icon [name]="Zap" size="20"></lucide-icon>
@@ -450,15 +448,15 @@ import { CheckboxModule } from "primeng/checkbox";
                   <button
                     type="button"
                     (click)="searchCategories()"
-                    class="p-4 bg-slate-500/10 hover:bg-slate-500/20 text-slate-400 rounded-2xl border border-slate-500/30 transition-all flex items-center justify-center shadow-lg"
-                    title="Buscar Categoría por nombre"
+                    class="p-4 bg-slate-500/10 hover:bg-slate-500/20 text-slate-400 rounded-2xl border border-slate-500/30 transition-all"
+                    title="Buscar Categoría"
                   >
                     <lucide-icon [name]="Search" size="20"></lucide-icon>
                   </button>
                   <button
                     type="button"
                     (click)="openMeLiSell()"
-                    class="p-4 bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 rounded-2xl border border-yellow-500/30 transition-all flex items-center justify-center shadow-lg"
+                    class="p-4 bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 rounded-2xl border border-yellow-500/30 transition-all"
                     title="Ir a Publicar en Mercado Libre (Web)"
                   >
                     <lucide-icon [name]="ExternalLink" size="20"></lucide-icon>
@@ -467,53 +465,47 @@ import { CheckboxModule } from "primeng/checkbox";
               </div>
 
               <!-- List of predicted/searched categories if multiple -->
-              <div *ngIf="categorySearchResults.length > 0" class="p-2 bg-slate-900/50 rounded-2xl border border-blue-500/20 space-y-2 animate-in">
-              <!-- MeLi Listing Type -->
-              <div class="flex flex-col gap-2">
-                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">Tipo de Publicación MeLi</label>
-                <select
-                  formControlName="meli_listing_type"
-                  class="w-full p-4 bg-slate-900/50 border border-slate-700/50 rounded-2xl text-slate-300 focus:outline-none focus:border-blue-500/50 transition-all appearance-none"
-                >
-                  <option *ngFor="let type of meliListingTypes" [value]="type.value">{{ type.label }}</option>
-                </select>
-              </div>
-
-              <!-- MeLi Format -->
-              <div class="flex flex-col gap-2">
-                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">Formato de Venta</label>
-                <select
-                  formControlName="meli_format"
-                  class="w-full p-4 bg-slate-900/50 border border-slate-700/50 rounded-2xl text-slate-300 focus:outline-none focus:border-blue-500/50 transition-all appearance-none"
-                >
-                  <option value="unidades">Unidad / Individual</option>
-                  <option value="pack">Pack / Multipack</option>
-                </select>
-              </div>
-              <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest px-2 pt-1">Resultados encontrados:</p>
+              <div *ngIf="categorySearchResults.length > 0" class="p-2 bg-slate-900/50 rounded-2xl border border-blue-500/20 space-y-2">
+                <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest px-2 pt-1">Resultados:</p>
                 <div 
                   *ngFor="let cat of categorySearchResults" 
                   (click)="selectCategory(cat)"
                   class="p-3 hover:bg-blue-500/10 rounded-xl cursor-pointer border border-transparent hover:border-blue-500/20 transition-all group"
                 >
-                  <p class="text-xs font-bold text-white group-hover:text-blue-400 transition-colors">{{ cat.category_name }}</p>
+                  <p class="text-xs font-bold text-white group-hover:text-blue-400">{{ cat.category_name }}</p>
                   <p class="text-[10px] text-slate-400 italic mb-1">{{ cat.category_path }}</p>
-                  <p class="text-[10px] text-slate-500 font-mono">{{ cat.category_id }} - {{ cat.domain_name }}</p>
+                  <p class="text-[10px] text-slate-500 font-mono">{{ cat.category_id }}</p>
                 </div>
-                <button (click)="categorySearchResults = []" class="w-full py-2 text-[10px] font-black text-rose-500 uppercase hover:bg-rose-500/10 rounded-xl transition-all">Cerrar</button>
+                <button (click)="categorySearchResults = []" class="w-full py-2 text-[10px] font-black text-rose-500 uppercase hover:bg-rose-500/10 rounded-xl">Cerrar</button>
               </div>
 
-              <div class="flex flex-col gap-3">
-                <label class="font-bold text-slate-400 text-sm ml-1 uppercase tracking-tighter">Condición</label>
-                <p-dropdown
-                  [options]="meliConditions"
-                  formControlName="meli_condition"
-                  optionLabel="label"
-                  optionValue="value"
-                  styleClass="w-full custom-dark-dropdown"
-                ></p-dropdown>
-                  <div class="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl">
-                <p class="text-[10px] font-black text-emerald-400 uppercase tracking-widest mb-2">ID de Item Mercado Libre (Vincular Manualmente)</p>
+              <div class="grid grid-cols-2 gap-4">
+                <!-- MeLi Listing Type -->
+                <div class="flex flex-col gap-2">
+                  <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">Publicación</label>
+                  <select
+                    formControlName="meli_listing_type"
+                    class="w-full p-4 bg-slate-900/50 border border-slate-700/50 rounded-2xl text-slate-300 focus:outline-none focus:border-blue-500/50 transition-all appearance-none"
+                  >
+                    <option *ngFor="let type of meliListingTypes" [value]="type.value">{{ type.label }}</option>
+                  </select>
+                </div>
+
+                <!-- MeLi Format -->
+                <div class="flex flex-col gap-2">
+                  <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">Formato</label>
+                  <select
+                    formControlName="meli_format"
+                    class="w-full p-4 bg-slate-900/50 border border-slate-700/50 rounded-2xl text-slate-300 focus:outline-none focus:border-blue-500/50 transition-all appearance-none"
+                  >
+                    <option value="unidades">Unidad</option>
+                    <option value="pack">Pack</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl">
+                <p class="text-[10px] font-black text-emerald-400 uppercase tracking-widest mb-2">ID de Item (Vincular Manualmente)</p>
                 <div class="flex gap-2">
                   <input
                     type="text"
@@ -530,9 +522,9 @@ import { CheckboxModule } from "primeng/checkbox";
                     <lucide-icon [name]="ExternalLink" size="18"></lucide-icon>
                   </a>
                 </div>
-                <p class="text-[10px] text-slate-500 mt-2 italic">Si publicas directamente en Mercado Libre, pega aquí el ID (ej: MLA...) para vincular el stock.</p>
               </div>
-              </div>
+            </div>
+             </div>
             </div>
           </div>
         </div>
@@ -633,7 +625,7 @@ export class ProductFormComponent implements OnInit {
 
   loadCategories() {
     // Always load from API to ensure IDs match the database
-    this.api.get<any>(`/inventory/categories/`).subscribe({
+    this.api.get<any>("/categories/").subscribe({
       next: (res: any) => {
         this.categories = res.results || res;
       },
