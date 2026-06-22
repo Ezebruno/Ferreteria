@@ -112,12 +112,13 @@ import { FormsModule } from "@angular/forms";
     <div class="h-full flex flex-col space-y-8 animate-in">
       <!-- Header Area -->
       <div
-        class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 bg-slate-800/40 backdrop-blur-xl p-8 rounded-3xl border border-red-500/20 shadow-2xl relative group"
+        class="grid grid-cols-1 lg:grid-cols-3 items-center gap-8 bg-slate-800/40 backdrop-blur-xl p-8 rounded-3xl border border-red-500/20 shadow-2xl relative group"
       >
         <div class="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none rounded-3xl"></div>
         
+        <!-- Left: Branding & Info -->
         <div class="relative z-10 flex items-center gap-4">
-          <div class="w-14 h-14 rounded-2xl bg-red-500/10 flex items-center justify-center border border-red-500/20">
+          <div class="w-14 h-14 rounded-2xl bg-red-500/10 flex items-center justify-center border border-red-500/20 shrink-0">
             <lucide-icon
               [name]="PackageSearch"
               class="text-red-500"
@@ -125,38 +126,47 @@ import { FormsModule } from "@angular/forms";
             ></lucide-icon>
           </div>
           <div>
-            <h1 class="text-3xl font-black text-white tracking-tight">Inventario Global <span class="text-red-500 text-xs">ML-READY</span></h1>
-            <p class="text-slate-400 font-medium mt-1">
-              Control total sobre {{ products.length }} productos activos.
+            <div class="flex items-center gap-2 mb-1">
+              <h1 class="text-3xl font-black text-white tracking-tight">Inventario</h1>
+              <span class="bg-red-500/10 text-red-500 text-[10px] px-2 py-0.5 rounded-full border border-red-500/20 font-bold tracking-widest">ML-READY</span>
+            </div>
+            <p class="text-slate-400 font-medium text-sm">
+              <span class="text-white font-bold opacity-80">{{ products.length }}</span> productos activos en total.
             </p>
           </div>
         </div>
 
-        <div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto relative z-10">
-          <div class="relative group/search flex-1">
+        <!-- Center: Search -->
+        <div class="relative z-10 w-full max-w-md mx-auto">
+          <div class="relative group/search">
             <lucide-icon [name]="Search" size="18" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within/search:text-red-500 transition-colors"></lucide-icon>
             <input
               type="text"
               [(ngModel)]="searchQuery"
               (input)="onSearch()"
               placeholder="Buscar producto o SKU..."
-              class="w-full md:w-80 pl-12 pr-4 py-3.5 bg-slate-800/50 border border-red-500/30 text-white rounded-2xl focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all placeholder-slate-600 outline-none"
+              class="w-full pl-12 pr-4 py-3.5 bg-slate-900/40 border border-red-500/30 text-white rounded-2xl focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all placeholder-slate-600 outline-none shadow-inner"
             />
           </div>
+        </div>
+
+        <!-- Right: Actions -->
+        <div class="relative z-10 flex items-center justify-end gap-3">
           <button
             id="btn-vender-meli"
             (click)="onVenderMeLi()"
-            class="bg-yellow-500 hover:bg-yellow-400 text-black px-6 py-3.5 rounded-2xl font-black shadow-lg shadow-yellow-500/40 transition-all flex items-center justify-center gap-2 transform hover:scale-105 active:scale-95"
+            class="bg-yellow-500 hover:bg-yellow-400 text-black px-6 py-3.5 rounded-2xl font-black shadow-lg shadow-yellow-500/40 transition-all flex items-center justify-center gap-2 transform hover:scale-105 active:scale-95 group/meli"
+            title="Sincronizar con Mercado Libre"
           >
-            <lucide-icon [name]="Globe" size="20"></lucide-icon>
-            Vender en MeLi
+            <lucide-icon [name]="Globe" size="20" class="group-hover/meli:rotate-12 transition-transform"></lucide-icon>
+            <span>Vender en MeLi</span>
           </button>
           <button
             routerLink="new"
-            class="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-400 hover:to-red-500 text-black px-8 py-3.5 rounded-2xl font-black shadow-lg shadow-red-500/20 transition-all flex items-center justify-center gap-2 transform hover:scale-105 active:scale-95"
+            class="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-400 hover:to-red-500 text-black px-6 py-3.5 rounded-2xl font-black shadow-lg shadow-red-500/20 transition-all flex items-center justify-center gap-2 transform hover:scale-105 active:scale-95 group/plus"
           >
-            <lucide-icon [name]="Plus" size="20"></lucide-icon>
-            Nuevo Producto
+            <lucide-icon [name]="Plus" size="20" class="group-hover/plus:rotate-90 transition-transform"></lucide-icon>
+            <span>Nuevo</span>
           </button>
         </div>
       </div>
