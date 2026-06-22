@@ -16,14 +16,20 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 SECRET_KEY = env("SECRET_KEY", default="django-insecure-key-for-dev")
 DEBUG = env.bool("DEBUG", default=True)
-# Configuración simplificada y robusta
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
+
+# CONFIGURACIÓN FORZADA PARA RAILWAY (IGNORA VARIABLES EXTERNAS)
+ALLOWED_HOSTS = [
+    'ferreteria-production-fc73.up.railway.app',
+    'localhost',
+    '127.0.0.1',
+    '.railway.app'
+]
 
 # Mercado Pago
 MP_ACCESS_TOKEN = env("MP_ACCESS_TOKEN", default="")
 MP_WEBHOOK_URL = env("MP_WEBHOOK_URL", default="http://localhost:8000/api/integrations/mercadopago/webhook/")
 
-# Mercado Libre - Configuración fija para Producción (Ignora variables externas)
+# Mercado Libre - Configuración fija para Producción
 MELI_CLIENT_ID = "3644837068470032"
 MELI_CLIENT_SECRET = "4YRCvqfSCcfwPUTyobGAcQwAwg4a7SuZ"
 MELI_REDIRECT_URI = "https://ferreteria-4n8s.vercel.app/admin/meli/"
@@ -49,7 +55,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'axes',
-    # 'admin_honeypot',  # Disabled due to Django 5 compatibility issues
     'simple_history',
 ]
 
@@ -59,7 +64,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'axes.middleware.AxesMiddleware',  # Corregido: agregado middleware de axes
+    'axes.middleware.AxesMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -88,7 +93,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ferre_saas.wsgi.application'
 
-# Configuración Híbrida de Base de Datos (SQLite Fijo para evitar problemas de ruteo IPv6)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -140,7 +144,7 @@ SIMPLE_JWT = {
 SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=not DEBUG)
 SESSION_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE", default=not DEBUG)
 CSRF_COOKIE_SECURE = env.bool("CSRF_COOKIE_SECURE", default=not DEBUG)
-MOCK_EXTERNAL_SERVICES = env.bool("MOCK_EXTERNAL_SERVICES", default=False)  # Seteado en False para producción
+MOCK_EXTERNAL_SERVICES = env.bool("MOCK_EXTERNAL_SERVICES", default=False)
 SESSION_COOKIE_HTTPONLY = True
 CSRF_COOKIE_HTTPONLY = True
 SECURE_BROWSER_XSS_FILTER = True
@@ -195,7 +199,7 @@ ADMIN_URL = 'admin-secure-ferre/'
 ADMIN_SITE_HEADER = "VectraWeb Admin Panel"
 
 AUTHENTICATION_BACKENDS = [
-    'axes.backends.AxesStandaloneBackend', # Corregido: agregado backend de axes
+    'axes.backends.AxesStandaloneBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
@@ -216,7 +220,6 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
 
-# Configuración de CORS blindada para desarrollo y producción
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
 else:
@@ -225,7 +228,6 @@ else:
         "https://ferreteria-4n8s.vercel.app",
         "http://localhost:4200",
     ]
-    CORS_ALLOWED_ORIGINS += env.list("CORS_ALLOWED_ORIGINS", default=[])
     
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = (
@@ -238,7 +240,6 @@ CORS_ALLOW_HEADERS = (
 )
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email Config
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
