@@ -876,9 +876,6 @@ export class ProductFormComponent implements OnInit {
   }
 
   openMeLiSell() {
-    const query = this.form.get("name")?.value || "";
-    const url = `https://www.mercadolibre.com.ar/publicar#label=sell&q=${encodeURIComponent(query)}`;
-    window.open(url, "_blank");
-    alert("Se ha abierto el publicador de Mercado Libre. Una vez publicado, pega el ID del item aquí abajo para vincularlo.");
+    window.open("https://www.mercadolibre.com.ar/publicar", "_blank");
   }
 }

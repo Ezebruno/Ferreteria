@@ -235,22 +235,29 @@ import { FormsModule } from "@angular/forms";
                       'border-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-white': product.meli_item_id
                     }"
                     [title]="product.meli_item_id ? 'Sincronizar Stock/Precio' : 'Publicar en MeLi'"
+                    class="p-2 bg-blue-500/10 hover:bg-blue-500/20 text-blue-500 rounded-xl transition-all"
+                    title="Sincronizar Stock/Precio MeLi"
                   >
-                    <lucide-icon [name]="product.meli_item_id ? RefreshCw : Globe" size="18"></lucide-icon>
+                    <lucide-icon [name]="Globe" size="16"></lucide-icon>
                   </button>
                   <button
-                    [routerLink]="[product.id, 'edit']"
-                    class="w-10 h-10 rounded-xl bg-white/5 border border-red-500/20 text-slate-300 hover:text-white hover:bg-red-500 hover:border-red-500 transition-all flex items-center justify-center"
-                    title="Editar"
+                    (click)="openMeLiSell()"
+                    class="p-2 bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 rounded-xl transition-all"
+                    title="Publicar en MeLi (Manual)"
                   >
-                    <lucide-icon [name]="Edit3" size="18"></lucide-icon>
+                    <lucide-icon [name]="ExternalLink" size="16"></lucide-icon>
                   </button>
                   <button
-                    (click)="deleteProduct(product.id)"
-                    class="w-10 h-10 rounded-xl bg-white/5 border border-red-500/20 text-slate-300 hover:text-white hover:bg-rose-600 hover:border-rose-600 transition-all flex items-center justify-center"
-                    title="Eliminar"
+                    [routerLink]="['/admin/products/edit', product.id]"
+                    class="p-2 bg-slate-500/10 hover:bg-slate-500/20 text-slate-400 rounded-xl transition-all"
                   >
-                    <lucide-icon [name]="Trash2" size="18"></lucide-icon>
+                    <lucide-icon [name]="Pencil" size="16"></lucide-icon>
+                  </button>
+                  <button
+                    (click)="deleteProduct(product)"
+                    class="p-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 rounded-xl transition-all"
+                  >
+                    <lucide-icon [name]="Trash2" size="16"></lucide-icon>
                   </button>
                 </div>
               </td>
@@ -291,6 +298,8 @@ export class ProductListComponent implements OnInit {
   PackageSearch = PackageSearch;
   Globe = Globe;
   RefreshCw = RefreshCw;
+  ExternalLink = ExternalLink;
+  Pencil = Pencil;
 
   isSyncing = false;
 
@@ -345,9 +354,9 @@ export class ProductListComponent implements OnInit {
     }, 500);
   }
 
-  deleteProduct(id: number) {
+  deleteProduct(product: any) {
     if (confirm("¿Estás seguro de que deseas eliminar este producto?")) {
-      this.api.delete(`/products/${id}/`).subscribe(
+      this.api.delete(`/products/${product.id}/`).subscribe(
         () => {
           this.loadProducts();
           alert("✅ Producto eliminado exitosamente");
@@ -392,7 +401,11 @@ export class ProductListComponent implements OnInit {
         const msg = err.error?.message || err.error?.detail || JSON.stringify(err.error) || 'Error desconocido';
         const detail = err.error?.details ? `\n\nDetalles MeLi: ${typeof err.error.details === 'string' ? err.error.details : JSON.stringify(err.error.details)}` : '';
         alert(`❌ Error al sincronizar: ${msg}${detail}`);
-      }
+      },
     });
+  }
+
+  openMeLiSell() {
+    window.open("https://www.mercadolibre.com.ar/publicar", "_blank");
   }
 }
