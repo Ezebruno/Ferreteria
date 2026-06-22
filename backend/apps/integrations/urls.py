@@ -4,7 +4,7 @@ from django.urls import path
 from apps.integrations.views import (
     MeLiSyncView, MercadoPagoPreferenceView, MercadoPagoWebhookView,
     MeLiCategoryPredictorView, MeLiAuthUrlView, MeLiAuthorizeView, MeLiConfigView,
-    MercadoPagoAuthUrlView, MercadoPagoAuthorizeView
+    MeLiCategorySearchView, MercadoPagoAuthUrlView, MercadoPagoAuthorizeView
 )
 
 urlpatterns = [
@@ -14,6 +14,7 @@ urlpatterns = [
     path('meli/sync/', MeLiSyncView.as_view(), name='meli_sync_all'),
     path('meli/sync/<int:product_id>/', MeLiSyncView.as_view(), name='meli_sync_item'),
     path('meli/predict-category/', MeLiCategoryPredictorView.as_view(), name='meli_predict_category'),
+    path('meli/search-category/', MeLiCategorySearchView.as_view(), name='meli_search_category'),
     path('mercadopago/auth-url/', MercadoPagoAuthUrlView.as_view(), name='mp_auth_url'),
     path('mercadopago/authorize/', MercadoPagoAuthorizeView.as_view(), name='mp_authorize'),
     path('mercadopago/preference/', MercadoPagoPreferenceView.as_view(), name='mp_preference'),

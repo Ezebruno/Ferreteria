@@ -30,7 +30,7 @@ class ProductListSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Product
-        fields = ('id', 'name', 'sku', 'price_retail', 'stock_current', 'image', 'category_name', 'discount_percentage')
+        fields = ('id', 'name', 'sku', 'price_retail', 'stock_current', 'image', 'category_name', 'discount_percentage', 'meli_item_id', 'meli_category_id')
 
 class KitItemSerializer(serializers.ModelSerializer):
     product_name = serializers.CharField(source='product.name', read_only=True)

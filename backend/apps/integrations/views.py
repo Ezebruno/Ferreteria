@@ -164,6 +164,29 @@ class MeLiCategoryPredictorView(APIView):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+class MeLiCategorySearchView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        """ Searches MeLi categories based on a keyword """
+        q = request.query_params.get('q')
+        if not q:
+            return Response({'error': 'Query parameter "q" required'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        import requests
+        from urllib.parse import quote
+        try:
+            # Using domain discovery with more results or category search
+            url = f"https://api.mercadolibre.com/sites/MLA/domain_discovery/search?q={quote(q)}&limit=5"
+            resp = requests.get(url, timeout=10)
+            if resp.status_code == 200:
+                data = resp.json()
+                return Response(data)
+                
+            return Response({'error': 'No categories found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 class MercadoPagoPreferenceView(APIView):
     permission_classes = [permissions.AllowAny] # Allow customers to create preferences
     authentication_classes = [] # Disable auth to avoid 401 with expired tokens

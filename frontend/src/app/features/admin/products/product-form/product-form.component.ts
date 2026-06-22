@@ -23,6 +23,7 @@ import {
   ExternalLink,
   Zap,
   Globe,
+  Search,
 } from "lucide-angular";
 import { CheckboxModule } from "primeng/checkbox";
 
@@ -446,7 +447,29 @@ import { CheckboxModule } from "primeng/checkbox";
                   >
                     <lucide-icon [name]="Zap" size="20"></lucide-icon>
                   </button>
+                  <button
+                    type="button"
+                    (click)="searchCategories()"
+                    class="p-4 bg-slate-500/10 hover:bg-slate-500/20 text-slate-400 rounded-2xl border border-slate-500/30 transition-all flex items-center justify-center shadow-lg"
+                    title="Buscar Categoría por nombre"
+                  >
+                    <lucide-icon [name]="Search" size="20"></lucide-icon>
+                  </button>
                 </div>
+              </div>
+
+              <!-- List of predicted/searched categories if multiple -->
+              <div *ngIf="categorySearchResults.length > 0" class="p-2 bg-slate-900/50 rounded-2xl border border-blue-500/20 space-y-2 animate-in">
+                <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest px-2 pt-1">Resultados encontrados:</p>
+                <div 
+                  *ngFor="let cat of categorySearchResults" 
+                  (click)="selectCategory(cat)"
+                  class="p-3 hover:bg-blue-500/10 rounded-xl cursor-pointer border border-transparent hover:border-blue-500/20 transition-all group"
+                >
+                  <p class="text-xs font-bold text-white group-hover:text-blue-400 transition-colors">{{ cat.category_name }}</p>
+                  <p class="text-[10px] text-slate-500 font-mono">{{ cat.category_id }} - {{ cat.domain_name }}</p>
+                </div>
+                <button (click)="categorySearchResults = []" class="w-full py-2 text-[10px] font-black text-rose-500 uppercase hover:bg-rose-500/10 rounded-xl transition-all">Cerrar</button>
               </div>
 
               <div class="flex flex-col gap-3">
@@ -495,12 +518,14 @@ export class ProductFormComponent implements OnInit {
   ExternalLink = ExternalLink;
   Zap = Zap;
   Globe = Globe;
+  Search = Search;
 
   form: FormGroup;
   isEditMode = false;
   productId: number | null = null;
   categories: any[] = [];
   isSaving = false;
+  categorySearchResults: any[] = [];
 
   meliConditions = [
     { label: "Nuevo", value: "new" },
@@ -788,5 +813,30 @@ export class ProductFormComponent implements OnInit {
           );
         },
       });
+  }
+
+  searchCategories() {
+    const query = prompt("Ingresá palabras clave para buscar la categoría (ej: Taladro percutor):");
+    if (!query) return;
+
+    this.api.get<any[]>(`/integrations/meli/search-category/?q=${encodeURIComponent(query)}`).subscribe({
+      next: (res: any[]) => {
+        if (res && res.length > 0) {
+          this.categorySearchResults = res;
+        } else {
+          alert("No se encontraron categorías para esa búsqueda.");
+        }
+      },
+      error: (err: any) => {
+        console.error("Category search error:", err);
+        alert("Error al buscar categorías.");
+      }
+    });
+  }
+
+  selectCategory(cat: any) {
+    this.form.patchValue({ meli_category_id: cat.category_id });
+    this.categorySearchResults = [];
+    alert(`✅ Categoría seleccionada: ${cat.category_name}`);
   }
 }

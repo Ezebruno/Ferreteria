@@ -125,7 +125,7 @@ import { FormsModule } from "@angular/forms";
             ></lucide-icon>
           </div>
           <div>
-            <h1 class="text-3xl font-black text-white tracking-tight">Inventario Global</h1>
+            <h1 class="text-3xl font-black text-white tracking-tight">Inventario Global <span class="text-red-500 text-xs">ML-READY</span></h1>
             <p class="text-slate-400 font-medium mt-1">
               Control total sobre {{ products.length }} productos activos.
             </p>
