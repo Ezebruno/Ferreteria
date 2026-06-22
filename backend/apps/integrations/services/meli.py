@@ -97,9 +97,19 @@ class MeLiService:
             "pictures": [{"source": product.image.url if product.image else ""}],
             "attributes": [
                 {"id": "BRAND", "value_name": product.brand or 'Genérica'},
-                {"id": "MODEL", "value_name": product.sku}, # Use SKU as model if none available
+                {"id": "MODEL", "value_name": product.sku},
             ]
         }
+
+        # Add GTIN (Universal Code) if available
+        if product.barcode:
+            payload["attributes"].append({"id": "GTIN", "value_name": product.barcode})
+
+        # Selling Format
+        if getattr(product, 'meli_format', 'unidades') == 'pack':
+            payload["attributes"].append({"id": "SELLING_FORMAT", "value_name": "Pack"})
+        else:
+            payload["attributes"].append({"id": "SELLING_FORMAT", "value_name": "Unidad"})
         
         url = f"https://api.mercadolibre.com/items?access_token={access_token}"
         resp = requests.post(url, json=payload)

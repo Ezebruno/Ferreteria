@@ -183,8 +183,22 @@ class MeLiCategorySearchView(APIView):
             url = f"https://api.mercadolibre.com/sites/MLA/domain_discovery/search?q={quote(q)}&limit=5"
             resp = requests.get(url, timeout=10)
             if resp.status_code == 200:
-                data = resp.json()
-                return Response(data)
+                results = resp.json()
+                # Enhanced results with path information
+                enhanced_results = []
+                for item in results[:5]: # Limit to 5
+                    cat_id = item.get('category_id')
+                    path_name = ""
+                    try:
+                        cat_info = requests.get(f"https://api.mercadolibre.com/categories/{cat_id}", timeout=5).json()
+                        path_name = " > ".join([p['name'] for p in cat_info.get('path_from_root', [])])
+                    except:
+                        path_name = item.get('category_name', '')
+                    
+                    item['category_path'] = path_name
+                    enhanced_results.append(item)
+                    
+                return Response(enhanced_results)
                 
             return Response({'error': 'No categories found'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:

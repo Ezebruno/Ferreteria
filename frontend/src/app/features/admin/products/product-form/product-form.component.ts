@@ -460,13 +460,36 @@ import { CheckboxModule } from "primeng/checkbox";
 
               <!-- List of predicted/searched categories if multiple -->
               <div *ngIf="categorySearchResults.length > 0" class="p-2 bg-slate-900/50 rounded-2xl border border-blue-500/20 space-y-2 animate-in">
-                <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest px-2 pt-1">Resultados encontrados:</p>
+              <!-- MeLi Listing Type -->
+              <div class="flex flex-col gap-2">
+                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">Tipo de Publicación MeLi</label>
+                <select
+                  formControlName="meli_listing_type"
+                  class="w-full p-4 bg-slate-900/50 border border-slate-700/50 rounded-2xl text-slate-300 focus:outline-none focus:border-blue-500/50 transition-all appearance-none"
+                >
+                  <option *ngFor="let type of meliListingTypes" [value]="type.value">{{ type.label }}</option>
+                </select>
+              </div>
+
+              <!-- MeLi Format -->
+              <div class="flex flex-col gap-2">
+                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">Formato de Venta</label>
+                <select
+                  formControlName="meli_format"
+                  class="w-full p-4 bg-slate-900/50 border border-slate-700/50 rounded-2xl text-slate-300 focus:outline-none focus:border-blue-500/50 transition-all appearance-none"
+                >
+                  <option value="unidades">Unidad / Individual</option>
+                  <option value="pack">Pack / Multipack</option>
+                </select>
+              </div>
+              <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest px-2 pt-1">Resultados encontrados:</p>
                 <div 
                   *ngFor="let cat of categorySearchResults" 
                   (click)="selectCategory(cat)"
                   class="p-3 hover:bg-blue-500/10 rounded-xl cursor-pointer border border-transparent hover:border-blue-500/20 transition-all group"
                 >
                   <p class="text-xs font-bold text-white group-hover:text-blue-400 transition-colors">{{ cat.category_name }}</p>
+                  <p class="text-[10px] text-slate-400 italic mb-1">{{ cat.category_path }}</p>
                   <p class="text-[10px] text-slate-500 font-mono">{{ cat.category_id }} - {{ cat.domain_name }}</p>
                 </div>
                 <button (click)="categorySearchResults = []" class="w-full py-2 text-[10px] font-black text-rose-500 uppercase hover:bg-rose-500/10 rounded-xl transition-all">Cerrar</button>
@@ -477,17 +500,6 @@ import { CheckboxModule } from "primeng/checkbox";
                 <p-dropdown
                   [options]="meliConditions"
                   formControlName="meli_condition"
-                  optionLabel="label"
-                  optionValue="value"
-                  styleClass="w-full custom-dark-dropdown"
-                ></p-dropdown>
-              </div>
-
-              <div class="flex flex-col gap-3">
-                <label class="font-bold text-slate-400 text-sm ml-1 uppercase tracking-tighter">Tipo de Publicación</label>
-                <p-dropdown
-                  [options]="meliListingTypes"
-                  formControlName="meli_listing_type"
                   optionLabel="label"
                   optionValue="value"
                   styleClass="w-full custom-dark-dropdown"
@@ -562,9 +574,9 @@ export class ProductFormComponent implements OnInit {
       warranty: [""],
       specifications: [""],
       meli_sync: [false],
-      meli_category_id: [""],
       meli_condition: ["new"],
-      meli_listing_type: ["gold_special"],
+      meli_listing_type: ["gold_pro"],
+      meli_format: ["unidades"],
       meli_item_id: [null],
     });
   }
@@ -572,7 +584,7 @@ export class ProductFormComponent implements OnInit {
   ngOnInit() {
     this.loadCategories();
 
-    this.route.params.subscribe((params) => {
+    this.route.params.subscribe((params: any) => {
       if (params["id"]) {
         this.isEditMode = true;
         this.productId = +params["id"];
@@ -598,8 +610,8 @@ export class ProductFormComponent implements OnInit {
 
   loadCategories() {
     // Always load from API to ensure IDs match the database
-    this.api.get<any>("/categories/").subscribe({
-      next: (res) => {
+    this.api.get<any[]>(`/inventory/categories/`).subscribe({
+      next: (res: any[]) => {
         this.categories = res.results || res;
       },
       error: () => {
@@ -610,8 +622,8 @@ export class ProductFormComponent implements OnInit {
   }
 
   loadProduct(id: number) {
-    this.api.get<any>(`/products/${id}/`).subscribe({
-      next: (product) => {
+    this.api.get<any>(`/inventory/products/${id}/`).subscribe({
+      next: (product: any) => {
         this.form.patchValue({
           name: product.name,
           sku: product.sku,
@@ -639,7 +651,7 @@ export class ProductFormComponent implements OnInit {
           this.previewUrl = product.image;
         }
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error("Error loading product", err);
         alert("Error al cargar el producto para editar");
         this.router.navigate(["/admin/products"]);
@@ -720,7 +732,7 @@ export class ProductFormComponent implements OnInit {
           }
           this.router.navigate(["/admin/products"]);
         },
-        error: (error) => {
+        error: (error: any) => {
           this.isSaving = false;
           console.error("Error updating product", error);
           const errorMsg =
@@ -739,7 +751,7 @@ export class ProductFormComponent implements OnInit {
           }
           this.router.navigate(["/admin/products"]);
         },
-        error: (error) => {
+        error: (error: any) => {
           this.isSaving = false;
           console.error("Error creating product", error);
           const errorMsg =
@@ -792,7 +804,7 @@ export class ProductFormComponent implements OnInit {
         `/integrations/meli/predict-category/?title=${encodeURIComponent(queryTitle)}`,
       )
       .subscribe({
-        next: (res) => {
+        next: (res: any) => {
           if (res && res.category_id) {
             this.form.patchValue({ meli_category_id: res.category_id });
             const domainLabel = res.domain_name ? ` (${res.domain_name})` : "";
@@ -806,7 +818,7 @@ export class ProductFormComponent implements OnInit {
             alert("No se encontró una categoría. Ingresá el ID manualmente.");
           }
         },
-        error: (err) => {
+        error: (err: any) => {
           console.error("Category prediction error:", err);
           alert(
             "No se pudo predecir la categoría. Por favor ingresa el ID manualmente.",
