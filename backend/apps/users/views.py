@@ -1,9 +1,10 @@
 # Vistas para autenticación de usuarios: login, registro, perfiles y gestación de roles
 # Maneja creación de cuentas y actualización de información de usuario
 from rest_framework import generics, permissions, status
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
-from apps.users.models import User
+from apps.users.models import User, StoreConfig
 from apps.sales.models import Customer
 from rest_framework import serializers
 from django_ratelimit.decorators import ratelimit
@@ -113,10 +114,6 @@ class PasswordResetConfirmView(APIView):
 @method_decorator(ratelimit(key='ip', rate='5/m', method='POST', block=True), name='dispatch')
 class RateLimitedTokenObtainPairView(TokenObtainPairView):
     pass
-
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from .models import StoreConfig
 
 class StoreSettingsView(APIView):
     def get(self, request):
