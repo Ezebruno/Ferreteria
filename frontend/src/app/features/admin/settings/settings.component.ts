@@ -15,6 +15,7 @@ import {
   ShoppingBag,
   Zap,
   Link,
+  CheckCircle,
   ChevronUp,
   ChevronDown,
 } from "lucide-angular";
@@ -74,6 +75,7 @@ export class SettingsComponent implements OnInit {
   ShoppingBag = ShoppingBag;
   Zap = Zap;
   Link = Link;
+  CheckCircle = CheckCircle;
   ChevronUp = ChevronUp;
   ChevronDown = ChevronDown;
 

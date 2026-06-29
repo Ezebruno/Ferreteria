@@ -517,9 +517,6 @@ import {
                         ><span class="text-white font-bold">{{ tenantInfo?.name || 'FerreNexo' }}</span>
                       </div>
                       <div class="flex justify-between items-center">
-                        <span class="text-slate-400">Nombre</span
-                      </div>
-                      <div class="flex justify-between items-center">
                         <span class="text-slate-400">CBU / CVU</span
                         ><span class="text-white font-bold"
                           >{{ tenantInfo?.bank_cvu || '...' }}</span
