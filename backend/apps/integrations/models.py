@@ -4,7 +4,6 @@ class IntegrationConfig(models.Model):
     """ Stores API keys and tokens for different integrations per tenant """
     INTEGRATION_CHOICES = (
         ('MELI', 'Mercado Libre'),
-        ('AFIP', 'AFIP'),
         ('CORREO_ARG', 'Correo Argentino'),
     )
     
@@ -18,12 +17,6 @@ class IntegrationConfig(models.Model):
     access_token = models.TextField(null=True, blank=True)
     refresh_token = models.TextField(null=True, blank=True)
     token_expires_at = models.DateTimeField(null=True, blank=True)
-    
-    # AFIP specific
-    afip_cuit = models.CharField(max_length=11, null=True, blank=True)
-    afip_cert = models.TextField(null=True, blank=True)
-    afip_key = models.TextField(null=True, blank=True)
-    is_production = models.BooleanField(default=False)
     
     # Metadata
     is_active = models.BooleanField(default=True)

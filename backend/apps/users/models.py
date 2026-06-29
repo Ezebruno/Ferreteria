@@ -49,10 +49,6 @@ class User(AbstractUser):
 class StoreConfig(models.Model):
     name = models.CharField(max_length=100, default="Mi Ferretería")
     store_postal_code = models.CharField(max_length=20, null=True, blank=True)
-    afip_cuit = models.CharField(max_length=20, null=True, blank=True)
-    afip_punto_venta = models.IntegerField(null=True, blank=True)  # 1-9999
-    afip_certificate = models.FileField(upload_to='afip/', null=True, blank=True)  # .crt or .pem file
-    afip_private_key = models.FileField(upload_to='afip/', null=True, blank=True)  # .key or .pem file
     
     bank_cvu = models.CharField(max_length=50, null=True, blank=True)
     bank_alias = models.CharField(max_length=50, null=True, blank=True)

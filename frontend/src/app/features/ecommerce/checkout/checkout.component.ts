@@ -221,7 +221,7 @@ import {
                 <div>
                   <label
                     class="text-xs font-bold text-slate-400 uppercase tracking-widest block mb-2"
-                    >DNI o CUIT (Para Factura A)</label
+                    >DNI o CUIT</label
                   >
                   <input
                     type="text"
@@ -517,8 +517,7 @@ import {
                         ><span class="text-white font-bold">{{ tenantInfo?.name || 'FerreNexo' }}</span>
                       </div>
                       <div class="flex justify-between items-center">
-                        <span class="text-slate-400">CUIT</span
-                        ><span class="text-white font-bold">{{ tenantInfo?.afip_cuit || '...' }}</span>
+                        <span class="text-slate-400">Nombre</span
                       </div>
                       <div class="flex justify-between items-center">
                         <span class="text-slate-400">CBU / CVU</span

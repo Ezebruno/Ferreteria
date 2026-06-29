@@ -25,4 +25,4 @@ class UserAdmin(BaseUserAdmin):
 
 @admin.register(StoreConfig)
 class StoreConfigAdmin(admin.ModelAdmin):
-    list_display = ('name', 'afip_cuit', 'whatsapp_number')
+    list_display = ('name', 'whatsapp_number')

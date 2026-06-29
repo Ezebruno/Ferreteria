@@ -73,18 +73,10 @@ class StoreSettingsView(APIView):
             return Response({})
             
         data = {
-            'afip_cuit': config.afip_cuit,
-            'afip_punto_venta': config.afip_punto_venta,
             'bank_cvu': config.bank_cvu,
             'bank_alias': config.bank_alias,
             'whatsapp_number': config.whatsapp_number
         }
-        
-        # Include file paths if they exist
-        if config.afip_certificate:
-            data['afip_certificate_name'] = config.afip_certificate.name.split('/')[-1]
-        if config.afip_private_key:
-            data['afip_private_key_name'] = config.afip_private_key.name.split('/')[-1]
             
         return Response(data)
 
@@ -95,25 +87,12 @@ class StoreSettingsView(APIView):
             config = StoreConfig.objects.create()
             
         # Handle text fields
-        if 'afip_cuit' in request.data:
-            config.afip_cuit = request.data['afip_cuit']
-        if 'afip_punto_venta' in request.data:
-            try:
-                config.afip_punto_venta = int(request.data['afip_punto_venta'])
-            except (ValueError, TypeError):
-                return Response({'error': 'afip_punto_venta must be an integer'}, status=status.HTTP_400_BAD_REQUEST)
         if 'bank_cvu' in request.data:
             config.bank_cvu = request.data['bank_cvu']
         if 'bank_alias' in request.data:
             config.bank_alias = request.data['bank_alias']
         if 'whatsapp_number' in request.data:
             config.whatsapp_number = request.data['whatsapp_number']
-            
-        # Handle file uploads
-        if 'afip_certificate' in request.FILES:
-            config.afip_certificate = request.FILES['afip_certificate']
-        if 'afip_private_key' in request.FILES:
-            config.afip_private_key = request.FILES['afip_private_key']
             
         config.save()
         return Response({'status': 'ok', 'message': 'Configuración guardada exitosamente'})
@@ -124,8 +103,6 @@ class StoreSettingsView(APIView):
         if not config:
             config = StoreConfig.objects.create()
             
-        if 'afip_cuit' in request.data:
-            config.afip_cuit = request.data['afip_cuit']
         if 'bank_cvu' in request.data:
             config.bank_cvu = request.data['bank_cvu']
         if 'bank_alias' in request.data:
@@ -146,7 +123,6 @@ class StoreInfoView(APIView):
             
         return Response({
             'name': config.name,
-            'afip_cuit': config.afip_cuit,
             'bank_cvu': config.bank_cvu,
             'bank_alias': config.bank_alias,
             'whatsapp_number': config.whatsapp_number,

@@ -28,23 +28,4 @@ class WhatsAppService:
         text = f"Hola! Aquí tienes tu factura: {invoice_url}"
         return WhatsAppService.send_message(phone_number, text)
 
-class AFIPService:
-    @staticmethod
-    def create_invoice(sale_id):
-        """ Interacts with AFIP WSFE to generate a fiscal invoice """
-        sale = Sale.objects.get(id=sale_id)
-        if sale.is_invoiced:
-            return "Already invoiced"
-            
-        # Real life: use pyafipws or similar library to interact with SOAP/REST
-        # Mocking values here
-        sale.is_invoiced = True
-        sale.invoice_number = "0001-00000123"
-        sale.cae = "12345678901234"
-        import datetime
-        sale.cae_vencimiento = datetime.date.today() + datetime.timedelta(days=10)
-        sale.save()
-        return {
-            "invoice_number": sale.invoice_number,
-            "cae": sale.cae
-        }
+

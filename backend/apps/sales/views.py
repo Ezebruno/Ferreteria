@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from apps.sales.models import Sale, Customer, Ticket, Budget, BudgetItem
 from apps.sales.serializers import SaleSerializer, CustomerSerializer, TicketSerializer
 from apps.sales.budget_serializers import BudgetSerializer
-from apps.sales.services.external import AFIPService, WhatsAppService
+from apps.sales.services.external import WhatsAppService
 
 class BudgetViewSet(viewsets.ModelViewSet):
     queryset = Budget.objects.all().order_by('-created_at')
@@ -49,12 +49,6 @@ class SaleViewSet(viewsets.ModelViewSet):
     queryset = Sale.objects.all().order_by('-created_at')
     serializer_class = SaleSerializer
     permission_classes = [permissions.IsAuthenticated]
-
-    @action(detail=True, methods=['post'])
-    def generate_invoice(self, request, pk=None):
-        """ Calls AFIP service to generate invoice for this sale """
-        res = AFIPService.create_invoice(pk)
-        return Response(res)
 
     @action(detail=True, methods=['post'])
     def send_shipping_email(self, request, pk=None):

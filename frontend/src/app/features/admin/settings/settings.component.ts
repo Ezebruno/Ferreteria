@@ -10,15 +10,11 @@ import { ApiService } from "src/app/core/services/api.service";
 import {
   LucideAngularModule,
   Save,
-  Store,
   CreditCard,
   MessageCircle,
   ShoppingBag,
   Zap,
   Link,
-  CheckCircle,
-  FileUp,
-  AlertCircle,
   ChevronUp,
   ChevronDown,
 } from "lucide-angular";
@@ -64,36 +60,25 @@ export class SettingsComponent implements OnInit {
   successMessage = "";
   errorMessage = "";
   hasMpLinked = false;
-  certificateFileName = "";
-  privateKeyFileName = "";
-  certificateFile: File | null = null;
-  privateKeyFile: File | null = null;
 
   // Accordion state
   expandedSections: { [key: string]: boolean } = {
-    afip: false,
     payment: false,
     mercadolibre: false,
     whatsapp: false,
   };
   // Icons
   Save = Save;
-  Store = Store;
   CreditCard = CreditCard;
   MessageCircle = MessageCircle;
   ShoppingBag = ShoppingBag;
   Zap = Zap;
   Link = Link;
-  CheckCircle = CheckCircle;
-  FileUp = FileUp;
-  AlertCircle = AlertCircle;
   ChevronUp = ChevronUp;
   ChevronDown = ChevronDown;
 
   constructor() {
     this.settingsForm = this.fb.group({
-      afip_cuit: [""],
-      afip_punto_venta: [""],
       bank_cvu: [""],
       bank_alias: [""],
       whatsapp_number: [""],
@@ -178,8 +163,6 @@ export class SettingsComponent implements OnInit {
     this.api.get<any>("/tenant/settings/").subscribe({
       next: (data) => {
         this.settingsForm.patchValue({
-          afip_cuit: data.afip_cuit || "",
-          afip_punto_venta: data.afip_punto_venta || "",
           bank_cvu: data.bank_cvu || "",
           bank_alias: data.bank_alias || "",
           whatsapp_number: data.whatsapp_number || "",
@@ -200,27 +183,15 @@ export class SettingsComponent implements OnInit {
 
     // Create FormData to support file uploads
     const formData = new FormData();
-    formData.append("afip_cuit", formValues.afip_cuit);
-    formData.append("afip_punto_venta", formValues.afip_punto_venta || "");
     formData.append("bank_cvu", formValues.bank_cvu);
     formData.append("bank_alias", formValues.bank_alias);
     formData.append("whatsapp_number", formValues.whatsapp_number);
-
-    if (this.certificateFile) {
-      formData.append("afip_certificate", this.certificateFile);
-    }
-    if (this.privateKeyFile) {
-      formData.append("afip_private_key", this.privateKeyFile);
-    }
 
     // Use POST with FormData (not PATCH, to support multipart)
     this.api.post("/tenant/settings/", formData).subscribe({
       next: () => {
         this.isSaving = false;
         this.successMessage = "¡Configuración guardada exitosamente!";
-        // Clear file references after successful save
-        this.certificateFile = null;
-        this.privateKeyFile = null;
         // Close all sections after saving
         this.closeAllSections();
         setTimeout(() => (this.successMessage = ""), 3000);
@@ -232,22 +203,6 @@ export class SettingsComponent implements OnInit {
         console.error("Error saving settings:", err);
       },
     });
-  }
-
-  onCertificateSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.certificateFile = input.files[0];
-      this.certificateFileName = this.certificateFile.name;
-    }
-  }
-
-  onPrivateKeySelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.privateKeyFile = input.files[0];
-      this.privateKeyFileName = this.privateKeyFile.name;
-    }
   }
 
   toggleSection(section: string): void {

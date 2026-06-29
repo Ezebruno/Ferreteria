@@ -25,10 +25,6 @@ class SaleAdmin(admin.ModelAdmin):
         ('Envío', {
             'fields': ('shipping_address', 'tracking_number')
         }),
-        ('Facturación AFIP', {
-            'fields': ('is_invoiced', 'invoice_number', 'invoice_type', 'cae', 'cae_vencimiento'),
-            'classes': ('collapse',)
-        }),
         ('Mercado Pago', {
             'fields': ('mp_preference_id', 'mp_payment_id'),
             'classes': ('collapse',)

@@ -48,13 +48,6 @@ class Sale(models.Model):
     payment_status = models.CharField(choices=PAYMENT_STATUS_CHOICES, max_length=20, default='PENDING')
     shipping_status = models.CharField(choices=SHIPPING_STATUS_CHOICES, max_length=20, default='PENDING')
     
-    # AFIP data
-    is_invoiced = models.BooleanField(default=False)
-    invoice_number = models.CharField(max_length=50, null=True, blank=True)
-    cae = models.CharField(max_length=50, null=True, blank=True)
-    cae_vencimiento = models.DateField(null=True, blank=True)
-    invoice_type = models.CharField(max_length=2, choices=(('A','A'),('B','B'),('C','C')), default='B')
-    
     # Shipment
     shipping_address = models.TextField(null=True, blank=True)
     tracking_number = models.CharField(max_length=100, null=True, blank=True)
