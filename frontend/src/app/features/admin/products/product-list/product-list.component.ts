@@ -41,9 +41,9 @@ import { FormsModule } from "@angular/forms";
     }
 
     :host ::ng-deep .p-datatable-dark .p-datatable-thead > tr > th {
-      background: #f8f8f6 !important;
-      color: #62707e !important;
-      border-bottom: 2px solid #dddbd3 !important;
+      background: #1a1f27 !important;
+      color: #8b92a0 !important;
+      border-bottom: 2px solid #2a2f38 !important;
       padding: 1rem 1.25rem !important;
       font-size: 0.7rem !important;
       font-weight: 700 !important;
@@ -53,32 +53,32 @@ import { FormsModule } from "@angular/forms";
 
     :host ::ng-deep .p-datatable-dark .p-datatable-tbody > tr {
       background: transparent !important;
-      color: #374048 !important;
+      color: #e2e4e9 !important;
       transition: all 0.15s !important;
     }
 
     :host ::ng-deep .p-datatable-dark .p-datatable-tbody > tr:hover {
-      background: #f8f8f6 !important;
+      background: rgba(255,255,255,0.03) !important;
     }
 
     :host ::ng-deep .p-datatable-dark .p-datatable-tbody > tr > td {
-      border-bottom: 1px solid #efeeea !important;
+      border-bottom: 1px solid #2a2f38 !important;
       padding: 1rem 1.25rem !important;
       background: transparent !important;
     }
 
     :host ::ng-deep .p-datatable-dark .p-paginator {
-      background: #ffffff !important;
+      background: #1a1f27 !important;
       border: none !important;
-      border-top: 2px solid #dddbd3 !important;
-      color: #62707e !important;
+      border-top: 2px solid #2a2f38 !important;
+      color: #8b92a0 !important;
       padding: 1rem !important;
     }
 
     :host ::ng-deep .p-datatable-dark .p-paginator .p-paginator-pages .p-paginator-page {
-      color: #62707e !important;
+      color: #8b92a0 !important;
       background: transparent !important;
-      border: 1.5px solid #dddbd3 !important;
+      border: 1.5px solid #2a2f38 !important;
       border-radius: 0.375rem !important;
       min-width: 2.25rem !important;
       height: 2.25rem !important;
@@ -101,11 +101,11 @@ import { FormsModule } from "@angular/forms";
     }
 
     :host ::ng-deep .p-datatable-dark .p-paginator .p-link {
-      color: #62707e !important;
+      color: #8b92a0 !important;
     }
 
     :host ::ng-deep .p-datatable-dark .p-paginator .p-paginator-current {
-      color: #62707e !important;
+      color: #8b92a0 !important;
       font-size: 0.75rem !important;
       font-weight: 700 !important;
       text-transform: uppercase !important;
@@ -118,7 +118,7 @@ import { FormsModule } from "@angular/forms";
       <div class="card-industrial p-6 relative">
         <!-- Left: Branding & Info -->
         <div class="flex items-center gap-4">
-          <div class="w-14 h-14 rounded-2xl bg-ferre-50 flex items-center justify-center border border-concrete-200 shrink-0">
+          <div class="w-14 h-14 rounded-2xl bg-ferre-50 flex items-center justify-center border border-[#2a2f38] shrink-0">
             <lucide-icon
               [name]="PackageSearch"
               class="text-ferre-600"
@@ -127,11 +127,11 @@ import { FormsModule } from "@angular/forms";
           </div>
           <div>
             <div class="flex items-center gap-2 mb-1">
-              <h1 class="text-3xl font-extrabold text-steel-900 tracking-tight" style="font-family: Sora, sans-serif;">Inventario</h1>
-              <span class="bg-ferre-50 text-ferre-600 text-[10px] px-2 py-0.5 rounded-full border border-concrete-200 font-bold tracking-widest">ML-READY</span>
+              <h1 class="text-3xl font-extrabold text-white tracking-tight" style="font-family: Sora, sans-serif;">Inventario</h1>
+              <span class="bg-ferre-50 text-ferre-600 text-[10px] px-2 py-0.5 rounded-full border border-[#2a2f38] font-bold tracking-widest">ML-READY</span>
             </div>
-            <p class="text-steel-500 font-medium text-sm">
-              <span class="text-steel-900 font-bold opacity-80">{{ products.length }}</span> productos activos en total.
+            <p class="text-steel-400 font-medium text-sm">
+              <span class="text-white font-bold opacity-80">{{ products.length }}</span> productos activos en total.
             </p>
           </div>
         </div>
@@ -145,7 +145,7 @@ import { FormsModule } from "@angular/forms";
               [(ngModel)]="searchQuery"
               (input)="onSearch()"
               placeholder="Buscar producto o SKU..."
-              class="w-full pl-12 pr-4 py-3.5 bg-concrete-50 border border-concrete-200 text-steel-900 rounded-2xl focus:ring-2 focus:ring-ferre-600/30 focus:border-ferre-600 transition-all placeholder-steel-400 outline-none shadow-inner"
+              class="w-full pl-12 pr-4 py-3.5 bg-[#13161c] border border-[#2a2f38] text-white rounded-2xl focus:ring-2 focus:ring-ferre-600/30 focus:border-ferre-600 transition-all placeholder-steel-400 outline-none shadow-inner"
             />
           </div>
         </div>
@@ -173,7 +173,7 @@ import { FormsModule } from "@angular/forms";
 
       <!-- Table Area -->
       <div
-        class="flex-1 bg-white rounded-xl border border-concrete-200 shadow-sm overflow-hidden"
+        class="flex-1 bg-[#1a1f27] rounded-xl border border-[#2a2f38] shadow-sm overflow-hidden"
       >
         <p-table
           [value]="products"
@@ -185,28 +185,28 @@ import { FormsModule } from "@angular/forms";
           styleClass="p-datatable-dark custom-table"
         >
           <ng-template pTemplate="header">
-            <tr class="bg-concrete-50">
-              <th class="px-6 py-4 font-extrabold text-steel-500 text-xs uppercase tracking-widest border-b border-concrete-200 w-24" style="font-family: Sora, sans-serif;">Miniatura</th>
-              <th pSortableColumn="name" class="px-6 py-4 font-extrabold text-steel-500 text-xs uppercase tracking-widest border-b border-concrete-200" style="font-family: Sora, sans-serif;">
+            <tr class="bg-[#13161c]">
+              <th class="px-6 py-4 font-extrabold text-steel-400 text-xs uppercase tracking-widest border-b border-[#2a2f38] w-24" style="font-family: Sora, sans-serif;">Miniatura</th>
+              <th pSortableColumn="name" class="px-6 py-4 font-extrabold text-steel-400 text-xs uppercase tracking-widest border-b border-[#2a2f38]" style="font-family: Sora, sans-serif;">
                 Producto <p-sortIcon field="name"></p-sortIcon>
               </th>
-              <th pSortableColumn="sku" class="px-6 py-4 font-extrabold text-steel-500 text-xs uppercase tracking-widest border-b border-concrete-200" style="font-family: Sora, sans-serif;">
+              <th pSortableColumn="sku" class="px-6 py-4 font-extrabold text-steel-400 text-xs uppercase tracking-widest border-b border-[#2a2f38]" style="font-family: Sora, sans-serif;">
                 SKU <p-sortIcon field="sku"></p-sortIcon>
               </th>
-              <th pSortableColumn="price_retail" class="px-6 py-4 font-extrabold text-steel-500 text-xs uppercase tracking-widest border-b border-concrete-200" style="font-family: Sora, sans-serif;">
+              <th pSortableColumn="price_retail" class="px-6 py-4 font-extrabold text-steel-400 text-xs uppercase tracking-widest border-b border-[#2a2f38]" style="font-family: Sora, sans-serif;">
                 Precio Lista <p-sortIcon field="price_retail"></p-sortIcon>
               </th>
-              <th pSortableColumn="stock_current" class="px-6 py-4 font-extrabold text-steel-500 text-xs uppercase tracking-widest border-b border-concrete-200" style="font-family: Sora, sans-serif;">
+              <th pSortableColumn="stock_current" class="px-6 py-4 font-extrabold text-steel-400 text-xs uppercase tracking-widest border-b border-[#2a2f38]" style="font-family: Sora, sans-serif;">
                 Stock <p-sortIcon field="stock_current"></p-sortIcon>
               </th>
-              <th class="px-6 py-4 font-extrabold text-steel-500 text-xs uppercase tracking-widest border-b border-concrete-200 text-center" style="font-family: Sora, sans-serif;">Gestión</th>
+              <th class="px-6 py-4 font-extrabold text-steel-400 text-xs uppercase tracking-widest border-b border-[#2a2f38] text-center" style="font-family: Sora, sans-serif;">Gestión</th>
             </tr>
           </ng-template>
 
           <ng-template pTemplate="body" let-product>
-            <tr class="group border-b border-concrete-100 hover:bg-concrete-50/50 transition-colors">
+            <tr class="group border-b border-concrete-100 hover:bg-white/5 transition-colors">
               <td class="px-6 py-4">
-                <div class="w-14 h-14 rounded-2xl bg-concrete-50 flex items-center justify-center overflow-hidden border border-concrete-200 group-hover:border-concrete-300 transition-colors shadow-inner">
+                <div class="w-14 h-14 rounded-2xl bg-[#13161c] flex items-center justify-center overflow-hidden border border-[#2a2f38] group-hover:border-concrete-300 transition-colors shadow-inner">
                   <img
                     *ngIf="product.image"
                     [src]="product.image"
@@ -222,9 +222,9 @@ import { FormsModule } from "@angular/forms";
                 </div>
               </td>
               <td class="px-6 py-4">
-                <span class="font-bold text-steel-900 text-base group-hover:text-ferre-600 transition-colors">{{ product.name }}</span>
+                <span class="font-bold text-white text-base group-hover:text-ferre-600 transition-colors">{{ product.name }}</span>
               </td>
-              <td class="px-6 py-4 text-steel-500 font-mono text-xs uppercase tracking-tighter">
+              <td class="px-6 py-4 text-steel-400 font-mono text-xs uppercase tracking-tighter">
                 {{ product.sku }}
               </td>
               <td class="px-6 py-4">
@@ -247,7 +247,7 @@ import { FormsModule } from "@angular/forms";
                 <div class="flex items-center justify-center gap-3">
                   <button
                     [routerLink]="['/admin/products', product.id, 'edit']"
-                    class="p-2 bg-concrete-100 hover:bg-concrete-200 text-steel-500 rounded-xl transition-all"
+                    class="p-2 bg-concrete-100 hover:bg-concrete-200 text-steel-400 rounded-xl transition-all"
                     title="Editar Producto"
                   >
                     <lucide-icon [name]="Edit3" size="16"></lucide-icon>
@@ -267,7 +267,7 @@ import { FormsModule } from "@angular/forms";
             <tr>
               <td colspan="6" class="text-center py-24">
                 <div class="flex flex-col items-center justify-center text-steel-400 space-y-4">
-                  <div class="w-20 h-20 rounded-full bg-concrete-50 flex items-center justify-center">
+                  <div class="w-20 h-20 rounded-full bg-[#13161c] flex items-center justify-center">
                     <lucide-icon [name]="PackageSearch" size="40" class="opacity-20"></lucide-icon>
                   </div>
                   <p class="text-xl font-extrabold uppercase tracking-widest" style="font-family: Sora, sans-serif;">Sin coincidencias</p>

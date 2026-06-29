@@ -42,7 +42,7 @@ import {
       </button>
 
       <!-- Login Card -->
-      <div class="z-10 w-full max-w-md p-8 relative" style="background: white; border: 2px solid #dddbd3; border-radius: 0.5rem; box-shadow: 0 25px 60px rgba(0,0,0,0.5);">
+      <div class="z-10 w-full max-w-md p-8 relative" style="background: #1a1f27; border: 2px solid #2a2f38; border-radius: 0.5rem; box-shadow: 0 25px 60px rgba(0,0,0,0.7);">
         <!-- Tornillos decorativos -->
         <div class="absolute top-3 left-3 screw"></div>
         <div class="absolute top-3 right-3 screw"></div>
@@ -54,7 +54,7 @@ import {
             <lucide-icon [name]="LockIcon" size="28" class="text-white"></lucide-icon>
           </div>
           <span
-            class="text-2xl font-extrabold tracking-wider uppercase text-steel-900"
+            class="text-2xl font-extrabold tracking-wider uppercase text-white"
             style="font-family: Sora, sans-serif;"
           >
             Ferre<span class="text-ferre-600">Nexo</span>
@@ -72,7 +72,7 @@ import {
               <input
                 formControlName="email"
                 type="email"
-                class="w-full pl-11 pr-4 py-3 bg-concrete-50 border border-concrete-200 text-steel-900 rounded-lg focus:ring-2 focus:ring-ferre-500/20 focus:border-ferre-500 transition-all placeholder-steel-400 text-sm"
+                class="w-full pl-11 pr-4 py-3 bg-[#13161c] border border-[#2a2f38] text-white rounded-lg focus:ring-2 focus:ring-ferre-500/20 focus:border-ferre-500 transition-all placeholder-steel-500 text-sm"
                 placeholder="correo@ejemplo.com"
               />
             </div>
@@ -87,7 +87,7 @@ import {
               <input
                 formControlName="password"
                 type="password"
-                class="w-full pl-11 pr-4 py-3 bg-concrete-50 border border-concrete-200 text-steel-900 rounded-lg focus:ring-2 focus:ring-ferre-500/20 focus:border-ferre-500 transition-all placeholder-steel-400 text-sm"
+                class="w-full pl-11 pr-4 py-3 bg-[#13161c] border border-[#2a2f38] text-white rounded-lg focus:ring-2 focus:ring-ferre-500/20 focus:border-ferre-500 transition-all placeholder-steel-500 text-sm"
                 placeholder="••••••••"
               />
             </div>

@@ -1,10 +1,10 @@
 <div class="space-y-6">
   <div class="flex justify-between items-center">
     <div>
-      <h2 class="text-2xl font-extrabold text-steel-900 uppercase tracking-wider" style="font-family: Sora, sans-serif;">
+      <h2 class="text-2xl font-extrabold text-white uppercase tracking-wider" style="font-family: Sora, sans-serif;">
         Configuracion del Negocio
       </h2>
-      <p class="text-steel-500 mt-1 text-sm">
+      <p class="text-steel-400 mt-1 text-sm">
         Administra las integraciones y credenciales de tu ferreteria.
       </p>
     </div>
@@ -20,7 +20,7 @@
 
   <div
     *ngIf="successMessage"
-    class="bg-green-50 border-2 border-green-200 text-green-700 p-4 rounded-lg flex items-center gap-3 text-sm font-medium"
+    class="bg-green-500/10 border-2 border-green-500/20 text-green-400 p-4 rounded-lg flex items-center gap-3 text-sm font-medium"
   >
     <lucide-icon [name]="Save" size="18"></lucide-icon>
     <span>{{ successMessage }}</span>
@@ -39,34 +39,34 @@
       <button
         type="button"
         (click)="toggleSection('address')"
-        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-concrete-50 transition-colors cursor-pointer"
+        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-white/5 transition-colors cursor-pointer"
       >
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-600" style="border: 1.5px solid #bbf7d0;">
             <lucide-icon [name]="MapPin" size="20"></lucide-icon>
           </div>
-          <h3 class="text-lg font-bold text-steel-900">Direccion del Negocio</h3>
+          <h3 class="text-lg font-bold text-white">Direccion del Negocio</h3>
         </div>
         <lucide-icon
           [name]="expandedSections['address'] ? ChevronUp : ChevronDown"
           size="20"
-          class="text-steel-500 flex-shrink-0 transition-transform"
+          class="text-steel-400 flex-shrink-0 transition-transform"
         ></lucide-icon>
       </button>
 
       <div
         *ngIf="expandedSections['address']"
         class="px-6 pb-6 space-y-4"
-        style="border-top: 2px solid #dddbd3;"
+        style="border-top: 2px solid #2a2f38;"
       >
-        <p class="text-xs text-steel-500 mt-4">
+        <p class="text-xs text-steel-400 mt-4">
           Direccion que se mostrara en el mapa del sitio web.
         </p>
         <input
           type="text"
           formControlName="store_address"
           placeholder="Ej: Av. Corrientes 1234, CABA"
-          class="w-full bg-concrete-50 border border-concrete-200 rounded-lg px-4 py-2.5 text-steel-900 focus:outline-none focus:ring-2 focus:ring-ferre-400 transition-all text-sm"
+          class="w-full bg-[#13161c] border border-[#2a2f38] rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-ferre-400 transition-all text-sm"
         />
       </div>
     </div>
@@ -75,25 +75,25 @@
       <button
         type="button"
         (click)="toggleSection('payment')"
-        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-concrete-50 transition-colors cursor-pointer"
+        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-white/5 transition-colors cursor-pointer"
       >
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-lg bg-sky-500/20 flex items-center justify-center text-sky-600" style="border: 1.5px solid #bae6fd;">
             <lucide-icon [name]="CreditCard" size="20"></lucide-icon>
           </div>
-          <h3 class="text-lg font-bold text-steel-900">Mercado Pago y Banco</h3>
+          <h3 class="text-lg font-bold text-white">Mercado Pago y Banco</h3>
         </div>
         <lucide-icon
           [name]="expandedSections['payment'] ? ChevronUp : ChevronDown"
           size="20"
-          class="text-steel-500 flex-shrink-0"
+          class="text-steel-400 flex-shrink-0"
         ></lucide-icon>
       </button>
 
       <div
         *ngIf="expandedSections['payment']"
         class="px-6 pb-6 space-y-4"
-        style="border-top: 2px solid #dddbd3;"
+        style="border-top: 2px solid #2a2f38;"
       >
         <div class="rounded-lg p-4 flex gap-3 items-start mt-4" style="background: #3b82f610; border: 1.5px solid #3b82f630;">
           <lucide-icon [name]="MessageCircle" size="20" class="text-blue-500 mt-0.5 flex-shrink-0"></lucide-icon>
@@ -117,25 +117,25 @@
           </div>
         </div>
 
-        <hr class="border-concrete-200" />
+        <hr class="border-[#2a2f38]" />
 
         <div>
-          <label class="block text-xs font-bold text-steel-500 uppercase tracking-wider mb-1.5">CVU / CBU (Transferencias)</label>
+          <label class="block text-xs font-bold text-steel-400 uppercase tracking-wider mb-1.5">CVU / CBU (Transferencias)</label>
           <input
             type="text"
             formControlName="bank_cvu"
             placeholder="00000031000..."
-            class="w-full bg-concrete-50 border border-concrete-200 rounded-lg px-4 py-2.5 text-steel-900 focus:outline-none focus:ring-2 focus:ring-ferre-400 transition-all font-mono text-sm"
+            class="w-full bg-[#13161c] border border-[#2a2f38] rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-ferre-400 transition-all font-mono text-sm"
           />
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-steel-500 uppercase tracking-wider mb-1.5">Alias Bancario</label>
+          <label class="block text-xs font-bold text-steel-400 uppercase tracking-wider mb-1.5">Alias Bancario</label>
           <input
             type="text"
             formControlName="bank_alias"
             placeholder="FERRE.TORNILLO.MP"
-            class="w-full bg-concrete-50 border border-concrete-200 rounded-lg px-4 py-2.5 text-steel-900 focus:outline-none focus:ring-2 focus:ring-ferre-400 transition-all text-sm"
+            class="w-full bg-[#13161c] border border-[#2a2f38] rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-ferre-400 transition-all text-sm"
           />
         </div>
 
@@ -149,25 +149,25 @@
       <button
         type="button"
         (click)="toggleSection('mercadolibre')"
-        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-concrete-50 transition-colors cursor-pointer"
+        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-white/5 transition-colors cursor-pointer"
       >
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-lg bg-safety-yellow/20 flex items-center justify-center text-safety-yellow" style="border: 1.5px solid #fef08a;">
             <lucide-icon [name]="ShoppingBag" size="20"></lucide-icon>
           </div>
-          <h3 class="text-lg font-bold text-steel-900">Mercado Libre</h3>
+          <h3 class="text-lg font-bold text-white">Mercado Libre</h3>
         </div>
         <lucide-icon
           [name]="expandedSections['mercadolibre'] ? ChevronUp : ChevronDown"
           size="20"
-          class="text-steel-500 flex-shrink-0"
+          class="text-steel-400 flex-shrink-0"
         ></lucide-icon>
       </button>
 
       <div
         *ngIf="expandedSections['mercadolibre']"
         class="px-6 pb-6 space-y-4"
-        style="border-top: 2px solid #dddbd3;"
+        style="border-top: 2px solid #2a2f38;"
       >
         <div class="rounded-lg p-4 mt-4" style="background: #FFC10710; border: 1.5px solid #FFC10730;">
           <p class="text-sm text-steel-600">
@@ -176,7 +176,7 @@
         </div>
         <a
           routerLink="/admin/meli"
-          class="inline-flex items-center justify-center gap-2 w-full bg-concrete-100 hover:bg-concrete-200 text-steel-900 font-bold py-3 rounded-lg border border-concrete-200 transition-all text-sm"
+          class="inline-flex items-center justify-center gap-2 w-full bg-[#2a2f38] hover:bg-[#3a404a] text-white font-bold py-3 rounded-lg border border-[#2a2f38] transition-all text-sm"
         >
           <lucide-icon [name]="Zap" size="18" class="text-safety-yellow"></lucide-icon>
           Gestionar mi cuenta de Mercado Libre
@@ -188,33 +188,33 @@
       <button
         type="button"
         (click)="toggleSection('whatsapp')"
-        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-concrete-50 transition-colors cursor-pointer"
+        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-white/5 transition-colors cursor-pointer"
       >
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-600" style="border: 1.5px solid #bbf7d0;">
             <lucide-icon [name]="MessageCircle" size="20"></lucide-icon>
           </div>
-          <h3 class="text-lg font-bold text-steel-900">WhatsApp de la Ferreteria</h3>
+          <h3 class="text-lg font-bold text-white">WhatsApp de la Ferreteria</h3>
         </div>
         <lucide-icon
           [name]="expandedSections['whatsapp'] ? ChevronUp : ChevronDown"
           size="20"
-          class="text-steel-500 flex-shrink-0"
+          class="text-steel-400 flex-shrink-0"
         ></lucide-icon>
       </button>
 
       <div
         *ngIf="expandedSections['whatsapp']"
         class="px-6 pb-6 space-y-4"
-        style="border-top: 2px solid #dddbd3;"
+        style="border-top: 2px solid #2a2f38;"
       >
         <div class="mt-4">
-          <label class="block text-xs font-bold text-steel-500 uppercase tracking-wider mb-1.5">Numero de WhatsApp</label>
+          <label class="block text-xs font-bold text-steel-400 uppercase tracking-wider mb-1.5">Numero de WhatsApp</label>
           <input
             type="text"
             formControlName="whatsapp_number"
             placeholder="Ej: 5491123456789"
-            class="w-full bg-concrete-50 border border-concrete-200 rounded-lg px-4 py-2.5 text-steel-900 focus:outline-none focus:ring-2 focus:ring-ferre-400 transition-all font-mono text-sm"
+            class="w-full bg-[#13161c] border border-[#2a2f38] rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-ferre-400 transition-all font-mono text-sm"
           />
           <p class="text-xs text-steel-400 mt-2">
             Ingrese el numero completo con codigo de pais (Ej: 5491112345678). El widget redirigira consultas a este numero.

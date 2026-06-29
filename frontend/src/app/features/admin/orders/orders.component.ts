@@ -56,13 +56,13 @@ interface Sale {
       <!-- Header -->
       <div class="flex items-center justify-between">
         <div>
-          <h2 class="text-2xl font-extrabold text-steel-900 uppercase tracking-wider flex items-center gap-3" style="font-family: Sora, sans-serif;">
+          <h2 class="text-2xl font-extrabold text-white uppercase tracking-wider flex items-center gap-3" style="font-family: Sora, sans-serif;">
             <lucide-icon [name]="ClipboardList" size="28" class="text-ferre-600"></lucide-icon>
             Ordenes de Venta
           </h2>
-          <p class="text-steel-500 mt-1">Gestiona los pedidos de tu tienda online</p>
+          <p class="text-steel-400 mt-1">Gestiona los pedidos de tu tienda online</p>
         </div>
-        <button (click)="loadOrders()" class="flex items-center gap-2 px-4 py-2 bg-white border border-concrete-200 rounded-lg text-steel-600 hover:bg-concrete-50 transition-all font-semibold text-sm">
+        <button (click)="loadOrders()" class="flex items-center gap-2 px-4 py-2 bg-[#1a1f27] border border-[#2a2f38] rounded-lg text-steel-400 hover:bg-[#1a1f27]/5 transition-all font-semibold text-sm">
           <lucide-icon [name]="RefreshCw" size="16" [class.animate-spin]="loading"></lucide-icon>
           Actualizar
         </button>
@@ -71,8 +71,8 @@ interface Sale {
       <!-- Stats Cards -->
       <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
         <div class="card-industrial p-4 text-center">
-          <p class="text-2xl font-extrabold text-steel-900" style="font-family: Sora, sans-serif;">{{ orders.length }}</p>
-          <p class="text-[10px] text-steel-500 font-bold uppercase tracking-wider">Total</p>
+          <p class="text-2xl font-extrabold text-white" style="font-family: Sora, sans-serif;">{{ orders.length }}</p>
+          <p class="text-[10px] text-steel-400 font-bold uppercase tracking-wider">Total</p>
         </div>
         <div class="p-4 text-center" style="background: #FFC10710; border: 2px solid #FFC107; border-left: 4px solid #d45e08; border-radius: 0.375rem;">
           <p class="text-2xl font-extrabold text-amber-700" style="font-family: Sora, sans-serif;">{{ getCountByPaymentStatus('PENDING') }}</p>
@@ -94,11 +94,11 @@ interface Sale {
 
       <!-- Filters -->
       <div class="flex gap-4 flex-wrap">
-        <div class="flex items-center bg-white border border-concrete-200 rounded-lg px-4 py-2 gap-2 flex-1 max-w-sm">
-          <lucide-icon [name]="Search" size="16" class="text-steel-400"></lucide-icon>
-          <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="filterOrders()" placeholder="Buscar por cliente, ID o direccion..." class="bg-transparent text-steel-900 text-sm focus:outline-none flex-1">
+        <div class="flex items-center bg-[#1a1f27] border border-[#2a2f38] rounded-lg px-4 py-2 gap-2 flex-1 max-w-sm">
+          <lucide-icon [name]="Search" size="16" class="text-steel-500"></lucide-icon>
+          <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="filterOrders()" placeholder="Buscar por cliente, ID o direccion..." class="bg-transparent text-white text-sm focus:outline-none flex-1">
         </div>
-        <select [(ngModel)]="statusFilter" (ngModelChange)="filterOrders()" class="bg-white border border-concrete-200 rounded-lg px-4 py-2 text-steel-900 text-sm focus:outline-none focus:border-ferre-600 cursor-pointer">
+        <select [(ngModel)]="statusFilter" (ngModelChange)="filterOrders()" class="bg-[#1a1f27] border border-[#2a2f38] rounded-lg px-4 py-2 text-white text-sm focus:outline-none focus:border-ferre-600 cursor-pointer">
           <option value="">Pago: Todos</option>
           <option value="PENDING">Pendiente</option>
           <option value="PAID">Pagado</option>
@@ -109,28 +109,28 @@ interface Sale {
       <!-- Loading -->
       <div *ngIf="loading" class="text-center py-12">
         <lucide-icon [name]="RefreshCw" size="32" class="text-ferre-600 animate-spin mx-auto"></lucide-icon>
-        <p class="text-steel-500 mt-4">Cargando ordenes...</p>
+        <p class="text-steel-400 mt-4">Cargando ordenes...</p>
       </div>
 
       <!-- Orders Table -->
       <div *ngIf="!loading" class="card-industrial overflow-hidden">
         <table class="w-full text-sm">
           <thead>
-            <tr style="background: #f8f8f6;">
-              <th class="text-left px-6 py-3 text-[10px] font-bold text-steel-500 uppercase tracking-wider" style="border-bottom: 2px solid #dddbd3;">ID</th>
-              <th class="text-left px-6 py-3 text-[10px] font-bold text-steel-500 uppercase tracking-wider" style="border-bottom: 2px solid #dddbd3;">Cliente</th>
-              <th class="text-left px-6 py-3 text-[10px] font-bold text-steel-500 uppercase tracking-wider" style="border-bottom: 2px solid #dddbd3;">Total</th>
-              <th class="text-left px-6 py-3 text-[10px] font-bold text-steel-500 uppercase tracking-wider" style="border-bottom: 2px solid #dddbd3;">Pago</th>
-              <th class="text-left px-6 py-3 text-[10px] font-bold text-steel-500 uppercase tracking-wider" style="border-bottom: 2px solid #dddbd3;">Envio</th>
-              <th class="text-left px-6 py-3 text-[10px] font-bold text-steel-500 uppercase tracking-wider" style="border-bottom: 2px solid #dddbd3;">Fecha</th>
-              <th class="text-right px-6 py-3 text-[10px] font-bold text-steel-500 uppercase tracking-wider" style="border-bottom: 2px solid #dddbd3;">Acciones</th>
+            <tr style="background: #1a1f27;">
+              <th class="text-left px-6 py-3 text-[10px] font-bold text-steel-400 uppercase tracking-wider" style="border-bottom: 2px solid #2a2f38;">ID</th>
+              <th class="text-left px-6 py-3 text-[10px] font-bold text-steel-400 uppercase tracking-wider" style="border-bottom: 2px solid #2a2f38;">Cliente</th>
+              <th class="text-left px-6 py-3 text-[10px] font-bold text-steel-400 uppercase tracking-wider" style="border-bottom: 2px solid #2a2f38;">Total</th>
+              <th class="text-left px-6 py-3 text-[10px] font-bold text-steel-400 uppercase tracking-wider" style="border-bottom: 2px solid #2a2f38;">Pago</th>
+              <th class="text-left px-6 py-3 text-[10px] font-bold text-steel-400 uppercase tracking-wider" style="border-bottom: 2px solid #2a2f38;">Envio</th>
+              <th class="text-left px-6 py-3 text-[10px] font-bold text-steel-400 uppercase tracking-wider" style="border-bottom: 2px solid #2a2f38;">Fecha</th>
+              <th class="text-right px-6 py-3 text-[10px] font-bold text-steel-400 uppercase tracking-wider" style="border-bottom: 2px solid #2a2f38;">Acciones</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let order of filteredOrders" class="border-b border-concrete-100 hover:bg-concrete-50 transition-colors">
+            <tr *ngFor="let order of filteredOrders" class="border-b border-[#2a2f38] hover:bg-[#1a1f27]/5 transition-colors">
               <td class="px-6 py-4 font-extrabold text-ferre-600">#{{ order.id }}</td>
-              <td class="px-6 py-4 text-steel-900 font-semibold">{{ order.customer?.name || 'Consumidor Final' }}</td>
-              <td class="px-6 py-4 text-steel-900 font-extrabold">\${{ order.total }}</td>
+              <td class="px-6 py-4 text-white font-semibold">{{ order.customer?.name || 'Consumidor Final' }}</td>
+              <td class="px-6 py-4 text-white font-extrabold">\${{ order.total }}</td>
               <td class="px-6 py-4">
                 <p-dropdown 
                   [(ngModel)]="order.payment_status" 
@@ -171,69 +171,69 @@ interface Sale {
                   </ng-template>
                 </p-dropdown>
               </td>
-              <td class="px-6 py-4 text-steel-500 text-xs">{{ order.created_at | date:'dd/MM/yyyy HH:mm' }}</td>
+              <td class="px-6 py-4 text-steel-400 text-xs">{{ order.created_at | date:'dd/MM/yyyy HH:mm' }}</td>
               <td class="px-6 py-4 text-right space-x-2">
-                <button (click)="viewOrder(order)" class="px-3 py-1.5 bg-ferre-50 text-ferre-600 rounded-lg text-xs font-bold hover:bg-ferre-50 border border-ferre-200 transition-colors" title="Ver detalle">
+                <button (click)="viewOrder(order)" class="px-3 py-1.5 bg-ferre-600/10 text-ferre-600 rounded-lg text-xs font-bold hover:bg-ferre-600/10 border border-ferre-600/20 transition-colors" title="Ver detalle">
                   <lucide-icon [name]="Eye" size="14"></lucide-icon>
                 </button>
                 <button *ngIf="order.payment_status === 'PAID' && order.shipping_status === 'SHIPPED'" 
                         (click)="sendShippingEmail(order)" 
-                        class="px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg text-xs font-bold hover:bg-blue-50 border border-blue-200 transition-colors" 
+                        class="px-3 py-1.5 bg-blue-500/10 text-blue-400 rounded-lg text-xs font-bold hover:bg-blue-500/10 border border-blue-500/20 transition-colors" 
                         title="Enviar notificación de envío">
                   <lucide-icon [name]="Mail" size="14"></lucide-icon>
                 </button>
-                <button (click)="deleteSale(order)" class="px-3 py-1.5 bg-red-50 text-red-500 rounded-lg text-xs font-bold hover:bg-red-50 border border-red-200 transition-colors" title="Eliminar venta">
+                <button (click)="deleteSale(order)" class="px-3 py-1.5 bg-safety-red/10 text-safety-red rounded-lg text-xs font-bold hover:bg-safety-red/10 border border-safety-red/20 transition-colors" title="Eliminar venta">
                   <lucide-icon [name]="Trash2" size="14"></lucide-icon>
                 </button>
               </td>
             </tr>
           </tbody>
         </table>
-        <div *ngIf="filteredOrders.length === 0" class="text-center py-12 text-steel-400">
+        <div *ngIf="filteredOrders.length === 0" class="text-center py-12 text-steel-500">
           No se encontraron órdenes
         </div>
       </div>
 
       <!-- Order Detail Modal -->
       <div *ngIf="selectedOrder" class="fixed inset-0 bg-steel-900/30 backdrop-blur-sm z-50 flex items-center justify-center p-4" (click)="selectedOrder = null">
-        <div class="bg-white border-2 border-concrete-200 rounded-lg w-full max-w-2xl max-h-[80vh] overflow-y-auto relative" (click)="$event.stopPropagation()">
+        <div class="bg-[#1a1f27] border-2 border-[#2a2f38] rounded-lg w-full max-w-2xl max-h-[80vh] overflow-y-auto relative" (click)="$event.stopPropagation()">
           <!-- Tornillos -->
           <div class="absolute top-3 left-3 screw"></div>
           <div class="absolute top-3 right-3 screw"></div>
-          <div class="flex items-center justify-between p-6" style="border-bottom: 2px solid #dddbd3;">
-            <h3 class="text-lg font-extrabold text-steel-900 uppercase tracking-wider" style="font-family: Sora, sans-serif;">Pedido #{{ selectedOrder.id }}</h3>
-            <button (click)="selectedOrder = null" class="text-steel-400 hover:text-steel-900 transition-colors">
+          <div class="flex items-center justify-between p-6" style="border-bottom: 2px solid #2a2f38;">
+            <h3 class="text-lg font-extrabold text-white uppercase tracking-wider" style="font-family: Sora, sans-serif;">Pedido #{{ selectedOrder.id }}</h3>
+            <button (click)="selectedOrder = null" class="text-steel-500 hover:text-white transition-colors">
               <lucide-icon [name]="X" size="20"></lucide-icon>
             </button>
           </div>
           <div class="p-6 space-y-6">
             <!-- Customer Info -->
-            <div class="bg-concrete-50 rounded-lg p-4 space-y-2 border border-concrete-200">
+            <div class="bg-[#13161c] rounded-lg p-4 space-y-2 border border-[#2a2f38]">
               <h4 class="text-[10px] font-bold text-ferre-600 uppercase tracking-wider mb-3">Datos del Cliente</h4>
               <div class="flex items-center gap-2 text-sm">
-                <lucide-icon [name]="User" size="14" class="text-steel-400"></lucide-icon>
-                <span class="text-steel-900 font-semibold">{{ selectedOrder.customer?.name || 'Consumidor Final' }}</span>
+                <lucide-icon [name]="User" size="14" class="text-steel-500"></lucide-icon>
+                <span class="text-white font-semibold">{{ selectedOrder.customer?.name || 'Consumidor Final' }}</span>
               </div>
             </div>
             
             <!-- Shipping -->
-            <div class="bg-concrete-50 rounded-lg p-4 border border-concrete-200">
+            <div class="bg-[#13161c] rounded-lg p-4 border border-[#2a2f38]">
               <h4 class="text-[10px] font-bold text-ferre-600 uppercase tracking-wider mb-3">Direccion de Envio</h4>
-              <p class="text-sm text-steel-600 flex items-start gap-2">
-                <lucide-icon [name]="MapPin" size="14" class="text-steel-400 mt-0.5"></lucide-icon>
+              <p class="text-sm text-steel-400 flex items-start gap-2">
+                <lucide-icon [name]="MapPin" size="14" class="text-steel-500 mt-0.5"></lucide-icon>
                 {{ selectedOrder.shipping_address || 'Sin direccion' }}
               </p>
             </div>
 
             <!-- Items -->
-            <div class="bg-concrete-50 rounded-lg p-4 border border-concrete-200">
+            <div class="bg-[#13161c] rounded-lg p-4 border border-[#2a2f38]">
               <h4 class="text-[10px] font-bold text-ferre-600 uppercase tracking-wider mb-3">Productos</h4>
-              <div *ngFor="let item of selectedOrder.items" class="flex justify-between items-center py-2 border-b border-concrete-200 last:border-0">
+              <div *ngFor="let item of selectedOrder.items" class="flex justify-between items-center py-2 border-b border-[#2a2f38] last:border-0">
                 <div>
-                  <span class="text-steel-900 font-semibold text-sm">Producto #{{ item.product }}</span>
-                  <span class="text-steel-400 text-xs ml-2">x{{ item.quantity }}</span>
+                  <span class="text-white font-semibold text-sm">Producto #{{ item.product }}</span>
+                  <span class="text-steel-500 text-xs ml-2">x{{ item.quantity }}</span>
                 </div>
-                <span class="text-steel-900 font-bold text-sm">\${{ item.subtotal }}</span>
+                <span class="text-white font-bold text-sm">\${{ item.subtotal }}</span>
               </div>
             </div>
 
@@ -335,19 +335,19 @@ export class OrdersComponent implements OnInit {
 
   getPaymentStatusClasses(status: string): string {
     switch(status) {
-      case 'PENDING': return 'bg-amber-50 text-amber-700 border border-amber-200';
-      case 'PAID': return 'bg-green-50 text-green-700 border border-green-200';
-      case 'REJECTED': return 'bg-red-50 text-red-500 border border-red-200';
-      default: return 'bg-concrete-100 text-steel-500 border border-concrete-200';
+      case 'PENDING': return 'bg-safety-yellow/10 text-safety-yellow border border-safety-yellow/20';
+      case 'PAID': return 'bg-green-500/10 text-green-400 border border-green-500/20';
+      case 'REJECTED': return 'bg-safety-red/10 text-safety-red border border-safety-red/20';
+      default: return 'bg-concrete-100 text-steel-400 border border-[#2a2f38]';
     }
   }
 
   getShippingStatusClasses(status: string): string {
     switch(status) {
-      case 'PENDING': return 'bg-concrete-100 text-steel-500 border border-concrete-200';
-      case 'SHIPPED': return 'bg-blue-50 text-blue-600 border border-blue-200';
-      case 'DELIVERED': return 'bg-green-50 text-green-700 border border-green-200';
-      default: return 'bg-concrete-100 text-steel-500 border border-concrete-200';
+      case 'PENDING': return 'bg-concrete-100 text-steel-400 border border-[#2a2f38]';
+      case 'SHIPPED': return 'bg-blue-500/10 text-blue-400 border border-blue-500/20';
+      case 'DELIVERED': return 'bg-green-500/10 text-green-400 border border-green-500/20';
+      default: return 'bg-concrete-100 text-steel-400 border border-[#2a2f38]';
     }
   }
 

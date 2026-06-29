@@ -11,11 +11,11 @@
   --ferre-primary-dark: #b0440b;
   --ferre-secondary: #374048;
   --ferre-accent: #FFC107;
-  --ferre-bg: #f8f8f6;
-  --ferre-text: #2a3138;
-  --ferre-muted: #62707e;
-  --ferre-border: #dddbd3;
-  --ferre-surface: #ffffff;
+  --ferre-bg: #13161c;
+  --ferre-text: #e2e4e9;
+  --ferre-muted: #8b92a0;
+  --ferre-border: #2a2f38;
+  --ferre-surface: #1a1f27;
 }
 
 * {
@@ -69,41 +69,41 @@ body {
 .btn-outline:hover {
   border-color: var(--ferre-primary);
   color: var(--ferre-primary);
-  background: rgba(212, 94, 8, 0.04);
+  background: rgba(212, 94, 8, 0.06);
 }
 
 /* ===== TARJETAS ===== */
 .card-ferre {
-  @apply rounded-xl transition-all duration-200;
+  @apply rounded-lg transition-all duration-200;
   background: var(--ferre-surface);
   border: 1px solid var(--ferre-border);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 .card-ferre:hover {
-  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-  border-color: #c7c3b7;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  border-color: #3a404a;
 }
 
 /* ===== INPUTS ===== */
 .input-ferre {
   @apply w-full px-4 py-3 rounded-lg font-medium transition-all duration-200;
-  background: var(--ferre-surface);
+  background: #13161c;
   border: 1.5px solid var(--ferre-border);
   color: var(--ferre-text);
 }
 .input-ferre:focus {
   outline: none;
   border-color: var(--ferre-primary);
-  box-shadow: 0 0 0 3px rgba(212, 94, 8, 0.1);
+  box-shadow: 0 0 0 3px rgba(212, 94, 8, 0.15);
 }
 .input-ferre::placeholder {
-  color: #adb5be;
+  color: #5a6070;
 }
 
 /* ===== BADGES ===== */
 .badge-ferre {
   @apply inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold uppercase tracking-wide;
-  background: rgba(212, 94, 8, 0.1);
+  background: rgba(212, 94, 8, 0.15);
   color: var(--ferre-primary);
 }
 
@@ -114,38 +114,25 @@ body {
   color: var(--ferre-text);
 }
 
-/* ===== TEXTURA INDUSTRIAL ===== */
-.bg-industrial-texture {
-  background-color: #f8f8f6;
-  background-image:
-    repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 3px,
-      rgba(0,0,0,0.012) 3px,
-      rgba(0,0,0,0.012) 4px
-    );
-}
-
 /* ===== TARJETA INDUSTRIAL (stripe naranja superior) ===== */
 .card-industrial {
-  background: white;
-  border: 1.5px solid #dddbd3;
-  border-top: 4px solid #d45e08;
+  background: #1a1f27;
+  border: 1px solid #2a2f38;
+  border-top: 3px solid #d45e08;
   border-radius: 0.5rem;
   transition: all 0.2s;
 }
 .card-industrial:hover {
-  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-  border-color: #c7c3b7;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  border-color: #3a404a;
 }
 
 /* ===== TORNILLOS DECORATIVOS ===== */
 .screw {
   width: 8px; height: 8px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #dddbd3 0%, #c7c3b7 100%);
-  border: 1px solid #aba596;
+  background: linear-gradient(135deg, #3a404a 0%, #2a2f38 100%);
+  border: 1px solid #4a5060;
   position: relative;
 }
 .screw::after {
@@ -154,7 +141,7 @@ body {
   top: 50%; left: 50%;
   transform: translate(-50%,-50%) rotate(45deg);
   width: 5px; height: 0.8px;
-  background: #968e7c;
+  background: #5a6070;
 }
 
 /* ===== LINEA DE ADVERTENCIA (rayas amarillas) ===== */
@@ -163,8 +150,8 @@ body {
     -45deg,
     #FFC107,
     #FFC107 8px,
-    #2a3138 8px,
-    #2a3138 16px
+    #1a1f27 8px,
+    #1a1f27 16px
   );
   height: 4px;
 }
@@ -172,8 +159,8 @@ body {
 /* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #c7c3b7; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #968e7c; }
+::-webkit-scrollbar-thumb { background: #3a404a; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #4a5060; }
 
 /* ===== PRIMEGEN OVERRIDES ===== */
 .p-paginator {
@@ -189,10 +176,10 @@ body {
   gap: 0.25rem !important;
 }
 .p-paginator .p-paginator-pages .p-paginator-page {
-  background: white !important;
-  border: 1.5px solid var(--ferre-border) !important;
-  color: var(--ferre-muted) !important;
-  border-radius: 8px !important;
+  background: #1a1f27 !important;
+  border: 1.5px solid #2a2f38 !important;
+  color: #8b92a0 !important;
+  border-radius: 6px !important;
   min-width: 2.5rem !important;
   height: 2.5rem !important;
   font-weight: 700 !important;
@@ -204,7 +191,7 @@ body {
   color: white !important;
 }
 .p-paginator .p-paginator-pages .p-paginator-page:not(.p-highlight):hover {
-  background: rgba(212, 94, 8, 0.06) !important;
+  background: rgba(212, 94, 8, 0.1) !important;
   border-color: var(--ferre-primary) !important;
   color: var(--ferre-primary) !important;
 }
@@ -216,18 +203,18 @@ body {
 
 /* PrimeNG Dropdown */
 .p-dropdown-panel {
-  background: white !important;
-  border: 1.5px solid var(--ferre-border) !important;
-  border-radius: 10px !important;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+  background: #1a1f27 !important;
+  border: 1.5px solid #2a2f38 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4) !important;
 }
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
-  color: var(--ferre-text) !important;
+  color: #e2e4e9 !important;
   padding: 0.6rem 0.75rem !important;
   border-radius: 6px !important;
 }
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item:hover {
-  background: rgba(212, 94, 8, 0.06) !important;
+  background: rgba(212, 94, 8, 0.1) !important;
   color: var(--ferre-primary) !important;
 }
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {

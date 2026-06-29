@@ -77,10 +77,10 @@ interface Category {
       <!-- Header -->
       <div class="flex items-center justify-between">
         <div>
-          <h1 class="text-2xl font-extrabold text-steel-900 uppercase tracking-wider" style="font-family: Sora, sans-serif;">
+          <h1 class="text-2xl font-extrabold text-white uppercase tracking-wider" style="font-family: Sora, sans-serif;">
             Categorias
           </h1>
-          <p class="text-steel-500 text-sm mt-1">
+          <p class="text-steel-400 text-sm mt-1">
             Gestioná las categorias de tu catalogo de productos.
           </p>
         </div>
@@ -99,19 +99,19 @@ interface Category {
         class="card-industrial p-6 animate-scale-in"
       >
         <div class="flex items-center gap-3 mb-4">
-          <div class="w-10 h-10 rounded-lg bg-ferre-50 flex items-center justify-center" style="border: 1.5px solid #f9d7a5;">
+          <div class="w-10 h-10 rounded-lg bg-ferre-600/10 flex items-center justify-center" style="border: 1.5px solid #f9d7a5;">
             <lucide-icon [name]="FolderOpen" size="18" class="text-ferre-600"></lucide-icon>
           </div>
-          <h2 class="text-lg font-extrabold text-steel-900 uppercase tracking-wider" style="font-family: Sora, sans-serif;">Crear Nueva Categoria</h2>
+          <h2 class="text-lg font-extrabold text-white uppercase tracking-wider" style="font-family: Sora, sans-serif;">Crear Nueva Categoria</h2>
         </div>
         <div class="flex items-end gap-4">
           <div class="flex-1">
-            <label class="block text-xs font-bold text-steel-500 uppercase tracking-wider mb-1.5">Nombre de la categoria</label>
+            <label class="block text-xs font-bold text-steel-400 uppercase tracking-wider mb-1.5">Nombre de la categoria</label>
             <input
               type="text"
               [(ngModel)]="newCategoryName"
               placeholder="Ej. Herramientas Electricas, Plomeria, Pinturas..."
-              class="w-full px-4 py-2.5 rounded-lg bg-concrete-50 border border-concrete-200 text-steel-900 text-sm focus:outline-none focus:ring-2 focus:ring-ferre-400 focus:border-ferre-500 transition-all placeholder:text-steel-300"
+              class="w-full px-4 py-2.5 rounded-lg bg-[#13161c] border border-[#2a2f38] text-white text-sm focus:outline-none focus:ring-2 focus:ring-ferre-400 focus:border-ferre-500 transition-all placeholder:text-steel-600"
               (keydown.enter)="createCategory()"
               autofocus
             />
@@ -119,13 +119,13 @@ interface Category {
           <button
             (click)="createCategory()"
             [disabled]="!newCategoryName.trim() || creatingCategory"
-            class="px-5 py-2.5 rounded-lg bg-ferre-600 text-white font-bold text-sm hover:bg-ferre-500 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 whitespace-nowrap"
+            class="px-5 py-2.5 rounded-lg bg-ferre-600 text-white font-bold text-sm hover:bg-ferre-600/100 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 whitespace-nowrap"
           >
             <div *ngIf="creatingCategory" class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
             <lucide-icon *ngIf="!creatingCategory" [name]="Save" size="16"></lucide-icon>
             {{ creatingCategory ? "Creando..." : "Crear" }}
           </button>
-          <button (click)="showNewForm = false" class="p-2.5 rounded-lg bg-concrete-100 hover:bg-concrete-200 text-steel-500 hover:text-steel-900 transition-all">
+          <button (click)="showNewForm = false" class="p-2.5 rounded-lg bg-[#2a2f38] hover:bg-[#3a404a] text-steel-400 hover:text-white transition-all">
             <lucide-icon [name]="X" size="18"></lucide-icon>
           </button>
         </div>
@@ -133,8 +133,8 @@ interface Category {
 
       <!-- Loading -->
       <div *ngIf="loading" class="text-center py-20">
-        <div class="w-8 h-8 border-2 border-concrete-200 border-t-ferre-600 rounded-full animate-spin mx-auto mb-4"></div>
-        <p class="text-steel-400 text-sm">Cargando categorias...</p>
+        <div class="w-8 h-8 border-2 border-[#2a2f38] border-t-ferre-600 rounded-full animate-spin mx-auto mb-4"></div>
+        <p class="text-steel-500 text-sm">Cargando categorias...</p>
       </div>
 
       <!-- Category Cards -->
@@ -146,15 +146,15 @@ interface Category {
         >
           <div class="p-4 flex items-center gap-4">
             <!-- Icon -->
-            <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-ferre-50" style="border: 1.5px solid #f9d7a5;">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-ferre-600/10" style="border: 1.5px solid #f9d7a5;">
               <lucide-icon [name]="Tag" size="18" class="text-ferre-600"></lucide-icon>
             </div>
 
             <!-- Name / Edit -->
             <div class="flex-1 min-w-0" *ngIf="!cat.editing">
-              <p class="font-bold text-steel-900 truncate">{{ cat.name }}</p>
+              <p class="font-bold text-white truncate">{{ cat.name }}</p>
               <div class="flex items-center gap-2 mt-1">
-                <span class="text-[10px] bg-concrete-100 text-steel-500 px-2 py-0.5 rounded font-bold">
+                <span class="text-[10px] bg-[#2a2f38] text-steel-400 px-2 py-0.5 rounded font-bold">
                   slug: {{ cat.slug }}
                 </span>
                 <span *ngIf="cat.meli_category_id" class="text-[10px] bg-green-500/10 text-green-600 px-2 py-0.5 rounded font-bold">
@@ -168,7 +168,7 @@ interface Category {
               <input
                 type="text"
                 [(ngModel)]="cat.editName"
-                class="w-full px-4 py-2 rounded-lg bg-concrete-50 border border-concrete-200 text-steel-900 font-bold text-sm focus:outline-none focus:ring-2 focus:ring-ferre-400 transition-all"
+                class="w-full px-4 py-2 rounded-lg bg-[#13161c] border border-[#2a2f38] text-white font-bold text-sm focus:outline-none focus:ring-2 focus:ring-ferre-400 transition-all"
                 (keydown.enter)="saveEdit(cat)"
                 (keydown.escape)="cancelEdit(cat)"
               />
@@ -178,10 +178,10 @@ interface Category {
             <div class="flex items-center gap-2" *ngIf="!cat.editing">
               <!-- Reorder controls -->
               <div class="flex flex-col gap-1 mr-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <button (click)="moveCategory(cat, -1)" class="p-1 rounded bg-concrete-100 hover:bg-concrete-200 text-steel-500 hover:text-steel-900 transition-all disabled:opacity-30" [disabled]="i === 0">
+                <button (click)="moveCategory(cat, -1)" class="p-1 rounded bg-[#2a2f38] hover:bg-[#3a404a] text-steel-400 hover:text-white transition-all disabled:opacity-30" [disabled]="i === 0">
                   <lucide-icon [name]="ArrowUp" size="14"></lucide-icon>
                 </button>
-                <button (click)="moveCategory(cat, 1)" class="p-1 rounded bg-concrete-100 hover:bg-concrete-200 text-steel-500 hover:text-steel-900 transition-all disabled:opacity-30" [disabled]="i === categories.length - 1">
+                <button (click)="moveCategory(cat, 1)" class="p-1 rounded bg-[#2a2f38] hover:bg-[#3a404a] text-steel-400 hover:text-white transition-all disabled:opacity-30" [disabled]="i === categories.length - 1">
                   <lucide-icon [name]="ArrowDown" size="14"></lucide-icon>
                 </button>
               </div>
@@ -189,14 +189,14 @@ interface Category {
               <button
                 (click)="startEdit(cat)"
                 title="Editar nombre"
-                class="p-2.5 rounded-xl bg-concrete-100 hover:bg-concrete-200 text-steel-500 hover:text-steel-900 transition-all opacity-0 group-hover:opacity-100"
+                class="p-2.5 rounded-lg bg-[#2a2f38] hover:bg-[#3a404a] text-steel-400 hover:text-white transition-all opacity-0 group-hover:opacity-100"
               >
                 <lucide-icon [name]="Pencil" size="16"></lucide-icon>
               </button>
               <button
                 (click)="confirmDelete(cat)"
                 title="Eliminar categoría"
-                class="p-2.5 rounded-xl bg-concrete-100 hover:bg-ferre-50 text-steel-500 hover:text-ferre-600 transition-all opacity-0 group-hover:opacity-100"
+                class="p-2.5 rounded-lg bg-[#2a2f38] hover:bg-ferre-600/10 text-steel-400 hover:text-ferre-600 transition-all opacity-0 group-hover:opacity-100"
               >
                 <lucide-icon [name]="Trash2" size="16"></lucide-icon>
               </button>
@@ -206,14 +206,14 @@ interface Category {
             <div class="flex items-center gap-2" *ngIf="cat.editing">
               <button
                 (click)="saveEdit(cat)"
-                class="px-4 py-2 rounded-xl bg-ferre-600 text-black font-extrabold text-xs hover:bg-ferre-500 transition-all flex items-center gap-1.5"
+                class="px-4 py-2 rounded-lg bg-ferre-600 text-black font-extrabold text-xs hover:bg-ferre-600/100 transition-all flex items-center gap-1.5"
               >
                 <lucide-icon [name]="CheckCircle" size="14"></lucide-icon>
                 Guardar
               </button>
               <button
                 (click)="cancelEdit(cat)"
-                class="p-2 rounded-xl bg-concrete-100 hover:bg-concrete-200 text-steel-500 hover:text-steel-900 transition-all"
+                class="p-2 rounded-lg bg-[#2a2f38] hover:bg-[#3a404a] text-steel-400 hover:text-white transition-all"
               >
                 <lucide-icon [name]="X" size="16"></lucide-icon>
               </button>
@@ -224,16 +224,16 @@ interface Category {
 
       <!-- Empty -->
       <div *ngIf="!loading && categories.length === 0" class="text-center py-20">
-        <div class="w-16 h-16 rounded-lg bg-concrete-100 flex items-center justify-center mx-auto mb-4" style="border: 2px dashed #dddbd3;">
-          <lucide-icon [name]="FolderOpen" size="28" class="text-steel-300"></lucide-icon>
+        <div class="w-16 h-16 rounded-lg bg-[#2a2f38] flex items-center justify-center mx-auto mb-4" style="border: 2px dashed #dddbd3;">
+          <lucide-icon [name]="FolderOpen" size="28" class="text-steel-600"></lucide-icon>
         </div>
-        <p class="text-steel-400 font-bold">No hay categorias aun</p>
-        <p class="text-steel-300 text-sm mt-1">Crea tu primera categoria para organizar tus productos.</p>
+        <p class="text-steel-500 font-bold">No hay categorias aun</p>
+        <p class="text-steel-600 text-sm mt-1">Crea tu primera categoria para organizar tus productos.</p>
       </div>
 
       <!-- Delete Confirmation Modal -->
       <div *ngIf="deletingCategory" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center" (click)="deletingCategory = null">
-        <div class="bg-white border-2 border-concrete-200 rounded-lg p-6 max-w-md w-full mx-4 animate-scale-in relative" (click)="$event.stopPropagation()">
+        <div class="bg-[#1a1f27] border-2 border-[#2a2f38] rounded-lg p-6 max-w-md w-full mx-4 animate-scale-in relative" (click)="$event.stopPropagation()">
           <!-- Tornillos -->
           <div class="absolute top-3 left-3 screw"></div>
           <div class="absolute top-3 right-3 screw"></div>
@@ -241,15 +241,15 @@ interface Category {
             <div class="w-10 h-10 rounded-lg bg-safety-red/10 flex items-center justify-center" style="border: 1.5px solid #fecaca;">
               <lucide-icon [name]="AlertCircle" size="20" class="text-safety-red"></lucide-icon>
             </div>
-            <h3 class="text-lg font-extrabold text-steel-900 uppercase tracking-wider" style="font-family: Sora, sans-serif;">Eliminar categoria?</h3>
+            <h3 class="text-lg font-extrabold text-white uppercase tracking-wider" style="font-family: Sora, sans-serif;">Eliminar categoria?</h3>
           </div>
-          <p class="text-steel-500 text-sm mb-6">
+          <p class="text-steel-400 text-sm mb-6">
             Estas por eliminar la categoria
-            <strong class="text-steel-900">"{{ deletingCategory?.name }}"</strong>.
+            <strong class="text-white">"{{ deletingCategory?.name }}"</strong>.
             Los productos asociados quedaran sin categoria. Esta accion no se puede deshacer.
           </p>
           <div class="flex justify-end gap-3">
-            <button (click)="deletingCategory = null" class="px-5 py-2.5 rounded-lg bg-concrete-100 hover:bg-concrete-200 text-steel-900 font-bold text-sm transition-all">
+            <button (click)="deletingCategory = null" class="px-5 py-2.5 rounded-lg bg-[#2a2f38] hover:bg-[#3a404a] text-white font-bold text-sm transition-all">
               Cancelar
             </button>
             <button (click)="deleteCategory()" class="px-5 py-2.5 rounded-lg bg-safety-red hover:bg-red-600 text-white font-bold text-sm transition-all flex items-center gap-2">

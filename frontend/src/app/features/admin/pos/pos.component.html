@@ -1,14 +1,14 @@
-<div class="min-h-screen p-4 md:p-8" style="background: #f8f8f6; background-image: repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(0,0,0,0.012) 3px, rgba(0,0,0,0.012) 4px);">
+<div class="min-h-screen p-4 md:p-8" style="background: #13161c;">
   <div class="max-w-7xl mx-auto">
     <!-- Header -->
     <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
       <div>
-        <h1 class="text-3xl font-black text-steel-900 mb-1 uppercase tracking-wider" style="font-family: Sora, sans-serif;">POS <span class="text-ferre-600">FERRENEXO</span></h1>
-        <p class="text-steel-500 font-medium text-sm">Terminal de Venta y Gestion de Remitos</p>
+        <h1 class="text-3xl font-black text-white mb-1 uppercase tracking-wider" style="font-family: Sora, sans-serif;">POS <span class="text-ferre-600">FERRENEXO</span></h1>
+        <p class="text-steel-400 font-medium text-sm">Terminal de Venta y Gestion de Remitos</p>
       </div>
       <div class="flex items-center gap-3">
-        <div class="bg-green-50 border-2 border-green-200 px-4 py-2 rounded-lg">
-          <span class="text-green-700 font-bold text-xs uppercase tracking-wider">Sesion Activa</span>
+        <div class="bg-green-500/10 border-2 border-green-500/20 px-4 py-2 rounded-lg">
+          <span class="text-green-400 font-bold text-xs uppercase tracking-wider">Sesion Activa</span>
         </div>
       </div>
     </div>
@@ -22,23 +22,23 @@
             <div class="w-10 h-10 bg-ferre-600 rounded-lg flex items-center justify-center text-white">
               <lucide-icon [name]="User" size="20"></lucide-icon>
             </div>
-            <h2 class="text-lg font-black text-steel-900 uppercase tracking-wider" style="font-family: Sora, sans-serif;">Datos del Cliente</h2>
+            <h2 class="text-lg font-black text-white uppercase tracking-wider" style="font-family: Sora, sans-serif;">Datos del Cliente</h2>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div class="md:col-span-1">
-              <label class="block text-steel-500 text-xs font-bold uppercase tracking-wider mb-1.5">Nombre Completo</label>
+              <label class="block text-steel-400 text-xs font-bold uppercase tracking-wider mb-1.5">Nombre Completo</label>
               <input
                 [(ngModel)]="currentReceipt.customer"
                 type="text"
                 placeholder="Ej: Juan Perez"
-                class="w-full bg-concrete-50 border border-concrete-200 text-steel-900 px-4 py-2.5 rounded-lg focus:border-ferre-600 outline-none transition-all placeholder:text-steel-400 text-sm"
+                class="w-full bg-[#13161c] border border-[#2a2f38] text-white px-4 py-2.5 rounded-lg focus:border-ferre-600 outline-none transition-all placeholder:text-steel-500 text-sm"
               />
             </div>
             <div class="md:col-span-1">
-              <label class="block text-steel-500 text-xs font-bold uppercase tracking-wider mb-1.5">Metodo de Pago</label>
+              <label class="block text-steel-400 text-xs font-bold uppercase tracking-wider mb-1.5">Metodo de Pago</label>
               <select 
                 [(ngModel)]="paymentMethod"
-                class="w-full bg-concrete-50 border border-concrete-200 text-steel-900 px-4 py-2.5 rounded-lg focus:border-ferre-600 outline-none transition-all cursor-pointer text-sm"
+                class="w-full bg-[#13161c] border border-[#2a2f38] text-white px-4 py-2.5 rounded-lg focus:border-ferre-600 outline-none transition-all cursor-pointer text-sm"
               >
                 <option value="Efectivo">Efectivo</option>
                 <option value="Transferencia">Transferencia</option>
@@ -48,11 +48,11 @@
               </select>
             </div>
             <div class="md:col-span-1">
-              <label class="block text-steel-500 text-xs font-bold uppercase tracking-wider mb-1.5">Email (Envio Digital)</label>
+              <label class="block text-steel-400 text-xs font-bold uppercase tracking-wider mb-1.5">Email (Envio Digital)</label>
               <input
                 type="email"
                 placeholder="opcional@mail.com"
-                class="w-full bg-concrete-50 border border-concrete-200 text-steel-900 px-4 py-2.5 rounded-lg focus:border-ferre-600 outline-none transition-all placeholder:text-steel-400 text-sm"
+                class="w-full bg-[#13161c] border border-[#2a2f38] text-white px-4 py-2.5 rounded-lg focus:border-ferre-600 outline-none transition-all placeholder:text-steel-500 text-sm"
               />
             </div>
           </div>
@@ -65,17 +65,17 @@
               <div class="w-10 h-10 bg-ferre-600 rounded-lg flex items-center justify-center text-white">
                 <lucide-icon [name]="Plus" size="20"></lucide-icon>
               </div>
-              <h2 class="text-lg font-black text-steel-900 uppercase tracking-wider" style="font-family: Sora, sans-serif;">Catalogo de Productos</h2>
+              <h2 class="text-lg font-black text-white uppercase tracking-wider" style="font-family: Sora, sans-serif;">Catalogo de Productos</h2>
             </div>
             
             <!-- Search Bar -->
             <div class="relative flex-1 max-w-md">
-              <lucide-icon [name]="Search" class="absolute left-3 top-1/2 -translate-y-1/2 text-steel-400" size="16"></lucide-icon>
+              <lucide-icon [name]="Search" class="absolute left-3 top-1/2 -translate-y-1/2 text-steel-500" size="16"></lucide-icon>
               <input 
                 [(ngModel)]="searchTerm"
                 type="text" 
                 placeholder="Buscar por nombre o codigo..."
-                class="w-full bg-concrete-50 border border-concrete-200 text-steel-900 pl-10 pr-4 py-2.5 rounded-lg focus:border-ferre-600 outline-none transition-all text-sm"
+                class="w-full bg-[#13161c] border border-[#2a2f38] text-white pl-10 pr-4 py-2.5 rounded-lg focus:border-ferre-600 outline-none transition-all text-sm"
               >
             </div>
           </div>
@@ -83,27 +83,27 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
             <div
               *ngIf="getFilteredProducts().length === 0"
-              class="col-span-full text-center py-12 bg-concrete-50 rounded-lg border-2 border-dashed border-concrete-200"
+              class="col-span-full text-center py-12 bg-[#13161c] rounded-lg border border-[#2a2f38]"
             >
-              <lucide-icon [name]="AlertCircle" size="40" class="mx-auto text-steel-400 mb-3"></lucide-icon>
-              <p class="font-bold text-steel-900">No se encontraron productos</p>
-              <p class="text-sm text-steel-500">Intenta con otro termino de busqueda</p>
+              <lucide-icon [name]="AlertCircle" size="40" class="mx-auto text-steel-500 mb-3"></lucide-icon>
+              <p class="font-bold text-white">No se encontraron productos</p>
+              <p class="text-sm text-steel-400">Intenta con otro termino de busqueda</p>
             </div>
             
             <div
               *ngFor="let product of getFilteredProducts()"
-              class="group bg-white border border-concrete-200 p-4 rounded-lg hover:bg-concrete-50 hover:border-ferre-600/30 transition-all cursor-pointer flex flex-col justify-between"
+              class="group bg-[#1a1f27] border border-[#2a2f38] p-4 rounded-lg hover:bg-white/5 hover:border-ferre-600/30 transition-all cursor-pointer flex flex-col justify-between"
               (click)="addProductToCart(product)"
             >
               <div>
                 <div class="flex justify-between items-start mb-2">
                   <span class="text-[10px] font-black bg-ferre-600/10 text-ferre-600 px-2 py-0.5 rounded uppercase tracking-wider">{{ product.category?.name || 'Varios' }}</span>
-                  <span class="text-xs text-steel-400 font-mono">#{{ product.sku || product.id }}</span>
+                  <span class="text-xs text-steel-500 font-mono">#{{ product.sku || product.id }}</span>
                 </div>
-                <p class="font-bold text-steel-900 group-hover:text-ferre-600 transition-colors line-clamp-2 leading-tight mb-2 text-sm">{{ product.name }}</p>
+                <p class="font-bold text-white group-hover:text-ferre-600 transition-colors line-clamp-2 leading-tight mb-2 text-sm">{{ product.name }}</p>
               </div>
               <div class="flex items-center justify-between mt-3">
-                <span class="text-lg font-black text-steel-900">${{ product.price | number:'1.0-0' }}</span>
+                <span class="text-lg font-black text-white">${{ product.price | number:'1.0-0' }}</span>
                 <div class="bg-ferre-600 text-white p-1.5 rounded-md opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
                   <lucide-icon [name]="Plus" size="14"></lucide-icon>
                 </div>
@@ -118,7 +118,7 @@
         <!-- Shopping Cart -->
         <div class="card-industrial p-6 flex flex-col h-[calc(100vh-250px)] lg:sticky lg:top-8">
           <div class="flex items-center justify-between mb-6">
-            <h2 class="text-lg font-black text-steel-900 flex items-center gap-2 uppercase tracking-wider" style="font-family: Sora, sans-serif;">
+            <h2 class="text-lg font-black text-white flex items-center gap-2 uppercase tracking-wider" style="font-family: Sora, sans-serif;">
               <lucide-icon [name]="ShoppingCart" size="18" class="text-ferre-600"></lucide-icon>
               Carrito
             </h2>
@@ -129,7 +129,7 @@
           <div class="flex-1 overflow-y-auto space-y-2 mb-6 pr-2 custom-scrollbar">
             <div
               *ngIf="currentReceipt.items.length === 0"
-              class="h-full flex flex-col items-center justify-center text-steel-400 opacity-50"
+              class="h-full flex flex-col items-center justify-center text-steel-500 opacity-50"
             >
               <lucide-icon [name]="ShoppingCart" size="40" class="mb-3"></lucide-icon>
               <p class="font-bold text-sm">Sin productos</p>
@@ -137,20 +137,20 @@
             
             <div
               *ngFor="let item of currentReceipt.items"
-              class="group bg-concrete-50 border border-concrete-200 p-3 rounded-lg flex items-center gap-3 transition-all hover:bg-white"
+              class="group bg-[#13161c] border border-[#2a2f38] p-3 rounded-lg flex items-center gap-3 transition-all hover:bg-[#222730]"
             >
               <div class="flex-1">
-                <p class="font-bold text-steel-900 text-sm line-clamp-1 leading-none mb-1">{{ item.name }}</p>
+                <p class="font-bold text-white text-sm line-clamp-1 leading-none mb-1">{{ item.name }}</p>
                 <div class="flex items-center gap-2">
                   <span class="text-xs text-ferre-600 font-black">${{ item.price | number:'1.0-0' }}</span>
-                  <span class="text-[10px] text-steel-400">x{{ item.quantity }}</span>
+                  <span class="text-[10px] text-steel-500">x{{ item.quantity }}</span>
                 </div>
               </div>
               <div class="text-right">
-                <p class="font-black text-steel-900 text-sm mb-1">${{ item.total | number:'1.0-0' }}</p>
+                <p class="font-black text-white text-sm mb-1">${{ item.total | number:'1.0-0' }}</p>
                 <button
                   (click)="removeFromCart(item.id)"
-                  class="text-steel-400 hover:text-safety-red transition-colors"
+                  class="text-steel-500 hover:text-safety-red transition-colors"
                 >
                   <lucide-icon [name]="Trash2" size="14"></lucide-icon>
                 </button>
@@ -159,17 +159,17 @@
           </div>
 
           <!-- Totals -->
-          <div class="bg-concrete-50 p-4 rounded-lg border border-concrete-200 space-y-2 mb-6">
-            <div class="flex justify-between text-sm font-bold text-steel-500">
+          <div class="bg-[#13161c] p-4 rounded-lg border border-[#2a2f38] space-y-2 mb-6">
+            <div class="flex justify-between text-sm font-bold text-steel-400">
               <span>Subtotal</span>
               <span>{{ calculateSubtotal() | currency }}</span>
             </div>
-            <div class="flex justify-between text-sm font-bold text-steel-500">
+            <div class="flex justify-between text-sm font-bold text-steel-400">
               <span>IVA (21%)</span>
               <span>{{ calculateTax() | currency }}</span>
             </div>
-            <div class="pt-2 mt-2 border-t-2 border-concrete-200 flex justify-between items-center">
-              <span class="text-steel-900 font-black text-lg">TOTAL</span>
+            <div class="pt-2 mt-2 border-t-2 border-[#2a2f38] flex justify-between items-center">
+              <span class="text-white font-black text-lg">TOTAL</span>
               <span class="text-ferre-600 font-black text-2xl tracking-tighter">{{ calculateTotal() | currency }}</span>
             </div>
           </div>
@@ -185,7 +185,7 @@
             </button>
             <button
               (click)="clearCart()"
-              class="w-full bg-white hover:bg-concrete-50 text-steel-400 hover:text-safety-red border border-concrete-200 font-bold py-2.5 rounded-lg transition-all flex items-center justify-center gap-2 text-sm"
+              class="w-full bg-[#1a1f27] hover:bg-white/5 text-steel-500 hover:text-safety-red border border-[#2a2f38] font-bold py-2.5 rounded-lg transition-all flex items-center justify-center gap-2 text-sm"
             >
               Limpiar Carrito
             </button>
@@ -195,14 +195,14 @@
         <!-- Recent Receipts -->
         <div class="card-industrial p-6">
           <div class="flex items-center justify-between mb-4">
-            <h2 class="text-lg font-black text-steel-900 flex items-center gap-2 uppercase tracking-wider" style="font-family: Sora, sans-serif;">
+            <h2 class="text-lg font-black text-white flex items-center gap-2 uppercase tracking-wider" style="font-family: Sora, sans-serif;">
                <lucide-icon [name]="Download" size="18" class="text-ferre-600"></lucide-icon>
                Historico
             </h2>
             <button
               (click)="clearReceiptHistory()"
               *ngIf="receipts.length > 0"
-              class="text-steel-400 hover:text-safety-red text-xs font-bold"
+              class="text-steel-500 hover:text-safety-red text-xs font-bold"
             >
               Borrar Todo
             </button>
@@ -210,22 +210,22 @@
           <div class="space-y-2 max-h-48 overflow-y-auto custom-scrollbar">
             <div
               *ngIf="receipts.length === 0"
-              class="text-center py-4 text-steel-400 italic text-sm"
+              class="text-center py-4 text-steel-500 italic text-sm"
             >
               No hay remitos previos
             </div>
             <div
               *ngFor="let receipt of receipts"
-              class="flex items-center justify-between p-3 bg-concrete-50 rounded-lg hover:bg-white transition-colors group cursor-pointer"
+              class="flex items-center justify-between p-3 bg-[#13161c] rounded-lg border border-[#2a2f38] hover:bg-[#222730] transition-colors group cursor-pointer"
               (click)="downloadReceipt(receipt)"
             >
               <div class="flex-1">
-                <p class="font-bold text-steel-900 text-xs">#{{ receipt.id.slice(-6) }}</p>
-                <p class="text-[10px] text-steel-400">{{ receipt.date }} - {{ receipt.customer }}</p>
+                <p class="font-bold text-white text-xs">#{{ receipt.id.slice(-6) }}</p>
+                <p class="text-[10px] text-steel-500">{{ receipt.date }} - {{ receipt.customer }}</p>
               </div>
               <div class="flex items-center gap-3">
                 <p class="font-black text-ferre-600 text-sm">${{ receipt.total | number:'1.0-0' }}</p>
-                <lucide-icon [name]="Download" size="14" class="text-steel-400 group-hover:text-steel-900 transition-colors"></lucide-icon>
+                <lucide-icon [name]="Download" size="14" class="text-steel-500 group-hover:text-white transition-colors"></lucide-icon>
               </div>
             </div>
           </div>
@@ -238,18 +238,18 @@
       *ngIf="showReceiptPreview"
       class="fixed inset-0 bg-steel-900/50 flex items-center justify-center z-50 p-4"
     >
-      <div class="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto border-2 border-concrete-200 relative">
+      <div class="bg-[#1a1f27] rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto border-2 border-[#2a2f38] relative">
         <!-- Tornillos -->
         <div class="absolute top-3 left-3 screw"></div>
         <div class="absolute top-3 right-3 screw"></div>
         <div class="p-8">
           <!-- Header -->
-          <div class="flex items-center justify-between mb-8 pb-4" style="border-bottom: 2px solid #dddbd3;">
+          <div class="flex items-center justify-between mb-8 pb-4" style="border-bottom: 2px solid #2a2f38;">
             <div>
-              <h1 class="text-2xl font-black text-steel-900 uppercase tracking-wider" style="font-family: Sora, sans-serif;">FerreNexo</h1>
-              <p class="text-steel-500 font-medium text-sm">Remito de Venta</p>
+              <h1 class="text-2xl font-black text-white uppercase tracking-wider" style="font-family: Sora, sans-serif;">FerreNexo</h1>
+              <p class="text-steel-400 font-medium text-sm">Remito de Venta</p>
             </div>
-            <button (click)="showReceiptPreview = false" class="text-steel-400 hover:text-steel-700">
+            <button (click)="showReceiptPreview = false" class="text-steel-500 hover:text-steel-700">
               <lucide-icon [name]="X" size="24"></lucide-icon>
             </button>
           </div>
@@ -257,37 +257,37 @@
           <!-- Receipt Content -->
           <div class="space-y-4 mb-8">
             <div>
-              <p class="text-sm text-steel-600 font-bold">REMITO #{{ lastReceipt?.id }}</p>
-              <p class="text-sm text-steel-600">Fecha: {{ lastReceipt?.date }}</p>
+              <p class="text-sm text-steel-400 font-bold">REMITO #{{ lastReceipt?.id }}</p>
+              <p class="text-sm text-steel-400">Fecha: {{ lastReceipt?.date }}</p>
             </div>
 
-            <div class="bg-concrete-50 p-4 rounded-lg border border-concrete-200">
-              <p class="text-sm font-bold text-steel-900">Cliente: {{ lastReceipt?.customer }}</p>
-              <p class="text-sm font-bold text-steel-900">Metodo: {{ lastReceipt?.paymentMethod }}</p>
+            <div class="bg-[#13161c] p-4 rounded-lg border border-[#2a2f38]">
+              <p class="text-sm font-bold text-white">Cliente: {{ lastReceipt?.customer }}</p>
+              <p class="text-sm font-bold text-white">Metodo: {{ lastReceipt?.paymentMethod }}</p>
             </div>
 
             <!-- Items Table -->
             <table class="w-full text-sm">
               <thead>
-                <tr style="border-bottom: 2px solid #dddbd3;">
-                  <th class="text-left py-2 font-black text-steel-900 text-xs uppercase tracking-wider">Producto</th>
-                  <th class="text-center py-2 font-black text-steel-900 text-xs uppercase tracking-wider">Cantidad</th>
-                  <th class="text-right py-2 font-black text-steel-900 text-xs uppercase tracking-wider">Precio</th>
-                  <th class="text-right py-2 font-black text-steel-900 text-xs uppercase tracking-wider">Total</th>
+                <tr style="border-bottom: 2px solid #2a2f38;">
+                  <th class="text-left py-2 font-black text-white text-xs uppercase tracking-wider">Producto</th>
+                  <th class="text-center py-2 font-black text-white text-xs uppercase tracking-wider">Cantidad</th>
+                  <th class="text-right py-2 font-black text-white text-xs uppercase tracking-wider">Precio</th>
+                  <th class="text-right py-2 font-black text-white text-xs uppercase tracking-wider">Total</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let item of lastReceipt?.items" class="border-b border-concrete-100">
-                  <td class="py-2 text-steel-900 font-bold">{{ item.name }}</td>
+                  <td class="py-2 text-white font-bold">{{ item.name }}</td>
                   <td class="text-center py-2 text-steel-700">{{ item.quantity }}</td>
                   <td class="text-right py-2 text-steel-700">${{ item.price }}</td>
-                  <td class="text-right py-2 font-black text-steel-900">${{ item.total }}</td>
+                  <td class="text-right py-2 font-black text-white">${{ item.total }}</td>
                 </tr>
               </tbody>
             </table>
 
             <!-- Totals -->
-            <div class="pt-4 space-y-2" style="border-top: 2px solid #dddbd3;">
+            <div class="pt-4 space-y-2" style="border-top: 2px solid #2a2f38;">
               <div class="flex justify-between font-bold text-steel-700">
                 <span>Subtotal:</span>
                 <span>${{ lastReceipt?.subtotal }}</span>
@@ -296,7 +296,7 @@
                 <span>IVA (21%):</span>
                 <span>${{ lastReceipt?.tax }}</span>
               </div>
-              <div class="flex justify-between text-xl font-black text-steel-900 pt-2" style="border-top: 2px solid #dddbd3;">
+              <div class="flex justify-between text-xl font-black text-white pt-2" style="border-top: 2px solid #2a2f38;">
                 <span>TOTAL A PAGAR:</span>
                 <span>${{ lastReceipt?.total }}</span>
               </div>
