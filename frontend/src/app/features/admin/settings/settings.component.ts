@@ -68,7 +68,6 @@ export class SettingsComponent implements OnInit {
     address: false,
     payment: false,
     mercadolibre: false,
-    whatsapp: false,
     social: false,
   };
   // Icons
