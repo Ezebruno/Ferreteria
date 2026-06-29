@@ -1,17 +1,17 @@
 <div class="space-y-6 animate-fade-in-up">
   <div class="flex justify-between items-center">
     <div>
-      <h2 class="text-3xl font-black text-white uppercase tracking-tight">
+      <h2 class="text-3xl font-extrabold text-steel-900 uppercase tracking-tight" style="font-family: Sora, sans-serif;">
         Configuración del Negocio
       </h2>
-      <p class="text-slate-400 mt-1">
+      <p class="text-steel-500 mt-1">
         Administra las integraciones y credenciales de tu ferretería.
       </p>
     </div>
     <button
       [disabled]="isSaving"
       (click)="saveSettings()"
-      class="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-red-500 text-white font-bold hover:from-red-500 hover:to-red-400 transition-all shadow-[0_0_20px_rgba(220,38,38,0.3)] disabled:opacity-50"
+      class="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-ferre-600 to-ferre-700 text-white font-bold hover:from-ferre-500 hover:to-ferre-600 transition-all shadow-[0_0_20px_rgba(220,38,38,0.3)] disabled:opacity-50"
     >
       <lucide-icon [name]="Save" size="18"></lucide-icon>
       {{ isSaving ? "Guardando..." : "Guardar Cambios" }}
@@ -28,19 +28,19 @@
 
   <div
     *ngIf="errorMessage"
-    class="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl flex items-center gap-3"
+    class="bg-ferre-50 border border-ferre-200 text-ferre-600 p-4 rounded-xl flex items-center gap-3"
   >
     <span class="font-medium">{{ errorMessage }}</span>
   </div>
 
   <form [formGroup]="settingsForm" class="space-y-4">
     <div
-      class="bg-slate-800/50 backdrop-blur-md rounded-2xl border border-white/5 shadow-xl overflow-hidden"
+      class="bg-white rounded-xl border border-concrete-200 shadow-sm overflow-hidden"
     >
       <button
         type="button"
         (click)="toggleSection('address')"
-        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-slate-700/30 transition-colors cursor-pointer"
+        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-concrete-100 transition-colors cursor-pointer"
       >
         <div class="flex items-center gap-3">
           <div
@@ -48,38 +48,38 @@
           >
             <lucide-icon [name]="MapPin" size="20"></lucide-icon>
           </div>
-          <h3 class="text-xl font-bold text-white">Dirección del Negocio</h3>
+          <h3 class="text-xl font-bold text-steel-900">Dirección del Negocio</h3>
         </div>
         <lucide-icon
           [name]="expandedSections['address'] ? ChevronUp : ChevronDown"
           size="24"
-          class="text-slate-400 flex-shrink-0 transition-transform"
+          class="text-steel-500 flex-shrink-0 transition-transform"
         ></lucide-icon>
       </button>
 
       <div
         *ngIf="expandedSections['address']"
-        class="px-6 pb-6 border-t border-white/5 space-y-4"
+        class="px-6 pb-6 border-t border-concrete-200 space-y-4"
       >
-        <p class="text-xs text-slate-400 mt-4">
+        <p class="text-xs text-steel-500 mt-4">
           Dirección que se mostrará en el mapa del sitio web.
         </p>
         <input
           type="text"
           formControlName="store_address"
           placeholder="Ej: Av. Corrientes 1234, CABA"
-          class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-red-500/50 transition-all"
+          class="w-full bg-concrete-50 border border-concrete-200 rounded-xl px-4 py-2.5 text-steel-900 focus:outline-none focus:ring-2 focus:ring-ferre-400 transition-all"
         />
       </div>
     </div>
 
     <div
-      class="bg-slate-800/50 backdrop-blur-md rounded-2xl border border-white/5 shadow-xl overflow-hidden"
+      class="bg-white rounded-xl border border-concrete-200 shadow-sm overflow-hidden"
     >
       <button
         type="button"
         (click)="toggleSection('payment')"
-        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-slate-700/30 transition-colors cursor-pointer"
+        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-concrete-100 transition-colors cursor-pointer"
       >
         <div class="flex items-center gap-3">
           <div
@@ -87,18 +87,18 @@
           >
             <lucide-icon [name]="CreditCard" size="20"></lucide-icon>
           </div>
-          <h3 class="text-xl font-bold text-white">Mercado Pago y Banco</h3>
+          <h3 class="text-xl font-bold text-steel-900">Mercado Pago y Banco</h3>
         </div>
         <lucide-icon
           [name]="expandedSections['payment'] ? ChevronUp : ChevronDown"
           size="24"
-          class="text-slate-400 flex-shrink-0"
+          class="text-steel-500 flex-shrink-0"
         ></lucide-icon>
       </button>
 
       <div
         *ngIf="expandedSections['payment']"
-        class="px-6 pb-6 border-t border-white/5 space-y-4"
+        class="px-6 pb-6 border-t border-concrete-200 space-y-4"
       >
         <div
           class="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 flex gap-3 items-start mt-4"
@@ -141,33 +141,33 @@
           </div>
         </div>
 
-        <hr class="border-white/5" />
+        <hr class="border-concrete-200" />
 
         <div>
-          <label class="block text-sm font-medium text-slate-400 mb-2"
+          <label class="block text-sm font-medium text-steel-500 mb-2"
             >CVU / CBU (Transferencias)</label
           >
           <input
             type="text"
             formControlName="bank_cvu"
             placeholder="00000031000..."
-            class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-red-500/50 transition-all font-mono"
+            class="w-full bg-concrete-50 border border-concrete-200 rounded-xl px-4 py-2.5 text-steel-900 focus:outline-none focus:ring-2 focus:ring-ferre-400 transition-all font-mono"
           />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-slate-400 mb-2"
+          <label class="block text-sm font-medium text-steel-500 mb-2"
             >Alias Bancario</label
           >
           <input
             type="text"
             formControlName="bank_alias"
             placeholder="FERRE.TORNILLO.MP"
-            class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-red-500/50 transition-all"
+            class="w-full bg-concrete-50 border border-concrete-200 rounded-xl px-4 py-2.5 text-steel-900 focus:outline-none focus:ring-2 focus:ring-ferre-400 transition-all"
           />
         </div>
 
-        <p class="text-xs text-slate-500">
+        <p class="text-xs text-steel-400">
           Estos datos se mostrarán al cliente que elija abonar con Transferencia
           Bancaria.
         </p>
@@ -175,12 +175,12 @@
     </div>
 
     <div
-      class="bg-slate-800/50 backdrop-blur-md rounded-2xl border border-white/5 shadow-xl overflow-hidden"
+      class="bg-white rounded-xl border border-concrete-200 shadow-sm overflow-hidden"
     >
       <button
         type="button"
         (click)="toggleSection('mercadolibre')"
-        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-slate-700/30 transition-colors cursor-pointer"
+        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-concrete-100 transition-colors cursor-pointer"
       >
         <div class="flex items-center gap-3">
           <div
@@ -188,30 +188,30 @@
           >
             <lucide-icon [name]="ShoppingBag" size="20"></lucide-icon>
           </div>
-          <h3 class="text-xl font-bold text-white">Mercado Libre</h3>
+          <h3 class="text-xl font-bold text-steel-900">Mercado Libre</h3>
         </div>
         <lucide-icon
           [name]="expandedSections['mercadolibre'] ? ChevronUp : ChevronDown"
           size="24"
-          class="text-slate-400 flex-shrink-0"
+          class="text-steel-500 flex-shrink-0"
         ></lucide-icon>
       </button>
 
       <div
         *ngIf="expandedSections['mercadolibre']"
-        class="px-6 pb-6 border-t border-white/5 space-y-4"
+        class="px-6 pb-6 border-t border-concrete-200 space-y-4"
       >
         <div
           class="bg-yellow-400/5 border border-yellow-400/20 rounded-xl p-4 mt-4"
         >
-          <p class="text-sm text-slate-300">
+          <p class="text-sm text-steel-600">
             La integración con Mercado Libre ya no requiere copiar códigos
             difíciles. Está automatizada mediante una conexión segura (OAuth).
           </p>
         </div>
         <a
           routerLink="/admin/meli"
-          class="inline-flex items-center justify-center gap-2 w-full bg-slate-700/50 hover:bg-slate-700 text-white font-bold py-3 rounded-xl border border-slate-600 transition-all"
+          class="inline-flex items-center justify-center gap-2 w-full bg-concrete-100 hover:bg-concrete-200 text-steel-900 font-bold py-3 rounded-xl border border-concrete-200 transition-all"
         >
           <lucide-icon
             [name]="Zap"
@@ -224,12 +224,12 @@
     </div>
 
     <div
-      class="bg-slate-800/50 backdrop-blur-md rounded-2xl border border-white/5 shadow-xl overflow-hidden"
+      class="bg-white rounded-xl border border-concrete-200 shadow-sm overflow-hidden"
     >
       <button
         type="button"
         (click)="toggleSection('whatsapp')"
-        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-slate-700/30 transition-colors cursor-pointer"
+        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-concrete-100 transition-colors cursor-pointer"
       >
         <div class="flex items-center gap-3">
           <div
@@ -237,32 +237,32 @@
           >
             <lucide-icon [name]="MessageCircle" size="20"></lucide-icon>
           </div>
-          <h3 class="text-xl font-bold text-white">
+          <h3 class="text-xl font-bold text-steel-900">
             WhatsApp de la Ferretería
           </h3>
         </div>
         <lucide-icon
           [name]="expandedSections['whatsapp'] ? ChevronUp : ChevronDown"
           size="24"
-          class="text-slate-400 flex-shrink-0"
+          class="text-steel-500 flex-shrink-0"
         ></lucide-icon>
       </button>
 
       <div
         *ngIf="expandedSections['whatsapp']"
-        class="px-6 pb-6 border-t border-white/5 space-y-4"
+        class="px-6 pb-6 border-t border-concrete-200 space-y-4"
       >
         <div class="mt-4">
-          <label class="block text-sm font-medium text-slate-400 mb-2"
+          <label class="block text-sm font-medium text-steel-500 mb-2"
             >Número de WhatsApp</label
           >
           <input
             type="text"
             formControlName="whatsapp_number"
             placeholder="Ej: 5491123456789"
-            class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-red-500/50 transition-all font-mono"
+            class="w-full bg-concrete-50 border border-concrete-200 rounded-xl px-4 py-2.5 text-steel-900 focus:outline-none focus:ring-2 focus:ring-ferre-400 transition-all font-mono"
           />
-          <p class="text-xs text-slate-500 mt-2">
+          <p class="text-xs text-steel-400 mt-2">
             Ingresá el número completo con código de país (Ej: 5491112345678).
             El widget redirigirá consultas a este número.
           </p>
