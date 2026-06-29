@@ -1,9 +1,9 @@
-﻿<div class="min-h-screen bg-concrete-50">
-  <div class="bg-white border-b border-concrete-200">
+﻿<div class="min-h-screen bg-[#13161c]">
+  <div class="bg-[#1a1f27] border-b border-[#2a2f38]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
       <button
         (click)="goBack()"
-        class="flex items-center gap-2 text-steel-500 hover:text-ferre-600 font-semibold text-sm transition-colors group"
+        class="flex items-center gap-2 text-steel-400 hover:text-ferre-600 font-semibold text-sm transition-colors group"
       >
         <lucide-icon [name]="ArrowLeft" size="18" class="group-hover:-translate-x-1 transition-transform"></lucide-icon>
         Volver al catalogo
@@ -15,7 +15,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-start">
 
       <div class="space-y-4">
-        <div class="aspect-square bg-white rounded-2xl border border-concrete-200 p-8 flex items-center justify-center relative overflow-hidden">
+        <div class="aspect-square bg-[#1a1f27] rounded-2xl border border-[#2a2f38] p-8 flex items-center justify-center relative overflow-hidden">
           <img
             *ngIf="product.image"
             [src]="product.image"
@@ -23,31 +23,31 @@
             (error)="product.image = ''"
             class="w-full h-full object-contain hover:scale-105 transition-transform duration-500"
           />
-          <div *ngIf="!product.image" class="flex flex-col items-center gap-3 text-steel-300">
+          <div *ngIf="!product.image" class="flex flex-col items-center gap-3 text-steel-600">
             <lucide-icon [name]="Hammer" size="64"></lucide-icon>
             <span class="text-sm font-medium">Sin imagen</span>
           </div>
         </div>
 
         <div class="grid grid-cols-4 gap-3">
-          <div *ngFor="let i of [1, 2, 3, 4]" class="aspect-square bg-white rounded-xl border border-concrete-200 p-2 cursor-pointer hover:border-ferre-400 transition-colors flex items-center justify-center">
+          <div *ngFor="let i of [1, 2, 3, 4]" class="aspect-square bg-[#1a1f27] rounded-xl border border-[#2a2f38] p-2 cursor-pointer hover:border-ferre-500 transition-colors flex items-center justify-center">
             <img
               *ngIf="product.image"
               [src]="product.image"
               (error)="product.image = ''"
               class="w-full h-full object-contain opacity-60 hover:opacity-100 transition-opacity"
             />
-            <lucide-icon *ngIf="!product.image" [name]="Hammer" size="20" class="text-steel-300"></lucide-icon>
+            <lucide-icon *ngIf="!product.image" [name]="Hammer" size="20" class="text-steel-600"></lucide-icon>
           </div>
         </div>
       </div>
 
       <div class="flex flex-col gap-6">
-        <span class="inline-flex items-center bg-ferre-50 text-ferre-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide w-fit">
+        <span class="inline-flex items-center bg-ferre-600/10 text-ferre-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide w-fit">
           {{ product.category_name }}
         </span>
 
-        <h1 class="text-3xl md:text-4xl font-extrabold text-steel-900 leading-tight" style="font-family: Sora, sans-serif;">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-white leading-tight" style="font-family: Sora, sans-serif;">
           {{ product.name }}
         </h1>
 
@@ -56,23 +56,23 @@
             <span
               *ngFor="let star of [1, 2, 3, 4, 5]; let i = index"
               class="text-lg cursor-pointer"
-              [ngClass]="i < (hoverRating > 0 ? hoverRating : Math.round(userRating || averageRating || 0)) ? 'text-safety-500' : 'text-concrete-300'"
+              [ngClass]="i < (hoverRating > 0 ? hoverRating : Math.round(userRating || averageRating || 0)) ? 'text-safety-500' : 'text-steel-600'"
               (click)="setRating(i + 1)"
               (mouseenter)="onStarHover(i + 1)"
               (mouseleave)="onStarLeave()"
             >&#9733;</span>
           </div>
-          <span class="text-sm text-steel-400 font-medium">({{ totalReviews }} resenas)</span>
+          <span class="text-sm text-steel-500 font-medium">({{ totalReviews }} resenas)</span>
         </div>
 
-        <p class="text-steel-600 leading-relaxed">
+        <p class="text-steel-300 leading-relaxed">
           {{ product.description }}
         </p>
 
-        <div class="bg-white border border-concrete-200 rounded-2xl p-6">
+        <div class="bg-[#1a1f27] border border-[#2a2f38] rounded-2xl p-6">
           <div class="flex items-baseline gap-3 mb-3">
-            <span class="text-4xl font-extrabold text-steel-900" style="font-family: Sora, sans-serif;">${{ product.price_retail }}</span>
-            <span class="text-lg text-steel-400 line-through">${{ getOriginalPrice(product) }}</span>
+            <span class="text-4xl font-extrabold text-white" style="font-family: Sora, sans-serif;">${{ product.price_retail }}</span>
+            <span class="text-lg text-steel-500 line-through">${{ getOriginalPrice(product) }}</span>
           </div>
           <p class="text-green-600 font-semibold text-sm flex items-center gap-2 mb-6">
             <span class="w-2 h-2 rounded-full bg-green-500"></span>
@@ -80,16 +80,16 @@
           </p>
 
           <div class="flex flex-col sm:flex-row gap-3">
-            <div class="flex items-center border border-concrete-200 rounded-xl overflow-hidden shrink-0">
-              <button (click)="updateQuantity(quantity - 1)" class="w-11 h-11 flex items-center justify-center text-steel-500 hover:text-ferre-600 hover:bg-ferre-50 transition-colors">
+            <div class="flex items-center border border-[#2a2f38] rounded-xl overflow-hidden shrink-0">
+              <button (click)="updateQuantity(quantity - 1)" class="w-11 h-11 flex items-center justify-center text-steel-400 hover:text-ferre-600 hover:bg-ferre-600/10 transition-colors">
                 <lucide-icon [name]="Minus" size="16"></lucide-icon>
               </button>
               <input
                 type="number"
                 [(ngModel)]="quantity"
-                class="w-11 h-11 text-center bg-transparent text-steel-900 font-bold outline-none border-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                class="w-11 h-11 text-center bg-transparent text-white font-bold outline-none border-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               />
-              <button (click)="updateQuantity(quantity + 1)" class="w-11 h-11 flex items-center justify-center text-steel-500 hover:text-ferre-600 hover:bg-ferre-50 transition-colors">
+              <button (click)="updateQuantity(quantity + 1)" class="w-11 h-11 flex items-center justify-center text-steel-400 hover:text-ferre-600 hover:bg-ferre-600/10 transition-colors">
                 <lucide-icon [name]="Plus" size="16"></lucide-icon>
               </button>
             </div>
@@ -106,22 +106,22 @@
         </div>
 
         <div class="grid grid-cols-2 gap-3">
-          <div class="flex items-center gap-3 bg-white border border-concrete-200 p-4 rounded-xl">
-            <lucide-icon [name]="Truck" class="text-steel-500" size="20"></lucide-icon>
-            <p class="text-steel-700 text-xs font-semibold">Envio a todo el pais</p>
+          <div class="flex items-center gap-3 bg-[#1a1f27] border border-[#2a2f38] p-4 rounded-xl">
+            <lucide-icon [name]="Truck" class="text-steel-400" size="20"></lucide-icon>
+            <p class="text-steel-200 text-xs font-semibold">Envio a todo el pais</p>
           </div>
-          <div class="flex items-center gap-3 bg-white border border-concrete-200 p-4 rounded-xl">
+          <div class="flex items-center gap-3 bg-[#1a1f27] border border-[#2a2f38] p-4 rounded-xl">
             <lucide-icon [name]="Shield" class="text-green-600" size="20"></lucide-icon>
             <div>
-              <p class="text-steel-700 text-xs font-semibold">Garantia Pro</p>
-              <p class="text-steel-400 text-[10px]">12 Meses</p>
+              <p class="text-steel-200 text-xs font-semibold">Garantia Pro</p>
+              <p class="text-steel-500 text-[10px]">12 Meses</p>
             </div>
           </div>
         </div>
 
-        <div class="bg-white border border-concrete-200 rounded-2xl p-6">
-          <h3 class="text-steel-900 font-bold mb-3 flex items-center gap-2 text-sm">
-            <lucide-icon [name]="Truck" size="18" class="text-steel-500"></lucide-icon>
+        <div class="bg-[#1a1f27] border border-[#2a2f38] rounded-2xl p-6">
+          <h3 class="text-white font-bold mb-3 flex items-center gap-2 text-sm">
+            <lucide-icon [name]="Truck" size="18" class="text-steel-400"></lucide-icon>
             Calculador de Envio
           </h3>
           <div class="flex gap-3">
@@ -129,7 +129,7 @@
               type="text"
               [(ngModel)]="zipCode"
               placeholder="Codigo Postal"
-              class="bg-concrete-50 border border-concrete-200 text-steel-900 placeholder-steel-400 rounded-xl px-4 py-2.5 flex-1 outline-none focus:border-ferre-400 transition-colors text-sm"
+              class="bg-[#13161c] border border-[#2a2f38] text-white placeholder-steel-400 rounded-xl px-4 py-2.5 flex-1 outline-none focus:border-ferre-400 transition-colors text-sm"
               (keyup.enter)="calculateShipping()"
             />
             <button
@@ -145,58 +145,58 @@
           </div>
 
           <div *ngIf="shippingResult" class="mt-4 space-y-2">
-            <p class="text-steel-500 text-xs font-medium bg-concrete-50 py-2 px-3 rounded-lg text-center">
-              Opciones para CP <span class="font-bold text-steel-700">{{ zipCode }}</span>
+            <p class="text-steel-400 text-xs font-medium bg-[#13161c] py-2 px-3 rounded-lg text-center">
+              Opciones para CP <span class="font-bold text-steel-200">{{ zipCode }}</span>
               <span *ngIf="shippingResult.destination_name" class="text-ferre-600"> ({{ shippingResult.destination_name }})</span>
             </p>
 
-            <div class="flex items-center justify-between bg-ferre-50 border border-ferre-200 p-3 rounded-xl">
+            <div class="flex items-center justify-between bg-ferre-600/10 border border-ferre-600/20 p-3 rounded-xl">
               <div>
-                <p class="text-steel-900 font-semibold text-sm">Retiro en Sucursal Central</p>
+                <p class="text-white font-semibold text-sm">Retiro en Sucursal Central</p>
                 <p class="text-green-600 text-xs font-medium mt-0.5">Acordar en local</p>
               </div>
               <p class="text-ferre-600 font-bold text-sm">Gratis</p>
             </div>
 
-            <div *ngFor="let rate of shippingResult.rates" class="flex items-center justify-between bg-concrete-50 border border-concrete-200 p-3 rounded-xl hover:border-ferre-300 transition-colors">
+            <div *ngFor="let rate of shippingResult.rates" class="flex items-center justify-between bg-[#13161c] border border-[#2a2f38] p-3 rounded-xl hover:border-ferre-300 transition-colors">
               <div>
-                <p class="text-steel-900 font-semibold text-sm">{{ rate.productName }}</p>
-                <p class="text-steel-400 text-xs mt-0.5">
+                <p class="text-white font-semibold text-sm">{{ rate.productName }}</p>
+                <p class="text-steel-500 text-xs mt-0.5">
                   {{ rate.deliveredType === 'D' ? 'Entrega a domicilio' : 'Retiro en sucursal' }}
                 </p>
               </div>
-              <p class="text-steel-700 font-bold text-sm">${{ rate.price }}</p>
+              <p class="text-steel-200 font-bold text-sm">${{ rate.price }}</p>
             </div>
           </div>
 
-          <div *ngIf="shippingError" class="mt-3 text-red-600 text-xs font-medium bg-red-50 p-3 rounded-lg border border-red-200">
+          <div *ngIf="shippingError" class="mt-3 text-safety-red text-xs font-medium bg-safety-red/10 p-3 rounded-lg border border-safety-red/20">
             {{ shippingError }}
           </div>
         </div>
       </div>
     </div>
 
-    <div class="mt-16 border-t border-concrete-200 pt-12">
+    <div class="mt-16 border-t border-[#2a2f38] pt-12">
       <div class="grid lg:grid-cols-3 gap-8">
         <div class="lg:col-span-2">
-          <h2 class="text-2xl font-extrabold text-steel-900 mb-6" style="font-family: Sora, sans-serif;">Especificaciones Tecnicas</h2>
+          <h2 class="text-2xl font-extrabold text-white mb-6" style="font-family: Sora, sans-serif;">Especificaciones Tecnicas</h2>
           <div class="grid sm:grid-cols-2 gap-x-12 gap-y-4">
             <div *ngFor="let spec of [
               { label: 'Marca', value: product.brand },
               { label: 'Material', value: product.material },
               { label: 'Dimensiones', value: product.dimensions },
               { label: 'Peso', value: product.weight }
-            ]" class="flex justify-between py-3 border-b border-concrete-100">
-              <span class="text-steel-400 font-medium text-sm">{{ spec.label }}</span>
-              <span class="text-steel-800 font-semibold">{{ spec.value }}</span>
+            ]" class="flex justify-between py-3 border-b border-[#2a2f38]">
+              <span class="text-steel-500 font-medium text-sm">{{ spec.label }}</span>
+              <span class="text-steel-200 font-semibold">{{ spec.value }}</span>
             </div>
           </div>
         </div>
 
         <div class="space-y-4 h-fit">
-          <div class="bg-white border border-concrete-200 p-6 rounded-2xl">
-            <h3 class="text-lg font-bold text-steel-900 mb-2">Necesitas ayuda?</h3>
-            <p class="text-steel-500 text-sm mb-4">Contamos con expertos para asesorarte en la eleccion de tus herramientas.</p>
+          <div class="bg-[#1a1f27] border border-[#2a2f38] p-6 rounded-2xl">
+            <h3 class="text-lg font-bold text-white mb-2">Necesitas ayuda?</h3>
+            <p class="text-steel-400 text-sm mb-4">Contamos con expertos para asesorarte en la eleccion de tus herramientas.</p>
             <a
               [href]="whatsappHref + '?text=Hola,%20necesito%20asesoramiento%20sobre%20' + product.name"
               target="_blank"
@@ -218,13 +218,13 @@
       </div>
     </div>
 
-    <div *ngIf="related && related.length" class="mt-16 border-t border-concrete-200 pt-12">
-      <h3 class="text-2xl font-extrabold text-steel-900 mb-6" style="font-family: Sora, sans-serif;">Productos relacionados</h3>
+    <div *ngIf="related && related.length" class="mt-16 border-t border-[#2a2f38] pt-12">
+      <h3 class="text-2xl font-extrabold text-white mb-6" style="font-family: Sora, sans-serif;">Productos relacionados</h3>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <a *ngFor="let r of related" [routerLink]="['/product', r.id]" class="block bg-white p-4 rounded-xl border border-concrete-200 hover:border-ferre-300 transition-colors">
+        <a *ngFor="let r of related" [routerLink]="['/product', r.id]" class="block bg-[#1a1f27] p-4 rounded-xl border border-[#2a2f38] hover:border-ferre-300 transition-colors">
           <img [src]="r.image" class="w-full h-24 object-contain mb-3" alt="{{ r.name }}" />
-          <div class="text-sm font-semibold text-steel-800 line-clamp-2">{{ r.name }}</div>
-          <div class="text-sm text-steel-500 mt-1">${{ r.price_retail }}</div>
+          <div class="text-sm font-semibold text-steel-200 line-clamp-2">{{ r.name }}</div>
+          <div class="text-sm text-steel-400 mt-1">${{ r.price_retail }}</div>
         </a>
       </div>
     </div>
@@ -233,28 +233,28 @@
   <div *ngIf="isLoading" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 animate-pulse">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
       <div class="space-y-4">
-        <div class="aspect-square bg-concrete-200 rounded-2xl"></div>
+        <div class="aspect-square bg-[#2a2f38] rounded-2xl"></div>
         <div class="grid grid-cols-4 gap-3">
-          <div *ngFor="let i of [1, 2, 3, 4]" class="aspect-square bg-concrete-200 rounded-xl"></div>
+          <div *ngFor="let i of [1, 2, 3, 4]" class="aspect-square bg-[#2a2f38] rounded-xl"></div>
         </div>
       </div>
       <div class="flex flex-col gap-6">
-        <div class="w-24 h-5 bg-concrete-200 rounded-full"></div>
-        <div class="w-3/4 h-10 bg-concrete-200 rounded-xl"></div>
-        <div class="w-32 h-5 bg-concrete-200 rounded-full"></div>
+        <div class="w-24 h-5 bg-[#2a2f38] rounded-full"></div>
+        <div class="w-3/4 h-10 bg-[#2a2f38] rounded-xl"></div>
+        <div class="w-32 h-5 bg-[#2a2f38] rounded-full"></div>
         <div class="space-y-2">
-          <div class="w-full h-4 bg-concrete-200 rounded-full"></div>
-          <div class="w-5/6 h-4 bg-concrete-200 rounded-full"></div>
+          <div class="w-full h-4 bg-[#2a2f38] rounded-full"></div>
+          <div class="w-5/6 h-4 bg-[#2a2f38] rounded-full"></div>
         </div>
-        <div class="bg-concrete-100 p-6 rounded-2xl h-40"></div>
+        <div class="bg-[#2a2f38] p-6 rounded-2xl h-40"></div>
       </div>
     </div>
   </div>
 
   <div *ngIf="!isLoading && !product" class="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
-    <lucide-icon [name]="Hammer" size="64" class="text-concrete-300 mb-6"></lucide-icon>
-    <h2 class="text-3xl font-extrabold text-steel-900 mb-4" style="font-family: Sora, sans-serif;">Producto no encontrado</h2>
-    <p class="text-steel-500 mb-6">El producto que buscas no existe o fue removido.</p>
+    <lucide-icon [name]="Hammer" size="64" class="text-steel-600 mb-6"></lucide-icon>
+    <h2 class="text-3xl font-extrabold text-white mb-4" style="font-family: Sora, sans-serif;">Producto no encontrado</h2>
+    <p class="text-steel-400 mb-6">El producto que buscas no existe o fue removido.</p>
     <button
       (click)="goBack()"
       class="btn-ferre px-8 py-3"
