@@ -75,6 +75,7 @@ export class ProductDetailComponent implements OnInit {
 
   Math = Math;
   parseInt = parseInt;
+  whatsappHref = "https://wa.me/5493462612989";
 
   ShoppingCart = ShoppingCart;
   Star = Star;
@@ -88,6 +89,16 @@ export class ProductDetailComponent implements OnInit {
 
   ngOnInit(): void {
     window.scrollTo({ top: 0, behavior: "instant" });
+
+    this.api.get<any>("/tenant/info/").subscribe({
+      next: (data) => {
+        if (data.whatsapp_number) {
+          const cleanNumber = data.whatsapp_number.replace(/\D/g, "");
+          this.whatsappHref = `https://wa.me/${cleanNumber}`;
+        }
+      },
+    });
+
     this.route.params.subscribe((params) => {
       const productId = parseInt(params["id"], 10);
       this.isLoading = true;

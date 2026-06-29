@@ -7,6 +7,7 @@ import {
   CartItem,
   Cart,
 } from "../../../core/services/cart.service";
+import { ApiService } from "../../../core/services/api.service";
 import {
   LucideAngularModule,
   Trash2,
@@ -26,6 +27,7 @@ import {
 export class CartComponent implements OnInit {
   private cartService = inject(CartService);
   private router = inject(Router);
+  private api = inject(ApiService);
 
   cart: Cart | null = null;
   items: CartItem[] = [];
@@ -82,6 +84,14 @@ export class CartComponent implements OnInit {
       this.calculateTotal();
     });
     this.cartService.loadCart();
+
+    this.api.get<any>("/tenant/info/").subscribe({
+      next: (data) => {
+        if (data.whatsapp_number) {
+          this.bankDetails.whatsapp = data.whatsapp_number;
+        }
+      },
+    });
   }
 
   calculateTotal(): void {
