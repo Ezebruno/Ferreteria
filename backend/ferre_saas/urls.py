@@ -30,6 +30,7 @@ from apps.users.views import (
     StoreInfoView,
     PasswordResetRequestView,
     PasswordResetConfirmView,
+    ChangePasswordView,
 )
 
 # Vista para la raíz del sitio
@@ -67,6 +68,7 @@ urlpatterns = [
     path('api/auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/auth/register/', CustomerRegisterView.as_view(), name='customer_register'),
     path('api/auth/profile/', UserProfileView.as_view(), name='user_profile'),
+    path('api/auth/change-password/', ChangePasswordView.as_view(), name='change_password'),
     path('api/auth/password-reset/', PasswordResetRequestView.as_view(), name='password_reset'),
     path('api/auth/password-reset/confirm/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
 

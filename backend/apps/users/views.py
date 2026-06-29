@@ -51,6 +51,26 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         return self.request.user
 
+class ChangePasswordView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        current_password = request.data.get('current_password', '')
+        new_password = request.data.get('new_password', '')
+
+        if not current_password or not new_password:
+            return Response({'error': 'Ingresa tu contrasena actual y la nueva'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if len(new_password) < 6:
+            return Response({'error': 'La nueva contrasena debe tener al menos 6 caracteres'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if not request.user.check_password(current_password):
+            return Response({'error': 'La contrasena actual es incorrecta'}, status=status.HTTP_400_BAD_REQUEST)
+
+        request.user.set_password(new_password)
+        request.user.save()
+        return Response({'message': 'Contrasena cambiada exitosamente'})
+
 class PasswordResetRequestView(APIView):
     """Solicitar reset de contraseña por email"""
     permission_classes = [permissions.AllowAny]

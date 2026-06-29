@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { ApiService } from "src/app/core/services/api.service";
 import { Router, RouterModule } from "@angular/router";
-import { LucideAngularModule, User, Mail, Phone, Lock, Save, ArrowLeft, LogOut } from "lucide-angular";
+import { LucideAngularModule, User, Mail, Phone, Lock, Save, ArrowLeft, LogOut, KeyRound } from "lucide-angular";
 
 @Component({
   selector: "app-profile",
@@ -35,10 +35,22 @@ import { LucideAngularModule, User, Mail, Phone, Lock, Save, ArrowLeft, LogOut }
           <p class="text-steel-500 mt-1 text-sm font-medium">{{ email }}</p>
         </div>
 
-        <div *ngIf="success" class="bg-green-500/10 border border-green-500/30 text-green-400 p-3 rounded-lg text-sm text-center font-medium mb-4">
-          Perfil actualizado exitosamente
+        <!-- Password change banner -->
+        <div *ngIf="showPasswordBanner" class="bg-safety-yellow/10 border border-safety-yellow/30 rounded-lg p-4 mb-6">
+          <div class="flex items-start gap-3">
+            <lucide-icon [name]="KeyRound" size="20" class="text-safety-yellow mt-0.5 flex-shrink-0"></lucide-icon>
+            <div>
+              <p class="text-sm font-bold text-safety-yellow">Debes cambiar tu contrasena</p>
+              <p class="text-xs text-steel-400 mt-1">Por seguridad, cambia la contrasena temporal que te asignaron.</p>
+            </div>
+          </div>
         </div>
 
+        <div *ngIf="success" class="bg-green-500/10 border border-green-500/30 text-green-400 p-3 rounded-lg text-sm text-center font-medium mb-4">
+          {{ successMsg }}
+        </div>
+
+        <!-- Profile form -->
         <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4">
           <div class="grid grid-cols-2 gap-3">
             <div class="space-y-1.5">
@@ -88,6 +100,39 @@ import { LucideAngularModule, User, Mail, Phone, Lock, Save, ArrowLeft, LogOut }
           </button>
         </form>
 
+        <!-- Password change section -->
+        <div class="mt-6 pt-6 border-t border-[#2a2f38]">
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+            <lucide-icon [name]="KeyRound" size="16" class="text-ferre-500"></lucide-icon>
+            Cambiar contrasena
+          </h3>
+          <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()" class="space-y-3">
+            <div class="space-y-1.5">
+              <label class="text-xs font-bold text-steel-500 uppercase tracking-wider ml-1">Contrasena actual</label>
+              <input formControlName="current_password" type="password"
+                class="w-full px-4 py-2.5 bg-[#13161c] border border-[#2a2f38] text-white rounded-lg focus:ring-2 focus:ring-ferre-500/20 focus:border-ferre-500 transition-all text-sm"
+                placeholder="Tu contrasena actual" />
+            </div>
+            <div class="space-y-1.5">
+              <label class="text-xs font-bold text-steel-500 uppercase tracking-wider ml-1">Nueva contrasena</label>
+              <input formControlName="new_password" type="password"
+                class="w-full px-4 py-2.5 bg-[#13161c] border border-[#2a2f38] text-white rounded-lg focus:ring-2 focus:ring-ferre-500/20 focus:border-ferre-500 transition-all text-sm"
+                placeholder="Minimo 6 caracteres" />
+            </div>
+            <div *ngIf="pwError" class="bg-safety-red/10 border border-safety-red/30 text-safety-red p-2 rounded-lg text-xs text-center">
+              {{ pwError }}
+            </div>
+            <div *ngIf="pwSuccess" class="bg-green-500/10 border border-green-500/30 text-green-400 p-2 rounded-lg text-xs text-center">
+              Contrasena cambiada exitosamente
+            </div>
+            <button type="submit" [disabled]="pwLoading"
+              class="w-full bg-[#2a2f38] hover:bg-[#3a404a] text-white font-bold py-2.5 rounded-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50 text-sm">
+              <lucide-icon [name]="Lock" size="16"></lucide-icon>
+              {{ pwLoading ? "Cambiando..." : "Cambiar contrasena" }}
+            </button>
+          </form>
+        </div>
+
         <button (click)="logout()"
           class="w-full mt-4 bg-[#2a2f38] hover:bg-[#3a404a] text-steel-400 hover:text-white font-bold py-3 rounded-lg transition-all flex items-center justify-center gap-2 text-sm">
           <lucide-icon [name]="LogOut" size="18"></lucide-icon>
@@ -108,6 +153,8 @@ export class ProfileComponent implements OnInit {
   Save = Save;
   ArrowLeft = ArrowLeft;
   LogOut = LogOut;
+  KeyRound = KeyRound;
+  Lock = Lock;
 
   form: FormGroup = this.fb.group({
     first_name: [""],
@@ -115,10 +162,21 @@ export class ProfileComponent implements OnInit {
     phone: [""],
   });
 
+  passwordForm: FormGroup = this.fb.group({
+    current_password: ["", Validators.required],
+    new_password: ["", [Validators.required, Validators.minLength(6)]],
+  });
+
   email = "";
   loading = false;
   error = "";
   success = false;
+  successMsg = "";
+  showPasswordBanner = false;
+
+  pwLoading = false;
+  pwError = "";
+  pwSuccess = false;
 
   ngOnInit() {
     this.api.get<any>("/auth/profile/").subscribe({
@@ -129,6 +187,10 @@ export class ProfileComponent implements OnInit {
           last_name: data.last_name || "",
           phone: data.phone || "",
         });
+        // Show banner if password is still the temp one (flag from admin)
+        if (data.must_change_password) {
+          this.showPasswordBanner = true;
+        }
       },
     });
   }
@@ -138,8 +200,33 @@ export class ProfileComponent implements OnInit {
     this.error = "";
     this.success = false;
     this.api.patch<any>("/auth/profile/", this.form.value).subscribe({
-      next: () => { this.success = true; this.loading = false; setTimeout(() => (this.success = false), 3000); },
+      next: () => {
+        this.success = true;
+        this.successMsg = "Perfil actualizado exitosamente";
+        this.loading = false;
+        setTimeout(() => (this.success = false), 3000);
+      },
       error: () => { this.error = "Error al guardar"; this.loading = false; },
+    });
+  }
+
+  onChangePassword() {
+    if (this.passwordForm.invalid) return;
+    this.pwLoading = true;
+    this.pwError = "";
+    this.pwSuccess = false;
+    this.api.post<any>("/auth/change-password/", this.passwordForm.value).subscribe({
+      next: () => {
+        this.pwSuccess = true;
+        this.pwLoading = false;
+        this.passwordForm.reset();
+        this.showPasswordBanner = false;
+        setTimeout(() => (this.pwSuccess = false), 3000);
+      },
+      error: (err) => {
+        this.pwError = err.error?.error || "Error al cambiar contrasena";
+        this.pwLoading = false;
+      },
     });
   }
 
