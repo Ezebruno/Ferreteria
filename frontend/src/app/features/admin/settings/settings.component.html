@@ -37,8 +37,12 @@
     <div
       class="bg-slate-800/50 backdrop-blur-md rounded-2xl border border-white/5 shadow-xl overflow-hidden"
     >
-      <div class="px-6 pt-6 pb-4">
-        <div class="flex items-center gap-3 mb-4">
+      <button
+        type="button"
+        (click)="toggleSection('address')"
+        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-slate-700/30 transition-colors cursor-pointer"
+      >
+        <div class="flex items-center gap-3">
           <div
             class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400"
           >
@@ -46,13 +50,24 @@
           </div>
           <h3 class="text-xl font-bold text-white">Dirección del Negocio</h3>
         </div>
-        <p class="text-xs text-slate-400 mb-4">
+        <lucide-icon
+          [name]="expandedSections['address'] ? ChevronUp : ChevronDown"
+          size="24"
+          class="text-slate-400 flex-shrink-0 transition-transform"
+        ></lucide-icon>
+      </button>
+
+      <div
+        *ngIf="expandedSections['address']"
+        class="px-6 pb-6 border-t border-white/5 space-y-4"
+      >
+        <p class="text-xs text-slate-400 mt-4">
           Dirección que se mostrará en el mapa del sitio web.
         </p>
         <input
           type="text"
           formControlName="store_address"
-          placeholder="Ej: Padre Ghio 87, Junín, Buenos Aires"
+          placeholder="Ej: Av. Corrientes 1234, CABA"
           class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-red-500/50 transition-all"
         />
       </div>

@@ -65,6 +65,7 @@ export class SettingsComponent implements OnInit {
 
   // Accordion state
   expandedSections: { [key: string]: boolean } = {
+    address: false,
     payment: false,
     mercadolibre: false,
     whatsapp: false,
