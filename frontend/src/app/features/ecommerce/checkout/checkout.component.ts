@@ -23,616 +23,258 @@ import {
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule, LucideAngularModule],
   template: `
-    <div
-      class="min-h-screen bg-slate-800 flex flex-col justify-start pt-28 pb-16"
-    >
+    <div class="min-h-screen bg-concrete-50 pt-20 pb-16">
       <div class="w-full max-w-5xl mx-auto px-4">
-        <!-- Back to Cart Button -->
-        <div class="mb-8">
+        <div class="mb-6">
           <button
             (click)="goBack()"
-            class="flex items-center gap-2 text-slate-400 hover:text-red-500 font-bold transition-colors"
+            class="flex items-center gap-2 text-steel-500 hover:text-ferre-600 font-semibold text-sm transition-colors group"
           >
-            <lucide-icon [name]="ArrowLeft" size="20"></lucide-icon>
+            <lucide-icon [name]="ArrowLeft" size="18" class="group-hover:-translate-x-1 transition-transform"></lucide-icon>
             Volver al Carrito
           </button>
         </div>
 
-        <!-- Main Content -->
         <div class="grid md:grid-cols-3 gap-8">
-          <!-- Left Column: Steps -->
-          <div class="md:col-span-2 space-y-6">
-            <!-- Step progress indicator -->
-            <div
-              class="flex items-center justify-between mb-12 max-w-xl mx-auto px-2 relative"
-            >
-              <!-- Step 1 -->
-              <div class="relative flex justify-center">
-                <div
-                  class="w-10 h-10 rounded-full flex items-center justify-center font-black transition-all relative z-20"
-                  [ngClass]="
-                    currentStep === 1
-                      ? 'bg-red-500 text-black shadow-[0_0_15px_rgba(220,38,38,0.5)] border-2 border-red-500'
-                      : 'bg-transparent border-2 border-red-500 text-red-500 shadow-[0_0_10px_rgba(220,38,38,0.2)]'
-                  "
-                >
-                  <lucide-icon
-                    *ngIf="currentStep > 1"
-                    [name]="Check"
-                    size="20"
-                    strokeWidth="3"
-                  ></lucide-icon>
+          <div class="md:col-span-2 space-y-5">
+            <!-- Step Progress -->
+            <div class="flex items-center justify-between max-w-lg mx-auto mb-8">
+              <div class="relative flex flex-col items-center">
+                <div class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm transition-all"
+                  [ngClass]="currentStep === 1 ? 'bg-ferre-600 text-white' : 'bg-ferre-100 text-ferre-600'">
+                  <lucide-icon *ngIf="currentStep > 1" [name]="Check" size="16" strokeWidth="3"></lucide-icon>
                   <span *ngIf="currentStep <= 1">1</span>
                 </div>
-                <span
-                  class="absolute top-12 whitespace-nowrap text-xs font-bold"
-                  [ngClass]="
-                    currentStep >= 1 ? 'text-red-500' : 'text-slate-600'
-                  "
-                  >Contacto</span
-                >
+                <span class="mt-2 text-xs font-semibold" [ngClass]="currentStep >= 1 ? 'text-ferre-600' : 'text-steel-400'">Contacto</span>
               </div>
-
-              <!-- Line 1-2 -->
-              <div
-                class="flex-1 h-1 rounded-full transition-all mx-3"
-                [ngClass]="currentStep >= 2 ? 'bg-red-500' : 'bg-slate-800'"
-              ></div>
-
-              <!-- Step 2 -->
-              <div class="relative flex justify-center">
-                <div
-                  class="w-10 h-10 rounded-full flex items-center justify-center font-black transition-all relative z-20"
-                  [ngClass]="
-                    currentStep === 2
-                      ? 'bg-red-500 text-black shadow-[0_0_15px_rgba(220,38,38,0.5)] border-2 border-red-500'
-                      : currentStep > 2
-                        ? 'bg-transparent border-2 border-red-500 text-red-500 shadow-[0_0_10px_rgba(220,38,38,0.2)]'
-                        : 'bg-transparent border-2 border-slate-700 text-slate-500'
-                  "
-                >
-                  <lucide-icon
-                    *ngIf="currentStep > 2"
-                    [name]="Check"
-                    size="20"
-                    strokeWidth="3"
-                  ></lucide-icon>
+              <div class="flex-1 h-0.5 mx-4 rounded-full transition-all" [ngClass]="currentStep >= 2 ? 'bg-ferre-500' : 'bg-concrete-200'"></div>
+              <div class="relative flex flex-col items-center">
+                <div class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm transition-all"
+                  [ngClass]="currentStep === 2 ? 'bg-ferre-600 text-white' : currentStep > 2 ? 'bg-ferre-100 text-ferre-600' : 'bg-concrete-200 text-steel-400'">
+                  <lucide-icon *ngIf="currentStep > 2" [name]="Check" size="16" strokeWidth="3"></lucide-icon>
                   <span *ngIf="currentStep <= 2">2</span>
                 </div>
-                <span
-                  class="absolute top-12 whitespace-nowrap text-xs font-bold"
-                  [ngClass]="
-                    currentStep >= 2 ? 'text-red-500' : 'text-slate-600'
-                  "
-                  >Envío</span
-                >
+                <span class="mt-2 text-xs font-semibold" [ngClass]="currentStep >= 2 ? 'text-ferre-600' : 'text-steel-400'">Envio</span>
               </div>
-
-              <!-- Line 2-3 -->
-              <div
-                class="flex-1 h-1 rounded-full transition-all mx-3"
-                [ngClass]="currentStep >= 3 ? 'bg-red-500' : 'bg-slate-800'"
-              ></div>
-
-              <!-- Step 3 -->
-              <div class="relative flex justify-center">
-                <div
-                  class="w-10 h-10 rounded-full flex items-center justify-center font-black transition-all relative z-20"
-                  [ngClass]="
-                    currentStep === 3
-                      ? 'bg-red-500 text-black shadow-[0_0_15px_rgba(220,38,38,0.5)] border-2 border-red-500'
-                      : 'bg-transparent border-2 border-slate-700 text-slate-500'
-                  "
-                >
-                  <span *ngIf="currentStep <= 3">3</span>
+              <div class="flex-1 h-0.5 mx-4 rounded-full transition-all" [ngClass]="currentStep >= 3 ? 'bg-ferre-500' : 'bg-concrete-200'"></div>
+              <div class="relative flex flex-col items-center">
+                <div class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm transition-all"
+                  [ngClass]="currentStep === 3 ? 'bg-ferre-600 text-white' : 'bg-concrete-200 text-steel-400'">
+                  3
                 </div>
-                <span
-                  class="absolute top-12 whitespace-nowrap text-xs font-bold"
-                  [ngClass]="
-                    currentStep >= 3 ? 'text-red-500' : 'text-slate-600'
-                  "
-                  >Pago</span
-                >
+                <span class="mt-2 text-xs font-semibold" [ngClass]="currentStep >= 3 ? 'text-ferre-600' : 'text-steel-400'">Pago</span>
               </div>
             </div>
 
-            <!-- Step 1: Contacto (Guest Checkout) -->
-            <div
-              class="bg-slate-800 border border-red-500/20 rounded-3xl p-8 shadow-xl"
-              [class.hidden]="currentStep !== 1"
-            >
-              <h2
-                class="text-2xl font-black text-white mb-6 flex items-center gap-3"
-              >
-                <lucide-icon [name]="Mail" class="text-red-500"></lucide-icon>
+            <!-- Step 1: Contacto -->
+            <div class="bg-white border border-concrete-200 rounded-2xl p-6 shadow-sm" [class.hidden]="currentStep !== 1">
+              <h2 class="text-lg font-bold text-steel-900 mb-5 flex items-center gap-2">
+                <lucide-icon [name]="Mail" class="text-ferre-600" size="20"></lucide-icon>
                 Datos de Contacto
               </h2>
               <div class="space-y-4">
                 <div>
-                  <label
-                    class="text-xs font-bold text-slate-400 uppercase tracking-widest block mb-2"
-                    >Correo Electrónico</label
-                  >
-                  <input
-                    type="email"
-                    [(ngModel)]="formData.email"
-                    placeholder="ejemplo@correo.com"
-                    class="w-full bg-[#020617] border border-red-500/30 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500/50 transition-all font-medium"
-                  />
+                  <label class="text-xs font-semibold text-steel-500 uppercase tracking-wide block mb-1.5">Correo Electronico</label>
+                  <input type="email" [(ngModel)]="formData.email" placeholder="ejemplo@correo.com"
+                    class="input-ferre w-full" />
                 </div>
-
-                <div
-                  class="bg-red-500/10 border border-red-500/20 rounded-xl p-4 flex gap-3 text-sm text-slate-300"
-                >
-                  <lucide-icon
-                    [name]="Check"
-                    size="20"
-                    class="text-red-500 flex-shrink-0 mt-0.5"
-                    strokeWidth="3"
-                  ></lucide-icon>
-                  <p>
-                    Puedes comprar sin cuenta. Usaremos tu email solo para
-                    enviarte el comprobante y seguimiento del pedido.
-                  </p>
+                <div class="bg-ferre-50 border border-ferre-200 rounded-xl p-3 flex gap-3 text-sm text-steel-600">
+                  <lucide-icon [name]="Check" size="18" class="text-ferre-600 flex-shrink-0 mt-0.5" strokeWidth="3"></lucide-icon>
+                  <p>Puedes comprar sin cuenta. Usaremos tu email solo para enviarte el comprobante y seguimiento del pedido.</p>
                 </div>
-
-                <button
-                  (click)="nextStep()"
-                  [disabled]="!formData.email"
-                  class="w-full mt-6 bg-red-500 text-black font-black py-4 rounded-xl hover:bg-red-400 transition-all disabled:opacity-50 disabled:hover:bg-red-500 shadow-[0_0_20px_rgba(220,38,38,0.2)] hover:shadow-[0_0_30px_rgba(220,38,38,0.4)] disabled:shadow-none"
-                >
+                <button (click)="nextStep()" [disabled]="!formData.email"
+                  class="w-full btn-ferre py-3 disabled:opacity-50">
                   Continuar
                 </button>
               </div>
             </div>
 
-            <!-- Step 2: Envío / Facturación -->
-            <div
-              class="bg-slate-800 border border-red-500/20 rounded-3xl p-8 shadow-xl"
-              [class.hidden]="currentStep !== 2"
-            >
-              <div class="flex items-center justify-between mb-6">
-                <h2
-                  class="text-2xl font-black text-white flex items-center gap-3"
-                >
-                  <lucide-icon [name]="User" class="text-red-500"></lucide-icon>
-                  Datos de Facturación
+            <!-- Step 2: Envio / Facturacion -->
+            <div class="bg-white border border-concrete-200 rounded-2xl p-6 shadow-sm" [class.hidden]="currentStep !== 2">
+              <div class="flex items-center justify-between mb-5">
+                <h2 class="text-lg font-bold text-steel-900 flex items-center gap-2">
+                  <lucide-icon [name]="User" class="text-ferre-600" size="20"></lucide-icon>
+                  Datos de Facturacion
                 </h2>
-                <button
-                  (click)="setStep(1)"
-                  class="text-xs font-bold text-slate-500 hover:text-white uppercase tracking-widest"
-                >
-                  Cambiar Email
-                </button>
+                <button (click)="setStep(1)" class="text-xs font-semibold text-steel-400 hover:text-ferre-600 transition-colors">Cambiar Email</button>
               </div>
 
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label
-                    class="text-xs font-bold text-slate-400 uppercase tracking-widest block mb-2"
-                    >Nombre / Razón Social</label
-                  >
-                  <input
-                    type="text"
-                    [(ngModel)]="formData.name"
-                    class="w-full bg-[#020617] border border-red-500/30 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-red-500"
-                  />
+                  <label class="text-xs font-semibold text-steel-500 uppercase tracking-wide block mb-1.5">Nombre / Razon Social</label>
+                  <input type="text" [(ngModel)]="formData.name" class="input-ferre w-full" />
                 </div>
                 <div>
-                  <label
-                    class="text-xs font-bold text-slate-400 uppercase tracking-widest block mb-2"
-                    >DNI o CUIT</label
-                  >
-                  <input
-                    type="text"
-                    [(ngModel)]="formData.cuit"
-                    class="w-full bg-[#020617] border border-red-500/30 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-red-500"
-                  />
+                  <label class="text-xs font-semibold text-steel-500 uppercase tracking-wide block mb-1.5">DNI o CUIT</label>
+                  <input type="text" [(ngModel)]="formData.cuit" class="input-ferre w-full" />
                 </div>
                 <div class="md:col-span-2">
-                  <label
-                    class="text-xs font-bold text-slate-400 uppercase tracking-widest block mb-2"
-                    >Teléfono de contacto</label
-                  >
-                  <div
-                    class="flex items-center w-full bg-[#020617] border border-red-500/30 rounded-xl focus-within:border-red-500 focus-within:ring-1 focus-within:ring-red-500/50 transition-all overflow-hidden"
-                  >
-                    <lucide-icon
-                      [name]="Phone"
-                      size="18"
-                      class="text-slate-500 ml-4 mr-3 pointer-events-none"
-                    ></lucide-icon>
-                    <input
-                      type="tel"
-                      [(ngModel)]="formData.phone"
-                      class="flex-1 bg-transparent py-3 pr-4 text-white font-medium focus:outline-none"
-                    />
-                  </div>
+                  <label class="text-xs font-semibold text-steel-500 uppercase tracking-wide block mb-1.5">Telefono de contacto</label>
+                  <input type="tel" [(ngModel)]="formData.phone" class="input-ferre w-full" />
                 </div>
-                <div class="md:col-span-2 mt-4 pt-4 border-t border-red-500/20">
-                  <h3
-                    class="text-sm font-black text-white mb-4 uppercase tracking-widest flex items-center gap-2"
-                  >
-                    <lucide-icon
-                      [name]="MapPin"
-                      size="16"
-                      class="text-red-500"
-                    ></lucide-icon>
+
+                <div class="md:col-span-2 mt-2 pt-4 border-t border-concrete-100">
+                  <h3 class="text-sm font-bold text-steel-700 mb-3 flex items-center gap-2">
+                    <lucide-icon [name]="MapPin" size="16" class="text-ferre-600"></lucide-icon>
                     Donde enviamos
                   </h3>
-                  <div class="grid grid-cols-2 gap-4">
+                  <div class="grid grid-cols-2 gap-3">
                     <div class="col-span-2 relative">
                       <div class="relative">
-                        <input
-                          type="text"
-                          [(ngModel)]="formData.address"
-                          (input)="onAddressInput()"
-                          placeholder="Calle y número"
-                          class="w-full bg-[#020617] border border-red-500/30 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-red-500 pr-10"
-                        />
-                        <div
-                          *ngIf="isSearchingAddress"
-                          class="absolute right-3 top-1/2 -translate-y-1/2"
-                        >
-                          <lucide-icon
-                            [name]="Loader2"
-                            size="18"
-                            class="animate-spin text-red-500"
-                          ></lucide-icon>
+                        <input type="text" [(ngModel)]="formData.address" (input)="onAddressInput()" placeholder="Calle y numero" class="input-ferre w-full pr-10" />
+                        <div *ngIf="isSearchingAddress" class="absolute right-3 top-1/2 -translate-y-1/2">
+                          <lucide-icon [name]="Loader2" size="16" class="animate-spin text-ferre-500"></lucide-icon>
                         </div>
                       </div>
-
-                      <!-- Address Suggestions Dropdown -->
-                      <div
-                        *ngIf="addressSuggestions.length > 0"
-                        class="absolute left-0 right-0 top-full mt-2 bg-slate-900 border-2 border-red-500 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-50 overflow-hidden animate-in fade-in slide-in-from-top-4"
-                      >
-                        <div
-                          class="px-6 py-4 bg-slate-800 border-b border-white/10 text-xs font-black text-slate-400 uppercase tracking-widest flex justify-between items-center"
-                        >
-                          <span>Resultados Encontrados</span>
-                          <span class="text-red-500"
-                            >¿No aparece? Agrega la ciudad</span
-                          >
+                      <div *ngIf="addressSuggestions.length > 0" class="absolute left-0 right-0 top-full mt-2 bg-white border border-concrete-200 rounded-xl shadow-lg z-50 overflow-hidden">
+                        <div class="px-4 py-2.5 bg-concrete-50 border-b border-concrete-100 text-[10px] font-bold text-steel-400 uppercase tracking-wider flex justify-between items-center">
+                          <span>Resultados</span>
+                          <span class="text-ferre-500">No aparece? Agrega la ciudad</span>
                         </div>
-                        <button
-                          *ngFor="let suggestion of addressSuggestions"
-                          (click)="selectSuggestion(suggestion)"
-                          class="w-full text-left px-6 py-5 hover:bg-red-500/10 hover:text-red-400 transition-all border-b border-white/5 last:border-0 flex flex-col gap-1.5 group"
-                        >
-                          <span
-                            class="text-lg font-black text-white group-hover:text-red-400 transition-colors"
-                          >
-                            {{ formatAddressTitle(suggestion) }}
-                          </span>
-                          <span
-                            class="text-xs font-medium text-slate-400 group-hover:text-slate-300"
-                          >
-                            {{ formatAddressSubtitle(suggestion) }}
-                          </span>
+                        <button *ngFor="let suggestion of addressSuggestions" (click)="selectSuggestion(suggestion)"
+                          class="w-full text-left px-4 py-3 hover:bg-ferre-50 transition-colors border-b border-concrete-50 last:border-0">
+                          <span class="text-sm font-semibold text-steel-800">{{ formatAddressTitle(suggestion) }}</span>
+                          <span class="text-xs text-steel-400 block mt-0.5">{{ formatAddressSubtitle(suggestion) }}</span>
                         </button>
-                        <div class="p-4 bg-slate-800/30 text-center">
-                          <button
-                            (click)="addressSuggestions = []"
-                            class="text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-tighter"
-                          >
-                            Cerrar sugerencias
-                          </button>
+                        <div class="p-2 text-center">
+                          <button (click)="addressSuggestions = []" class="text-[10px] font-bold text-steel-400 hover:text-steel-700 uppercase">Cerrar</button>
                         </div>
                       </div>
                     </div>
                     <div class="col-span-2">
-                      <input
-                        type="text"
-                        [(ngModel)]="formData.notes"
-                        placeholder="Depto, timbre, o indicaciones (Opcional)"
-                        class="w-full bg-[#020617] border border-red-500/30 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-red-500"
-                      />
+                      <input type="text" [(ngModel)]="formData.notes" placeholder="Depto, timbre, o indicaciones (Opcional)" class="input-ferre w-full" />
                     </div>
-                    <input
-                      type="text"
-                      [(ngModel)]="formData.city"
-                      placeholder="Ciudad"
-                      class="w-full bg-[#020617] border border-red-500/30 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-red-500"
-                    />
-                    <input
-                      type="text"
-                      [(ngModel)]="formData.province"
-                      placeholder="Provincia"
-                      class="w-full bg-[#020617] border border-red-500/30 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-red-500"
-                    />
+                    <input type="text" [(ngModel)]="formData.city" placeholder="Ciudad" class="input-ferre w-full" />
+                    <input type="text" [(ngModel)]="formData.province" placeholder="Provincia" class="input-ferre w-full" />
                     <div class="col-span-2">
-                      <input
-                        type="text"
-                        [(ngModel)]="formData.zip"
-                        placeholder="Código Postal"
-                        class="w-full bg-[#020617] border border-red-500/30 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-red-500"
-                      />
+                      <input type="text" [(ngModel)]="formData.zip" placeholder="Codigo Postal" class="input-ferre w-full" />
                     </div>
                   </div>
                 </div>
               </div>
 
-              <!-- Checkbox de Registro Transparente -->
-              <label
-                class="flex items-start gap-3 mt-8 p-4 bg-white/5 border border-red-500/30 rounded-xl cursor-pointer hover:bg-white/10 transition-colors"
-              >
-                <div
-                  class="relative flex items-center justify-center mt-0.5 w-6 h-6"
-                >
-                  <!-- Invisible Real Input -->
-                  <input
-                    type="checkbox"
-                    [(ngModel)]="formData.saveData"
-                    class="absolute inset-0 w-full h-full opacity-0 z-20 cursor-pointer"
-                  />
-
-                  <!-- Visual when UNCHECKED -->
-                  <div
-                    *ngIf="!formData.saveData"
-                    class="w-5 h-5 border-2 border-slate-500 rounded-full bg-slate-800/50 transition-colors pointer-events-none relative z-10"
-                  ></div>
-
-                  <!-- Visual when CHECKED -->
-                  <lucide-icon
-                    *ngIf="formData.saveData"
-                    [name]="CheckCircle2"
-                    size="24"
-                    class="text-red-500 transition-all pointer-events-none relative z-10"
-                    strokeWidth="2"
-                  ></lucide-icon>
+              <label class="flex items-start gap-3 mt-6 p-4 bg-concrete-50 border border-concrete-200 rounded-xl cursor-pointer hover:bg-concrete-100 transition-colors">
+                <div class="relative flex items-center justify-center mt-0.5 w-5 h-5">
+                  <input type="checkbox" [(ngModel)]="formData.saveData" class="absolute inset-0 w-full h-full opacity-0 z-20 cursor-pointer" />
+                  <div *ngIf="!formData.saveData" class="w-4.5 h-4.5 border-2 border-concrete-300 rounded bg-white transition-colors pointer-events-none relative z-10" style="width:18px;height:18px;"></div>
+                  <lucide-icon *ngIf="formData.saveData" [name]="CheckCircle2" size="20" class="text-ferre-600 pointer-events-none relative z-10" strokeWidth="2"></lucide-icon>
                 </div>
                 <div>
-                  <span class="block text-sm font-bold text-white mb-1"
-                    >Guardar mis datos y crear una cuenta</span
-                  >
-                  <span class="block text-xs text-slate-400 font-medium"
-                    >Crea una cuenta rápidamente para ver tu historial de
-                    facturas y acelerar tu próxima compra.</span
-                  >
+                  <span class="block text-sm font-semibold text-steel-800 mb-0.5">Guardar mis datos y crear una cuenta</span>
+                  <span class="block text-xs text-steel-400">Crea una cuenta rapidamente para ver tu historial y acelerar tu proxima compra.</span>
                 </div>
               </label>
 
-              <button
-                (click)="nextStep()"
-                [disabled]="
-                  !formData.name || !formData.address || !formData.phone
-                "
-                class="w-full mt-6 bg-red-500 text-black font-black py-4 rounded-xl hover:bg-red-400 transition-all disabled:opacity-50 disabled:hover:bg-red-500 shadow-[0_0_20px_rgba(220,38,38,0.2)]"
-              >
+              <button (click)="nextStep()" [disabled]="!formData.name || !formData.address || !formData.phone"
+                class="w-full btn-ferre py-3 mt-5 disabled:opacity-50">
                 Continuar al Pago
               </button>
             </div>
 
-            <!-- Step 3: Payment -->
-            <div
-              class="bg-slate-800 border border-red-500/20 rounded-3xl p-8 shadow-xl"
-              [class.hidden]="currentStep !== 3"
-            >
-              <div class="flex items-center justify-between mb-6">
-                <h2
-                  class="text-2xl font-black text-white flex items-center gap-3"
-                >
-                  <lucide-icon
-                    [name]="CreditCard"
-                    class="text-red-500"
-                  ></lucide-icon>
+            <!-- Step 3: Pago -->
+            <div class="bg-white border border-concrete-200 rounded-2xl p-6 shadow-sm" [class.hidden]="currentStep !== 3">
+              <div class="flex items-center justify-between mb-5">
+                <h2 class="text-lg font-bold text-steel-900 flex items-center gap-2">
+                  <lucide-icon [name]="CreditCard" class="text-ferre-600" size="20"></lucide-icon>
                   Medio de Pago
                 </h2>
-                <button
-                  (click)="setStep(2)"
-                  class="text-xs font-bold text-slate-500 hover:text-white uppercase tracking-widest"
-                >
-                  Cambiar Datos
-                </button>
+                <button (click)="setStep(2)" class="text-xs font-semibold text-steel-400 hover:text-ferre-600 transition-colors">Cambiar Datos</button>
               </div>
 
               <div class="space-y-3">
-                <div
-                  *ngIf="tenantInfo?.has_mp"
-                  (click)="selectPayment('mercadopago')"
+                <div *ngIf="tenantInfo?.has_mp" (click)="selectPayment('mercadopago')"
                   class="p-4 rounded-xl border cursor-pointer transition-all flex items-center gap-4"
-                  [ngClass]="
-                    paymentMethod === 'mercadopago'
-                      ? 'border-blue-500 bg-blue-500/10'
-                      : 'border-red-500/30 bg-[#020617] hover:bg-white/5'
-                  "
-                >
-                  <div
-                    class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-xl"
-                  >
-                    Ⓜ️
+                  [ngClass]="paymentMethod === 'mercadopago' ? 'border-blue-500 bg-blue-50' : 'border-concrete-200 bg-white hover:border-concrete-300'">
+                  <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white text-lg font-bold">M</div>
+                  <div class="flex-1">
+                    <h3 class="font-semibold text-steel-900 text-sm">Mercado Pago</h3>
+                    <p class="text-xs text-steel-400">Tarjetas de credito, debito y dinero en cuenta</p>
                   </div>
-                  <div>
-                    <h3 class="font-bold text-white">Mercado Pago</h3>
-                    <p class="text-xs text-slate-400">
-                      Tarjetas de crédito, débito y dinero en cuenta
-                    </p>
-                  </div>
-                  <div class="ml-auto">
-                    <div
-                      class="w-6 h-6 rounded-full border-2 border-slate-600 flex items-center justify-center"
-                    >
-                      <div
-                        class="w-3 h-3 rounded-full bg-blue-500"
-                        *ngIf="paymentMethod === 'mercadopago'"
-                      ></div>
-                    </div>
+                  <div class="w-5 h-5 rounded-full border-2 flex items-center justify-center" [ngClass]="paymentMethod === 'mercadopago' ? 'border-blue-500' : 'border-concrete-300'">
+                    <div class="w-2.5 h-2.5 rounded-full bg-blue-500" *ngIf="paymentMethod === 'mercadopago'"></div>
                   </div>
                 </div>
 
-                <div
-                  *ngIf="tenantInfo?.bank_cvu || tenantInfo?.bank_alias"
-                  (click)="selectPayment('transferencia')"
+                <div *ngIf="tenantInfo?.bank_cvu || tenantInfo?.bank_alias" (click)="selectPayment('transferencia')"
                   class="p-4 rounded-xl border cursor-pointer transition-all flex flex-col"
-                  [ngClass]="
-                    paymentMethod === 'transferencia'
-                      ? 'border-red-500 bg-red-500/10'
-                      : 'border-red-500/30 bg-[#020617] hover:bg-white/5'
-                  "
-                >
+                  [ngClass]="paymentMethod === 'transferencia' ? 'border-ferre-500 bg-ferre-50' : 'border-concrete-200 bg-white hover:border-concrete-300'">
                   <div class="flex items-center gap-4">
-                    <div
-                      class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-xl"
-                    >
-                      🏦
+                    <div class="w-10 h-10 bg-steel-800 rounded-full flex items-center justify-center text-white text-lg">B</div>
+                    <div class="flex-1">
+                      <h3 class="font-semibold text-steel-900 text-sm">Transferencia Bancaria</h3>
+                      <p class="text-xs text-steel-400">5% de Descuento (Pago manual)</p>
                     </div>
-                    <div>
-                      <h3 class="font-bold text-white">
-                        Transferencia Bancaria
-                      </h3>
-                      <p class="text-xs text-slate-400">
-                        5% de Descuento (Pago manual)
-                      </p>
-                    </div>
-                    <div class="ml-auto">
-                      <div
-                        class="w-6 h-6 rounded-full border-2 border-slate-600 flex items-center justify-center transition-colors"
-                        [ngClass]="
-                          paymentMethod === 'transferencia'
-                            ? 'border-red-500'
-                            : ''
-                        "
-                      >
-                        <div
-                          class="w-3 h-3 rounded-full bg-red-500 transition-all scale-0"
-                          [class.scale-100]="paymentMethod === 'transferencia'"
-                        ></div>
-                      </div>
+                    <div class="w-5 h-5 rounded-full border-2 flex items-center justify-center" [ngClass]="paymentMethod === 'transferencia' ? 'border-ferre-500' : 'border-concrete-300'">
+                      <div class="w-2.5 h-2.5 rounded-full bg-ferre-600 transition-all scale-0" [class.scale-100]="paymentMethod === 'transferencia'"></div>
                     </div>
                   </div>
-
-                  <div
-                    *ngIf="paymentMethod === 'transferencia'"
-                    class="mt-4 pt-4 border-t border-red-500/20 text-sm animate-fade-in"
-                  >
-                    <p class="text-slate-300 font-medium mb-3">
-                      Transfiere el monto exacto a la siguiente cuenta:
-                    </p>
-                    <div
-                      class="bg-[#020617] p-4 rounded-lg border border-red-500/20 space-y-2"
-                    >
+                  <div *ngIf="paymentMethod === 'transferencia'" class="mt-4 pt-4 border-t border-concrete-200 text-sm">
+                    <p class="text-steel-600 font-medium mb-3">Transfiere el monto exacto a la siguiente cuenta:</p>
+                    <div class="bg-concrete-50 p-4 rounded-xl border border-concrete-200 space-y-2">
                       <div class="flex justify-between items-center">
-                        <span class="text-slate-400">Titular</span
-                        ><span class="text-white font-bold">{{ tenantInfo?.name || 'FerreNexo' }}</span>
+                        <span class="text-steel-400 text-xs">Titular</span>
+                        <span class="text-steel-900 font-semibold text-sm">{{ tenantInfo?.name || 'FerreNexo' }}</span>
                       </div>
                       <div class="flex justify-between items-center">
-                        <span class="text-slate-400">CBU / CVU</span
-                        ><span class="text-white font-bold"
-                          >{{ tenantInfo?.bank_cvu || '...' }}</span
-                        >
+                        <span class="text-steel-400 text-xs">CBU / CVU</span>
+                        <span class="text-steel-900 font-semibold text-sm">{{ tenantInfo?.bank_cvu || '...' }}</span>
                       </div>
                       <div class="flex justify-between items-center">
-                        <span class="text-slate-400">Alias</span
-                        ><span class="text-red-500 font-black"
-                          >{{ tenantInfo?.bank_alias || '...' }}</span
-                        >
+                        <span class="text-steel-400 text-xs">Alias</span>
+                        <span class="text-ferre-600 font-bold text-sm">{{ tenantInfo?.bank_alias || '...' }}</span>
                       </div>
                     </div>
-                    <p class="mt-3 text-xs text-slate-400">
-                      Una vez finalizado,
-                      <span class="text-red-500 font-bold"
-                        >envía el comprobante</span
-                      >
-                      por WhatsApp indicando tu código de pedido. Validaremos el
-                      pago para liberar el envío.
+                    <p class="mt-3 text-xs text-steel-400">
+                      Una vez finalizado, <span class="text-ferre-600 font-semibold">envia el comprobante</span> por WhatsApp indicando tu codigo de pedido.
                     </p>
                   </div>
                 </div>
               </div>
 
-              <!-- Main Action Buttons -->
-              <div class="flex flex-col gap-3 mt-8">
-                <button
-                  (click)="processPayment()"
-                  [disabled]="!paymentMethod || isProcessing"
-                  class="w-full bg-red-500 text-black font-black py-4 rounded-xl hover:bg-red-400 transition-all disabled:opacity-50 flex items-center justify-center gap-2 text-lg shadow-[0_0_25px_rgba(220,38,38,0.3)]"
-                >
-                  <lucide-icon
-                    *ngIf="isProcessing"
-                    [name]="Loader2"
-                    size="24"
-                    class="animate-spin"
-                  ></lucide-icon>
-                  <span *ngIf="paymentMethod === 'transferencia'">{{
-                    isProcessing
-                      ? "Procesando..."
-                      : "YA REALICÉ LA TRANSFERENCIA"
-                  }}</span>
-                  <span
-                    *ngIf="
-                      paymentMethod !== 'transferencia' && paymentMethod !== ''
-                    "
-                    >{{
-                      isProcessing
-                        ? "Procesando..."
-                        : "PAGAR $" + getFinalTotal()
-                    }}</span
-                  >
+              <div class="flex flex-col gap-3 mt-6">
+                <button (click)="processPayment()" [disabled]="!paymentMethod || isProcessing"
+                  class="w-full btn-ferre py-3.5 flex items-center justify-center gap-2 disabled:opacity-50">
+                  <lucide-icon *ngIf="isProcessing" [name]="Loader2" size="20" class="animate-spin"></lucide-icon>
+                  <span *ngIf="paymentMethod === 'transferencia'">{{ isProcessing ? 'Procesando...' : 'YA REALICE LA TRANSFERENCIA' }}</span>
+                  <span *ngIf="paymentMethod !== 'transferencia' && paymentMethod !== ''">{{ isProcessing ? 'Procesando...' : 'PAGAR $' + getFinalTotal() }}</span>
                   <span *ngIf="paymentMethod === '' && (tenantInfo?.has_mp || tenantInfo?.bank_cvu)">SELECCIONAR PAGO</span>
-                  <span *ngIf="!tenantInfo?.has_mp && !tenantInfo?.bank_cvu && !tenantInfo?.bank_alias" class="text-sm">NINGÚN MEDIO DE PAGO DISPONIBLE</span>
+                  <span *ngIf="!tenantInfo?.has_mp && !tenantInfo?.bank_cvu && !tenantInfo?.bank_alias" class="text-sm">NINGUN MEDIO DE PAGO DISPONIBLE</span>
                 </button>
-
-                <button
-                  *ngIf="paymentMethod === 'transferencia' && !isProcessing"
-                  (click)="goHome()"
-                  class="w-full bg-white/5 border border-white/10 text-white font-bold py-3 rounded-xl hover:bg-white/10 transition-all"
-                >
+                <button *ngIf="paymentMethod === 'transferencia' && !isProcessing" (click)="goHome()"
+                  class="w-full bg-concrete-100 border border-concrete-200 text-steel-700 font-semibold py-3 rounded-xl hover:bg-concrete-200 transition-all text-sm">
                   VOLVER AL INICIO
                 </button>
               </div>
             </div>
           </div>
 
-          <!-- Right Column: Order Summary Mini -->
+          <!-- Order Summary -->
           <div>
-            <div
-              class="bg-slate-800 border border-red-500/30 rounded-3xl p-6 sticky top-24"
-            >
-              <h3
-                class="font-black text-white mb-4 uppercase tracking-widest text-sm"
-              >
-                Resumen
-              </h3>
-              <div class="space-y-4 mb-4 max-h-[300px] overflow-y-auto pr-2">
+            <div class="bg-white border border-concrete-200 rounded-2xl p-5 shadow-sm sticky top-24">
+              <h3 class="font-bold text-steel-900 mb-4 text-sm">Resumen</h3>
+              <div class="space-y-3 mb-4 max-h-[300px] overflow-y-auto pr-1">
                 <div *ngFor="let item of items" class="flex gap-3">
-                  <div
-                    class="w-12 h-12 bg-slate-800 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center"
-                  >
-                    <img
-                      *ngIf="item.image"
-                      [src]="item.image"
-                      class="w-full h-full object-contain"
-                    />
+                  <div class="w-11 h-11 bg-concrete-50 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center border border-concrete-100">
+                    <img *ngIf="item.image" [src]="item.image" class="w-full h-full object-contain" />
                   </div>
-                  <div class="flex-1">
-                    <p class="text-sm font-bold text-slate-300 line-clamp-1">
-                      {{ item.product_name }}
-                    </p>
-                    <p class="text-xs text-slate-500">
-                      {{ item.quantity }} x \${{ item.price }}
-                    </p>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-xs font-semibold text-steel-800 truncate">{{ item.product_name }}</p>
+                    <p class="text-[11px] text-steel-400">{{ item.quantity }} x \${{ item.price }}</p>
                   </div>
                 </div>
               </div>
-              <div class="border-t border-red-500/30 pt-4 space-y-2 mt-4">
-                <div
-                  class="flex justify-between text-sm text-slate-400 font-medium"
-                >
+              <div class="border-t border-concrete-100 pt-3 space-y-2 mt-3">
+                <div class="flex justify-between text-xs text-steel-400 font-medium">
                   <span>Subtotal</span>
                   <span>\${{ total }}</span>
                 </div>
-                <div
-                  class="flex justify-between text-sm text-slate-400 font-medium"
-                >
+                <div class="flex justify-between text-xs text-steel-400 font-medium">
                   <span>IVA (21%)</span>
                   <span>\${{ getTax() }}</span>
                 </div>
-                <div
-                  class="flex justify-between text-lg text-white font-black pt-2 border-t border-red-500/20 mt-2"
-                >
+                <div class="flex justify-between text-base text-steel-900 font-bold pt-2 border-t border-concrete-100 mt-2">
                   <span>Total</span>
-                  <span class="text-red-500">\${{ getFinalTotal() }}</span>
+                  <span class="text-ferre-600">\${{ getFinalTotal() }}</span>
                 </div>
               </div>
             </div>

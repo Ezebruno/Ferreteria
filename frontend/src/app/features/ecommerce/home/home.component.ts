@@ -48,6 +48,7 @@ import {
   Map,
   ShieldCheck,
   Store,
+  MessageCircle,
 } from "lucide-angular";
 import { RouterModule } from "@angular/router";
 
@@ -199,6 +200,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   Map = Map;
   ShieldCheck = ShieldCheck;
   Store = Store;
+  MessageCircle = MessageCircle;
 
   ngOnInit(): void {
     this.seo.updateMetaTags({

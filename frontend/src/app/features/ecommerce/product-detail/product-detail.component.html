@@ -1,501 +1,265 @@
-<div class="min-h-screen bg-slate-800 relative overflow-hidden">
-  <!-- Glowing effects -->
-  <div
-    class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-red-900/20 via-slate-900 to-slate-900"
-  ></div>
-  <div
-    class="absolute top-0 right-0 w-[500px] h-[500px] bg-red-500/10 rounded-full blur-[120px] pointer-events-none"
-  ></div>
-
-  <!-- Header Navigation (Breadcrumb style) -->
-  <div class="relative z-10 border-b border-red-500/20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+﻿<div class="min-h-screen bg-concrete-50">
+  <div class="bg-white border-b border-concrete-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
       <button
         (click)="goBack()"
-        class="flex items-center gap-2 text-slate-400 hover:text-red-400 font-bold transition-all group"
+        class="flex items-center gap-2 text-steel-500 hover:text-ferre-600 font-semibold text-sm transition-colors group"
       >
-        <lucide-icon
-          [name]="ArrowLeft"
-          size="20"
-          class="group-hover:-translate-x-1 transition-transform"
-        ></lucide-icon>
-        Volver al catálogo
+        <lucide-icon [name]="ArrowLeft" size="18" class="group-hover:-translate-x-1 transition-transform"></lucide-icon>
+        Volver al catalogo
       </button>
-    </div>
-
-    <!-- Related Products -->
-    <div
-      *ngIf="related && related.length"
-      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10"
-    >
-      <h3 class="text-2xl font-black text-white mb-6">
-        Productos relacionados
-      </h3>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <a
-          *ngFor="let r of related"
-          [routerLink]="['/product', r.id]"
-          class="block bg-slate-800 p-4 rounded-xl border border-red-500/10 hover:border-red-500/30 transition-all"
-        >
-          <img
-            [src]="r.image"
-            class="w-full h-28 object-contain mb-3"
-            alt="{{ r.name }}"
-          />
-          <div class="text-sm font-bold text-white line-clamp-2">
-            {{ r.name }}
-          </div>
-          <div class="text-sm text-slate-400">${{ r.price_retail }}</div>
-        </a>
-      </div>
     </div>
   </div>
 
-  <!-- Main Content -->
-  <div
-    *ngIf="!isLoading && product"
-    class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10"
-  >
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
-      <!-- LEFT: Image Section -->
-      <div class="space-y-6 animate-in">
-        <div
-          class="relative group aspect-square bg-slate-800 rounded-3xl overflow-hidden border border-red-500/30 p-12 transition-all hover:border-red-500/30"
-        >
-          <div
-            class="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
-          ></div>
+  <div *ngIf="!isLoading && product" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-start">
+
+      <div class="space-y-4">
+        <div class="aspect-square bg-white rounded-2xl border border-concrete-200 p-8 flex items-center justify-center relative overflow-hidden">
           <img
             *ngIf="product.image"
             [src]="product.image"
             [alt]="product.name"
             (error)="product.image = ''"
-            class="w-full h-full object-contain drop-shadow-[0_0_30px_rgba(0,0,0,0.5)] group-hover:scale-105 transition-transform duration-700"
+            class="w-full h-full object-contain hover:scale-105 transition-transform duration-500"
           />
-          <div
-            *ngIf="!product.image"
-            class="absolute inset-0 flex items-center justify-center bg-slate-800 overflow-hidden"
-          >
-            <lucide-icon
-              [name]="Hammer"
-              size="80"
-              class="text-red-500/30 drop-shadow-[0_0_15px_rgba(220,38,38,0.2)]"
-            ></lucide-icon>
+          <div *ngIf="!product.image" class="flex flex-col items-center gap-3 text-steel-300">
+            <lucide-icon [name]="Hammer" size="64"></lucide-icon>
+            <span class="text-sm font-medium">Sin imagen</span>
           </div>
         </div>
 
-        <!-- Thumbnail Gallery (Simulated) -->
-        <div class="grid grid-cols-4 gap-4">
-          <div
-            *ngFor="let i of [1, 2, 3, 4]"
-            class="aspect-square bg-slate-800 rounded-2xl border border-red-500/20 p-3 cursor-pointer hover:border-red-500/50 transition-all flex items-center justify-center relative overflow-hidden"
-          >
+        <div class="grid grid-cols-4 gap-3">
+          <div *ngFor="let i of [1, 2, 3, 4]" class="aspect-square bg-white rounded-xl border border-concrete-200 p-2 cursor-pointer hover:border-ferre-400 transition-colors flex items-center justify-center">
             <img
               *ngIf="product.image"
               [src]="product.image"
               (error)="product.image = ''"
-              class="w-full h-full object-contain opacity-50 hover:opacity-100 transition-opacity"
+              class="w-full h-full object-contain opacity-60 hover:opacity-100 transition-opacity"
             />
-            <lucide-icon
-              *ngIf="!product.image"
-              [name]="Hammer"
-              size="24"
-              class="text-red-500/30"
-            ></lucide-icon>
+            <lucide-icon *ngIf="!product.image" [name]="Hammer" size="20" class="text-steel-300"></lucide-icon>
           </div>
         </div>
       </div>
 
-      <!-- RIGHT: Product Info -->
-      <div class="flex flex-col gap-8 animate-in-delay-1">
-        <div>
-          <span
-            class="inline-flex items-center gap-2 border border-red-500/30 bg-red-500/10 px-4 py-1.5 rounded-full backdrop-blur-md mb-6"
-          >
+      <div class="flex flex-col gap-6">
+        <span class="inline-flex items-center bg-ferre-50 text-ferre-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide w-fit">
+          {{ product.category_name }}
+        </span>
+
+        <h1 class="text-3xl md:text-4xl font-extrabold text-steel-900 leading-tight" style="font-family: Sora, sans-serif;">
+          {{ product.name }}
+        </h1>
+
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-0.5">
             <span
-              class="text-red-400 text-[10px] font-black tracking-widest uppercase"
-              >{{ product.category_name }}</span
-            >
-          </span>
-
-          <h1
-            class="text-4xl md:text-5xl font-black text-white leading-tight mb-4 tracking-tight"
-          >
-            {{ product.name }}
-          </h1>
-
-          <!-- Rating Section -->
-          <div
-            class="flex items-center gap-4 py-2 border-y border-red-500/20 mb-6"
-          >
-            <div class="flex items-center gap-1">
-              <span
-                *ngFor="let star of [1, 2, 3, 4, 5]; let i = index"
-                class="text-xl cursor-pointer transition-transform hover:scale-125"
-                [ngClass]="
-                  i <
-                  (hoverRating > 0
-                    ? hoverRating
-                    : Math.round(userRating || averageRating || 0))
-                    ? 'text-red-400 drop-shadow-[0_0_8px_rgba(220,38,38,0.5)]'
-                    : 'text-slate-800'
-                "
-                (click)="setRating(i + 1)"
-                (mouseenter)="onStarHover(i + 1)"
-                (mouseleave)="onStarLeave()"
-                >⭐</span
-              >
-            </div>
-            <span class="text-slate-500 text-sm font-bold"
-              >({{ totalReviews }} reseñas)</span
-            >
+              *ngFor="let star of [1, 2, 3, 4, 5]; let i = index"
+              class="text-lg cursor-pointer"
+              [ngClass]="i < (hoverRating > 0 ? hoverRating : Math.round(userRating || averageRating || 0)) ? 'text-safety-500' : 'text-concrete-300'"
+              (click)="setRating(i + 1)"
+              (mouseenter)="onStarHover(i + 1)"
+              (mouseleave)="onStarLeave()"
+            >&#9733;</span>
           </div>
-
-          <p class="text-slate-400 text-lg leading-relaxed font-medium">
-            {{ product.description }}
-          </p>
+          <span class="text-sm text-steel-400 font-medium">({{ totalReviews }} resenas)</span>
         </div>
 
-        <!-- Price Section -->
-        <div
-          class="bg-white/5 border border-red-500/30 backdrop-blur-xl p-8 rounded-3xl relative overflow-hidden group"
-        >
-          <div
-            class="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent"
-          ></div>
-          <div class="relative z-10">
-            <div class="flex items-baseline gap-4 mb-2">
-              <span class="text-5xl font-black text-white tracking-tighter"
-                >${{ product.price_retail }}</span
-              >
-              <span
-                class="text-xl text-slate-500 line-through decoration-red-500/50"
-                >${{ getOriginalPrice(product) }}</span
-              >
+        <p class="text-steel-600 leading-relaxed">
+          {{ product.description }}
+        </p>
+
+        <div class="bg-white border border-concrete-200 rounded-2xl p-6">
+          <div class="flex items-baseline gap-3 mb-3">
+            <span class="text-4xl font-extrabold text-steel-900" style="font-family: Sora, sans-serif;">${{ product.price_retail }}</span>
+            <span class="text-lg text-steel-400 line-through">${{ getOriginalPrice(product) }}</span>
+          </div>
+          <p class="text-green-600 font-semibold text-sm flex items-center gap-2 mb-6">
+            <span class="w-2 h-2 rounded-full bg-green-500"></span>
+            En stock
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-3">
+            <div class="flex items-center border border-concrete-200 rounded-xl overflow-hidden shrink-0">
+              <button (click)="updateQuantity(quantity - 1)" class="w-11 h-11 flex items-center justify-center text-steel-500 hover:text-ferre-600 hover:bg-ferre-50 transition-colors">
+                <lucide-icon [name]="Minus" size="16"></lucide-icon>
+              </button>
+              <input
+                type="number"
+                [(ngModel)]="quantity"
+                class="w-11 h-11 text-center bg-transparent text-steel-900 font-bold outline-none border-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              />
+              <button (click)="updateQuantity(quantity + 1)" class="w-11 h-11 flex items-center justify-center text-steel-500 hover:text-ferre-600 hover:bg-ferre-50 transition-colors">
+                <lucide-icon [name]="Plus" size="16"></lucide-icon>
+              </button>
             </div>
-            <p class="text-emerald-400 font-bold flex items-center gap-2 mb-8">
-              <span
-                class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"
-              ></span>
-              En stock
+
+            <button
+              (click)="addToCart()"
+              [disabled]="isAddingToCart"
+              class="flex-1 btn-ferre flex items-center justify-center gap-2 py-3 px-6 disabled:opacity-50"
+            >
+              <lucide-icon [name]="ShoppingCart" size="18"></lucide-icon>
+              <span>{{ isAddingToCart ? 'Agregando...' : 'Agregar al Carrito' }}</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div class="flex items-center gap-3 bg-white border border-concrete-200 p-4 rounded-xl">
+            <lucide-icon [name]="Truck" class="text-steel-500" size="20"></lucide-icon>
+            <p class="text-steel-700 text-xs font-semibold">Envio a todo el pais</p>
+          </div>
+          <div class="flex items-center gap-3 bg-white border border-concrete-200 p-4 rounded-xl">
+            <lucide-icon [name]="Shield" class="text-green-600" size="20"></lucide-icon>
+            <div>
+              <p class="text-steel-700 text-xs font-semibold">Garantia Pro</p>
+              <p class="text-steel-400 text-[10px]">12 Meses</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white border border-concrete-200 rounded-2xl p-6">
+          <h3 class="text-steel-900 font-bold mb-3 flex items-center gap-2 text-sm">
+            <lucide-icon [name]="Truck" size="18" class="text-steel-500"></lucide-icon>
+            Calculador de Envio
+          </h3>
+          <div class="flex gap-3">
+            <input
+              type="text"
+              [(ngModel)]="zipCode"
+              placeholder="Codigo Postal"
+              class="bg-concrete-50 border border-concrete-200 text-steel-900 placeholder-steel-400 rounded-xl px-4 py-2.5 flex-1 outline-none focus:border-ferre-400 transition-colors text-sm"
+              (keyup.enter)="calculateShipping()"
+            />
+            <button
+              (click)="calculateShipping()"
+              [disabled]="isCalculatingShipping || !zipCode"
+              class="bg-steel-800 hover:bg-steel-700 disabled:opacity-50 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors text-sm shrink-0"
+            >
+              <span *ngIf="!isCalculatingShipping">Calcular</span>
+              <span *ngIf="isCalculatingShipping" class="flex gap-1 items-center">
+                <lucide-icon [name]="Truck" size="14" class="animate-bounce"></lucide-icon>...
+              </span>
+            </button>
+          </div>
+
+          <div *ngIf="shippingResult" class="mt-4 space-y-2">
+            <p class="text-steel-500 text-xs font-medium bg-concrete-50 py-2 px-3 rounded-lg text-center">
+              Opciones para CP <span class="font-bold text-steel-700">{{ zipCode }}</span>
+              <span *ngIf="shippingResult.destination_name" class="text-ferre-600"> ({{ shippingResult.destination_name }})</span>
             </p>
 
-            <!-- Quantity and Actions -->
-            <div class="flex flex-col sm:flex-row gap-4">
-              <div
-                class="flex items-center bg-slate-800/50 border border-red-500/30 rounded-2xl p-1 shrink-0"
-              >
-                <button
-                  (click)="updateQuantity(quantity - 1)"
-                  class="w-12 h-12 flex items-center justify-center text-slate-400 hover:text-red-400 transition-colors"
-                >
-                  <lucide-icon [name]="Minus" size="18"></lucide-icon>
-                </button>
-                <input
-                  type="number"
-                  [(ngModel)]="quantity"
-                  class="w-12 text-center bg-transparent text-white font-black outline-none border-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                />
-                <button
-                  (click)="updateQuantity(quantity + 1)"
-                  class="w-12 h-12 flex items-center justify-center text-slate-400 hover:text-red-400 transition-colors"
-                >
-                  <lucide-icon [name]="Plus" size="18"></lucide-icon>
-                </button>
+            <div class="flex items-center justify-between bg-ferre-50 border border-ferre-200 p-3 rounded-xl">
+              <div>
+                <p class="text-steel-900 font-semibold text-sm">Retiro en Sucursal Central</p>
+                <p class="text-green-600 text-xs font-medium mt-0.5">Acordar en local</p>
               </div>
+              <p class="text-ferre-600 font-bold text-sm">Gratis</p>
+            </div>
 
-              <button
-                (click)="addToCart()"
-                [disabled]="isAddingToCart"
-                class="flex-1 bg-red-500 hover:bg-red-400 text-black font-black py-4 rounded-2xl transition-all shadow-[0_0_30px_rgba(220,38,38,0.2)] hover:shadow-[0_0_50px_rgba(220,38,38,0.5)] flex items-center justify-center gap-3 transform hover:scale-[1.02] active:scale-95 disabled:opacity-50"
-              >
-                <lucide-icon [name]="ShoppingCart" size="22"></lucide-icon>
-                <span>{{
-                  isAddingToCart ? "Agregando..." : "Agregar al Carrito"
-                }}</span>
-              </button>
+            <div *ngFor="let rate of shippingResult.rates" class="flex items-center justify-between bg-concrete-50 border border-concrete-200 p-3 rounded-xl hover:border-ferre-300 transition-colors">
+              <div>
+                <p class="text-steel-900 font-semibold text-sm">{{ rate.productName }}</p>
+                <p class="text-steel-400 text-xs mt-0.5">
+                  {{ rate.deliveredType === 'D' ? 'Entrega a domicilio' : 'Retiro en sucursal' }}
+                </p>
+              </div>
+              <p class="text-steel-700 font-bold text-sm">${{ rate.price }}</p>
             </div>
           </div>
-        </div>
 
-
-
-        <!-- Trust Signals -->
-        <div class="grid grid-cols-2 gap-4">
-          <div
-            class="flex items-center gap-4 bg-white/5 border border-red-500/30 p-4 rounded-2xl"
-          >
-            <lucide-icon
-              [name]="Truck"
-              class="text-red-500"
-              size="24"
-            ></lucide-icon>
-            <div>
-              <p
-                class="text-white text-xs font-black uppercase tracking-widest"
-              >
-                Envío a todo el país
-              </p>
-            </div>
-          </div>
-          <div
-            class="flex items-center gap-4 bg-white/5 border border-red-500/30 p-4 rounded-2xl"
-          >
-            <lucide-icon
-              [name]="Shield"
-              class="text-emerald-500"
-              size="24"
-            ></lucide-icon>
-            <div>
-              <p
-                class="text-white text-xs font-black uppercase tracking-widest"
-              >
-                Garantía Pro
-              </p>
-              <p class="text-slate-500 text-[10px] font-bold">12 Meses</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Shipping Calculator -->
-        <div
-          class="bg-white/5 border border-red-500/30 rounded-3xl p-6 relative overflow-hidden group"
-        >
-          <div
-            class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent"
-          ></div>
-          <div class="relative z-10">
-            <h3 class="text-white font-black mb-4 flex items-center gap-2">
-              <img
-                src="https://www.correoargentino.com.ar/sites/default/files/logo-correo-white.png"
-                onerror="
-                  this.src =
-                    'https://upload.wikimedia.org/wikipedia/commons/4/4e/Correo_Argentino_logo.png'
-                "
-                class="h-6 object-contain"
-                alt="Correo Argentino"
-              />
-              Calculador de Envío
-            </h3>
-            <div class="flex gap-4">
-              <input
-                type="text"
-                [(ngModel)]="zipCode"
-                placeholder="Tu Código Postal"
-                class="bg-slate-800/50 border border-red-500/30 text-white rounded-xl px-4 py-3 flex-1 outline-none focus:border-blue-500/50 transition-colors"
-                (keyup.enter)="calculateShipping()"
-              />
-              <button
-                (click)="calculateShipping()"
-                [disabled]="isCalculatingShipping || !zipCode"
-                class="bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white font-bold px-6 py-3 rounded-xl transition-colors shrink-0"
-              >
-                <span *ngIf="!isCalculatingShipping">Calcular</span>
-                <span
-                  *ngIf="isCalculatingShipping"
-                  class="flex gap-2 items-center"
-                  ><lucide-icon
-                    [name]="Truck"
-                    size="16"
-                    class="animate-bounce"
-                  ></lucide-icon
-                  >...</span
-                >
-              </button>
-            </div>
-
-            <!-- Shipping Results -->
-            <div
-              *ngIf="shippingResult"
-              class="mt-6 space-y-3 animate-in fade-in slide-in-from-top-4"
-            >
-              <p
-                class="text-slate-400 text-sm mb-4 text-center uppercase tracking-wider font-bold bg-white/5 py-2 px-4 rounded-xl border border-red-500/20"
-              >
-                Opciones para el CP
-                <span class="text-white">{{ zipCode }}</span>
-                <span
-                  *ngIf="shippingResult.destination_name"
-                  class="text-red-400 block sm:inline sm:ml-2"
-                  >({{ shippingResult.destination_name }})</span
-                >
-              </p>
-
-              <!-- Retiro en local -->
-              <div
-                class="flex items-center justify-between bg-red-500/10 border border-red-500/30 p-4 rounded-xl shadow-[0_0_15px_rgba(220,38,38,0.1)] transition-colors"
-              >
-                <div>
-                  <p class="text-white font-bold text-sm">
-                    Retiro en Sucursal Central
-                  </p>
-                  <p class="text-emerald-400 text-xs font-bold mt-1">
-                    Acordar en local
-                  </p>
-                </div>
-                <div class="text-right">
-                  <p class="text-red-400 font-black text-lg">Gratis</p>
-                </div>
-              </div>
-
-              <!-- Opciones de Correo -->
-              <div
-                *ngFor="let rate of shippingResult.rates"
-                class="flex items-center justify-between bg-slate-800/40 border border-red-500/20 p-4 rounded-xl hover:border-blue-400/30 transition-colors"
-              >
-                <div>
-                  <p class="text-white font-bold text-sm">
-                    {{ rate.productName }}
-                  </p>
-                  <p class="text-slate-500 text-xs mt-1">
-                    {{
-                      rate.deliveredType === "D"
-                        ? "Entrega a domicilio por Correo Argentino"
-                        : "Retiro en sucursal de Correo Argentino"
-                    }}
-                  </p>
-                </div>
-                <div class="text-right">
-                  <p class="text-blue-400 font-black text-lg">
-                    ${{ rate.price }}
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div
-              *ngIf="shippingError"
-              class="mt-4 text-red-400 text-sm font-medium bg-red-400/10 p-3 rounded-lg border border-red-400/20"
-            >
-              {{ shippingError }}
-            </div>
+          <div *ngIf="shippingError" class="mt-3 text-red-600 text-xs font-medium bg-red-50 p-3 rounded-lg border border-red-200">
+            {{ shippingError }}
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Details Section -->
-    <div
-      class="mt-24 grid lg:grid-cols-3 gap-12 border-t border-red-500/20 pt-12"
-    >
-      <div class="lg:col-span-2 space-y-8">
-        <h2 class="text-3xl font-black text-white tracking-tight">
-          Especificaciones Técnicas
-        </h2>
-        <div class="grid sm:grid-cols-2 gap-x-12 gap-y-6">
-          <div
-            *ngFor="
-              let spec of [
-                { label: 'Marca', value: product.brand },
-                { label: 'Material', value: product.material },
-                { label: 'Dimensiones', value: product.dimensions },
-                { label: 'Peso', value: product.weight },
-              ]
-            "
-            class="flex justify-between py-4 border-b border-red-500/20"
-          >
-            <span
-              class="text-slate-500 font-bold text-sm uppercase tracking-wider"
-              >{{ spec.label }}</span
-            >
-            <span class="text-white font-black">{{ spec.value }}</span>
+    <div class="mt-16 border-t border-concrete-200 pt-12">
+      <div class="grid lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2">
+          <h2 class="text-2xl font-extrabold text-steel-900 mb-6" style="font-family: Sora, sans-serif;">Especificaciones Tecnicas</h2>
+          <div class="grid sm:grid-cols-2 gap-x-12 gap-y-4">
+            <div *ngFor="let spec of [
+              { label: 'Marca', value: product.brand },
+              { label: 'Material', value: product.material },
+              { label: 'Dimensiones', value: product.dimensions },
+              { label: 'Peso', value: product.weight }
+            ]" class="flex justify-between py-3 border-b border-concrete-100">
+              <span class="text-steel-400 font-medium text-sm">{{ spec.label }}</span>
+              <span class="text-steel-800 font-semibold">{{ spec.value }}</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="space-y-6 h-fit">
-        <!-- Help Advisor -->
-        <div class="bg-red-500/5 border border-red-500/10 p-8 rounded-3xl">
-          <h3 class="text-xl font-black text-white mb-4">¿Necesitas ayuda?</h3>
-          <p class="text-slate-400 text-sm leading-relaxed mb-6">
-            Contamos con expertos disponibles para asesorarte en la elección de
-            tus herramientas.
-          </p>
-          <a
-            [href]="
-              whatsappHref +
-              '?text=Hola,%20necesito%20asesoramiento%20sobre%20' +
-              product.name
-            "
-            target="_blank"
-            rel="noopener noreferrer"
-            class="w-full bg-[#25D366]/10 hover:bg-[#25D366]/20 text-white font-black py-4 rounded-2xl border border-[#25D366]/30 transition-all flex items-center justify-center gap-2 group"
-          >
-            <svg
-              class="text-[#25D366] group-hover:scale-110 transition-transform"
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+        <div class="space-y-4 h-fit">
+          <div class="bg-white border border-concrete-200 p-6 rounded-2xl">
+            <h3 class="text-lg font-bold text-steel-900 mb-2">Necesitas ayuda?</h3>
+            <p class="text-steel-500 text-sm mb-4">Contamos con expertos para asesorarte en la eleccion de tus herramientas.</p>
+            <a
+              [href]="whatsappHref + '?text=Hola,%20necesito%20asesoramiento%20sobre%20' + product.name"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm"
             >
-              <path
-                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
-              ></path>
-            </svg>
-            <span>WhatsApp Ventas</span>
-          </a>
-        </div>
+              <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              WhatsApp Ventas
+            </a>
+          </div>
 
-        <!-- Material Calculator -->
-        <app-material-calculator 
-          [categoryName]="product.category_name || ''" 
-          [productName]="product.name"
-        ></app-material-calculator>
+          <app-material-calculator
+            [categoryName]="product.category_name || ''"
+            [productName]="product.name"
+          ></app-material-calculator>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="related && related.length" class="mt-16 border-t border-concrete-200 pt-12">
+      <h3 class="text-2xl font-extrabold text-steel-900 mb-6" style="font-family: Sora, sans-serif;">Productos relacionados</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <a *ngFor="let r of related" [routerLink]="['/product', r.id]" class="block bg-white p-4 rounded-xl border border-concrete-200 hover:border-ferre-300 transition-colors">
+          <img [src]="r.image" class="w-full h-24 object-contain mb-3" alt="{{ r.name }}" />
+          <div class="text-sm font-semibold text-steel-800 line-clamp-2">{{ r.name }}</div>
+          <div class="text-sm text-steel-500 mt-1">${{ r.price_retail }}</div>
+        </a>
       </div>
     </div>
   </div>
 
-  <!-- Loading State (Skeleton) -->
-  <div
-    *ngIf="isLoading"
-    class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10 animate-pulse"
-  >
+  <div *ngIf="isLoading" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 animate-pulse">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
-      <div class="space-y-6">
-        <div class="aspect-square bg-white/5 rounded-3xl"></div>
-        <div class="grid grid-cols-4 gap-4">
-          <div
-            *ngFor="let i of [1, 2, 3, 4]"
-            class="aspect-square bg-white/5 rounded-2xl"
-          ></div>
+      <div class="space-y-4">
+        <div class="aspect-square bg-concrete-200 rounded-2xl"></div>
+        <div class="grid grid-cols-4 gap-3">
+          <div *ngFor="let i of [1, 2, 3, 4]" class="aspect-square bg-concrete-200 rounded-xl"></div>
         </div>
       </div>
-      <div class="flex flex-col gap-8">
-        <div>
-          <div class="w-32 h-6 bg-white/5 rounded-full mb-6"></div>
-          <div class="w-3/4 h-12 bg-white/5 rounded-2xl mb-4"></div>
-          <div class="w-48 h-6 bg-white/5 rounded-xl mb-6"></div>
-          <div class="space-y-3">
-            <div class="w-full h-4 bg-white/5 rounded-full"></div>
-            <div class="w-5/6 h-4 bg-white/5 rounded-full"></div>
-            <div class="w-4/6 h-4 bg-white/5 rounded-full"></div>
-          </div>
+      <div class="flex flex-col gap-6">
+        <div class="w-24 h-5 bg-concrete-200 rounded-full"></div>
+        <div class="w-3/4 h-10 bg-concrete-200 rounded-xl"></div>
+        <div class="w-32 h-5 bg-concrete-200 rounded-full"></div>
+        <div class="space-y-2">
+          <div class="w-full h-4 bg-concrete-200 rounded-full"></div>
+          <div class="w-5/6 h-4 bg-concrete-200 rounded-full"></div>
         </div>
-        <div class="bg-white/5 p-8 rounded-3xl h-48"></div>
-        <div class="grid grid-cols-2 gap-4">
-          <div class="h-16 bg-white/5 rounded-2xl"></div>
-          <div class="h-16 bg-white/5 rounded-2xl"></div>
-        </div>
+        <div class="bg-concrete-100 p-6 rounded-2xl h-40"></div>
       </div>
     </div>
   </div>
 
-  <!-- Product Not Found -->
-  <div
-    *ngIf="!isLoading && !product"
-    class="min-h-[60vh] flex flex-col items-center justify-center text-center px-4 relative z-10"
-  >
-    <div class="text-8xl mb-8 opacity-20 filter grayscale">🔍</div>
-    <h2 class="text-4xl font-black text-white mb-6">Producto no encontrado</h2>
+  <div *ngIf="!isLoading && !product" class="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
+    <lucide-icon [name]="Hammer" size="64" class="text-concrete-300 mb-6"></lucide-icon>
+    <h2 class="text-3xl font-extrabold text-steel-900 mb-4" style="font-family: Sora, sans-serif;">Producto no encontrado</h2>
+    <p class="text-steel-500 mb-6">El producto que buscas no existe o fue removido.</p>
     <button
       (click)="goBack()"
-      class="bg-red-500 text-black px-12 py-4 rounded-2xl font-black shadow-2xl transition-all hover:scale-105"
+      class="btn-ferre px-8 py-3"
     >
-      Volver al catálogo
+      Volver al catalogo
     </button>
   </div>
 </div>

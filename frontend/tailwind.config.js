@@ -1,12 +1,68 @@
-// Configuración de Tailwind CSS: tema, colores y estilos personalizados
-// Define utilidades de diseño responsivo de la aplicación
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{html,ts}"],
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Inter", "sans-serif"], // Assuming we use Inter for a premium feel
+        sans: ["DM Sans", "sans-serif"],
+        display: ["Sora", "sans-serif"],
+      },
+      colors: {
+        ferre: {
+          50: "#fef7ee",
+          100: "#fdedd3",
+          200: "#f9d7a5",
+          300: "#f5b96d",
+          400: "#f09332",
+          500: "#ec7a0d",
+          600: "#d45e08",
+          700: "#b0440b",
+          800: "#8c3610",
+          900: "#722e10",
+        },
+        steel: {
+          50: "#f6f7f8",
+          100: "#ebedef",
+          200: "#d3d7dc",
+          300: "#adb5be",
+          400: "#818d99",
+          500: "#62707e",
+          600: "#4d5a67",
+          700: "#404a54",
+          800: "#374048",
+          900: "#2a3138",
+          950: "#1a2028",
+        },
+        concrete: {
+          50: "#f8f8f6",
+          100: "#efeeea",
+          200: "#dddbd3",
+          300: "#c7c3b7",
+          400: "#aba596",
+          500: "#968e7c",
+          600: "#877e6e",
+          700: "#70685c",
+          800: "#5d574d",
+          900: "#4e4a42",
+        },
+        safety: {
+          yellow: "#FFC107",
+          orange: "#FF9800",
+          red: "#E53935",
+        },
+      },
+      boxShadow: {
+        "ferre": "0 4px 14px 0 rgba(212, 94, 8, 0.15)",
+        "ferre-lg": "0 10px 30px 0 rgba(212, 94, 8, 0.2)",
+        "steel": "0 4px 20px 0 rgba(0, 0, 0, 0.08)",
+        "steel-lg": "0 10px 40px 0 rgba(0, 0, 0, 0.12)",
+        "card": "0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)",
+        "card-hover": "0 10px 25px rgba(0,0,0,0.08), 0 4px 10px rgba(0,0,0,0.04)",
+      },
+      borderRadius: {
+        "xl": "0.75rem",
+        "2xl": "1rem",
+        "3xl": "1.5rem",
       },
     },
   },
