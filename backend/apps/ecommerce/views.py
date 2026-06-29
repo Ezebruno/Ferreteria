@@ -182,8 +182,26 @@ class PublicCheckoutViewSet(viewsets.ViewSet):
                 defaults={'customer_type': 'RETAIL'}
             )
             
-        # Calculate totals securely from cart items payload (In production, re-calculate against DB)
-        total_items = sum([float(item.get('price', 0)) * int(item.get('quantity', 1)) for item in cart_items])
+        # Calculate totals securely from DB (never trust client prices)
+        total_items = 0
+        validated_items = []
+        for item in cart_items:
+            try:
+                product = Product.objects.get(id=item.get('product_id'))
+                qty = int(item.get('quantity', 1))
+                price = float(product.price_retail)
+                total_items += price * qty
+                validated_items.append({
+                    'product': product,
+                    'quantity': qty,
+                    'price_at_sale': price
+                })
+            except Product.DoesNotExist:
+                continue
+
+        if not validated_items:
+            return Response({"error": "No se encontraron productos validos"}, status=status.HTTP_400_BAD_REQUEST)
+
         final_total = total_items + shipping_cost
         
         # Apply 5% discount if transfer
@@ -203,18 +221,14 @@ class PublicCheckoutViewSet(viewsets.ViewSet):
             shipping_address=full_address,
         )
         
-        # Create Items
-        for item in cart_items:
-            try:
-                product = Product.objects.get(id=item.get('product_id'))
-                SaleItem.objects.create(
-                    sale=sale,
-                    product=product,
-                    quantity=int(item.get('quantity', 1)),
-                    price_at_sale=float(item.get('price', 0)),
-                )
-            except Product.DoesNotExist:
-                continue
+        # Create Items from validated data (with DB prices)
+        for item_data in validated_items:
+            SaleItem.objects.create(
+                sale=sale,
+                product=item_data['product'],
+                quantity=item_data['quantity'],
+                price_at_sale=item_data['price_at_sale'],
+            )
                 
         return Response({
             "status": "success", 

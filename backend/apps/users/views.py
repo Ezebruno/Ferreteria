@@ -84,6 +84,10 @@ class StoreSettingsView(APIView):
         return Response(data)
 
     def post(self, request):
+        if not request.user or not request.user.is_authenticated:
+            return Response({'error': 'No autorizado'}, status=status.HTTP_401_UNAUTHORIZED)
+        if not request.user.is_staff:
+            return Response({'error': 'Sin permisos'}, status=status.HTTP_403_FORBIDDEN)
         """Handle FormData with file uploads"""
         config = StoreConfig.objects.first()
         if not config:
@@ -108,6 +112,10 @@ class StoreSettingsView(APIView):
 
     def patch(self, request):
         """Keep backward compatibility with PATCH"""
+        if not request.user or not request.user.is_authenticated:
+            return Response({'error': 'No autorizado'}, status=status.HTTP_401_UNAUTHORIZED)
+        if not request.user.is_staff:
+            return Response({'error': 'Sin permisos'}, status=status.HTTP_403_FORBIDDEN)
         config = StoreConfig.objects.first()
         if not config:
             config = StoreConfig.objects.create()

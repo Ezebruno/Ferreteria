@@ -261,7 +261,7 @@ class MercadoPagoPreferenceView(APIView):
                     customer=customer,
                     total=total,
                     payment_method='MERCADO_PAGO',
-                    status='PENDING'
+                    payment_status='PENDING'
                 )
                 
                 for item_data in items_to_create:
@@ -368,8 +368,43 @@ class MercadoPagoWebhookView(APIView):
     permission_classes = [permissions.AllowAny]
     authentication_classes = []
 
+    def _verify_signature(self, request):
+        """Verify MercadoPago webhook signature using HMAC-SHA256"""
+        import hmac
+        import hashlib
+        x_signature = request.headers.get('x-signature', '')
+        if not x_signature:
+            return False
+        try:
+            # x-signature format: "ts=timestamp,v1=hash"
+            parts = {}
+            for item in x_signature.split(','):
+                k, v = item.split('=', 1)
+                parts[k.strip()] = v.strip()
+            ts = parts.get('ts', '')
+            v1 = parts.get('v1', '')
+            if not ts or not v1:
+                return False
+            # Get secret from StoreConfig or settings
+            config = StoreConfig.objects.first()
+            secret = config.mp_access_token if config and config.mp_access_token else getattr(settings, 'MP_ACCESS_TOKEN', '')
+            if not secret:
+                return False
+            # Build data to verify: id + ts + request body
+            body = request.body.decode('utf-8')
+            data_to_verify = f"id={request.data.get('data', {}).get('id', '')}&ts={ts}"
+            expected = hmac.new(secret.encode('utf-8'), data_to_verify.encode('utf-8'), hashlib.sha256).hexdigest()
+            return hmac.compare_digest(expected, v1)
+        except Exception:
+            return False
+
     def post(self, request):
         """ Handels Mercado Pago IPN/Webhooks """
+        # Verify signature if x-signature header is present
+        if request.headers.get('x-signature'):
+            if not self._verify_signature(request):
+                return Response(status=status.HTTP_401_UNAUTHORIZED)
+
         topic = request.query_params.get('topic')
         resource_id = request.query_params.get('id')
         
@@ -414,7 +449,7 @@ class MercadoPagoWebhookView(APIView):
                     new_status = status_map.get(status_mp)
                     if new_status:
                         # Prevent double processing
-                        if sale.status != 'PAID' and new_status == 'PAID':
+                        if sale.payment_status != 'PAID' and new_status == 'PAID':
                             # Reduce stock
                             items = SaleItem.objects.filter(sale=sale)
                             for item in items:
@@ -428,7 +463,7 @@ class MercadoPagoWebhookView(APIView):
                             if sale.customer and sale.customer.email:
                                 try:
                                     send_mail(
-                                        "Confirmación de Pago - FerreNexo",
+                                        "Confirmacion de Pago - FerreNexo",
                                         f"Tu pago de la orden #{sale.id} ha sido procesado exitosamente y estamos preparando tu pedido.",
                                         settings.DEFAULT_FROM_EMAIL,
                                         [sale.customer.email],
@@ -437,7 +472,7 @@ class MercadoPagoWebhookView(APIView):
                                 except Exception as e:
                                     print(f"WEBHOOK MAIL ERROR: {e}")
 
-                        sale.status = new_status
+                        sale.payment_status = new_status
                         
                     if payment_id:
                         sale.mp_payment_id = str(payment_id)

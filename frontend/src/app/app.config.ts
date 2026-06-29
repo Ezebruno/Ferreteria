@@ -4,7 +4,8 @@ import { ApplicationConfig, provideZoneChangeDetection, isDevMode } from "@angul
 import { provideRouter, withInMemoryScrolling } from "@angular/router";
 
 import { routes } from "./app.routes";
-import { provideHttpClient } from "@angular/common/http";
+import { provideHttpClient, withInterceptors } from "@angular/common/http";
+import { authInterceptor } from "./core/interceptors/auth.interceptor";
 import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
 import { provideServiceWorker } from '@angular/service-worker';
 
@@ -18,7 +19,7 @@ export const appConfig: ApplicationConfig = {
         scrollPositionRestoration: 'enabled' 
       })
     ), 
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideAnimationsAsync(), provideServiceWorker('ngsw-worker.js', {
             enabled: !isDevMode(),
             registrationStrategy: 'registerWhenStable:30000'
