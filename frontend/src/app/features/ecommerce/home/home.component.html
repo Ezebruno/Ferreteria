@@ -551,10 +551,10 @@
           class="font-black text-white mb-4 uppercase tracking-wider text-xs flex items-center gap-2"
         >
           <div class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
-          Sucursal Junín
+          Nuestra Sucursal
         </h4>
         <a
-          href="https://maps.google.com/?q=Padre+Ghio+87,+Junin,+Buenos+Aires"
+          [href]="'https://maps.google.com/?q=' + storeAddress"
           target="_blank"
           rel="noopener noreferrer"
           class="relative block rounded-2xl overflow-hidden border border-red-500/30 h-40 w-full grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-700 shadow-xl group cursor-pointer animate-in"
@@ -571,12 +571,12 @@
             height="100%"
             frameborder="0"
             style="border: 0; pointer-events: none;"
-            src="https://www.openstreetmap.org/export/embed.html?bbox=-60.96,-34.60,-60.94,-34.58&layer=mapnik&marker=-34.59,-60.95"
+            [src]="'https://maps.google.com/maps?q=' + storeAddress + '&t=&z=15&ie=UTF8&iwloc=&output=embed'"
           >
           </iframe>
         </a>
         <p class="mt-3 text-[10px] font-bold text-slate-500">
-          Padre Ghio 87, Junín, Buenos Aires.
+          {{ storeAddress }}
         </p>
       </div>
     </div>

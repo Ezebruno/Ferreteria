@@ -16,6 +16,7 @@ import {
   Zap,
   Link,
   CheckCircle,
+  MapPin,
   ChevronUp,
   ChevronDown,
 } from "lucide-angular";
@@ -76,11 +77,13 @@ export class SettingsComponent implements OnInit {
   Zap = Zap;
   Link = Link;
   CheckCircle = CheckCircle;
+  MapPin = MapPin;
   ChevronUp = ChevronUp;
   ChevronDown = ChevronDown;
 
   constructor() {
     this.settingsForm = this.fb.group({
+      store_address: [""],
       bank_cvu: [""],
       bank_alias: [""],
       whatsapp_number: [""],
@@ -165,6 +168,7 @@ export class SettingsComponent implements OnInit {
     this.api.get<any>("/tenant/settings/").subscribe({
       next: (data) => {
         this.settingsForm.patchValue({
+          store_address: data.store_address || "",
           bank_cvu: data.bank_cvu || "",
           bank_alias: data.bank_alias || "",
           whatsapp_number: data.whatsapp_number || "",
@@ -185,6 +189,7 @@ export class SettingsComponent implements OnInit {
 
     // Create FormData to support file uploads
     const formData = new FormData();
+    formData.append("store_address", formValues.store_address);
     formData.append("bank_cvu", formValues.bank_cvu);
     formData.append("bank_alias", formValues.bank_alias);
     formData.append("whatsapp_number", formValues.whatsapp_number);

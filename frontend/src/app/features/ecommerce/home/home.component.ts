@@ -139,6 +139,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   whatsappHref = "https://wa.me/5493462612989";
   whatsappHrefConsult = "https://wa.me/5493462612989?text=Hola,%20me%20gustaría%20recibir%20asesoría%20sobre%20herramientas%20para%20mi%20proyecto";
+  storeAddress = "Padre Ghio 87, Junín, Buenos Aires";
 
   currentSlide = 0;
   heroSlides = [
@@ -206,13 +207,16 @@ export class HomeComponent implements OnInit, OnDestroy {
         "Explora nuestro catálogo premium de herramientas y materiales de construcción.",
     });
 
-    // Fetch tenant dynamic info for Whatsapp links
+    // Fetch tenant dynamic info for Whatsapp links and address
     this.api.get<any>('/tenant/info/').subscribe({
       next: (data) => {
         if (data.whatsapp_number) {
           const cleanNumber = data.whatsapp_number.replace(/\D/g, '');
           this.whatsappHref = `https://wa.me/${cleanNumber}`;
           this.whatsappHrefConsult = `https://wa.me/${cleanNumber}?text=Hola,%20me%20gustaría%20recibir%20asesoría%20sobre%20herramientas%20para%20mi%20proyecto`;
+        }
+        if (data.store_address) {
+          this.storeAddress = data.store_address;
         }
       }
     });

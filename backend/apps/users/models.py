@@ -49,6 +49,7 @@ class User(AbstractUser):
 class StoreConfig(models.Model):
     name = models.CharField(max_length=100, default="Mi Ferretería")
     store_postal_code = models.CharField(max_length=20, null=True, blank=True)
+    store_address = models.CharField(max_length=255, null=True, blank=True)
     
     bank_cvu = models.CharField(max_length=50, null=True, blank=True)
     bank_alias = models.CharField(max_length=50, null=True, blank=True)
