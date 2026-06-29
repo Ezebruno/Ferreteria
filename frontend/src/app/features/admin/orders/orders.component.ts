@@ -293,9 +293,9 @@ export class OrdersComponent implements OnInit {
 
   loadOrders() {
     this.loading = true;
-    this.api.get<Sale[]>('/sales/').subscribe({
+    this.api.get<any>('/sales/').subscribe({
       next: (data) => {
-        this.orders = data;
+        this.orders = data.results || data;
         this.filterOrders();
         this.loading = false;
       },

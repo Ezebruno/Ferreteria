@@ -24,7 +24,7 @@ export class CategoriesService {
   }
 
   loadCategories(): Observable<Category[]> {
-    return this.api.get<Category[]>("/api/categories/").pipe(
+    return this.api.get<Category[]>("/categories/").pipe(
       tap((categories: any) => {
         // Handle both paginated and non-paginated responses
         const data = categories.results || categories;
