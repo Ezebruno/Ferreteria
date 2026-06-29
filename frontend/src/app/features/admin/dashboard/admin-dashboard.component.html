@@ -2,19 +2,19 @@
   <!-- Header -->
   <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
     <div>
-      <h2 class="text-2xl font-extrabold text-steel-900" style="font-family: Sora, sans-serif;">Estadisticas Generales</h2>
+      <h2 class="text-2xl font-extrabold text-steel-900 uppercase tracking-wider" style="font-family: Sora, sans-serif;">Estadisticas Generales</h2>
       <p class="text-steel-500 text-sm mt-1">Monitorea el rendimiento de tu ferreteria en tiempo real.</p>
     </div>
-    <div class="inline-flex items-center gap-2 bg-green-50 border border-green-200 text-green-700 px-3 py-1.5 rounded-lg text-xs font-bold">
-      <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+    <div class="inline-flex items-center gap-2 bg-green-50 border-2 border-green-200 text-green-700 px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider">
+      <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
       Sistema en Linea
     </div>
   </div>
 
   <!-- Low stock alerts -->
-  <div *ngIf="lowStockAlerts.length > 0" class="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-center justify-between gap-4">
+  <div *ngIf="lowStockAlerts.length > 0" class="p-4 flex items-center justify-between gap-4" style="background: #FFC10710; border: 2px solid #FFC107; border-left: 5px solid #d45e08; border-radius: 0.375rem;">
     <div class="flex items-center gap-3">
-      <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+      <span class="w-2.5 h-2.5 rounded-full bg-safety-yellow animate-pulse"></span>
       <div>
         <div class="text-sm font-bold text-amber-800">Productos con stock bajo: <span class="text-amber-900">{{ lowStockAlerts.length }}</span></div>
         <div class="text-xs text-amber-600">Revisa los productos que requieren reposicion.</div>
@@ -25,7 +25,7 @@
 
   <!-- Key Metrics -->
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-    <div *ngFor="let metric of metrics" class="bg-white border border-concrete-200 rounded-xl p-5 hover:border-ferre-300 transition-colors">
+    <div *ngFor="let metric of metrics" class="card-industrial p-5">
       <div class="flex items-start justify-between">
         <div>
           <p class="text-steel-400 text-[10px] font-bold uppercase tracking-wider">{{ metric.label }}</p>
@@ -35,7 +35,7 @@
             <span class="text-steel-400 font-medium">vs mes ant.</span>
           </div>
         </div>
-        <div class="w-10 h-10 rounded-xl bg-ferre-50 flex items-center justify-center shrink-0">
+        <div class="w-10 h-10 rounded-lg bg-ferre-50 flex items-center justify-center shrink-0" style="border: 1.5px solid #f9d7a5;">
           <lucide-icon [name]="metric.icon" size="18" class="text-ferre-600"></lucide-icon>
         </div>
       </div>
@@ -45,7 +45,7 @@
   <!-- Charts & Lists -->
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
     <!-- Activity Chart -->
-    <div class="lg:col-span-2 bg-white border border-concrete-200 rounded-xl p-6">
+    <div class="lg:col-span-2 card-industrial p-6">
       <div class="flex items-center justify-between mb-6">
         <h3 class="font-bold text-steel-900">Actividad de Ventas</h3>
         <select class="bg-concrete-50 border border-concrete-200 text-steel-600 text-xs font-semibold rounded-lg px-3 py-1.5 outline-none focus:border-ferre-400 cursor-pointer">
@@ -53,10 +53,10 @@
           <option>Este mes</option>
         </select>
       </div>
-      <div class="h-56 rounded-xl bg-concrete-50 border border-concrete-100 flex flex-col items-center justify-center">
+      <div class="h-56 rounded-lg bg-concrete-50 border border-concrete-200 flex flex-col items-center justify-center">
         <div class="flex items-end gap-2 h-36">
           <div *ngFor="let h of [40, 70, 45, 90, 65, 80, 55]" [style.height.%]="h"
-            class="w-7 bg-ferre-500 rounded-t-md transition-all hover:bg-ferre-600 cursor-pointer relative group/bar">
+            class="w-7 bg-ferre-500 rounded-t-sm transition-all hover:bg-ferre-600 cursor-pointer relative group/bar">
             <div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-steel-900 text-white text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover/bar:opacity-100 transition-opacity whitespace-nowrap z-20">
               ${{ h * 150 }}
             </div>
@@ -69,7 +69,7 @@
     </div>
 
     <!-- Top Products -->
-    <div class="bg-white border border-concrete-200 rounded-xl p-6">
+    <div class="card-industrial p-6">
       <h3 class="font-bold text-steel-900 mb-4">Mas Vendidos</h3>
       <div class="space-y-3">
         <div *ngIf="topProducts.length === 0" class="flex flex-col items-center justify-center py-10 text-steel-300">
@@ -78,7 +78,7 @@
         </div>
         <div *ngFor="let product of topProducts; let i = index" class="flex items-center justify-between p-3 rounded-lg hover:bg-concrete-50 transition-colors">
           <div class="flex items-center gap-3">
-            <div class="w-7 h-7 rounded-md bg-ferre-50 flex items-center justify-center text-[10px] font-bold text-ferre-600">{{ i + 1 }}</div>
+            <div class="w-7 h-7 rounded-md bg-ferre-50 flex items-center justify-center text-[10px] font-bold text-ferre-600" style="border: 1px solid #f9d7a5;">{{ i + 1 }}</div>
             <span class="font-semibold text-steel-800 text-sm truncate max-w-[120px]">{{ product.name }}</span>
           </div>
           <span class="text-ferre-600 font-bold text-sm">{{ product.sales }}u.</span>
@@ -88,8 +88,8 @@
   </div>
 
   <!-- Recent Orders Table -->
-  <div class="bg-white border border-concrete-200 rounded-xl overflow-hidden">
-    <div class="px-6 py-4 flex items-center justify-between border-b border-concrete-100">
+  <div class="card-industrial overflow-hidden">
+    <div class="px-6 py-4 flex items-center justify-between" style="border-bottom: 2px solid #dddbd3;">
       <h3 class="font-bold text-steel-900">Ordenes Recientes</h3>
     </div>
 
@@ -101,26 +101,26 @@
     <div class="overflow-x-auto" *ngIf="recentOrders.length > 0">
       <table class="w-full text-left">
         <thead>
-          <tr class="bg-concrete-50">
-            <th class="px-6 py-3 font-bold text-steel-400 text-[10px] uppercase tracking-wider border-b border-concrete-100">Referencia</th>
-            <th class="px-6 py-3 font-bold text-steel-400 text-[10px] uppercase tracking-wider border-b border-concrete-100">Cliente</th>
-            <th class="px-6 py-3 font-bold text-steel-400 text-[10px] uppercase tracking-wider border-b border-concrete-100">Monto Total</th>
-            <th class="px-6 py-3 font-bold text-steel-400 text-[10px] uppercase tracking-wider border-b border-concrete-100">Estado</th>
-            <th class="px-6 py-3 font-bold text-steel-400 text-[10px] uppercase tracking-wider border-b border-concrete-100">Fecha</th>
+          <tr style="background: #f8f8f6;">
+            <th class="px-6 py-3 font-bold text-steel-400 text-[10px] uppercase tracking-wider" style="border-bottom: 2px solid #dddbd3;">Referencia</th>
+            <th class="px-6 py-3 font-bold text-steel-400 text-[10px] uppercase tracking-wider" style="border-bottom: 2px solid #dddbd3;">Cliente</th>
+            <th class="px-6 py-3 font-bold text-steel-400 text-[10px] uppercase tracking-wider" style="border-bottom: 2px solid #dddbd3;">Monto Total</th>
+            <th class="px-6 py-3 font-bold text-steel-400 text-[10px] uppercase tracking-wider" style="border-bottom: 2px solid #dddbd3;">Estado</th>
+            <th class="px-6 py-3 font-bold text-steel-400 text-[10px] uppercase tracking-wider" style="border-bottom: 2px solid #dddbd3;">Fecha</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let order of recentOrders" class="border-b border-concrete-50 hover:bg-concrete-50/50 transition-colors">
+          <tr *ngFor="let order of recentOrders" class="border-b border-concrete-100 hover:bg-concrete-50/50 transition-colors">
             <td class="px-6 py-4 font-bold text-ferre-600 text-sm">#{{ order.id.toString().substring(0, 8) }}</td>
             <td class="px-6 py-4">
               <div class="flex items-center gap-2">
-                <div class="w-7 h-7 rounded-full bg-concrete-100 flex items-center justify-center text-[10px] font-bold text-steel-600">{{ order.customer.substring(0, 1) }}</div>
+                <div class="w-7 h-7 rounded-full bg-concrete-100 flex items-center justify-center text-[10px] font-bold text-steel-600" style="border: 1px solid #dddbd3;">{{ order.customer.substring(0, 1) }}</div>
                 <span class="text-steel-800 font-semibold text-sm">{{ order.customer }}</span>
               </div>
             </td>
             <td class="px-6 py-4 font-bold text-steel-900 text-sm">${{ order.total.toLocaleString("es-AR") }}</td>
             <td class="px-6 py-4">
-              <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase" [ngClass]="order.status === 'entregado' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-amber-50 text-amber-700 border border-amber-200'">
+              <span class="px-2.5 py-1 rounded-md text-[10px] font-bold uppercase" [ngClass]="order.status === 'entregado' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-safety-yellow/10 text-amber-700 border border-safety-yellow/30'">
                 {{ order.status }}
               </span>
             </td>

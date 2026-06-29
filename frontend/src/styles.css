@@ -114,6 +114,61 @@ body {
   color: var(--ferre-text);
 }
 
+/* ===== TEXTURA INDUSTRIAL ===== */
+.bg-industrial-texture {
+  background-color: #f8f8f6;
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 3px,
+      rgba(0,0,0,0.012) 3px,
+      rgba(0,0,0,0.012) 4px
+    );
+}
+
+/* ===== TARJETA INDUSTRIAL (stripe naranja superior) ===== */
+.card-industrial {
+  background: white;
+  border: 1.5px solid #dddbd3;
+  border-top: 4px solid #d45e08;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+}
+.card-industrial:hover {
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  border-color: #c7c3b7;
+}
+
+/* ===== TORNILLOS DECORATIVOS ===== */
+.screw {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #dddbd3 0%, #c7c3b7 100%);
+  border: 1px solid #aba596;
+  position: relative;
+}
+.screw::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%) rotate(45deg);
+  width: 5px; height: 0.8px;
+  background: #968e7c;
+}
+
+/* ===== LINEA DE ADVERTENCIA (rayas amarillas) ===== */
+.warning-stripe {
+  background: repeating-linear-gradient(
+    -45deg,
+    #FFC107,
+    #FFC107 8px,
+    #2a3138 8px,
+    #2a3138 16px
+  );
+  height: 4px;
+}
+
 /* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }

@@ -16,6 +16,7 @@ import {
   Lock,
   Mail,
   ArrowLeft,
+  Wrench,
 } from "lucide-angular";
 
 @Component({
@@ -23,74 +24,70 @@ import {
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, LucideAngularModule],
   template: `
-    <div
-      class="min-h-screen bg-concrete-50 flex items-center justify-center p-4 relative"
-    >
+    <div class="min-h-screen bg-steel-950 flex items-center justify-center p-4 relative overflow-hidden">
+      <!-- Textura de fondo -->
+      <div class="absolute inset-0 opacity-[0.04]" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,255,255,0.15) 2px, rgba(255,255,255,0.15) 3px);"></div>
+      <!-- Linea naranja superior -->
+      <div class="absolute top-0 left-0 right-0 h-1 bg-ferre-600"></div>
+      <!-- Linea de advertencia decorativa -->
+      <div class="absolute bottom-0 left-0 right-0 warning-stripe"></div>
+
       <!-- Back to Store Button -->
       <button
         (click)="goHome()"
-        class="absolute top-8 left-8 z-20 text-steel-500 hover:text-ferre-600 flex items-center gap-2 transition-colors"
+        class="absolute top-6 left-6 z-20 text-steel-400 hover:text-ferre-400 flex items-center gap-2 transition-colors text-sm font-medium"
       >
-        <lucide-icon [name]="ArrowLeft" size="20"></lucide-icon>
+        <lucide-icon [name]="ArrowLeft" size="18"></lucide-icon>
         Volver a la tienda
       </button>
 
       <!-- Login Card -->
-      <div
-        class="z-10 w-full max-w-md bg-white border border-concrete-200 rounded-xl p-8 shadow-lg"
-      >
+      <div class="z-10 w-full max-w-md p-8 relative" style="background: white; border: 2px solid #dddbd3; border-radius: 0.5rem; box-shadow: 0 25px 60px rgba(0,0,0,0.5);">
+        <!-- Tornillos decorativos -->
+        <div class="absolute top-3 left-3 screw"></div>
+        <div class="absolute top-3 right-3 screw"></div>
+        <div class="absolute bottom-3 left-3 screw"></div>
+        <div class="absolute bottom-3 right-3 screw"></div>
+
         <div class="text-center mb-8">
+          <div class="w-14 h-14 rounded-lg bg-ferre-600 flex items-center justify-center mx-auto mb-3 shadow-lg">
+            <lucide-icon [name]="LockIcon" size="28" class="text-white"></lucide-icon>
+          </div>
           <span
-            class="text-3xl font-extrabold tracking-widest uppercase bg-clip-text text-transparent bg-gradient-to-r from-ferre-600 to-ferre-700"
+            class="text-2xl font-extrabold tracking-wider uppercase text-steel-900"
             style="font-family: Sora, sans-serif;"
           >
-            Ferre<span class="text-steel-900">Nexo</span>
+            Ferre<span class="text-ferre-600">Nexo</span>
           </span>
-          <p class="text-steel-500 mt-2 font-medium">Panel de Administración</p>
+          <p class="text-steel-500 mt-1 text-sm font-medium uppercase tracking-[0.15em]">Panel de Administracion</p>
         </div>
 
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
-          <div class="space-y-2">
-            <label class="text-sm font-bold text-steel-500 ml-1"
-              >Correo Electrónico</label
-            >
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-5">
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-steel-500 uppercase tracking-wider ml-1">Correo Electronico</label>
             <div class="relative">
-              <div
-                class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"
-              >
-                <lucide-icon
-                  [name]="Mail"
-                  size="18"
-                  class="text-steel-500"
-                ></lucide-icon>
+              <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <lucide-icon [name]="Mail" size="18" class="text-steel-400"></lucide-icon>
               </div>
               <input
                 formControlName="email"
                 type="email"
-                class="w-full pl-11 pr-4 py-3 bg-concrete-50 border border-concrete-200 text-steel-900 rounded-xl focus:ring-ferre-500 focus:border-ferre-500 transition-all placeholder-steel-400"
+                class="w-full pl-11 pr-4 py-3 bg-concrete-50 border border-concrete-200 text-steel-900 rounded-lg focus:ring-2 focus:ring-ferre-500/20 focus:border-ferre-500 transition-all placeholder-steel-400 text-sm"
                 placeholder="correo@ejemplo.com"
               />
             </div>
           </div>
 
-          <div class="space-y-2">
-            <label class="text-sm font-bold text-steel-500 ml-1"
-              >Contraseña</label
-            >
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-steel-500 uppercase tracking-wider ml-1">Contrasena</label>
             <div class="relative">
-              <div
-                class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"
-              >
-                <lucide-icon
-                  [name]="Lock"
-                  size="18"
-                  class="text-steel-500"
-                ></lucide-icon>
+              <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <lucide-icon [name]="Lock" size="18" class="text-steel-400"></lucide-icon>
               </div>
               <input
                 formControlName="password"
                 type="password"
-                class="w-full pl-11 pr-4 py-3 bg-concrete-50 border border-concrete-200 text-steel-900 rounded-xl focus:ring-ferre-500 focus:border-ferre-500 transition-all placeholder-steel-400"
+                class="w-full pl-11 pr-4 py-3 bg-concrete-50 border border-concrete-200 text-steel-900 rounded-lg focus:ring-2 focus:ring-ferre-500/20 focus:border-ferre-500 transition-all placeholder-steel-400 text-sm"
                 placeholder="••••••••"
               />
             </div>
@@ -98,7 +95,7 @@ import {
 
           <div
             *ngIf="error"
-            class="bg-ferre-50 border border-ferre-500/50 text-ferre-600 p-3 rounded-lg text-sm text-center font-medium"
+            class="bg-safety-red/10 border border-safety-red/30 text-safety-red p-3 rounded-lg text-sm text-center font-medium"
           >
             {{ error }}
           </div>
@@ -107,17 +104,10 @@ import {
             type="submit"
             (click)="onSubmit()"
             [disabled]="loading"
-            class="w-full bg-ferre-600 hover:bg-ferre-700 text-white font-black py-3.5 rounded-xl shadow-lg transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-50"
+            class="w-full bg-ferre-600 hover:bg-ferre-700 text-white font-bold py-3 rounded-lg shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50 text-sm uppercase tracking-wider"
           >
-            <lucide-icon
-              *ngIf="!loading"
-              [name]="LogIn"
-              size="20"
-            ></lucide-icon>
-            <div
-              *ngIf="loading"
-              class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"
-            ></div>
+            <lucide-icon *ngIf="!loading" [name]="LogIn" size="18"></lucide-icon>
+            <div *ngIf="loading" class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
             {{ loading ? "Verificando..." : "Entrar" }}
           </button>
         </form>
@@ -134,6 +124,7 @@ export class LoginComponent {
   Lock = Lock;
   Mail = Mail;
   ArrowLeft = ArrowLeft;
+  LockIcon = Wrench;
 
   loginForm: FormGroup = this.fb.group({
     email: ["", [Validators.required, Validators.email]],

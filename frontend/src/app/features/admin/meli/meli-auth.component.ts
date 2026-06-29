@@ -10,20 +10,16 @@ import { LucideAngularModule, Zap, CheckCircle2, AlertCircle, RefreshCw, Externa
   imports: [CommonModule, LucideAngularModule],
   template: `
     <div class="max-w-2xl mx-auto py-12">
-      <div class="bg-white p-10 rounded-xl border border-concrete-200 shadow-sm relative overflow-hidden">
-
-        <div class="absolute -top-10 -right-10 w-64 h-64 bg-amber-50 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute -bottom-10 -left-10 w-64 h-64 bg-ferre-50 rounded-full blur-3xl pointer-events-none"></div>
-
+      <div class="card-industrial p-8 relative overflow-hidden">
         <div class="relative z-10 space-y-8">
 
           <div class="flex items-center gap-4">
-            <div class="w-14 h-14 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center flex-shrink-0">
-              <lucide-icon [name]="Zap" size="28" class="text-amber-600"></lucide-icon>
+            <div class="w-14 h-14 rounded-lg bg-safety-yellow/20 border border-safety-yellow/30 flex items-center justify-center flex-shrink-0">
+              <lucide-icon [name]="Zap" size="28" class="text-safety-yellow"></lucide-icon>
             </div>
             <div>
-              <h1 class="text-2xl font-extrabold text-steel-900 tracking-tight" style="font-family: Sora, sans-serif;">Mercado Libre</h1>
-              <p class="text-steel-500 text-sm">Sincronizá tu catálogo y recibí pedidos automáticamente</p>
+              <h1 class="text-2xl font-extrabold text-steel-900 uppercase tracking-wider" style="font-family: Sora, sans-serif;">Mercado Libre</h1>
+              <p class="text-steel-500 text-sm">Sincroniza tu catalogo y recibi pedidos automaticamente</p>
             </div>
           </div>
 
@@ -38,44 +34,37 @@ import { LucideAngularModule, Zap, CheckCircle2, AlertCircle, RefreshCw, Externa
           </div>
 
           <div *ngIf="!isLoading && !isExchanging && isLinked" class="space-y-6">
-            <div class="bg-green-50 border border-green-200 rounded-xl p-6 flex items-start gap-4">
+            <div class="rounded-lg p-6 flex items-start gap-4" style="background: #22c55e10; border: 2px solid #22c55e30; border-left: 4px solid #22c55e;">
               <div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center flex-shrink-0 mt-0.5">
                 <lucide-icon [name]="CheckCircle2" size="20" class="text-green-600"></lucide-icon>
               </div>
               <div class="flex-1">
-                <h3 class="text-lg font-bold text-steel-900" style="font-family: Sora, sans-serif;">Cuenta conectada</h3>
-                <p class="text-green-600/80 text-sm mt-1">Tu cuenta de Mercado Libre está vinculada y activa. Los productos marcados para sincronizar se publican automáticamente.</p>
+                <h3 class="text-lg font-bold text-steel-900 uppercase tracking-wider" style="font-family: Sora, sans-serif;">Cuenta conectada</h3>
+                <p class="text-green-600/80 text-sm mt-1">Tu cuenta de Mercado Libre esta vinculada y activa. Los productos marcados para sincronizar se publican automaticamente.</p>
               </div>
             </div>
 
             <div class="grid grid-cols-3 gap-3">
-              <div class="bg-concrete-50 rounded-xl p-4 text-center">
-                <div class="text-2xl font-extrabold text-steel-900" style="font-family: Sora, sans-serif;">✓</div>
-                <div class="text-xs text-steel-500 mt-1 font-medium">Publicaciones automáticas</div>
+              <div class="bg-concrete-50 rounded-lg p-4 text-center border border-concrete-200">
+                <div class="text-2xl font-extrabold text-steel-900" style="font-family: Sora, sans-serif;">&#10003;</div>
+                <div class="text-[10px] text-steel-500 mt-1 font-bold uppercase tracking-wider">Publicaciones automaticas</div>
               </div>
-              <div class="bg-concrete-50 rounded-xl p-4 text-center">
-                <div class="text-2xl font-extrabold text-steel-900" style="font-family: Sora, sans-serif;">✓</div>
-                <div class="text-xs text-steel-500 mt-1 font-medium">Sync de precios y stock</div>
+              <div class="bg-concrete-50 rounded-lg p-4 text-center border border-concrete-200">
+                <div class="text-2xl font-extrabold text-steel-900" style="font-family: Sora, sans-serif;">&#10003;</div>
+                <div class="text-[10px] text-steel-500 mt-1 font-bold uppercase tracking-wider">Sync de precios y stock</div>
               </div>
-              <div class="bg-concrete-50 rounded-xl p-4 text-center">
-                <div class="text-2xl font-extrabold text-steel-900" style="font-family: Sora, sans-serif;">✓</div>
-                <div class="text-xs text-steel-500 mt-1 font-medium">Pedidos integrados</div>
+              <div class="bg-concrete-50 rounded-lg p-4 text-center border border-concrete-200">
+                <div class="text-2xl font-extrabold text-steel-900" style="font-family: Sora, sans-serif;">&#10003;</div>
+                <div class="text-[10px] text-steel-500 mt-1 font-bold uppercase tracking-wider">Pedidos integrados</div>
               </div>
             </div>
 
             <div class="flex gap-3">
-              <button
-                (click)="linkAccount()"
-                class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-concrete-200 hover:bg-concrete-300 border border-concrete-200 text-steel-600 hover:text-steel-900 text-sm font-bold transition-all"
-              >
+              <button (click)="linkAccount()" class="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-concrete-200 hover:bg-concrete-300 border border-concrete-200 text-steel-600 hover:text-steel-900 text-sm font-bold transition-all">
                 <lucide-icon [name]="RefreshCw" size="16"></lucide-icon>
                 Reconectar cuenta
               </button>
-              <a
-                href="https://www.mercadolibre.com.ar/ventas"
-                target="_blank"
-                class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-600 hover:text-amber-500 text-sm font-bold transition-all"
-              >
+              <a href="https://www.mercadolibre.com.ar/ventas" target="_blank" class="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-safety-yellow/10 hover:bg-safety-yellow/20 border border-safety-yellow/30 text-amber-700 text-sm font-bold transition-all">
                 <lucide-icon [name]="ExternalLink" size="16"></lucide-icon>
                 Ver mis ventas en MeLi
               </a>
@@ -83,41 +72,37 @@ import { LucideAngularModule, Zap, CheckCircle2, AlertCircle, RefreshCw, Externa
           </div>
 
           <div *ngIf="!isLoading && !isExchanging && !isLinked" class="space-y-6">
-            <div class="bg-concrete-50 border border-concrete-200 rounded-xl p-6">
-              <h3 class="text-base font-bold text-steel-900 mb-4" style="font-family: Sora, sans-serif;">¿Qué podés hacer al conectar?</h3>
+            <div class="bg-concrete-50 border border-concrete-200 rounded-lg p-6">
+              <h3 class="text-base font-bold text-steel-900 mb-4 uppercase tracking-wider" style="font-family: Sora, sans-serif;">Que podes hacer al conectar?</h3>
               <ul class="space-y-3">
                 <li class="flex items-center gap-3 text-sm text-steel-600">
-                  <span class="w-5 h-5 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600 text-xs font-bold flex-shrink-0">1</span>
-                  Publicar productos automáticamente en Mercado Libre desde el formulario del producto
+                  <span class="w-5 h-5 rounded-full bg-safety-yellow/20 border border-safety-yellow/30 flex items-center justify-center text-amber-700 text-[10px] font-bold flex-shrink-0">1</span>
+                  Publicar productos automaticamente en Mercado Libre desde el formulario del producto
                 </li>
                 <li class="flex items-center gap-3 text-sm text-steel-600">
-                  <span class="w-5 h-5 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600 text-xs font-bold flex-shrink-0">2</span>
+                  <span class="w-5 h-5 rounded-full bg-safety-yellow/20 border border-safety-yellow/30 flex items-center justify-center text-amber-700 text-[10px] font-bold flex-shrink-0">2</span>
                   Sincronizar precios y stock en tiempo real sin entrar a Mercado Libre
                 </li>
                 <li class="flex items-center gap-3 text-sm text-steel-600">
-                  <span class="w-5 h-5 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600 text-xs font-bold flex-shrink-0">3</span>
+                  <span class="w-5 h-5 rounded-full bg-safety-yellow/20 border border-safety-yellow/30 flex items-center justify-center text-amber-700 text-[10px] font-bold flex-shrink-0">3</span>
                   Recibir notificaciones de nuevos pedidos directamente en el panel
                 </li>
               </ul>
             </div>
 
-            <div class="bg-amber-50 border border-amber-200 rounded-xl p-5 space-y-3">
+            <div class="p-5 space-y-3" style="background: #FFC10710; border: 2px solid #FFC107; border-left: 4px solid #d45e08; border-radius: 0.375rem;">
               <div class="flex items-start gap-3">
-                <lucide-icon [name]="AlertCircle" size="20" class="text-amber-600 shrink-0 mt-0.5 animate-pulse"></lucide-icon>
+                <lucide-icon [name]="AlertCircle" size="20" class="text-amber-700 shrink-0 mt-0.5 animate-pulse"></lucide-icon>
                 <div>
-                  <h4 class="text-sm font-bold text-steel-900 uppercase tracking-wider text-[11px]" style="font-family: Sora, sans-serif;">¿Vincular tu cuenta propia de vendedor?</h4>
+                  <h4 class="text-[11px] font-bold text-steel-900 uppercase tracking-wider" style="font-family: Sora, sans-serif;">Vincular tu cuenta propia de vendedor?</h4>
                   <p class="text-xs text-steel-500 mt-1 leading-relaxed">
-                    Asegurate de iniciar sesión con la cuenta de <strong>tu negocio o ferretería</strong> en Mercado Libre. Si tenés abierta tu cuenta personal en este navegador, cerrala antes de continuar para evitar vinculaciones erróneas.
+                    Asegurate de iniciar sesion con la cuenta de <strong>tu negocio o ferreteria</strong> en Mercado Libre. Si tenes abierta tu cuenta personal en este navegador, cerrala antes de continuar.
                   </p>
                 </div>
               </div>
-              <div class="flex gap-2 pt-2 border-t border-concrete-200">
-                <a 
-                  href="https://www.mercadolibre.com.ar/jms/ml/lgout" 
-                  target="_blank"
-                  class="flex-1 text-center py-2 px-3 rounded-xl bg-concrete-50 hover:bg-concrete-100 border border-concrete-200 text-steel-600 hover:text-steel-900 text-xs font-bold transition-all flex items-center justify-center gap-1.5"
-                >
-                  🚪 Cerrar sesión actual en MeLi
+              <div class="flex gap-2 pt-2" style="border-top: 2px solid #dddbd3;">
+                <a href="https://www.mercadolibre.com.ar/jms/ml/lgout" target="_blank" class="flex-1 text-center py-2 px-3 rounded-lg bg-concrete-50 hover:bg-concrete-100 border border-concrete-200 text-steel-600 hover:text-steel-900 text-xs font-bold transition-all flex items-center justify-center gap-1.5">
+                  Cerrar sesion actual en MeLi
                 </a>
               </div>
             </div>
@@ -125,15 +110,14 @@ import { LucideAngularModule, Zap, CheckCircle2, AlertCircle, RefreshCw, Externa
             <button
               (click)="linkAccount()"
               [disabled]="isExchanging"
-              class="w-full bg-amber-500 hover:bg-amber-400 text-steel-900 py-4 rounded-xl font-extrabold text-lg shadow-sm transition-all flex items-center justify-center gap-3 group disabled:opacity-50"
-              style="font-family: Sora, sans-serif;"
+              class="w-full bg-amber-500 hover:bg-amber-400 text-steel-900 py-3.5 rounded-lg font-bold text-sm shadow-sm transition-all flex items-center justify-center gap-3 group disabled:opacity-50 uppercase tracking-wider"
             >
-              <lucide-icon [name]="Zap" size="22" class="group-hover:rotate-12 transition-transform"></lucide-icon>
+              <lucide-icon [name]="Zap" size="20" class="group-hover:rotate-12 transition-transform"></lucide-icon>
               Conectar con Mercado Libre
             </button>
 
             <p class="text-center text-xs text-steel-400">
-              Serás redirigido a Mercado Libre para autorizar el acceso. Es seguro y podés revocar el permiso en cualquier momento.
+              Seras redirigido a Mercado Libre para autorizar el acceso. Es seguro y podes revocar el permiso en cualquier momento.
             </p>
           </div>
 

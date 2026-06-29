@@ -17,6 +17,7 @@ import {
   Globe,
   Menu,
   X,
+  Wrench,
 } from "lucide-angular";
 
 
@@ -26,6 +27,24 @@ import {
   imports: [CommonModule, RouterModule, LucideAngularModule],
   styles: [`
     :host { display: block; }
+    .sidebar-link {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.625rem 0.75rem; border-radius: 0.5rem;
+      font-size: 0.875rem; font-weight: 500;
+      color: rgba(255,255,255,0.55);
+      border-left: 3px solid transparent;
+      transition: all 0.15s;
+    }
+    .sidebar-link:hover {
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.9);
+    }
+    .sidebar-link.sidebar-active {
+      background: rgba(212,94,8,0.12);
+      color: #f09332;
+      border-left-color: #d45e08;
+    }
+    .sidebar-link.sidebar-active lucide-icon { color: #d45e08; }
   `],
   template: `
     <div class="flex h-screen bg-concrete-50 text-steel-800 font-sans">
@@ -38,63 +57,73 @@ import {
 
       <!-- Sidebar -->
       <aside
-        class="fixed lg:static inset-y-0 left-0 w-64 bg-white border-r border-concrete-200 flex flex-col z-40 transition-transform duration-300 lg:translate-x-0"
+        class="fixed lg:static inset-y-0 left-0 w-64 flex flex-col z-40 transition-transform duration-300 lg:translate-x-0"
         [class.-translate-x-full]="!sidebarOpen"
         [class.translate-x-0]="sidebarOpen"
+        style="background: linear-gradient(180deg, #1a2028 0%, #0d1117 100%); border-right: 3px solid #d45e08;"
       >
-        <div class="h-16 flex items-center justify-between px-5 border-b border-concrete-100">
-          <span class="text-lg font-extrabold tracking-tight text-steel-900" style="font-family: Sora, sans-serif;">
-            Ferre<span class="text-ferre-600">Nexo</span>
-          </span>
-          <button (click)="sidebarOpen = false" class="lg:hidden p-1 text-steel-400 hover:text-steel-700">
+        <!-- Logo -->
+        <div class="h-16 flex items-center gap-3 px-5" style="border-bottom: 1px solid rgba(212,94,8,0.2);">
+          <div class="w-9 h-9 rounded-lg bg-ferre-600 flex items-center justify-center shadow-lg">
+            <lucide-icon [name]="WrenchIcon" size="20" class="text-white"></lucide-icon>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-sm font-extrabold tracking-wider text-white uppercase" style="font-family: Sora, sans-serif;">
+              Ferre<span class="text-ferre-400">Nexo</span>
+            </span>
+            <span class="text-[10px] font-bold text-steel-400 uppercase tracking-[0.15em]">Admin Panel</span>
+          </div>
+          <button (click)="sidebarOpen = false" class="lg:hidden p-1 text-steel-400 hover:text-white ml-auto">
             <lucide-icon [name]="X" size="18"></lucide-icon>
           </button>
         </div>
 
+        <!-- Nav -->
         <nav class="flex-1 py-4 px-3 space-y-1 overflow-y-auto">
-          <a routerLink="/admin/dashboard" routerLinkActive="bg-ferre-50 text-ferre-700 border-ferre-200" [routerLinkActiveOptions]="{exact:true}"
-            class="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-transparent transition-all hover:bg-concrete-50 hover:text-steel-900 text-sm font-medium"
+          <a routerLink="/admin/dashboard" routerLinkActive="sidebar-active" [routerLinkActiveOptions]="{exact:true}"
+            class="sidebar-link"
             (click)="closeSidebarOnMobile()">
             <lucide-icon [name]="LayoutDashboard" size="18"></lucide-icon>
             Dashboard
           </a>
-          <a routerLink="/admin/products" routerLinkActive="bg-ferre-50 text-ferre-700 border-ferre-200"
-            class="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-transparent transition-all hover:bg-concrete-50 hover:text-steel-900 text-sm font-medium"
+          <a routerLink="/admin/products" routerLinkActive="sidebar-active"
+            class="sidebar-link"
             (click)="closeSidebarOnMobile()">
             <lucide-icon [name]="Package" size="18"></lucide-icon>
             Productos
           </a>
-          <a routerLink="/admin/pos" routerLinkActive="bg-ferre-50 text-ferre-700 border-ferre-200"
-            class="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-transparent transition-all hover:bg-concrete-50 hover:text-steel-900 text-sm font-medium"
+          <a routerLink="/admin/pos" routerLinkActive="sidebar-active"
+            class="sidebar-link"
             (click)="closeSidebarOnMobile()">
             <lucide-icon [name]="ShoppingCart" size="18"></lucide-icon>
             Generar Remitos
           </a>
-          <a routerLink="/admin/orders" routerLinkActive="bg-ferre-50 text-ferre-700 border-ferre-200"
-            class="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-transparent transition-all hover:bg-concrete-50 hover:text-steel-900 text-sm font-medium"
+          <a routerLink="/admin/orders" routerLinkActive="sidebar-active"
+            class="sidebar-link"
             (click)="closeSidebarOnMobile()">
             <lucide-icon [name]="ClipboardList" size="18"></lucide-icon>
             Ordenes
           </a>
-          <a routerLink="/admin/categories" routerLinkActive="bg-ferre-50 text-ferre-700 border-ferre-200"
-            class="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-transparent transition-all hover:bg-concrete-50 hover:text-steel-900 text-sm font-medium"
+          <a routerLink="/admin/categories" routerLinkActive="sidebar-active"
+            class="sidebar-link"
             (click)="closeSidebarOnMobile()">
             <lucide-icon [name]="Layers" size="18"></lucide-icon>
             Categorias
           </a>
 
-          <div class="h-px bg-concrete-100 my-2"></div>
+          <div class="h-px my-3" style="background: rgba(255,255,255,0.08);"></div>
 
-          <a routerLink="/admin/settings" routerLinkActive="bg-ferre-50 text-ferre-700 border-ferre-200"
-            class="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-transparent transition-all hover:bg-concrete-50 hover:text-steel-900 text-sm font-medium"
+          <a routerLink="/admin/settings" routerLinkActive="sidebar-active"
+            class="sidebar-link"
             (click)="closeSidebarOnMobile()">
             <lucide-icon [name]="Settings" size="18"></lucide-icon>
             Configuracion
           </a>
         </nav>
 
-        <div class="p-4 border-t border-concrete-100">
-          <button (click)="logout()" class="w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-steel-500 hover:bg-red-50 hover:text-red-600 transition-all text-sm font-medium">
+        <!-- Footer -->
+        <div class="p-4" style="border-top: 1px solid rgba(255,255,255,0.08);">
+          <button (click)="logout()" class="w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-steel-400 hover:bg-white/5 hover:text-safety-red transition-all text-sm font-medium">
             <lucide-icon [name]="LogOut" size="18"></lucide-icon>
             Cerrar Sesion
           </button>
@@ -104,17 +133,17 @@ import {
       <!-- Main Content -->
       <main class="flex-1 flex flex-col h-screen overflow-hidden">
         <!-- Top Header -->
-        <div class="h-16 bg-white border-b border-concrete-200 flex items-center justify-between px-4 lg:px-6 shrink-0">
+        <div class="h-16 bg-white flex items-center justify-between px-4 lg:px-6 shrink-0" style="border-bottom: 2px solid #dddbd3;">
           <div class="flex items-center gap-3">
             <button (click)="sidebarOpen = true" class="lg:hidden p-2 text-steel-500 hover:text-steel-900 rounded-lg hover:bg-concrete-50 transition-all">
               <lucide-icon [name]="MenuIcon" size="20"></lucide-icon>
             </button>
-            <h1 class="text-sm font-bold text-steel-600 uppercase tracking-wide">
+            <h1 class="text-xs font-bold text-steel-500 uppercase tracking-[0.18em]">
               Consola de Administracion
             </h1>
           </div>
           <div class="flex items-center gap-3">
-            <a routerLink="/" class="flex items-center gap-2 px-3 py-2 rounded-lg text-steel-500 hover:bg-concrete-50 hover:text-steel-900 transition-all text-sm font-medium">
+            <a routerLink="/" class="flex items-center gap-2 px-4 py-2 rounded-lg text-steel-600 hover:bg-concrete-50 hover:text-ferre-600 transition-all text-sm font-bold border border-concrete-200">
               <lucide-icon [name]="Home" size="16"></lucide-icon>
               <span class="hidden sm:inline">Ver Tienda</span>
             </a>
@@ -147,6 +176,7 @@ export class AdminLayoutComponent implements OnInit {
   LogOut = LogOut;
   MenuIcon = Menu;
   X = X;
+  WrenchIcon = Wrench;
 
   Home = Home;
 

@@ -41,67 +41,71 @@ import { FormsModule } from "@angular/forms";
     }
 
     :host ::ng-deep .p-datatable-dark .p-datatable-thead > tr > th {
-      background: #f8f9fa !important; /* concrete-50 */
-      color: #64748b !important; /* steel-500 */
-      border-bottom: 1px solid #e5e7eb !important; /* concrete-200 */
-      padding: 1.25rem 1.5rem !important;
-      font-size: 0.75rem !important;
+      background: #f8f8f6 !important;
+      color: #62707e !important;
+      border-bottom: 2px solid #dddbd3 !important;
+      padding: 1rem 1.25rem !important;
+      font-size: 0.7rem !important;
+      font-weight: 700 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.08em !important;
     }
 
     :host ::ng-deep .p-datatable-dark .p-datatable-tbody > tr {
       background: transparent !important;
-      color: #334155 !important; /* steel-700 */
-      transition: all 0.3s !important;
+      color: #374048 !important;
+      transition: all 0.15s !important;
     }
 
     :host ::ng-deep .p-datatable-dark .p-datatable-tbody > tr:hover {
-      background: rgba(13, 110, 253, 0.05) !important; /* ferre-50/50 */
+      background: #f8f8f6 !important;
     }
 
     :host ::ng-deep .p-datatable-dark .p-datatable-tbody > tr > td {
-      border-bottom: 1px solid #f1f5f9 !important; /* concrete-100 */
-      padding: 1.25rem 1.5rem !important;
+      border-bottom: 1px solid #efeeea !important;
+      padding: 1rem 1.25rem !important;
       background: transparent !important;
     }
 
     :host ::ng-deep .p-datatable-dark .p-paginator {
       background: #ffffff !important;
       border: none !important;
-      border-top: 1px solid #f1f5f9 !important; /* concrete-100 */
-      color: #64748b !important; /* steel-500 */
+      border-top: 2px solid #dddbd3 !important;
+      color: #62707e !important;
       padding: 1rem !important;
     }
 
     :host ::ng-deep .p-datatable-dark .p-paginator .p-paginator-pages .p-paginator-page {
-      color: #64748b !important; /* steel-500 */
+      color: #62707e !important;
       background: transparent !important;
-      border: 1px solid #f1f5f9 !important; /* concrete-100 */
-      border-radius: 0.75rem !important;
+      border: 1.5px solid #dddbd3 !important;
+      border-radius: 0.375rem !important;
       min-width: 2.25rem !important;
       height: 2.25rem !important;
       margin: 0 0.25rem !important;
       transition: all 0.2s !important;
+      font-weight: 700 !important;
     }
 
     :host ::ng-deep .p-datatable-dark .p-paginator .p-paginator-pages .p-paginator-page:hover {
-      background: rgba(13, 110, 253, 0.08) !important;
-      border-color: rgba(13, 110, 253, 0.2) !important;
-      color: #0d6efd !important; /* ferre-600 */
+      background: rgba(212, 94, 8, 0.06) !important;
+      border-color: #d45e08 !important;
+      color: #d45e08 !important;
     }
 
     :host ::ng-deep .p-datatable-dark .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
-      background: #0d6efd !important; /* ferre-600 */
+      background: #d45e08 !important;
       color: #ffffff !important;
-      border-color: #0d6efd !important;
+      border-color: #d45e08 !important;
       font-weight: 800 !important;
     }
 
     :host ::ng-deep .p-datatable-dark .p-paginator .p-link {
-      color: #64748b !important; /* steel-500 */
+      color: #62707e !important;
     }
 
     :host ::ng-deep .p-datatable-dark .p-paginator .p-paginator-current {
-      color: #64748b !important; /* steel-500 */
+      color: #62707e !important;
       font-size: 0.75rem !important;
       font-weight: 700 !important;
       text-transform: uppercase !important;
@@ -109,15 +113,11 @@ import { FormsModule } from "@angular/forms";
     }
   `],
   template: `
-    <div class="h-full flex flex-col space-y-8 animate-in">
+    <div class="h-full flex flex-col space-y-6">
       <!-- Header Area -->
-      <div
-        class="grid grid-cols-1 lg:grid-cols-3 items-center gap-8 bg-white p-8 rounded-xl border border-concrete-200 shadow-sm relative group"
-      >
-        <div class="absolute inset-0 bg-gradient-to-br from-ferre-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none rounded-xl"></div>
-        
+      <div class="card-industrial p-6 relative">
         <!-- Left: Branding & Info -->
-        <div class="relative z-10 flex items-center gap-4">
+        <div class="flex items-center gap-4">
           <div class="w-14 h-14 rounded-2xl bg-ferre-50 flex items-center justify-center border border-concrete-200 shrink-0">
             <lucide-icon
               [name]="PackageSearch"
