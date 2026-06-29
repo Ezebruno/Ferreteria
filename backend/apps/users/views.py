@@ -8,6 +8,11 @@ from apps.sales.models import Customer
 from rest_framework import serializers
 from django_ratelimit.decorators import ratelimit
 from django.utils.decorators import method_decorator
+from django.core.mail import send_mail
+from django.conf import settings
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,7 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'email', 'role', 'first_name', 'last_name', 'phone')
 
 class RegisterCustomerSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=True, min_length=6)
     
     class Meta:
         model = User
@@ -30,7 +35,6 @@ class RegisterCustomerSerializer(serializers.ModelSerializer):
             role=User.CUSTOMER,
             phone=validated_data.get('phone', '')
         )
-        # Create corresponding Customer profile
         Customer.objects.create(user=user, name=f"{user.first_name} {user.last_name}")
         return user
 
@@ -46,20 +50,68 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         return self.request.user
 
-    def retrieve(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
-        data = serializer.data
-        # Adjuntamos el nombre del negocio (Tenant)
-        if False:
-            data['tenant_name'] = 'FerreNexo'
-        return Response(data)
+class PasswordResetRequestView(APIView):
+    """Solicitar reset de contraseña por email"""
+    permission_classes = [permissions.AllowAny]
+    authentication_classes = []
+
+    def post(self, request):
+        email = request.data.get('email', '').strip().lower()
+        if not email:
+            return Response({'error': 'Ingresa tu correo electronico'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        user = User.objects.filter(email=email).first()
+        if user:
+            token = default_token_generator.make_token(user)
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            frontend_url = request.data.get('frontend_url', 'http://localhost:4200')
+            reset_url = f"{frontend_url}/auth/reset-password?uid={uid}&token={token}"
+            
+            try:
+                send_mail(
+                    "Restablece tu contrasena - FerreNexo",
+                    f"Hola,\n\nRecibimos una solicitud para restablecer tu contrasena.\n\nHace click en el siguiente enlace:\n{reset_url}\n\nSi no solicitaste esto, ignora este mensaje.\n\nFerreNexo",
+                    settings.DEFAULT_FROM_EMAIL or 'noreply@ferrenexo.com',
+                    [email],
+                    fail_silently=True,
+                )
+            except Exception as e:
+                print(f"Password reset email error: {e}")
+        
+        # Siempre devolver OK para no revelar si el email existe
+        return Response({'message': 'Si el correo esta registrado, recibiras un enlace para restablecer tu contrasena'})
+
+class PasswordResetConfirmView(APIView):
+    """Confirmar reset de contraseña con token"""
+    permission_classes = [permissions.AllowAny]
+    authentication_classes = []
+
+    def post(self, request):
+        uid = request.data.get('uid', '')
+        token = request.data.get('token', '')
+        new_password = request.data.get('new_password', '')
+
+        if not all([uid, token, new_password]):
+            return Response({'error': 'Faltan datos'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if len(new_password) < 6:
+            return Response({'error': 'La contrasena debe tener al menos 6 caracteres'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user_id = force_str(urlsafe_base64_decode(uid))
+            user = User.objects.get(pk=user_id)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            return Response({'error': 'Enlace invalido'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if not default_token_generator.check_token(user, token):
+            return Response({'error': 'Enlace invalido o expirado'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user.set_password(new_password)
+        user.save()
+        return Response({'message': 'Contrasena restablecida exitosamente'})
 
 @method_decorator(ratelimit(key='ip', rate='5/m', method='POST', block=True), name='dispatch')
 class RateLimitedTokenObtainPairView(TokenObtainPairView):
-    """
-    Login view with rate limiting (5 attempts per minute per IP).
-    """
     pass
 
 from rest_framework.views import APIView

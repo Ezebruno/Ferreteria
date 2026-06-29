@@ -27,7 +27,9 @@ from apps.users.views import (
     UserProfileView,
     RateLimitedTokenObtainPairView,
     StoreSettingsView,
-    StoreInfoView
+    StoreInfoView,
+    PasswordResetRequestView,
+    PasswordResetConfirmView,
 )
 
 # Vista para la raíz del sitio
@@ -65,6 +67,8 @@ urlpatterns = [
     path('api/auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/auth/register/', CustomerRegisterView.as_view(), name='customer_register'),
     path('api/auth/profile/', UserProfileView.as_view(), name='user_profile'),
+    path('api/auth/password-reset/', PasswordResetRequestView.as_view(), name='password_reset'),
+    path('api/auth/password-reset/confirm/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
 
     # Configuración de tienda
     path('api/tenant/settings/', StoreSettingsView.as_view(), name='store_settings'),

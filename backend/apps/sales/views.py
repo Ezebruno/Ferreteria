@@ -6,7 +6,8 @@ from rest_framework.response import Response
 from apps.sales.models import Sale, Customer, Ticket, Budget, BudgetItem
 from apps.sales.serializers import SaleSerializer, CustomerSerializer, TicketSerializer
 from apps.sales.budget_serializers import BudgetSerializer
-from apps.sales.services.external import WhatsAppService
+from django.core.mail import send_mail
+from django.conf import settings
 
 class BudgetViewSet(viewsets.ModelViewSet):
     queryset = Budget.objects.all().order_by('-created_at')
@@ -55,28 +56,57 @@ class SaleViewSet(viewsets.ModelViewSet):
         """ Sends shipping notification email to customer """
         sale = self.get_object()
         if not sale.customer or not sale.customer.email:
-            return Response({"error": "No se encontró el email del cliente"}, status=400)
+            return Response({"error": "No se encontro el email del cliente"}, status=400)
             
-        # Build items list for email
         items_list = ""
         for item in sale.items.all():
             items_list += f"- {item.product.name} (x{item.quantity}) - ${item.subtotal}\n"
             
-        subject = f"¡Tu pedido #{sale.id} está en camino! 🚚"
+        subject = f"Tu pedido #{sale.id} esta en camino!"
         message = (
             f"Hola {sale.customer.name},\n\n"
-            f"¡Grandes noticias! Tu pedido #{sale.id} ya ha sido enviado y está en camino a tu dirección: {sale.shipping_address}.\n\n"
-            f"Detalle de tu compra:\n"
-            f"{items_list}\n"
-            f"Total: ${sale.total}\n\n"
-            f"¡Gracias por confiar en FerrePro!"
+            f"Tu pedido #{sale.id} ya ha sido enviado y esta en camino a: {sale.shipping_address}.\n\n"
+            f"Detalle de tu compra:\n{items_list}\nTotal: ${sale.total}\n\n"
+            f"Gracias por confiar en FerreNexo!"
         )
         
-        # Simulate sending or use Django send_mail
-        # from django.core.mail import send_mail
-        # send_mail(subject, message, 'noreply@ferrepro.com', [sale.customer.email])
+        from django.core.mail import send_mail
+        send_mail(
+            subject, message,
+            settings.DEFAULT_FROM_EMAIL or 'noreply@ferrenexo.com',
+            [sale.customer.email],
+            fail_silently=True,
+        )
         
-        print(f"EMAIL SENT TO {sale.customer.email}:\nSubject: {subject}\nBody: {message}")
+        return Response({"status": "success", "message": f"Email enviado a {sale.customer.email}"})
+
+    @action(detail=True, methods=['post'])
+    def send_payment_confirmation(self, request, pk=None):
+        """ Sends payment confirmation email to customer """
+        sale = self.get_object()
+        if not sale.customer or not sale.customer.email:
+            return Response({"error": "No se encontro el email del cliente"}, status=400)
+            
+        items_list = ""
+        for item in sale.items.all():
+            items_list += f"- {item.product.name} (x{item.quantity}) - ${item.subtotal}\n"
+            
+        subject = f"Pago confirmado - Pedido #{sale.id}"
+        message = (
+            f"Hola {sale.customer.name},\n\n"
+            f"Tu pago de la orden #{sale.id} ha sido procesado exitosamente.\n\n"
+            f"Detalle:\n{items_list}\nTotal pagado: ${sale.total}\n\n"
+            f"Estamos preparando tu pedido. Te notificaremos cuando sea enviado.\n\n"
+            f"FerreNexo"
+        )
+        
+        from django.core.mail import send_mail
+        send_mail(
+            subject, message,
+            settings.DEFAULT_FROM_EMAIL or 'noreply@ferrenexo.com',
+            [sale.customer.email],
+            fail_silently=True,
+        )
         
         return Response({"status": "success", "message": f"Email enviado a {sale.customer.email}"})
 

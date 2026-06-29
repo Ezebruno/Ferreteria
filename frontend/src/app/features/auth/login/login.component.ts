@@ -18,11 +18,12 @@ import {
   ArrowLeft,
   Wrench,
 } from "lucide-angular";
+import { RouterModule } from "@angular/router";
 
 @Component({
   selector: "app-login",
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, LucideAngularModule],
+  imports: [CommonModule, ReactiveFormsModule, LucideAngularModule, RouterModule],
   template: `
     <div class="min-h-screen bg-steel-950 flex items-center justify-center p-4 relative overflow-hidden">
       <!-- Textura de fondo -->
@@ -111,6 +112,16 @@ import {
             {{ loading ? "Verificando..." : "Entrar" }}
           </button>
         </form>
+
+        <div class="mt-6 space-y-3">
+          <a routerLink="/auth/forgot-password" class="block text-center text-steel-500 hover:text-ferre-400 text-sm transition-colors">
+            Olvidaste tu contrasena?
+          </a>
+          <p class="text-center text-steel-500 text-sm">
+            No tenes cuenta?
+            <a routerLink="/auth/register" class="text-ferre-400 hover:text-ferre-300 font-medium transition-colors">Registrate</a>
+          </p>
+        </div>
       </div>
     </div>
   `,

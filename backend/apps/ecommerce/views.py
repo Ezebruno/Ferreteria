@@ -229,6 +229,22 @@ class PublicCheckoutViewSet(viewsets.ViewSet):
                 quantity=item_data['quantity'],
                 price_at_sale=item_data['price_at_sale'],
             )
+
+        # Send order confirmation email
+        if email:
+            from django.core.mail import send_mail
+            from django.conf import settings
+            items_list = "\n".join([f"- {i['product'].name} (x{i['quantity']}) - ${i['price_at_sale'] * i['quantity']}" for i in validated_items])
+            try:
+                send_mail(
+                    f"Pedido #{sale.id} recibido - FerreNexo",
+                    f"Hola {name},\n\nRecibimos tu pedido #{sale.id}.\n\nDetalle:\n{items_list}\n\nTotal: ${final_total}\n\nTe notificaremos cuando sea procesado.\n\nFerreNexo",
+                    settings.DEFAULT_FROM_EMAIL or 'noreply@ferrenexo.com',
+                    [email],
+                    fail_silently=True,
+                )
+            except Exception as e:
+                print(f"Order confirmation email error: {e}")
                 
         return Response({
             "status": "success", 
