@@ -220,7 +220,7 @@
 </div>
 
 <!-- CTA Section -->
-<div class="py-16 bg-[#1a1f27] border-y border-[#2a2f38]">
+<div *ngIf="whatsappHrefConsult" class="py-16 bg-[#1a1f27] border-y border-[#2a2f38]">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <div class="inline-flex p-3 bg-ferre-600/10 rounded-2xl mb-5">
       <lucide-icon [name]="MessageCircle" size="28" class="text-ferre-600"></lucide-icon>

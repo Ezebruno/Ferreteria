@@ -75,7 +75,7 @@ export class ProductDetailComponent implements OnInit {
 
   Math = Math;
   parseInt = parseInt;
-  whatsappHref = "https://wa.me/5493462612989";
+  whatsappHref = "";
 
   ShoppingCart = ShoppingCart;
   Star = Star;

@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
   
   // Mensaje y link por defecto sin depender de los archivos de entorno (evita el error TS2304)
   defaultMsg = "Hola, tengo una consulta sobre un producto.";
-  whatsappHref = `https://wa.me/5491123456789?text=${encodeURIComponent(this.defaultMsg)}`;
+  whatsappHref = "";
   
   private api = inject(ApiService);
 

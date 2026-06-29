@@ -140,8 +140,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   Math = Math;
 
 
-  whatsappHref = "https://wa.me/5493462612989";
-  whatsappHrefConsult = "https://wa.me/5493462612989?text=Hola,%20me%20gustaría%20recibir%20asesoría%20sobre%20herramientas%20para%20mi%20proyecto";
+  whatsappHref = "";
+  whatsappHrefConsult = "";
   storeAddress = "";
   instagramUrl = "";
   facebookUrl = "";
