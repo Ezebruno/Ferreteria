@@ -69,6 +69,7 @@ export class SettingsComponent implements OnInit {
     payment: false,
     mercadolibre: false,
     whatsapp: false,
+    social: false,
   };
   // Icons
   Save = Save;
@@ -88,6 +89,8 @@ export class SettingsComponent implements OnInit {
       bank_cvu: [""],
       bank_alias: [""],
       whatsapp_number: [""],
+      instagram_url: [""],
+      facebook_url: [""],
     });
   }
 
@@ -173,6 +176,8 @@ export class SettingsComponent implements OnInit {
           bank_cvu: data.bank_cvu || "",
           bank_alias: data.bank_alias || "",
           whatsapp_number: data.whatsapp_number || "",
+          instagram_url: data.instagram_url || "",
+          facebook_url: data.facebook_url || "",
         });
       },
       error: (err) => {
@@ -194,6 +199,8 @@ export class SettingsComponent implements OnInit {
     formData.append("bank_cvu", formValues.bank_cvu);
     formData.append("bank_alias", formValues.bank_alias);
     formData.append("whatsapp_number", formValues.whatsapp_number);
+    formData.append("instagram_url", formValues.instagram_url);
+    formData.append("facebook_url", formValues.facebook_url);
 
     // Use POST with FormData (not PATCH, to support multipart)
     this.api.post("/tenant/settings/", formData).subscribe({

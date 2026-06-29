@@ -49,6 +49,8 @@ import {
   ShieldCheck,
   Store,
   MessageCircle,
+  Instagram,
+  Facebook,
 } from "lucide-angular";
 import { RouterModule } from "@angular/router";
 
@@ -141,6 +143,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   whatsappHref = "https://wa.me/5493462612989";
   whatsappHrefConsult = "https://wa.me/5493462612989?text=Hola,%20me%20gustaría%20recibir%20asesoría%20sobre%20herramientas%20para%20mi%20proyecto";
   storeAddress = "";
+  instagramUrl = "";
+  facebookUrl = "";
 
   currentSlide = 0;
   heroSlides = [
@@ -201,6 +205,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   ShieldCheck = ShieldCheck;
   Store = Store;
   MessageCircle = MessageCircle;
+  Instagram = Instagram;
+  Facebook = Facebook;
 
   ngOnInit(): void {
     this.seo.updateMetaTags({
@@ -219,6 +225,12 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
         if (data.store_address) {
           this.storeAddress = data.store_address;
+        }
+        if (data.instagram_url) {
+          this.instagramUrl = data.instagram_url;
+        }
+        if (data.facebook_url) {
+          this.facebookUrl = data.facebook_url;
         }
       }
     });

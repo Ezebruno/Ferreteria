@@ -292,10 +292,16 @@
         </ul>
       </div>
       <div>
-        <h4 class="font-bold text-white text-xs uppercase tracking-wider mb-4">Comunidad</h4>
+        <h4 class="font-bold text-white text-xs uppercase tracking-wider mb-4">Redes Sociales</h4>
         <div class="flex gap-3">
-          <a [href]="whatsappHref" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center hover:bg-ferre-600 hover:text-white transition-all">
+          <a [href]="whatsappHref" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center hover:bg-green-600 hover:text-white transition-all">
             <lucide-icon [name]="MessageCircle" size="16"></lucide-icon>
+          </a>
+          <a *ngIf="instagramUrl" [href]="instagramUrl" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center hover:bg-pink-600 hover:text-white transition-all">
+            <lucide-icon [name]="Instagram" size="16"></lucide-icon>
+          </a>
+          <a *ngIf="facebookUrl" [href]="facebookUrl" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
+            <lucide-icon [name]="Facebook" size="16"></lucide-icon>
           </a>
         </div>
       </div>

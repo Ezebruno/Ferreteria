@@ -222,5 +222,53 @@
         </div>
       </div>
     </div>
+
+    <div class="card-industrial overflow-hidden">
+      <button
+        type="button"
+        (click)="toggleSection('social')"
+        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-white/5 transition-colors cursor-pointer"
+      >
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-sky-500/20 flex items-center justify-center text-sky-600" style="border: 1.5px solid #bae6fd;">
+            <lucide-icon [name]="Link" size="20"></lucide-icon>
+          </div>
+          <h3 class="text-lg font-bold text-white">Redes Sociales</h3>
+        </div>
+        <lucide-icon
+          [name]="expandedSections['social'] ? ChevronUp : ChevronDown"
+          size="20"
+          class="text-steel-400 flex-shrink-0"
+        ></lucide-icon>
+      </button>
+
+      <div
+        *ngIf="expandedSections['social']"
+        class="px-6 pb-6 space-y-4"
+        style="border-top: 2px solid #2a2f38;"
+      >
+        <p class="text-xs text-steel-400 mt-4">
+          Links a tus redes sociales. Se mostraran en el footer de tu sitio web.
+        </p>
+        <div>
+          <label class="block text-xs font-bold text-steel-400 uppercase tracking-wider mb-1.5">URL de Instagram</label>
+          <input
+            type="url"
+            formControlName="instagram_url"
+            placeholder="https://instagram.com/tu-ferreteria"
+            class="w-full bg-[#13161c] border border-[#2a2f38] rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-ferre-400 transition-all text-sm"
+          />
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-steel-400 uppercase tracking-wider mb-1.5">URL de Facebook</label>
+          <input
+            type="url"
+            formControlName="facebook_url"
+            placeholder="https://facebook.com/tu-ferreteria"
+            class="w-full bg-[#13161c] border border-[#2a2f38] rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-ferre-400 transition-all text-sm"
+          />
+        </div>
+      </div>
+    </div>
   </form>
 </div>

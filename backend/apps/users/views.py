@@ -76,7 +76,9 @@ class StoreSettingsView(APIView):
             'store_address': config.store_address or '',
             'bank_cvu': config.bank_cvu,
             'bank_alias': config.bank_alias,
-            'whatsapp_number': config.whatsapp_number
+            'whatsapp_number': config.whatsapp_number,
+            'instagram_url': config.instagram_url or '',
+            'facebook_url': config.facebook_url or ''
         }
             
         return Response(data)
@@ -96,6 +98,10 @@ class StoreSettingsView(APIView):
             config.bank_alias = request.data['bank_alias']
         if 'whatsapp_number' in request.data:
             config.whatsapp_number = request.data['whatsapp_number']
+        if 'instagram_url' in request.data:
+            config.instagram_url = request.data['instagram_url']
+        if 'facebook_url' in request.data:
+            config.facebook_url = request.data['facebook_url']
             
         config.save()
         return Response({'status': 'ok', 'message': 'Configuración guardada exitosamente'})
@@ -114,6 +120,10 @@ class StoreSettingsView(APIView):
             config.bank_alias = request.data['bank_alias']
         if 'whatsapp_number' in request.data:
             config.whatsapp_number = request.data['whatsapp_number']
+        if 'instagram_url' in request.data:
+            config.instagram_url = request.data['instagram_url']
+        if 'facebook_url' in request.data:
+            config.facebook_url = request.data['facebook_url']
             
         config.save()
         return Response({'status': 'ok'})
@@ -132,5 +142,7 @@ class StoreInfoView(APIView):
             'bank_cvu': config.bank_cvu,
             'bank_alias': config.bank_alias,
             'whatsapp_number': config.whatsapp_number,
+            'instagram_url': config.instagram_url or '',
+            'facebook_url': config.facebook_url or '',
             'has_mp': bool(config.mp_access_token)
         })

@@ -54,6 +54,8 @@ class StoreConfig(models.Model):
     bank_cvu = models.CharField(max_length=50, null=True, blank=True)
     bank_alias = models.CharField(max_length=50, null=True, blank=True)
     whatsapp_number = models.CharField(max_length=20, null=True, blank=True)
+    instagram_url = models.CharField(max_length=255, null=True, blank=True)
+    facebook_url = models.CharField(max_length=255, null=True, blank=True)
     
     mp_access_token = models.CharField(max_length=255, null=True, blank=True)
     mp_public_key = models.CharField(max_length=255, null=True, blank=True)
