@@ -6,6 +6,7 @@ import { PosComponent } from "./pos/pos.component";
 import { CategoriesComponent } from "./categories/categories.component";
 import { OrdersComponent } from "./orders/orders.component";
 import { MeliAuthComponent } from "./meli/meli-auth.component";
+import { BannersComponent } from "./banners/banners.component";
 
 import { AdminLayoutComponent } from "./layout/admin-layout.component";
 
@@ -22,6 +23,7 @@ export const ADMIN_ROUTES: Routes = [
       },
       { path: "pos", component: PosComponent },
       { path: "categories", component: CategoriesComponent },
+      { path: "banners", component: BannersComponent },
       { path: "orders", component: OrdersComponent },
       { path: "meli", component: MeliAuthComponent },
       { path: "settings", loadComponent: () => import('./settings/settings.component').then(m => m.SettingsComponent) },

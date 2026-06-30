@@ -18,6 +18,7 @@ import {
   Menu,
   X,
   Wrench,
+  Image,
 } from "lucide-angular";
 
 
@@ -110,6 +111,12 @@ import {
             <lucide-icon [name]="Layers" size="18"></lucide-icon>
             Categorias
           </a>
+          <a routerLink="/admin/banners" routerLinkActive="sidebar-active"
+            class="sidebar-link"
+            (click)="closeSidebarOnMobile()">
+            <lucide-icon [name]="ImageIcon" size="18"></lucide-icon>
+            Banners
+          </a>
 
           <div class="h-px my-3" style="background: #1e232c;"></div>
 
@@ -177,6 +184,7 @@ export class AdminLayoutComponent implements OnInit {
   MenuIcon = Menu;
   X = X;
   WrenchIcon = Wrench;
+  ImageIcon = Image;
 
   Home = Home;
 

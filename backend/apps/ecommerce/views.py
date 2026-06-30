@@ -7,10 +7,24 @@ from apps.inventory.models import Product
 from apps.inventory.serializers import ProductListSerializer
 from apps.sales.models import Sale, SaleItem, Customer
 
-class BannerViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Banner.objects.filter(is_active=True).order_by('position')
+class BannerViewSet(viewsets.ModelViewSet):
     serializer_class = BannerSerializer
-    permission_classes = [permissions.AllowAny]
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated and self.request.user.is_staff:
+            return Banner.objects.all().order_by('position')
+        return Banner.objects.filter(is_active=True).order_by('position')
+
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve']:
+            return [permissions.AllowAny()]
+        return [permissions.IsAuthenticated()]
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+    def perform_update(self, serializer):
+        serializer.save()
 
 class PromotionViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Promotion.objects.filter(is_active=True)

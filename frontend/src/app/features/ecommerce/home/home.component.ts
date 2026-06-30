@@ -6,7 +6,6 @@ import { FormsModule } from "@angular/forms";
 import { ApiService } from "../../../core/services/api.service";
 import { CartService } from "../../../core/services/cart.service";
 import { NavigationService } from "../../../core/services/navigation.service";
-import { Observable } from "rxjs";
 import { Router, ActivatedRoute } from "@angular/router";
 import { SeoService } from "../../../core/services/seo.service";
 
@@ -29,6 +28,7 @@ interface Banner {
   subtitle: string;
   image: string;
   link: string;
+  is_active: boolean;
 }
 
 import {
@@ -82,9 +82,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   private messageService = inject(MessageService);
   private seo = inject(SeoService);
 
-  banners$: Observable<Banner[]> = new Observable();
-  allProducts$: Observable<Product[]> = new Observable();
-  featuredProducts$: Observable<Product[]> = new Observable();
   cartCount = 0;
   selectedCategory = "todos";
   searchQuery = "";
@@ -147,44 +144,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   facebookUrl = "";
 
   currentSlide = 0;
-  heroSlides = [
-    {
-      title: "Potencia",
-      highlight: "Absoluta",
-      description:
-        "Equipamiento de grado industrial para máxima exigencia. Construye el futuro con la mejor tecnología.",
-      image: "assets/hero_banner.png",
-      cta: "Explorar Catálogo",
-      color: "from-red-400 to-red-600",
-    },
-    {
-      title: "Precisión",
-      highlight: "Milimétrica",
-      description:
-        "Herramientas de medición láser y calibres digitales para los proyectos más detallados.",
-      image: "assets/industrial_measuring_tools_offer.png",
-      cta: "Ver Instrumentos",
-      color: "from-blue-400 to-blue-600",
-    },
-    {
-      title: "Soldadura",
-      highlight: "Profesional",
-      description:
-        "Equipos inverter de última generación. Máximo rendimiento y cordones perfectos.",
-      image: "assets/industrial_welding_offer.png",
-      cta: "Ver Ofertas",
-      color: "from-orange-400 to-orange-600",
-    },
-    {
-      title: "Taller",
-      highlight: "Organizado",
-      description:
-        "Sistemas de almacenamiento industrial. El orden que tu productividad necesita.",
-      image: "assets/industrial_toolkit_offer.png",
-      cta: "Equipar mi Taller",
-      color: "from-emerald-400 to-emerald-600",
-    },
-  ];
+  banners: Banner[] = [];
   private carouselInterval: any;
   private touchStartX = 0;
   private touchEndX = 0;
@@ -236,7 +196,18 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
 
     // Load base products
-    this.banners$ = this.api.get<Banner[]>("/ecommerce/banners/");
+    this.api.get<any>("/ecommerce/banners/").subscribe({
+      next: (res) => {
+        const data = res.results || res;
+        this.banners = data.filter((b: Banner) => b.is_active);
+        if (this.banners.length > 0) {
+          this.startCarousel();
+        }
+      },
+      error: () => {
+        this.banners = [];
+      }
+    });
 
     // Load and refresh products
     this.loadAllProducts();
@@ -257,8 +228,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.searchQuery = query;
       this.applyFilters();
     });
-
-    this.startCarousel();
 
     let isFirstLoad = true;
     this.navigationService.category$.subscribe((category) => {
@@ -501,7 +470,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   nextSlide(): void {
-    this.currentSlide = (this.currentSlide + 1) % this.heroSlides.length;
+    this.currentSlide = (this.currentSlide + 1) % this.banners.length;
   }
 
   setSlide(index: number): void {
@@ -513,7 +482,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   // User-triggered next (resets interval)
   userNextSlide(): void {
-    this.currentSlide = (this.currentSlide + 1) % this.heroSlides.length;
+    this.currentSlide = (this.currentSlide + 1) % this.banners.length;
     clearInterval(this.carouselInterval);
     this.startCarousel();
   }
@@ -521,7 +490,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   // User-triggered prev (resets interval)
   userPrevSlide(): void {
     this.currentSlide =
-      (this.currentSlide - 1 + this.heroSlides.length) % this.heroSlides.length;
+      (this.currentSlide - 1 + this.banners.length) % this.banners.length;
     clearInterval(this.carouselInterval);
     this.startCarousel();
   }

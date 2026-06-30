@@ -11,7 +11,7 @@
         </span>
       </div>
 
-      <!-- Center Nav -->
+      <!-- Center Nav (desktop) -->
       <div class="hidden lg:flex flex-1 justify-center items-center mx-8 gap-1">
         <button
           (click)="filterByCategory('todos')"
@@ -84,13 +84,54 @@
 
         <span class="w-px h-5 bg-concrete-200 hidden sm:block"></span>
 
-        <!-- Admin -->
+        <!-- Admin (always visible) -->
         <a
           routerLink="/auth/login"
-          class="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-steel-300 hover:text-ferre-600 px-3 py-2 rounded-lg hover:bg-ferre-600/10 transition-all"
+          class="inline-flex items-center gap-2 text-sm font-semibold text-steel-300 hover:text-ferre-600 px-3 py-2 rounded-lg hover:bg-ferre-600/10 transition-all"
         >
           <lucide-icon [name]="User" size="18"></lucide-icon>
-          Admin
+          <span class="hidden sm:inline">Admin</span>
+        </a>
+
+        <!-- Hamburger Menu (mobile only) -->
+        <button
+          (click)="mobileMenuOpen = !mobileMenuOpen"
+          class="lg:hidden p-2 text-steel-500 hover:text-ferre-600 rounded-lg hover:bg-ferre-600/10 transition-all"
+        >
+          <svg *ngIf="!mobileMenuOpen" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          <svg *ngIf="mobileMenuOpen" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu Dropdown -->
+  <div
+    *ngIf="mobileMenuOpen"
+    class="lg:hidden border-t border-[#2a2f38] bg-[#1a1f27]"
+  >
+    <div class="max-w-7xl mx-auto px-4 py-4 space-y-2">
+      <button
+        (click)="filterByCategory('todos'); mobileMenuOpen = false"
+        class="w-full text-left px-4 py-3 text-sm font-semibold text-steel-200 hover:text-ferre-600 hover:bg-ferre-600/10 rounded-lg transition-all"
+      >
+        Todos los productos
+      </button>
+      <button
+        *ngFor="let cat of categories"
+        (click)="filterByCategory(cat.name); mobileMenuOpen = false"
+        class="w-full text-left px-4 py-3 text-sm font-semibold text-steel-200 hover:text-ferre-600 hover:bg-ferre-600/10 rounded-lg transition-all"
+      >
+        {{ cat.name }}
+      </button>
+      <div class="border-t border-[#2a2f38] pt-2 mt-2">
+        <a
+          routerLink="/auth/login"
+          (click)="mobileMenuOpen = false"
+          class="flex items-center gap-2 px-4 py-3 text-sm font-semibold text-steel-200 hover:text-ferre-600 hover:bg-ferre-600/10 rounded-lg transition-all"
+        >
+          <lucide-icon [name]="User" size="18"></lucide-icon>
+          Iniciar sesion
         </a>
       </div>
     </div>

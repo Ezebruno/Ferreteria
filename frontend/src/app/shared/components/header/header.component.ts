@@ -41,6 +41,7 @@ export class HeaderComponent implements OnInit {
   Hammer = Hammer;
 
   activeDropdown: string | null = null;
+  mobileMenuOpen = false;
   categories: any[] = [];
 
   ngOnInit(): void {

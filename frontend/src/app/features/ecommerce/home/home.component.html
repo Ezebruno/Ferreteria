@@ -1,35 +1,42 @@
-﻿<div class="relative overflow-hidden bg-steel-950 h-[380px] md:h-[480px] lg:h-[520px]">
+﻿<div class="relative overflow-hidden bg-steel-950 h-[380px] md:h-[480px] lg:h-[520px]" *ngIf="banners.length > 0">
   <div
     class="relative h-full w-full"
     (touchstart)="onTouchStart($event)"
     (touchend)="onTouchEnd($event)"
   >
     <div
-      *ngFor="let slide of heroSlides; let i = index"
+      *ngFor="let banner of banners; let i = index"
       class="absolute inset-0 transition-all duration-700 ease-in-out"
       [style.opacity]="i === currentSlide ? 1 : 0"
       [style.z-index]="i === currentSlide ? 10 : 0"
     >
-      <div class="absolute inset-0 bg-cover bg-center" [style.backgroundImage]="'url(' + slide.image + ')'"></div>
+      <div class="absolute inset-0 bg-cover bg-center" [style.backgroundImage]="'url(' + banner.image + ')'"></div>
       <div class="absolute inset-0 bg-steel-950/60"></div>
       <div class="relative z-10 h-full flex items-center">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div class="max-w-xl">
-            <span class="inline-flex items-center gap-1.5 bg-ferre-600/10 text-ferre-400 text-xs font-bold px-3 py-1 rounded-full mb-4 border border-ferre-600/20">
-              <lucide-icon [name]="Zap" size="12"></lucide-icon>
-              {{ slide.highlight }}
-            </span>
             <h1 class="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-4" style="font-family: Sora, sans-serif;">
-              {{ slide.title }}
+              {{ banner.title }}
             </h1>
-            <p class="text-steel-300 text-sm md:text-base mb-8 leading-relaxed max-w-md">
-              {{ slide.description }}
+            <p *ngIf="banner.subtitle" class="text-steel-300 text-sm md:text-base mb-8 leading-relaxed max-w-md">
+              {{ banner.subtitle }}
             </p>
+            <a
+              *ngIf="banner.link"
+              [href]="banner.link"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-ferre px-8 py-3 inline-flex items-center gap-2"
+            >
+              Ver mas
+              <lucide-icon [name]="ArrowRight" size="16"></lucide-icon>
+            </a>
             <button
+              *ngIf="!banner.link"
               (click)="scrollToCatalog()"
               class="btn-ferre px-8 py-3 inline-flex items-center gap-2"
             >
-              {{ slide.cta }}
+              Ver productos
               <lucide-icon [name]="ArrowRight" size="16"></lucide-icon>
             </button>
           </div>
@@ -39,7 +46,7 @@
   </div>
 
   <!-- Slide Controls -->
-  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3">
+  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3" *ngIf="banners.length > 1">
     <button
       (click)="userPrevSlide()"
       class="w-9 h-9 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white hover:bg-ferre-600 transition-colors border border-white/10"
@@ -48,7 +55,7 @@
     </button>
     <div class="flex gap-1.5">
       <button
-        *ngFor="let slide of heroSlides; let i = index"
+        *ngFor="let banner of banners; let i = index"
         (click)="setSlide(i)"
         class="h-1.5 rounded-full transition-all duration-300"
         [ngClass]="i === currentSlide ? 'w-6 bg-ferre-500' : 'w-1.5 bg-white/30 hover:bg-white/50'"
