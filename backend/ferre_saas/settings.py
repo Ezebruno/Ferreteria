@@ -223,6 +223,7 @@ else:
     CORS_ALLOW_ALL_ORIGINS = False
     CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", default=[
         "http://localhost:4200",
+        "https://ferreteria-4n8s.vercel.app",
     ])
     
 CORS_ALLOW_CREDENTIALS = True
