@@ -1,0 +1,8 @@
+[phases.setup]
+nixPkgs = ["python313", "gcc", "libpq-dev"]
+
+[phases.build]
+cmds = ["cd backend && pip install -r requirements.txt && python manage.py collectstatic --noinput"]
+
+[start]
+cmd = "cd backend && gunicorn ferre_saas.wsgi --bind 0.0.0.0:$PORT --workers 3"
