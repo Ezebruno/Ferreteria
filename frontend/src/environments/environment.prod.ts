@@ -2,7 +2,7 @@
 // Configuración para deployment en servidores de producción
 export const environment = {
   production: true,
-  apiUrl: "https://ferreteria-production-2638.up.railway.app/api",
+  apiUrl: "https://ferreteria-production-fc73.up.railway.app/api",
 };
 
 // Agregar número de WhatsApp y mensaje por defecto para el botón flotante
