@@ -1,7 +1,7 @@
 import os
 import django
 
-# 1. Lee DATABASE_URL de las variables de entorno (Render, Railway, etc.)
+# 1. Lee DATABASE_URL de las variables de entorno
 db_url = os.environ.get('DATABASE_URL')
 
 if db_url:
