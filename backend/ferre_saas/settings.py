@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'axes',
     'simple_history',
+    'django_otp',
 ]
 
 MIDDLEWARE = [
@@ -91,6 +92,7 @@ DATABASES = {
     'default': dj_database_url.config(
         default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
         conn_max_age=600,
+        ssl_require=not DEBUG,
     )
 }
 
@@ -210,8 +212,8 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_SAMESITE = 'Lax'
 
-CELERY_BROKER_URL = env("REDIS_URL", default="redis://redis:6379/0")
-CELERY_RESULT_BACKEND = env("REDIS_URL", default="redis://redis:6379/0")
+CELERY_BROKER_URL = env("REDIS_URL", default="redis://127.0.0.1:6379/0")
+CELERY_RESULT_BACKEND = env("REDIS_URL", default="redis://127.0.0.1:6379/0")
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'

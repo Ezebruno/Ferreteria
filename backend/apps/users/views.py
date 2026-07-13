@@ -7,8 +7,6 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from apps.users.models import User, StoreConfig
 from apps.sales.models import Customer
 from rest_framework import serializers
-from django_ratelimit.decorators import ratelimit
-from django.utils.decorators import method_decorator
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.tokens import default_token_generator
@@ -131,7 +129,6 @@ class PasswordResetConfirmView(APIView):
         user.save()
         return Response({'message': 'Contrasena restablecida exitosamente'})
 
-@method_decorator(ratelimit(key='ip', rate='5/m', method='POST', block=True), name='dispatch')
 class RateLimitedTokenObtainPairView(TokenObtainPairView):
     pass
 

@@ -1,5 +1,6 @@
 // Variables de entorno para producción: API URL, modo debug desactivado
 // Configuración para deployment en servidores de producción
+// IMPORTANTE: Cambiar esta URL por la de tu servidor antes de deployar
 export const environment = {
   production: true,
   apiUrl: "http://localhost:8000/api",
