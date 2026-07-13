@@ -32,6 +32,25 @@ import { FormsModule } from "@angular/forms";
     FormsModule,
   ],
   styles: [`
+    @media (max-width: 768px) {
+      .flex.items-center.justify-between {
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .flex.items-center.justify-between > :first-child {
+        width: 100%;
+      }
+      .flex.items-center.justify-between > .max-w-md {
+        order: 3;
+        width: 100%;
+        max-width: 100% !important;
+      }
+      .flex.items-center.justify-between > :last-child {
+        order: 2;
+        margin-left: auto;
+      }
+    }
+
     :host ::ng-deep .p-datatable-dark.p-datatable {
       background: transparent !important;
     }
@@ -116,58 +135,60 @@ import { FormsModule } from "@angular/forms";
     <div class="h-full flex flex-col space-y-6">
       <!-- Header Area -->
       <div class="card-industrial p-6 relative">
-        <!-- Left: Branding & Info -->
-        <div class="flex items-center gap-4">
-          <div class="w-14 h-14 rounded-2xl bg-ferre-50 flex items-center justify-center border border-[#2a2f38] shrink-0">
-            <lucide-icon
-              [name]="PackageSearch"
-              class="text-ferre-600"
-              size="32"
-            ></lucide-icon>
-          </div>
-          <div>
-            <div class="flex items-center gap-2 mb-1">
-              <h1 class="text-3xl font-extrabold text-white tracking-tight" style="font-family: Sora, sans-serif;">Inventario</h1>
-              <span class="bg-ferre-50 text-ferre-600 text-[10px] px-2 py-0.5 rounded-full border border-[#2a2f38] font-bold tracking-widest">ML-READY</span>
+        <div class="flex items-center justify-between gap-6">
+          <!-- Left: Branding & Info -->
+          <div class="flex items-center gap-4 shrink-0">
+            <div class="w-14 h-14 rounded-2xl bg-ferre-50 flex items-center justify-center border border-[#2a2f38] shrink-0">
+              <lucide-icon
+                [name]="PackageSearch"
+                class="text-ferre-600"
+                size="32"
+              ></lucide-icon>
             </div>
-            <p class="text-steel-400 font-medium text-sm">
-              <span class="text-white font-bold opacity-80">{{ products.length }}</span> productos activos en total.
-            </p>
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <h1 class="text-3xl font-extrabold text-white tracking-tight" style="font-family: Sora, sans-serif;">Inventario</h1>
+                <span class="bg-ferre-50 text-ferre-600 text-[10px] px-2 py-0.5 rounded-full border border-[#2a2f38] font-bold tracking-widest">ML-READY</span>
+              </div>
+              <p class="text-steel-400 font-medium text-sm">
+                <span class="text-white font-bold opacity-80">{{ products.length }}</span> productos activos en total.
+              </p>
+            </div>
           </div>
-        </div>
 
-        <!-- Center: Search -->
-        <div class="relative z-10 w-full max-w-md mx-auto">
-          <div class="relative group/search">
-            <lucide-icon [name]="Search" size="18" class="absolute left-4 top-1/2 -translate-y-1/2 text-steel-400 group-focus-within/search:text-ferre-600 transition-colors"></lucide-icon>
-            <input
-              type="text"
-              [(ngModel)]="searchQuery"
-              (input)="onSearch()"
-              placeholder="Buscar producto o SKU..."
-              class="w-full pl-12 pr-4 py-3.5 bg-[#13161c] border border-[#2a2f38] text-white rounded-2xl focus:ring-2 focus:ring-ferre-600/30 focus:border-ferre-600 transition-all placeholder-steel-400 outline-none shadow-inner"
-            />
+          <!-- Center: Search -->
+          <div class="relative z-10 w-full max-w-md">
+            <div class="relative group/search">
+              <lucide-icon [name]="Search" size="18" class="absolute left-4 top-1/2 -translate-y-1/2 text-steel-400 group-focus-within/search:text-ferre-600 transition-colors"></lucide-icon>
+              <input
+                type="text"
+                [(ngModel)]="searchQuery"
+                (input)="onSearch()"
+                placeholder="Buscar producto o SKU..."
+                class="w-full pl-12 pr-4 py-3.5 bg-[#13161c] border border-[#2a2f38] text-white rounded-2xl focus:ring-2 focus:ring-ferre-600/30 focus:border-ferre-600 transition-all placeholder-steel-400 outline-none shadow-inner"
+              />
+            </div>
           </div>
-        </div>
 
-        <!-- Right: Actions -->
-        <div class="relative z-10 flex items-center justify-end gap-3">
-          <button
-            id="btn-vender-meli"
-            (click)="onVenderMeLi()"
-            class="bg-amber-500 hover:bg-amber-400 text-black px-6 py-3.5 rounded-2xl font-extrabold shadow-lg shadow-amber-500/30 transition-all flex items-center justify-center gap-2 transform hover:scale-105 active:scale-95 group/meli"
-            title="Sincronizar con Mercado Libre"
-          >
-            <lucide-icon [name]="Globe" size="20" class="group-hover/meli:rotate-12 transition-transform"></lucide-icon>
-            <span>Vender en MeLi</span>
-          </button>
-          <button
-            routerLink="new"
-            class="bg-gradient-to-r from-ferre-600 to-ferre-500 hover:from-ferre-500 hover:to-ferre-400 text-white px-6 py-3.5 rounded-2xl font-extrabold shadow-lg shadow-ferre-600/20 transition-all flex items-center justify-center gap-2 transform hover:scale-105 active:scale-95 group/plus"
-          >
-            <lucide-icon [name]="Plus" size="20" class="group-hover/plus:rotate-90 transition-transform"></lucide-icon>
-            <span>Nuevo</span>
-          </button>
+          <!-- Right: Actions -->
+          <div class="relative z-10 flex items-center gap-3 shrink-0">
+            <button
+              id="btn-vender-meli"
+              (click)="onVenderMeLi()"
+              class="bg-amber-500 hover:bg-amber-400 text-black px-6 py-3.5 rounded-2xl font-extrabold shadow-lg shadow-amber-500/30 transition-all flex items-center justify-center gap-2 transform hover:scale-105 active:scale-95 group/meli"
+              title="Sincronizar con Mercado Libre"
+            >
+              <lucide-icon [name]="Globe" size="20" class="group-hover/meli:rotate-12 transition-transform"></lucide-icon>
+              <span>Vender en MeLi</span>
+            </button>
+            <button
+              routerLink="new"
+              class="bg-gradient-to-r from-ferre-600 to-ferre-500 hover:from-ferre-500 hover:to-ferre-400 text-white px-6 py-3.5 rounded-2xl font-extrabold shadow-lg shadow-ferre-600/20 transition-all flex items-center justify-center gap-2 transform hover:scale-105 active:scale-95 group/plus"
+            >
+              <lucide-icon [name]="Plus" size="20" class="group-hover/plus:rotate-90 transition-transform"></lucide-icon>
+              <span>Nuevo</span>
+            </button>
+          </div>
         </div>
       </div>
 
