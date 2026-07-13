@@ -226,14 +226,13 @@ else:
         "CORS_ALLOWED_ORIGINS",
         default=[
             "http://localhost:4200",
-            "https://ferreteria-4n8s.vercel.app",
         ]
     )
 
     CSRF_TRUSTED_ORIGINS = env.list(
         "CSRF_TRUSTED_ORIGINS",
         default=[
-            "https://ferreteria-4n8s.vercel.app",
+            "http://localhost:4200",
         ]
     )
 
