@@ -3,7 +3,7 @@
 // IMPORTANTE: Cambiar esta URL por la de tu servidor antes de deployar
 export const environment = {
   production: true,
-  apiUrl: "http://localhost:8000/api",
+  apiUrl: "https://ferreteria-backend-iq4m.onrender.com/api",
 };
 
 // Agregar número de WhatsApp y mensaje por defecto para el botón flotante
