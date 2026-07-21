@@ -226,7 +226,8 @@ class MercadoPagoPreferenceView(APIView):
                 
                 for item in cart_items:
                     try:
-                        product = Product.objects.get(id=item['id'])
+                        product_id = item.get('id') or item.get('product_id')
+                        product = Product.objects.get(id=product_id)
                         price = float(product.price_retail)
                         total += price * int(item['quantity'])
                         
