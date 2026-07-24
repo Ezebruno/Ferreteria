@@ -1,6 +1,4 @@
-// Componente de login: formulario de autenticación de usuarios
-// Valida credenciales y almacena token JWT
-import { Component, inject } from "@angular/core";
+import { Component, inject, NgZone } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ApiService } from "src/app/core/services/api.service";
 import { Router } from "@angular/router";
@@ -119,6 +117,7 @@ export class LoginComponent {
   api = inject(ApiService);
   router = inject(Router);
   fb = inject(FormBuilder);
+  private zone = inject(NgZone);
 
   LogIn = LogIn;
   Lock = Lock;
@@ -135,29 +134,47 @@ export class LoginComponent {
   error = "";
 
   onSubmit() {
+    console.log(">>> 1. Click en Entrar detectado");
+    console.log(">>> Formulario válido:", this.loginForm.valid);
+    console.log(">>> Valor email:", this.loginForm.value.email);
+    console.log(">>> Valor password length:", this.loginForm.value.password?.length);
+
     if (this.loginForm.invalid) {
+      console.warn(">>> Formulario INVÁLIDO. Cancelando envío.");
       this.error = "Por favor ingresa un correo válido y tu contraseña.";
       return;
     }
+
     this.loading = true;
     this.error = "";
-
     const { email, password } = this.loginForm.value;
+
+    console.log(">>> 2. Enviando POST a /auth/login/ ...");
 
     this.api.post<any>("/auth/login/", { email, password }).subscribe({
       next: (response) => {
-        // Guardar tokens reales devueltos por SimpleJWT
+        console.log(">>> 3. Respuesta 200 OK recibida:", response);
+
         localStorage.setItem("access_token", response.access);
         localStorage.setItem("refresh_token", response.refresh);
         localStorage.setItem("user_email", email);
-        localStorage.setItem("user_role", "admin"); // TODO: Obtener del perfil si es necesario
+        localStorage.setItem("user_role", "admin");
+
+        console.log(">>> 4. Tokens guardados. Navegando a /admin/products ...");
 
         this.loading = false;
-        this.router.navigate(["/admin/products"]);
+
+        this.zone.run(() => {
+          this.router.navigate(["/admin/products"]).then((success) => {
+            console.log(">>> 5. Navegación resultado:", success);
+          }).catch((err) => {
+            console.error(">>> ERROR en navegación:", err);
+          });
+        });
       },
       error: (err) => {
         this.loading = false;
-        console.error("Login error", err);
+        console.error(">>> ERROR en login:", err.status, err.message);
         if (err.status === 401) {
           this.error = "Correo o contraseña incorrectos.";
         } else {
