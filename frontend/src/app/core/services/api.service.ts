@@ -11,7 +11,9 @@ import { environment } from "src/environments/environment";
 })
 export class ApiService {
   private http = inject(HttpClient);
-  private baseUrl = environment.production ? environment.apiUrl : `http://${window.location.hostname}:8000/api`;
+  private baseUrl = (environment.production || !window.location.hostname.includes('localhost'))
+    ? environment.apiUrl
+    : `http://${window.location.hostname}:8000/api`;
 
   private getHeaders(): HttpHeaders {
     let headers = new HttpHeaders();
