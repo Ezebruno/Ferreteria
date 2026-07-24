@@ -18,6 +18,7 @@ import {
 } from "lucide-angular";
 import { RouterModule, Router } from "@angular/router";
 import { FormsModule } from "@angular/forms";
+import { MarketplacePublishComponent } from "../marketplace-publish/marketplace-publish.component";
 
 @Component({
   selector: "app-product-list",
@@ -30,6 +31,7 @@ import { FormsModule } from "@angular/forms";
     LucideAngularModule,
     RouterModule,
     FormsModule,
+    MarketplacePublishComponent,
   ],
   styles: [`
     @media (max-width: 768px) {
@@ -220,6 +222,7 @@ import { FormsModule } from "@angular/forms";
               <th pSortableColumn="stock_current" class="px-6 py-4 font-extrabold text-steel-400 text-xs uppercase tracking-widest border-b border-[#2a2f38]" style="font-family: Sora, sans-serif;">
                 Stock <p-sortIcon field="stock_current"></p-sortIcon>
               </th>
+              <th class="px-6 py-4 font-extrabold text-steel-400 text-xs uppercase tracking-widest border-b border-[#2a2f38] text-center" style="font-family: Sora, sans-serif;">Publicar</th>
               <th class="px-6 py-4 font-extrabold text-steel-400 text-xs uppercase tracking-widest border-b border-[#2a2f38] text-center" style="font-family: Sora, sans-serif;">Gestión</th>
             </tr>
           </ng-template>
@@ -265,6 +268,11 @@ import { FormsModule } from "@angular/forms";
                 </div>
               </td>
               <td class="px-6 py-4 text-center">
+                <div class="flex justify-center">
+                  <app-marketplace-publish [productId]="product.id"></app-marketplace-publish>
+                </div>
+              </td>
+              <td class="px-6 py-4 text-center">
                 <div class="flex items-center justify-center gap-3">
                   <button
                     [routerLink]="['/admin/products', product.id, 'edit']"
@@ -286,7 +294,7 @@ import { FormsModule } from "@angular/forms";
 
           <ng-template pTemplate="emptymessage">
             <tr>
-              <td colspan="6" class="text-center py-24">
+              <td colspan="7" class="text-center py-24">
                 <div class="flex flex-col items-center justify-center text-steel-400 space-y-4">
                   <div class="w-20 h-20 rounded-full bg-[#13161c] flex items-center justify-center">
                     <lucide-icon [name]="PackageSearch" size="40" class="opacity-20"></lucide-icon>

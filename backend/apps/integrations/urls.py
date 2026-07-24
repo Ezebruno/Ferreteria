@@ -6,6 +6,10 @@ from apps.integrations.views import (
     MeLiCategoryPredictorView, MeLiAuthUrlView, MeLiAuthorizeView, MeLiConfigView,
     MeLiCategorySearchView, MercadoPagoAuthUrlView, MercadoPagoAuthorizeView
 )
+from apps.integrations.marketplace_views import (
+    MarketplacePublishView, MarketplaceUpdateView, MarketplaceDeleteView,
+    MarketplaceStatusView, MarketplaceFacebookPreviewView
+)
 
 urlpatterns = [
     path('meli/config/', MeLiConfigView.as_view(), name='meli_config'),
@@ -23,4 +27,11 @@ urlpatterns = [
     path('meli/callback/', MeLiAuthorizeView.as_view(), name='meli_callback'),
     
     path('mercadopago/webhook/', MercadoPagoWebhookView.as_view(), name='mp_webhook'),
+
+    # Marketplace publishing
+    path('marketplace/publish/', MarketplacePublishView.as_view(), name='marketplace_publish'),
+    path('marketplace/update/', MarketplaceUpdateView.as_view(), name='marketplace_update'),
+    path('marketplace/delete/', MarketplaceDeleteView.as_view(), name='marketplace_delete'),
+    path('marketplace/status/<int:product_id>/', MarketplaceStatusView.as_view(), name='marketplace_status'),
+    path('marketplace/facebook-preview/<int:product_id>/', MarketplaceFacebookPreviewView.as_view(), name='marketplace_fb_preview'),
 ]

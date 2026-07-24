@@ -27,3 +27,41 @@ class IntegrationConfig(models.Model):
 
     def __str__(self):
         return f"{self.integration_type} Config"
+
+
+class ProductPublication(models.Model):
+    """Registry of product publications across marketplace channels."""
+
+    CHANNEL_CHOICES = (
+        ('MELI', 'Mercado Libre'),
+        ('FACEBOOK', 'Facebook Marketplace'),
+    )
+
+    STATUS_CHOICES = (
+        ('DRAFT', 'Borrador'),
+        ('PENDING', 'Pendiente'),
+        ('PUBLISHED', 'Publicado'),
+        ('ERROR', 'Error'),
+        ('REMOVED', 'Eliminado'),
+    )
+
+    product = models.ForeignKey(
+        'inventory.Product',
+        on_delete=models.CASCADE,
+        related_name='publications'
+    )
+    channel = models.CharField(max_length=20, choices=CHANNEL_CHOICES)
+    channel_publication_id = models.CharField(max_length=255, null=True, blank=True)
+    publication_url = models.URLField(max_length=500, null=True, blank=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='DRAFT')
+    error_message = models.TextField(null=True, blank=True)
+    last_sync = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ('product', 'channel')
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.product.name} → {self.channel} ({self.status})"
