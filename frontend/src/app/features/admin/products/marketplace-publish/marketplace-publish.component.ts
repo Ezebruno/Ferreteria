@@ -139,10 +139,10 @@ interface FacebookContent {
             class="action-btn action-update" (click)="updatePub(getPub('MELI')!)" [disabled]="loading">
             Actualizar
           </button>
-          <button *ngIf="getPub('MELI')?.publication_url"
+          <a *ngIf="getPub('MELI')?.publication_url"
             class="action-btn action-link" target="_blank" [href]="getPub('MELI')!.publication_url">
             <lucide-icon [name]="ExternalLink" size="11"></lucide-icon> Ver
-          </button>
+          </a>
           <button *ngIf="getPub('MELI')?.status === 'ERROR'"
             class="action-btn action-delete" (click)="deletePub(getPub('MELI')!)">
             <lucide-icon [name]="Trash2" size="11"></lucide-icon>
