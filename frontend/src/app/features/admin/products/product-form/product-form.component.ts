@@ -563,7 +563,7 @@ export class ProductFormComponent implements OnInit {
   }
 
   loadProduct(id: number) {
-    this.api.get<any>(`/inventory/products/${id}/`).subscribe({
+    this.api.get<any>(`/products/${id}/`).subscribe({
       next: (product: any) => {
         this.form.patchValue({
           name: product.name,
