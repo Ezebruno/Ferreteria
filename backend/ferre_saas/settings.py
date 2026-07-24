@@ -246,6 +246,8 @@ CORS_ALLOW_HEADERS = (
     "user-agent",
     "x-csrftoken",
     "x-requested-with",
+    "cache-control",
+    "pragma",
 )
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
