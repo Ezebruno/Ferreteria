@@ -41,14 +41,14 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
               isRefreshing = false;
               localStorage.removeItem('access_token');
               localStorage.removeItem('refresh_token');
-              router.navigate(['/login']);
+              router.navigate(['/auth/login']);
               return throwError(() => error);
             })
           );
         } else {
           isRefreshing = false;
           localStorage.removeItem('access_token');
-          router.navigate(['/login']);
+          router.navigate(['/auth/login']);
         }
       }
       return throwError(() => error);

@@ -103,7 +103,6 @@ import { RouterModule } from "@angular/router";
 
           <button
             type="submit"
-            (click)="onSubmit()"
             [disabled]="loading"
             class="w-full bg-ferre-600 hover:bg-ferre-700 text-white font-bold py-3 rounded-lg shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50 text-sm uppercase tracking-wider"
           >
