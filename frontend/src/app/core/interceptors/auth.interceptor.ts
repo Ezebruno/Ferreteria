@@ -1,4 +1,4 @@
-import { HttpInterceptorFn, HttpErrorResponse, HttpClient } from '@angular/common/http';
+import { HttpInterceptorFn, HttpErrorResponse, HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, throwError, switchMap } from 'rxjs';
@@ -25,7 +25,12 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         const refreshToken = localStorage.getItem('refresh_token');
 
         if (refreshToken) {
-          return http.post<any>(`${environment.apiUrl}/auth/token/refresh/`, { refresh: refreshToken }).pipe(
+          const noCacheHeaders = new HttpHeaders({
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0',
+          });
+          return http.post<any>(`${environment.apiUrl}/auth/token/refresh/`, { refresh: refreshToken }, { headers: noCacheHeaders }).pipe(
             switchMap((res: any) => {
               isRefreshing = false;
               localStorage.setItem('access_token', res.access);
