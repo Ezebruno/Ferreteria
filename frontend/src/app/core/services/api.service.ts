@@ -30,8 +30,6 @@ export class ApiService {
       console.warn("Token expired or invalid. Removing from local storage.");
       localStorage.removeItem("access_token");
       localStorage.removeItem("refresh_token");
-      // Optionally reload the window to reset the application state so it can function as an anonymous user
-      window.location.reload();
     }
     return throwError(() => error);
   }
