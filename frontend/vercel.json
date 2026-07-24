@@ -1,0 +1,5 @@
+{
+  "buildCommand": "npx ng build --configuration production",
+  "outputDirectory": "dist/ferreteria/browser",
+  "framework": null
+}
