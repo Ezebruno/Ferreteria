@@ -1,13 +1,13 @@
-import { HttpInterceptorFn, HttpErrorResponse } from '@angular/common/http';
+import { HttpInterceptorFn, HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, throwError, switchMap } from 'rxjs';
-import { ApiService } from '../services/api.service';
+import { environment } from 'src/environments/environment';
 
 let isRefreshing = false;
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const api = inject(ApiService);
+  const http = inject(HttpClient);
   const router = inject(Router);
 
   const token = localStorage.getItem('access_token');
@@ -25,7 +25,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         const refreshToken = localStorage.getItem('refresh_token');
 
         if (refreshToken) {
-          return api.post<any>('/token/refresh/', { refresh: refreshToken }).pipe(
+          return http.post<any>(`${environment.apiUrl}/auth/token/refresh/`, { refresh: refreshToken }).pipe(
             switchMap((res: any) => {
               isRefreshing = false;
               localStorage.setItem('access_token', res.access);
