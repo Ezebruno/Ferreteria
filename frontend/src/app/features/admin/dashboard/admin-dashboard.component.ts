@@ -118,22 +118,6 @@ export class AdminDashboardComponent implements OnInit {
         // products count will be fetched separately
         this.metrics[3].value = (summary.new_customers || 0).toString();
 
-        // Show alerts_count as a dedicated small metric if provided
-        if (typeof summary.alerts_count !== "undefined") {
-          // Add or update an Alerts metric at the end
-          const alertMetricIndex = this.metrics.findIndex(
-            (m) => m.label === "Alertas de Stock",
-          );
-          const alertMetric = {
-            label: "Alertas de Stock",
-            value: summary.alerts_count,
-            change: 0,
-            icon: this.Package,
-            color: "bg-gradient-to-br from-yellow-400 to-orange-600",
-          } as DashboardMetric;
-          if (alertMetricIndex === -1) this.metrics.push(alertMetric);
-          else this.metrics[alertMetricIndex] = alertMetric;
-        }
       },
       error: (err) => console.error("Error loading dashboard summary", err),
     });

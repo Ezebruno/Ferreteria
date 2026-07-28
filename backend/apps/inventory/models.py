@@ -106,6 +106,18 @@ class Product(models.Model):
     def __str__(self):
         return f"{self.name} - SKU: {self.sku}"
 
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, related_name='additional_images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='products/')
+    display_order = models.PositiveIntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['display_order']
+
+    def __str__(self):
+        return f"Image for {self.product.name}"
+
 class Kit(models.Model):
     """ Bundle/Combo of products """
     name = models.CharField(max_length=255)

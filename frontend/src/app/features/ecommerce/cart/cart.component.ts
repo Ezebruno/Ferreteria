@@ -144,10 +144,10 @@ export class CartComponent implements OnInit {
   }
 
   getTax(): number {
-    return this.total * 0.16; // IVA 16%
+    return 0;
   }
 
   getFinalTotal(): number {
-    return this.total + this.getTax();
+    return this.total;
   }
 }

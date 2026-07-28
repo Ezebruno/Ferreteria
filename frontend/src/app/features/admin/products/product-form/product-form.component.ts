@@ -1,5 +1,3 @@
-// Formulario para crear/editar productos con información de precios e inventario
-// Valida cambios y sincroniza con el backend
 import { Component, OnInit, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import {
@@ -45,14 +43,13 @@ import { CheckboxModule } from "primeng/checkbox";
   styles: [
     `
       :host ::ng-deep {
-        /* Estilos para PrimeNG Inputs y Dropdowns en fondo oscuro */
         .custom-dark-input-number .p-inputnumber-input,
         .custom-dark-dropdown,
         .custom-dark-dropdown .p-dropdown-label,
         .p-inputtext {
-          background: rgba(2, 6, 23, 0.5) !important; /* bg-slate-800/50 */
-          border: 1px solid rgba(255, 255, 255, 0.1) !important;
-          color: white !important;
+          background: white !important;
+          border: 1px solid #e2e8f0 !important;
+          color: #0f172a !important;
           border-radius: 1rem !important;
           padding: 0.75rem 1rem !important;
           transition: all 0.3s ease !important;
@@ -61,50 +58,69 @@ import { CheckboxModule } from "primeng/checkbox";
         .custom-dark-input-number .p-inputnumber-input:focus,
         .custom-dark-dropdown.p-focus,
         .p-inputtext:focus {
-          border-color: #f59e0b !important; /* red-500 */
-          box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2) !important;
-          background: rgba(2, 6, 23, 0.8) !important;
+          border-color: #ffe600 !important;
+          box-shadow: 0 0 0 2px rgba(255, 230, 0, 0.2) !important;
+          background: white !important;
         }
 
-        /* Dropdown specific */
         .custom-dark-dropdown .p-dropdown-trigger {
-          color: #94a3b8 !important; /* slate-400 */
+          color: #94a3b8 !important;
         }
 
         .p-dropdown-panel {
-          background: #0f172a !important; /* slate-900 */
-          border: 1px solid rgba(255, 255, 255, 0.1) !important;
+          background: white !important;
+          border: 1px solid #e2e8f0 !important;
           border-radius: 1rem !important;
           overflow: hidden;
-          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5) !important;
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
         }
 
         .p-dropdown-items .p-dropdown-item {
-          color: #94a3b8 !important;
+          color: #64748b !important;
           transition: all 0.2s ease;
         }
 
         .p-dropdown-items .p-dropdown-item:hover {
-          background: rgba(220, 38, 38, 0.1) !important;
-          color: #ef4444 !important;
+          background: rgba(255, 230, 0, 0.06) !important;
+          color: #a67000 !important;
         }
 
         .p-dropdown-items .p-dropdown-item.p-highlight {
-          background: rgba(220, 38, 38, 0.2) !important;
-          color: #ef4444 !important;
+          background: rgba(255, 230, 0, 0.1) !important;
+          color: #a67000 !important;
         }
 
-        /* Input Number Buttons */
         .p-inputnumber-button {
-          background: #1e293b !important; /* slate-800 */
-          border-color: rgba(255, 255, 255, 0.1) !important;
-          color: #94a3b8 !important;
+          background: #f8fafc !important;
+          border-color: #e2e8f0 !important;
+          color: #64748b !important;
         }
 
         .p-inputnumber-button:hover {
-          background: #334155 !important;
-          color: white !important;
+          background: #f1f5f9 !important;
+          color: #0f172a !important;
         }
+      }
+
+      :host ::ng-deep .custom-ferre-dropdown .p-dropdown {
+        width: 100% !important;
+        padding: 1rem !important;
+        border-radius: 1rem !important;
+        border: 1px solid #e2e8f0 !important;
+        background: white !important;
+        color: #0f172a !important;
+        transition: all 0.2s !important;
+      }
+      :host ::ng-deep .custom-ferre-dropdown .p-dropdown:focus,
+      :host ::ng-deep .custom-ferre-dropdown .p-dropdown:focus-within {
+        border-color: #ffe600 !important;
+        box-shadow: 0 0 0 3px rgba(255, 230, 0, 0.15) !important;
+      }
+      :host ::ng-deep .custom-ferre-dropdown .p-dropdown .p-dropdown-label {
+        color: #0f172a !important;
+      }
+      :host ::ng-deep .custom-ferre-dropdown .p-dropdown .p-dropdown-trigger {
+        color: #94a3b8 !important;
       }
     `,
   ],
@@ -119,12 +135,12 @@ import { CheckboxModule } from "primeng/checkbox";
         <div class="flex items-center gap-4">
           <a
             routerLink="/admin/products"
-            class="w-12 h-12 rounded-2xl bg-white/5 border border-red-500/30 text-slate-400 hover:text-white hover:bg-white/10 transition-all flex items-center justify-center shadow-lg"
+            class="w-12 h-12 rounded-2xl bg-white border border-slate-200 text-slate-400 hover:text-slate-600 hover:bg-slate-50 transition-all flex items-center justify-center shadow-sm"
           >
             <lucide-icon [name]="ArrowLeft" size="24"></lucide-icon>
           </a>
           <div>
-            <h1 class="text-3xl font-black text-white tracking-tight">
+            <h1 class="text-3xl font-black text-slate-900 tracking-tight">
               {{ isEditMode ? "Editar Producto" : "Nuevo Producto" }}
             </h1>
             <p class="text-slate-500 font-medium">
@@ -136,7 +152,7 @@ import { CheckboxModule } from "primeng/checkbox";
         <button
           (click)="onSubmit()"
           [disabled]="form.invalid || isSaving"
-          class="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-400 hover:to-red-500 disabled:opacity-30 text-black px-10 py-4 rounded-2xl font-black shadow-xl shadow-red-500/20 transition-all flex items-center justify-center gap-2 transform hover:scale-105 active:scale-95"
+          class="bg-ferre-400 hover:bg-ferre-500 disabled:opacity-30 text-slate-800 px-10 py-4 rounded-2xl font-black shadow-sm transition-all flex items-center justify-center gap-2 transform hover:scale-105 active:scale-95"
         >
           <lucide-icon [name]="Save" size="22"></lucide-icon>
           {{ isSaving ? "Sincronizando..." : "Guardar Cambios" }}
@@ -147,68 +163,63 @@ import { CheckboxModule } from "primeng/checkbox";
         <!-- Left Column: Main Details -->
         <div class="lg:col-span-2 space-y-8">
           <div
-            class="bg-slate-800/40 backdrop-blur-xl p-8 rounded-[2rem] border border-red-500/20 shadow-2xl space-y-8"
+            class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-8"
           >
             <h2
-              class="text-xl font-black text-white flex items-center gap-2 uppercase tracking-widest text-sm opacity-80"
+              class="text-xl font-black text-slate-900 flex items-center gap-2 uppercase tracking-widest text-sm"
             >
-              <span class="w-2 h-2 rounded-full bg-red-500"></span>
+              <span class="w-2 h-2 rounded-full bg-ferre-400"></span>
               Información del Producto
             </h2>
 
             <div class="flex flex-col gap-3">
               <label
-                class="font-bold text-slate-400 text-sm ml-1 uppercase tracking-tighter"
+                class="font-bold text-slate-500 text-sm ml-1 uppercase tracking-tighter"
                 >Nombre Comercial *</label
               >
               <input
                 pInputText
                 formControlName="name"
                 placeholder="Ej. Taladro Percutor Industrial 20V"
-                class="w-full p-4 rounded-2xl bg-slate-800/50 border-red-500/30 text-white focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all placeholder-slate-700 outline-none"
+                (input)="capitalizeName($event)"
+                class="w-full p-4 rounded-2xl bg-white border-slate-200 text-slate-900 focus:ring-2 focus:ring-ferre-400/50 focus:border-ferre-400 transition-all placeholder-slate-400 outline-none"
               />
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div class="flex flex-col gap-3">
                 <label
-                  class="font-bold text-slate-400 text-sm ml-1 uppercase tracking-tighter"
+                  class="font-bold text-slate-500 text-sm ml-1 uppercase tracking-tighter"
                   >Referencia SKU / EAN *</label
                 >
                 <input
                   pInputText
                   formControlName="sku"
                   placeholder="TP-20V-X1"
-                  class="w-full p-4 rounded-2xl bg-slate-800/50 border-red-500/30 text-white focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all placeholder-slate-700 font-mono uppercase outline-none"
+                  class="w-full p-4 rounded-2xl bg-white border-slate-200 text-slate-900 focus:ring-2 focus:ring-ferre-400/50 focus:border-ferre-400 transition-all placeholder-slate-400 font-mono uppercase outline-none"
                 />
               </div>
+              <div class="flex flex-col gap-3">
                 <label
-                  class="font-bold text-slate-400 text-sm ml-1 uppercase tracking-tighter"
+                  class="font-bold text-slate-500 text-sm ml-1 uppercase tracking-tighter"
                   >Categoría Asignada *</label
                 >
-                <div class="flex gap-2">
+                <div class="flex gap-2 items-center">
                   <p-dropdown
                     [options]="categories"
                     formControlName="category"
                     optionLabel="name"
                     optionValue="id"
                     placeholder="Selecciona una categoría"
-                    styleClass="flex-1 custom-dark-dropdown"
+                    styleClass="flex-1 custom-ferre-dropdown"
                   ></p-dropdown>
-                  <button
-                    type="button"
-                    (click)="quickAddCategory()"
-                    title="Nueva Categoría"
-                    class="p-4 bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/30 rounded-2xl transition-all"
-                  >
-                    <lucide-icon [name]="Plus" size="20"></lucide-icon>
-                  </button>
                 </div>
+              </div>
             </div>
 
             <div class="flex flex-col gap-3">
               <label
-                class="font-bold text-slate-400 text-sm ml-1 uppercase tracking-tighter"
+                class="font-bold text-slate-500 text-sm ml-1 uppercase tracking-tighter"
                 >Descripción Técnica</label
               >
               <textarea
@@ -216,45 +227,48 @@ import { CheckboxModule } from "primeng/checkbox";
                 formControlName="description"
                 rows="6"
                 placeholder="Describe las características principales del producto..."
-                class="w-full p-4 rounded-2xl bg-slate-800/50 border-red-500/30 text-white focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all placeholder-slate-700 resize-none outline-none"
+                (input)="capitalizeName($event)"
+                class="w-full p-4 rounded-2xl !bg-white !border !border-slate-200 text-slate-900 focus:ring-2 focus:ring-ferre-400/50 focus:border-ferre-400 transition-all placeholder-slate-400 resize-none outline-none"
               ></textarea>
             </div>
           </div>
 
           <!-- Detalles Técnicos Card -->
           <div
-            class="bg-slate-800/40 backdrop-blur-xl p-8 rounded-[2rem] border border-red-500/20 shadow-2xl space-y-8"
+            class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-8"
           >
             <h2
-              class="text-xl font-black text-white flex items-center gap-2 uppercase tracking-widest text-sm opacity-80"
+              class="text-xl font-black text-slate-900 flex items-center gap-2 uppercase tracking-widest text-sm"
             >
-              <span class="w-2 h-2 rounded-full bg-red-500"></span>
+              <span class="w-2 h-2 rounded-full bg-ferre-400"></span>
               Ficha de Especificaciones
             </h2>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div class="flex flex-col gap-3">
                 <label
-                  class="font-bold text-slate-400 text-sm ml-1 uppercase tracking-tighter"
+                  class="font-bold text-slate-500 text-sm ml-1 uppercase tracking-tighter"
                   >Fabricante / Marca</label
                 >
                 <input
                   pInputText
                   formControlName="brand"
                   placeholder="Ej. DeWalt"
-                  class="w-full p-4 rounded-2xl bg-slate-800/50 border-red-500/30 text-white focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all outline-none"
+                  (input)="capitalizeName($event)"
+                  class="w-full p-4 rounded-2xl bg-white border-slate-200 text-slate-900 focus:ring-2 focus:ring-ferre-400/50 focus:border-ferre-400 transition-all outline-none"
                 />
               </div>
               <div class="flex flex-col gap-3">
                 <label
-                  class="font-bold text-slate-400 text-sm ml-1 uppercase tracking-tighter"
+                  class="font-bold text-slate-500 text-sm ml-1 uppercase tracking-tighter"
                   >Composición / Material</label
                 >
                 <input
                   pInputText
                   formControlName="material"
                   placeholder="Ej. Acero Reforzado"
-                  class="w-full p-4 rounded-2xl bg-slate-800/50 border-red-500/30 text-white focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all outline-none"
+                  (input)="capitalizeName($event)"
+                  class="w-full p-4 rounded-2xl bg-white border-slate-200 text-slate-900 focus:ring-2 focus:ring-ferre-400/50 focus:border-ferre-400 transition-all outline-none"
                 />
               </div>
             </div>
@@ -262,26 +276,28 @@ import { CheckboxModule } from "primeng/checkbox";
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div class="flex flex-col gap-3">
                 <label
-                  class="font-bold text-slate-400 text-sm ml-1 uppercase tracking-tighter"
+                  class="font-bold text-slate-500 text-sm ml-1 uppercase tracking-tighter"
                   >Peso Neto</label
                 >
                 <input
                   pInputText
                   formControlName="weight"
                   placeholder="Ej. 2.4 Kg"
-                  class="w-full p-4 rounded-2xl bg-slate-800/50 border-red-500/30 text-white focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all outline-none"
+                  (input)="capitalizeName($event)"
+                  class="w-full p-4 rounded-2xl bg-white border-slate-200 text-slate-900 focus:ring-2 focus:ring-ferre-400/50 focus:border-ferre-400 transition-all outline-none"
                 />
               </div>
               <div class="flex flex-col gap-3">
                 <label
-                  class="font-bold text-slate-400 text-sm ml-1 uppercase tracking-tighter"
+                  class="font-bold text-slate-500 text-sm ml-1 uppercase tracking-tighter"
                   >Dimensiones (An x Al x Pr)</label
                 >
                 <input
                   pInputText
                   formControlName="dimensions"
                   placeholder="Ej. 10x20x15 cm"
-                  class="w-full p-4 rounded-2xl bg-slate-800/50 border-red-500/30 text-white focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all outline-none"
+                  (input)="capitalizeName($event)"
+                  class="w-full p-4 rounded-2xl bg-white border-slate-200 text-slate-900 focus:ring-2 focus:ring-ferre-400/50 focus:border-ferre-400 transition-all outline-none"
                 />
               </div>
             </div>
@@ -292,68 +308,70 @@ import { CheckboxModule } from "primeng/checkbox";
         <div class="space-y-8">
           <!-- Multimedia Section -->
           <div
-            class="bg-slate-800/40 backdrop-blur-xl p-8 rounded-[2rem] border border-red-500/20 shadow-2xl space-y-6"
+            class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6"
           >
             <h2
-              class="text-sm font-black text-white uppercase tracking-widest opacity-80"
+              class="text-sm font-black text-slate-900 uppercase tracking-widest"
             >
               Galería Multimedia
             </h2>
 
             <div
-              class="relative group border-2 border-dashed border-red-500/30 rounded-3xl h-64 flex flex-col items-center justify-center overflow-hidden bg-slate-800/50 transition-all hover:bg-red-500/5 hover:border-red-500/40"
+              class="relative group border-2 border-dashed border-slate-300 rounded-3xl h-64 flex flex-col items-center justify-center overflow-hidden bg-slate-50 transition-all hover:bg-ferre-50 hover:border-ferre-300"
             >
               <input
                 type="file"
                 (change)="onFileSelected($event)"
                 accept="image/*"
+                multiple
                 class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
               />
 
-              <img
-                *ngIf="previewUrl"
-                [src]="previewUrl"
-                class="absolute inset-0 w-full h-full object-cover z-0 group-hover:scale-110 transition-transform duration-700"
-              />
-
               <div
-                *ngIf="!previewUrl"
                 class="flex flex-col items-center text-center p-6 relative z-10"
               >
                 <div
-                  class="w-16 h-16 rounded-2xl bg-slate-800 flex items-center justify-center mb-4 border border-red-500/20 shadow-xl group-hover:bg-red-500 group-hover:text-black transition-all"
+                  class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center mb-4 border border-slate-200 shadow-sm group-hover:bg-ferre-400 group-hover:text-slate-800 transition-all"
                 >
                   <lucide-icon
                     [name]="UploadCloud"
                     size="28"
-                    class="text-red-500 group-hover:text-black"
+                    class="text-slate-400 group-hover:text-slate-800"
                   ></lucide-icon>
                 </div>
-                <p class="font-black text-white text-sm">Cargar Imagen</p>
+                <p class="font-black text-slate-900 text-sm">Cargar Imagenes</p>
                 <p class="text-xs text-slate-500 mt-2">
-                  Formatos aceptados: PNG, JPG (Máx 5MB)
+                  Selecciona varias imagenes a la vez
                 </p>
               </div>
+            </div>
 
-              <div
-                *ngIf="previewUrl"
-                class="absolute inset-0 bg-slate-800/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-10 backdrop-blur-sm"
-              >
-                <div
-                  class="px-6 py-2 bg-white text-black font-black rounded-xl text-xs uppercase"
-                >
-                  Remplazar
-                </div>
+            <div *ngIf="existingImageUrls.length > 0 || previewUrls.length > 0" class="grid grid-cols-3 gap-3 mt-4">
+              <div *ngFor="let url of existingImageUrls; let i = index" class="relative group rounded-xl overflow-hidden border border-slate-200 aspect-square">
+                <img [src]="url" class="w-full h-full object-cover" />
+                <button
+                  type="button"
+                  (click)="removeExistingImage(i)"
+                  class="absolute top-1 right-1 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+                >x</button>
+              </div>
+              <div *ngFor="let url of previewUrls; let i = index" class="relative group rounded-xl overflow-hidden border border-slate-200 aspect-square">
+                <img [src]="url" class="w-full h-full object-cover" />
+                <button
+                  type="button"
+                  (click)="removeNewImage(i)"
+                  class="absolute top-1 right-1 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+                >x</button>
               </div>
             </div>
           </div>
 
           <!-- Precios e Inventario -->
           <div
-            class="bg-slate-800/40 backdrop-blur-xl p-8 rounded-[2rem] border border-red-500/20 shadow-2xl space-y-6"
+            class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6"
           >
             <h2
-              class="text-sm font-black text-white uppercase tracking-widest opacity-80 flex items-center gap-2"
+              class="text-sm font-black text-slate-900 uppercase tracking-widest flex items-center gap-2"
             >
               <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
               Precios e Inventario
@@ -361,21 +379,22 @@ import { CheckboxModule } from "primeng/checkbox";
 
             <div class="flex flex-col gap-3">
               <label
-                class="font-bold text-slate-400 text-sm ml-1 uppercase tracking-tighter"
+                class="font-bold text-slate-500 text-sm ml-1 uppercase tracking-tighter"
                 >Precio de Venta *</label
               >
               <input
                 pInputText
                 formControlName="price_retail"
-                type="number"
+                type="text"
                 placeholder="0"
-                class="w-full p-4 rounded-2xl bg-slate-800/50 border-red-500/30 text-white focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all outline-none"
+                (input)="formatPrice($event)"
+                class="w-full p-4 rounded-2xl bg-white border-slate-200 text-slate-900 focus:ring-2 focus:ring-ferre-400/50 focus:border-ferre-400 transition-all outline-none"
               />
             </div>
 
             <div class="flex flex-col gap-3">
               <label
-                class="font-bold text-slate-400 text-sm ml-1 uppercase tracking-tighter"
+                class="font-bold text-slate-500 text-sm ml-1 uppercase tracking-tighter"
                 >Descuento (%)</label
               >
               <input
@@ -383,14 +402,14 @@ import { CheckboxModule } from "primeng/checkbox";
                 formControlName="discount_percentage"
                 type="number"
                 placeholder="0"
-                class="w-full p-4 rounded-2xl bg-slate-800/50 border-red-500/30 text-white focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all outline-none"
+                class="w-full p-4 rounded-2xl bg-white border-slate-200 text-slate-900 focus:ring-2 focus:ring-ferre-400/50 focus:border-ferre-400 transition-all outline-none"
               />
             </div>
 
             <div class="grid grid-cols-2 gap-4">
               <div class="flex flex-col gap-3">
                 <label
-                  class="font-bold text-slate-400 text-sm ml-1 uppercase tracking-tighter"
+                  class="font-bold text-slate-500 text-sm ml-1 uppercase tracking-tighter"
                   >Stock Actual</label
                 >
                 <input
@@ -398,12 +417,12 @@ import { CheckboxModule } from "primeng/checkbox";
                   formControlName="stock_current"
                   type="number"
                   placeholder="0"
-                  class="w-full p-4 rounded-2xl bg-slate-800/50 border-red-500/30 text-white focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all outline-none"
+                  class="w-full p-4 rounded-2xl bg-white border-slate-200 text-slate-900 focus:ring-2 focus:ring-ferre-400/50 focus:border-ferre-400 transition-all outline-none"
                 />
               </div>
               <div class="flex flex-col gap-3">
                 <label
-                  class="font-bold text-slate-400 text-sm ml-1 uppercase tracking-tighter"
+                  class="font-bold text-slate-500 text-sm ml-1 uppercase tracking-tighter"
                   >Stock Mínimo</label
                 >
                 <input
@@ -411,52 +430,8 @@ import { CheckboxModule } from "primeng/checkbox";
                   formControlName="stock_minimum"
                   type="number"
                   placeholder="5"
-                  class="w-full p-4 rounded-2xl bg-slate-800/50 border-red-500/30 text-white focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all outline-none"
+                  class="w-full p-4 rounded-2xl bg-white border-slate-200 text-slate-900 focus:ring-2 focus:ring-ferre-400/50 focus:border-ferre-400 transition-all outline-none"
                 />
-              </div>
-            </div>
-          </div>
-
-          <!-- Mercado Libre Integration -->
-          <div
-            class="bg-slate-800/40 backdrop-blur-xl p-8 rounded-[2rem] border border-blue-500/20 shadow-2xl space-y-6 overflow-hidden relative group"
-          >
-            <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-              <lucide-icon [name]="Globe" size="64"></lucide-icon>
-            </div>
-
-            <div class="flex items-center justify-between">
-              <h2 class="text-sm font-black text-white uppercase tracking-widest opacity-80 flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-blue-500"></span>
-                Mercado Libre
-              </h2>
-              <p-checkbox 
-                formControlName="meli_sync" 
-                [binary]="true" 
-                label="Sincronizar"
-                labelStyleClass="text-xs font-bold text-slate-400 uppercase tracking-widest ml-2"
-              ></p-checkbox>
-            </div>
-
-            <div *ngIf="form.get('meli_sync')?.value" class="space-y-4 animate-in">
-              <div class="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl">
-                <p class="text-[10px] font-black text-emerald-400 uppercase tracking-widest mb-2">ID de Item (Vincular Manualmente)</p>
-                <div class="flex gap-2">
-                  <input
-                    type="text"
-                    formControlName="meli_item_id"
-                    placeholder="MLA12345678"
-                    class="flex-1 p-3 bg-slate-900 border border-emerald-500/20 rounded-xl text-white font-mono text-sm focus:outline-none focus:border-emerald-500"
-                  />
-                  <a 
-                    *ngIf="form.get('meli_item_id')?.value"
-                    [href]="'https://articulo.mercadolibre.com.ar/' + form.get('meli_item_id')?.value" 
-                    target="_blank"
-                    class="p-3 bg-emerald-500/20 text-emerald-400 rounded-xl hover:bg-emerald-500/30 transition-all"
-                  >
-                    <lucide-icon [name]="ExternalLink" size="18"></lucide-icon>
-                  </a>
-                </div>
               </div>
             </div>
           </div>
@@ -485,8 +460,9 @@ export class ProductFormComponent implements OnInit {
   categories: any[] = [];
   isSaving = false;
 
-  selectedFile: File | null = null;
-  previewUrl: string | ArrayBuffer | null = null;
+  selectedFiles: File[] = [];
+  previewUrls: (string | ArrayBuffer)[] = [];
+  existingImageUrls: string[] = [];
 
   constructor() {
     this.form = this.fb.group({
@@ -504,8 +480,6 @@ export class ProductFormComponent implements OnInit {
       material: [""],
       weight: [""],
       dimensions: [""],
-      meli_sync: [false],
-      meli_item_id: [null],
     });
   }
 
@@ -578,11 +552,11 @@ export class ProductFormComponent implements OnInit {
           material: product.material || "",
           weight: product.weight || "",
           dimensions: product.dimensions || "",
-          meli_sync: product.meli_sync || false,
-          meli_item_id: product.meli_item_id || null,
         });
+        this.form.get('price_retail')?.updateValueAndValidity();
+        setTimeout(() => this.loadFormattedPrice());
         if (product.image) {
-          this.previewUrl = product.image;
+          this.existingImageUrls = [product.image];
         }
       },
       error: (err: any) => {
@@ -594,12 +568,54 @@ export class ProductFormComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      this.selectedFile = file;
+    const files: FileList = event.target.files;
+    if (!files || files.length === 0) return;
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      this.selectedFiles.push(file);
       const reader = new FileReader();
-      reader.onload = (e) => (this.previewUrl = reader.result);
+      reader.onload = () => {
+        this.previewUrls.push(reader.result!);
+      };
       reader.readAsDataURL(file);
+    }
+    event.target.value = '';
+  }
+
+  removeNewImage(index: number) {
+    this.selectedFiles.splice(index, 1);
+    this.previewUrls.splice(index, 1);
+  }
+
+  removeExistingImage(index: number) {
+    this.existingImageUrls.splice(index, 1);
+  }
+
+  capitalizeName(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const val = input.value;
+    if (val) {
+      const capitalized = val.charAt(0).toUpperCase() + val.slice(1);
+      const controlName = input.getAttribute('formcontrolname');
+      if (controlName) {
+        this.form.get(controlName)?.setValue(capitalized, { emitEvent: false });
+      }
+    }
+  }
+
+  formatPrice(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const raw = input.value.replace(/\./g, '').replace(/[^0-9]/g, '');
+    const num = parseInt(raw, 10) || 0;
+    this.form.get('price_retail')?.setValue(num, { emitEvent: false });
+    input.value = num > 0 ? num.toLocaleString('es-AR') : '';
+  }
+
+  loadFormattedPrice() {
+    const val = this.form.get('price_retail')?.value;
+    const input = document.querySelector('input[formcontrolname="price_retail"]') as HTMLInputElement;
+    if (input && val) {
+      input.value = val > 0 ? val.toLocaleString('es-AR') : '';
     }
   }
 
@@ -628,11 +644,11 @@ export class ProductFormComponent implements OnInit {
     formData.append("weight", formValue.weight || "");
     formData.append("dimensions", formValue.dimensions || "");
 
-    formData.append("meli_sync", formValue.meli_sync ? "true" : "false");
-    formData.append("meli_item_id", formValue.meli_item_id || "");
-
-    if (this.selectedFile) {
-      formData.append("image", this.selectedFile);
+    if (this.selectedFiles.length > 0) {
+      formData.append("image", this.selectedFiles[0]);
+      for (let i = 1; i < this.selectedFiles.length; i++) {
+        formData.append("images", this.selectedFiles[i]);
+      }
     }
 
     const endpoint = this.isEditMode && this.productId 
@@ -646,7 +662,7 @@ export class ProductFormComponent implements OnInit {
     request.subscribe({
       next: (response: any) => {
         this.isSaving = false;
-        alert(`✅ Producto ${this.isEditMode ? 'actualizado' : 'creado'} exitosamente`);
+        alert(`Producto ${this.isEditMode ? 'actualizado' : 'creado'} exitosamente`);
         this.router.navigate(["/admin/products"]);
       },
       error: (error: any) => {

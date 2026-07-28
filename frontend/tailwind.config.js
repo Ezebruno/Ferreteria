@@ -1,6 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{html,ts}"],
+  content: [
+    "./src/**/*.{html,ts}"
+  ],
   theme: {
     extend: {
       fontFamily: {
@@ -9,29 +11,29 @@ module.exports = {
       },
       colors: {
         ferre: {
-          50: "#fef7ee",
-          100: "#fdedd3",
-          200: "#f9d7a5",
-          300: "#f5b96d",
-          400: "#f09332",
-          500: "#ec7a0d",
-          600: "#d45e08",
-          700: "#b0440b",
-          800: "#8c3610",
-          900: "#722e10",
+          50: "#fffbe6",
+          100: "#fff8c4",
+          200: "#fff059",
+          300: "#ffe821",
+          400: "#ffe600",
+          500: "#f2c200",
+          600: "#e6a800",
+          700: "#cc8c00",
+          800: "#a67000",
+          900: "#805500",
         },
         steel: {
-          50: "#f6f7f8",
-          100: "#ebedef",
-          200: "#d3d7dc",
-          300: "#adb5be",
-          400: "#818d99",
-          500: "#62707e",
-          600: "#4d5a67",
-          700: "#404a54",
-          800: "#374048",
-          900: "#2a3138",
-          950: "#1a2028",
+          50: "#faf8f5",
+          100: "#f5f2ed",
+          200: "#e2e4e0",
+          300: "#cbd5e1",
+          400: "#94a3b8",
+          500: "#64748b",
+          600: "#475569",
+          700: "#334155",
+          800: "#1e293b",
+          900: "#0f172a",
+          950: "#020617",
         },
         concrete: {
           50: "#f8f8f6",
@@ -46,18 +48,18 @@ module.exports = {
           900: "#4e4a42",
         },
         safety: {
-          yellow: "#FFC107",
-          orange: "#FF9800",
-          red: "#E53935",
+          yellow: "#f59e0b",
+          orange: "#f97316",
+          red: "#ef4444",
         },
       },
       boxShadow: {
-        "ferre": "0 4px 14px 0 rgba(212, 94, 8, 0.15)",
-        "ferre-lg": "0 10px 30px 0 rgba(212, 94, 8, 0.2)",
-        "steel": "0 4px 20px 0 rgba(0, 0, 0, 0.08)",
-        "steel-lg": "0 10px 40px 0 rgba(0, 0, 0, 0.12)",
-        "card": "0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)",
-        "card-hover": "0 10px 25px rgba(0,0,0,0.08), 0 4px 10px rgba(0,0,0,0.04)",
+        "ferre": "0 1px 3px rgba(255, 230, 0, 0.3)",
+        "ferre-lg": "0 4px 12px rgba(255, 230, 0, 0.4)",
+        "steel": "0 1px 2px rgba(0, 0, 0, 0.04)",
+        "steel-lg": "0 4px 12px rgba(0, 0, 0, 0.06)",
+        "card": "0 1px 2px rgba(0,0,0,0.04)",
+        "card-hover": "0 4px 12px rgba(0,0,0,0.06)",
       },
       borderRadius: {
         "xl": "0.75rem",

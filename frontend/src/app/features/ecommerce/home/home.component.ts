@@ -3,6 +3,7 @@
 import { Component, OnInit, OnDestroy, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
+import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { ApiService } from "../../../core/services/api.service";
 import { CartService } from "../../../core/services/cart.service";
 import { NavigationService } from "../../../core/services/navigation.service";
@@ -81,6 +82,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private messageService = inject(MessageService);
   private seo = inject(SeoService);
+  private sanitizer = inject(DomSanitizer);
 
   cartCount = 0;
   selectedCategory = "todos";
@@ -140,8 +142,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   whatsappHref = "";
   whatsappHrefConsult = "";
   storeAddress = "";
+  mapSafeUrl: SafeResourceUrl = "";
   instagramUrl = "";
   facebookUrl = "";
+
+  getMapsLink(): string {
+    return 'https://maps.google.com/?q=' + encodeURIComponent(this.storeAddress);
+  }
 
   currentSlide = 0;
   banners: Banner[] = [];
@@ -185,6 +192,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
         if (data.store_address) {
           this.storeAddress = data.store_address;
+          this.mapSafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+            'https://maps.google.com/maps?q=' + encodeURIComponent(data.store_address) + '&t=&z=15&ie=UTF8&iwloc=&output=embed'
+          );
         }
         if (data.instagram_url) {
           this.instagramUrl = data.instagram_url;
@@ -424,13 +434,19 @@ export class HomeComponent implements OnInit, OnDestroy {
     return product.id;
   }
 
-  getOriginalPrice(product: Product): number {
+  getDiscountedPrice(product: Product): number {
     const price = parseFloat(product.price_retail);
     const discount = product.discount_percentage || 0;
     if (discount > 0) {
-      return Math.round(price / (1 - discount / 100));
+      return Math.round(price * (1 - discount / 100));
     }
-    return Math.round(price * 1.25); // Fallback if no discount set but we want to show a "sale"
+    return price;
+  }
+
+  formatPrice(value: any): string {
+    const num = typeof value === 'number' ? value : parseFloat(value);
+    if (isNaN(num)) return '0';
+    return Math.round(num).toLocaleString('es-AR');
   }
 
   private generateSessionId(): string {

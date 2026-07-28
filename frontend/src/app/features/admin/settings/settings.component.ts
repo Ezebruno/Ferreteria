@@ -228,4 +228,16 @@ export class SettingsComponent implements OnInit {
       this.expandedSections[key] = false;
     });
   }
+
+  capitalizeName(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const val = input.value;
+    if (val) {
+      const capitalized = val.charAt(0).toUpperCase() + val.slice(1);
+      const controlName = input.getAttribute('formcontrolname');
+      if (controlName) {
+        this.settingsForm.get(controlName)?.setValue(capitalized, { emitEvent: false });
+      }
+    }
+  }
 }

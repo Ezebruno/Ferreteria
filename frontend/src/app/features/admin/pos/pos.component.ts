@@ -154,8 +154,8 @@ export class PosComponent implements OnInit {
       ...this.currentReceipt,
       id: "REC-" + Date.now(),
       subtotal: this.calculateSubtotal(),
-      tax: this.calculateTax(),
-      total: this.calculateTotal(),
+      tax: 0,
+      total: this.calculateSubtotal(),
       paymentMethod: this.paymentMethod,
       date: new Date().toLocaleDateString(),
     };
@@ -250,7 +250,6 @@ export class PosComponent implements OnInit {
 
         <div class="totals">
           <p><strong>Subtotal:</strong> $${this.lastReceipt.subtotal.toFixed(2)}</p>
-          <p><strong>IVA (21%):</strong> $${this.lastReceipt.tax.toFixed(2)}</p>
           <p class="total-amount"><strong>TOTAL A PAGAR: $${this.lastReceipt.total.toFixed(2)}</strong></p>
         </div>
       </body>

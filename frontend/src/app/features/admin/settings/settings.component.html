@@ -1,17 +1,17 @@
 <div class="space-y-6">
   <div class="flex justify-between items-center">
     <div>
-      <h2 class="text-2xl font-extrabold text-white uppercase tracking-wider" style="font-family: Sora, sans-serif;">
+      <h2 class="text-2xl font-extrabold text-slate-900 uppercase tracking-wider" style="font-family: Sora, sans-serif;">
         Configuracion del Negocio
       </h2>
-      <p class="text-steel-400 mt-1 text-sm">
+      <p class="text-slate-500 mt-1 text-sm">
         Administra las integraciones y credenciales de tu ferreteria.
       </p>
     </div>
     <button
       [disabled]="isSaving"
       (click)="saveSettings()"
-      class="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-ferre-600 text-white font-bold hover:bg-ferre-700 transition-all shadow-lg disabled:opacity-50 text-sm"
+      class="flex items-center gap-2 px-5 py-2.5 rounded-lg btn-ferre shadow-sm disabled:opacity-50 text-sm"
     >
       <lucide-icon [name]="Save" size="16"></lucide-icon>
       {{ isSaving ? "Guardando..." : "Guardar Cambios" }}
@@ -20,7 +20,7 @@
 
   <div
     *ngIf="successMessage"
-    class="bg-green-500/10 border-2 border-green-500/20 text-green-400 p-4 rounded-lg flex items-center gap-3 text-sm font-medium"
+    class="bg-emerald-50 border border-emerald-200 text-emerald-700 p-4 rounded-lg flex items-center gap-3 text-sm font-medium"
   >
     <lucide-icon [name]="Save" size="18"></lucide-icon>
     <span>{{ successMessage }}</span>
@@ -28,8 +28,7 @@
 
   <div
     *ngIf="errorMessage"
-    class="p-4 rounded-lg flex items-center gap-3 text-sm font-medium"
-    style="background: #ef444410; border: 2px solid #ef444430; border-left: 4px solid #ef4444; color: #ef4444;"
+    class="bg-red-50 border border-red-200 text-red-600 p-4 rounded-lg flex items-center gap-3 text-sm font-medium"
   >
     <span>{{ errorMessage }}</span>
   </div>
@@ -39,34 +38,34 @@
       <button
         type="button"
         (click)="toggleSection('address')"
-        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-white/5 transition-colors cursor-pointer"
+        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-slate-50 transition-colors cursor-pointer"
       >
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-600" style="border: 1.5px solid #bbf7d0;">
+          <div class="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 border border-emerald-200">
             <lucide-icon [name]="MapPin" size="20"></lucide-icon>
           </div>
-          <h3 class="text-lg font-bold text-white">Direccion del Negocio</h3>
+          <h3 class="text-lg font-bold text-slate-900">Direccion del Negocio</h3>
         </div>
         <lucide-icon
           [name]="expandedSections['address'] ? ChevronUp : ChevronDown"
           size="20"
-          class="text-steel-400 flex-shrink-0 transition-transform"
+          class="text-slate-400 flex-shrink-0 transition-transform"
         ></lucide-icon>
       </button>
 
       <div
         *ngIf="expandedSections['address']"
-        class="px-6 pb-6 space-y-4"
-        style="border-top: 2px solid #2a2f38;"
+        class="px-6 pb-6 space-y-4 border-t border-slate-200"
       >
-        <p class="text-xs text-steel-400 mt-4">
+        <p class="text-xs text-slate-500 mt-4">
           Direccion que se mostrara en el mapa del sitio web.
         </p>
         <input
           type="text"
           formControlName="store_address"
           placeholder="Ej: Av. Corrientes 1234, CABA"
-          class="w-full bg-[#13161c] border border-[#2a2f38] rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-ferre-400 transition-all text-sm"
+          class="input-ferre"
+          (input)="capitalizeName($event)"
         />
       </div>
     </div>
@@ -75,27 +74,26 @@
       <button
         type="button"
         (click)="toggleSection('payment')"
-        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-white/5 transition-colors cursor-pointer"
+        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-slate-50 transition-colors cursor-pointer"
       >
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-lg bg-sky-500/20 flex items-center justify-center text-sky-600" style="border: 1.5px solid #bae6fd;">
+          <div class="w-10 h-10 rounded-lg bg-sky-50 flex items-center justify-center text-sky-600 border border-sky-200">
             <lucide-icon [name]="CreditCard" size="20"></lucide-icon>
           </div>
-          <h3 class="text-lg font-bold text-white">Mercado Pago y Banco</h3>
+          <h3 class="text-lg font-bold text-slate-900">Mercado Pago y Banco</h3>
         </div>
         <lucide-icon
           [name]="expandedSections['payment'] ? ChevronUp : ChevronDown"
           size="20"
-          class="text-steel-400 flex-shrink-0"
+          class="text-slate-400 flex-shrink-0"
         ></lucide-icon>
       </button>
 
       <div
         *ngIf="expandedSections['payment']"
-        class="px-6 pb-6 space-y-4"
-        style="border-top: 2px solid #2a2f38;"
+        class="px-6 pb-6 space-y-4 border-t border-slate-200"
       >
-        <div class="rounded-lg p-4 flex gap-3 items-start mt-4" style="background: #3b82f610; border: 1.5px solid #3b82f630;">
+        <div class="rounded-lg p-4 flex gap-3 items-start mt-4 bg-blue-50 border border-blue-200">
           <lucide-icon [name]="MessageCircle" size="20" class="text-blue-500 mt-0.5 flex-shrink-0"></lucide-icon>
           <div>
             <p class="text-sm text-blue-700 font-bold">Cobros con Tarjetas (Automatico)</p>
@@ -106,40 +104,40 @@
             <button
               type="button"
               (click)="vincularMP()"
-              class="inline-flex items-center gap-2 text-sm font-bold bg-blue-500 hover:bg-blue-400 text-white px-4 py-2 rounded-lg transition-all shadow-lg"
+              class="inline-flex items-center gap-2 text-sm font-bold bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-all shadow-sm"
             >
               <lucide-icon [name]="hasMpLinked ? CheckCircle : Link" size="16"></lucide-icon>
               {{ hasMpLinked ? "Actualizar conexion con Mercado Pago" : "Vincular cuenta de Mercado Pago" }}
             </button>
-            <p *ngIf="hasMpLinked" class="text-xs text-green-600 mt-2 flex items-center gap-1 font-medium">
+            <p *ngIf="hasMpLinked" class="text-xs text-emerald-600 mt-2 flex items-center gap-1 font-medium">
               <lucide-icon [name]="CheckCircle" size="14"></lucide-icon> Cuenta de Mercado Pago vinculada.
             </p>
           </div>
         </div>
 
-        <hr class="border-[#2a2f38]" />
+        <hr class="border-slate-200" />
 
         <div>
-          <label class="block text-xs font-bold text-steel-400 uppercase tracking-wider mb-1.5">CVU / CBU (Transferencias)</label>
+          <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">CVU / CBU (Transferencias)</label>
           <input
             type="text"
             formControlName="bank_cvu"
             placeholder="00000031000..."
-            class="w-full bg-[#13161c] border border-[#2a2f38] rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-ferre-400 transition-all font-mono text-sm"
+            class="input-ferre font-mono"
           />
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-steel-400 uppercase tracking-wider mb-1.5">Alias Bancario</label>
+          <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Alias Bancario</label>
           <input
             type="text"
             formControlName="bank_alias"
             placeholder="FERRE.TORNILLO.MP"
-            class="w-full bg-[#13161c] border border-[#2a2f38] rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-ferre-400 transition-all text-sm"
+            class="input-ferre"
           />
         </div>
 
-        <p class="text-xs text-steel-400">
+        <p class="text-xs text-slate-400">
           Estos datos se mostraran al cliente que elija abonar con Transferencia Bancaria.
         </p>
       </div>
@@ -149,36 +147,35 @@
       <button
         type="button"
         (click)="toggleSection('mercadolibre')"
-        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-white/5 transition-colors cursor-pointer"
+        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-slate-50 transition-colors cursor-pointer"
       >
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-lg bg-safety-yellow/20 flex items-center justify-center text-safety-yellow" style="border: 1.5px solid #fef08a;">
+          <div class="w-10 h-10 rounded-lg bg-amber-50 flex items-center justify-center text-amber-600 border border-amber-200">
             <lucide-icon [name]="ShoppingBag" size="20"></lucide-icon>
           </div>
-          <h3 class="text-lg font-bold text-white">Mercado Libre</h3>
+          <h3 class="text-lg font-bold text-slate-900">Mercado Libre</h3>
         </div>
         <lucide-icon
           [name]="expandedSections['mercadolibre'] ? ChevronUp : ChevronDown"
           size="20"
-          class="text-steel-400 flex-shrink-0"
+          class="text-slate-400 flex-shrink-0"
         ></lucide-icon>
       </button>
 
       <div
         *ngIf="expandedSections['mercadolibre']"
-        class="px-6 pb-6 space-y-4"
-        style="border-top: 2px solid #2a2f38;"
+        class="px-6 pb-6 space-y-4 border-t border-slate-200"
       >
-        <div class="rounded-lg p-4 mt-4" style="background: #FFC10710; border: 1.5px solid #FFC10730;">
-          <p class="text-sm text-steel-600">
+        <div class="rounded-lg p-4 mt-4 bg-amber-50 border border-amber-200">
+          <p class="text-sm text-slate-600">
             La integracion con Mercado Libre ya no requiere copiar codigos dificiles. Esta automatizada mediante una conexion segura (OAuth).
           </p>
         </div>
         <a
           routerLink="/admin/meli"
-          class="inline-flex items-center justify-center gap-2 w-full bg-[#2a2f38] hover:bg-[#3a404a] text-white font-bold py-3 rounded-lg border border-[#2a2f38] transition-all text-sm"
+          class="btn-ferre w-full justify-center py-3"
         >
-          <lucide-icon [name]="Zap" size="18" class="text-safety-yellow"></lucide-icon>
+          <lucide-icon [name]="Zap" size="18"></lucide-icon>
           Gestionar mi cuenta de Mercado Libre
         </a>
       </div>
@@ -188,57 +185,56 @@
       <button
         type="button"
         (click)="toggleSection('social')"
-        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-white/5 transition-colors cursor-pointer"
+        class="w-full flex items-center justify-between gap-3 p-6 hover:bg-slate-50 transition-colors cursor-pointer"
       >
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-lg bg-sky-500/20 flex items-center justify-center text-sky-600" style="border: 1.5px solid #bae6fd;">
+          <div class="w-10 h-10 rounded-lg bg-sky-50 flex items-center justify-center text-sky-600 border border-sky-200">
             <lucide-icon [name]="Link" size="20"></lucide-icon>
           </div>
-          <h3 class="text-lg font-bold text-white">Redes Sociales</h3>
+          <h3 class="text-lg font-bold text-slate-900">Redes Sociales</h3>
         </div>
         <lucide-icon
           [name]="expandedSections['social'] ? ChevronUp : ChevronDown"
           size="20"
-          class="text-steel-400 flex-shrink-0"
+          class="text-slate-400 flex-shrink-0"
         ></lucide-icon>
       </button>
 
       <div
         *ngIf="expandedSections['social']"
-        class="px-6 pb-6 space-y-4"
-        style="border-top: 2px solid #2a2f38;"
+        class="px-6 pb-6 space-y-4 border-t border-slate-200"
       >
-        <p class="text-xs text-steel-400 mt-4">
+        <p class="text-xs text-slate-500 mt-4">
           Configura los links a tus redes sociales. Se mostraran en el footer de tu sitio web.
         </p>
         <div>
-          <label class="block text-xs font-bold text-steel-400 uppercase tracking-wider mb-1.5">Numero de WhatsApp</label>
+          <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Numero de WhatsApp</label>
           <input
             type="text"
             formControlName="whatsapp_number"
             placeholder="Ej: 5491123456789"
-            class="w-full bg-[#13161c] border border-[#2a2f38] rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-ferre-400 transition-all font-mono text-sm"
+            class="input-ferre font-mono"
           />
-          <p class="text-xs text-steel-400 mt-2">
+          <p class="text-xs text-slate-400 mt-2">
             Ingrese el numero completo con codigo de pais (Ej: 5491112345678).
           </p>
         </div>
         <div>
-          <label class="block text-xs font-bold text-steel-400 uppercase tracking-wider mb-1.5">URL de Instagram</label>
+          <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">URL de Instagram</label>
           <input
             type="url"
             formControlName="instagram_url"
             placeholder="https://instagram.com/tu-ferreteria"
-            class="w-full bg-[#13161c] border border-[#2a2f38] rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-ferre-400 transition-all text-sm"
+            class="input-ferre"
           />
         </div>
         <div>
-          <label class="block text-xs font-bold text-steel-400 uppercase tracking-wider mb-1.5">URL de Facebook</label>
+          <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">URL de Facebook</label>
           <input
             type="url"
             formControlName="facebook_url"
             placeholder="https://facebook.com/tu-ferreteria"
-            class="w-full bg-[#13161c] border border-[#2a2f38] rounded-lg px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-ferre-400 transition-all text-sm"
+            class="input-ferre"
           />
         </div>
       </div>

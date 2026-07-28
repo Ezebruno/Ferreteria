@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from "@angular/core";
+import { Component, Input, OnInit, OnDestroy, inject, ElementRef, HostListener, ViewChild } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ApiService } from "src/app/core/services/api.service";
 import {
@@ -45,56 +45,56 @@ interface FacebookContent {
   standalone: true,
   imports: [CommonModule, LucideAngularModule],
   styles: [`
-    .dropdown { position: relative; }
+    .dropdown { position: relative; display: inline-block; }
     .dropdown-menu {
-      position: absolute; right: 0; top: 100%; z-index: 50;
-      min-width: 320px; background: #1a1f27; border: 1px solid #2a2f38;
-      border-radius: 0.75rem; box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-      padding: 0.5rem; margin-top: 0.25rem;
+      position: fixed; z-index: 9999;
+      min-width: 320px; background: white; border: 1px solid #e2e8f0;
+      border-radius: 0.75rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      padding: 0.5rem;
     }
     .channel-row {
       display: flex; align-items: center; justify-content: space-between;
       padding: 0.625rem 0.75rem; border-radius: 0.5rem;
       transition: background 0.15s; cursor: default;
     }
-    .channel-row:hover { background: rgba(255,255,255,0.03); }
+    .channel-row:hover { background: rgba(0,0,0,0.02); }
     .status-badge {
       font-size: 0.65rem; font-weight: 700; padding: 0.15rem 0.5rem;
       border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.05em;
     }
-    .status-PUBLISHED { background: rgba(16,185,129,0.15); color: #10b981; }
-    .status-DRAFT { background: rgba(107,114,128,0.15); color: #6b7280; }
-    .status-PENDING { background: rgba(245,158,11,0.15); color: #f59e0b; }
-    .status-ERROR { background: rgba(239,68,68,0.15); color: #ef4444; }
-    .status-REMOVED { background: rgba(107,114,128,0.1); color: #4b5563; }
+    .status-PUBLISHED { background: rgba(16,185,129,0.1); color: #059669; }
+    .status-DRAFT { background: rgba(107,114,128,0.1); color: #6b7280; }
+    .status-PENDING { background: rgba(245,158,11,0.1); color: #d97706; }
+    .status-ERROR { background: rgba(239,68,68,0.1); color: #dc2626; }
+    .status-REMOVED { background: rgba(107,114,128,0.08); color: #6b7280; }
     .action-btn {
       padding: 0.25rem 0.5rem; border-radius: 0.375rem;
       font-size: 0.7rem; font-weight: 700; cursor: pointer;
       transition: all 0.15s; border: none;
     }
-    .action-publish { background: #d45e08; color: white; }
-    .action-publish:hover { background: #b94e06; }
-    .action-update { background: rgba(59,130,246,0.15); color: #3b82f6; }
-    .action-update:hover { background: rgba(59,130,246,0.25); }
-    .action-delete { background: rgba(239,68,68,0.1); color: #ef4444; }
-    .action-delete:hover { background: rgba(239,68,68,0.2); }
-    .action-link { background: rgba(139,92,246,0.1); color: #8b5cf6; text-decoration: none; }
-    .action-link:hover { background: rgba(139,92,246,0.2); }
+    .action-publish { background: #ffe600; color: #1e293b; }
+    .action-publish:hover { background: #f0d800; }
+    .action-update { background: rgba(59,130,246,0.1); color: #3b82f6; }
+    .action-update:hover { background: rgba(59,130,246,0.18); }
+    .action-delete { background: rgba(239,68,68,0.08); color: #dc2626; }
+    .action-delete:hover { background: rgba(239,68,68,0.15); }
+    .action-link { background: rgba(139,92,246,0.08); color: #7c3aed; text-decoration: none; }
+    .action-link:hover { background: rgba(139,92,246,0.15); }
     .fb-preview {
-      background: #13161c; border: 1px solid #2a2f38; border-radius: 0.5rem;
+      background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 0.5rem;
       padding: 0.75rem; margin-top: 0.5rem; font-size: 0.75rem;
     }
     .fb-preview textarea {
-      width: 100%; background: #0f1218; border: 1px solid #2a2f38;
-      color: #e2e4e9; border-radius: 0.375rem; padding: 0.5rem;
+      width: 100%; background: white; border: 1px solid #e2e8f0;
+      color: #0f172a; border-radius: 0.375rem; padding: 0.5rem;
       font-size: 0.75rem; resize: vertical; min-height: 80px;
       font-family: inherit;
     }
     .copy-toast {
       position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 9999;
-      background: #10b981; color: white; padding: 0.75rem 1.25rem;
+      background: #059669; color: white; padding: 0.75rem 1.25rem;
       border-radius: 0.5rem; font-weight: 700; font-size: 0.85rem;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       animation: fadeInUp 0.3s ease;
     }
     @keyframes fadeInUp {
@@ -103,25 +103,26 @@ interface FacebookContent {
     }
   `],
   template: `
-    <div class="dropdown" (click)="$event.stopPropagation()">
+    <div class="dropdown">
       <button
-        (click)="toggleMenu()"
+        #menuBtn
+        (click)="toggleMenu($event)"
         class="action-btn flex items-center gap-1.5"
-        [class]="hasAnyPublication ? 'bg-emerald-500/15 text-emerald-400' : 'bg-ferre-500/15 text-ferre-400'"
+        [class]="hasAnyPublication ? 'bg-emerald-50 text-emerald-700' : 'bg-ferre-50 text-amber-800'"
       >
         <lucide-icon [name]="Store" size="14"></lucide-icon>
         <span>Publicar</span>
         <lucide-icon [name]="ChevronDown" size="12"></lucide-icon>
       </button>
 
-      <div *ngIf="menuOpen" class="dropdown-menu" (click)="$event.stopPropagation()">
-        <div class="text-[10px] font-bold uppercase tracking-widest text-steel-500 px-3 pt-2 pb-1">Canales de venta</div>
+      <div *ngIf="menuOpen" class="dropdown-menu" [style.left]="menuStyle.left" [style.top]="menuStyle.top">
+        <div class="text-[10px] font-bold uppercase tracking-widest text-slate-500 px-3 pt-2 pb-1">Canales de venta</div>
 
         <!-- Mercado Libre -->
         <div class="channel-row">
           <div class="flex items-center gap-2">
-            <lucide-icon [name]="Globe" size="16" class="text-yellow-400"></lucide-icon>
-            <span class="text-white font-bold text-sm">Mercado Libre</span>
+            <lucide-icon [name]="Globe" size="16" class="text-amber-500"></lucide-icon>
+            <span class="text-slate-900 font-bold text-sm">Mercado Libre</span>
           </div>
           <div class="flex items-center gap-1.5">
             <span *ngIf="getPub('MELI')" class="status-badge" [ngClass]="'status-' + getPub('MELI')!.status">
@@ -149,15 +150,15 @@ interface FacebookContent {
           </button>
         </div>
         <div *ngIf="getPub('MELI')?.error_message"
-          class="mx-3 mb-2 text-[10px] text-red-400 bg-red-500/10 rounded px-2 py-1">
+          class="mx-3 mb-2 text-[10px] text-red-600 bg-red-50 rounded px-2 py-1">
           {{ getPub('MELI')!.error_message }}
         </div>
 
         <!-- Facebook Marketplace -->
         <div class="channel-row">
           <div class="flex items-center gap-2">
-            <lucide-icon [name]="Store" size="16" class="text-blue-400"></lucide-icon>
-            <span class="text-white font-bold text-sm">Facebook Marketplace</span>
+            <lucide-icon [name]="Store" size="16" class="text-blue-500"></lucide-icon>
+            <span class="text-slate-900 font-bold text-sm">Facebook Marketplace</span>
           </div>
           <div class="flex items-center gap-1.5">
             <span *ngIf="getPub('FACEBOOK')" class="status-badge" [ngClass]="'status-' + getPub('FACEBOOK')!.status">
@@ -179,7 +180,7 @@ interface FacebookContent {
         <!-- Facebook Preview -->
         <div *ngIf="fbContent" class="fb-preview mx-3 mb-2">
           <div class="flex items-center justify-between mb-2">
-            <span class="text-[10px] font-bold uppercase tracking-widest text-steel-400">Vista previa FB</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Vista previa FB</span>
             <div class="flex gap-1">
               <button class="action-btn action-update" (click)="copyText(fbContent!.title + '\n\n' + fbContent!.description + '\n\nPrecio: $' + fbContent!.price)">
                 <lucide-icon [name]="copiedText ? Check : Copy" size="11"></lucide-icon> {{ copiedText ? 'Copiado' : 'Copiar' }}
@@ -199,6 +200,7 @@ interface FacebookContent {
 })
 export class MarketplacePublishComponent implements OnInit {
   @Input() productId!: number;
+  @ViewChild('menuBtn') menuBtn!: ElementRef;
 
   api = inject(ApiService);
 
@@ -209,6 +211,7 @@ export class MarketplacePublishComponent implements OnInit {
   copiedText = false;
   showToast = false;
   toastMessage = "";
+  menuStyle = { left: '0px', top: '0px' };
 
   Store = Store;
   Globe = Globe;
@@ -229,11 +232,35 @@ export class MarketplacePublishComponent implements OnInit {
     this.loadPublications();
   }
 
-  toggleMenu() {
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    if (!this.menuOpen) return;
+    const target = event.target as HTMLElement;
+    const dropdown = this.menuBtn?.nativeElement?.closest('.dropdown');
+    if (dropdown && !dropdown.contains(target)) {
+      this.menuOpen = false;
+    }
+  }
+
+  toggleMenu(event: MouseEvent) {
+    event.stopPropagation();
     this.menuOpen = !this.menuOpen;
     if (this.menuOpen) {
       this.loadPublications();
+      this.updateMenuPosition(event);
     }
+  }
+
+  updateMenuPosition(event: MouseEvent) {
+    const btn = this.menuBtn?.nativeElement;
+    if (!btn) return;
+    const rect = btn.getBoundingClientRect();
+    let left = rect.left;
+    const top = rect.bottom + 4;
+    if (left + 320 > window.innerWidth) {
+      left = window.innerWidth - 330;
+    }
+    this.menuStyle = { left: left + 'px', top: top + 'px' };
   }
 
   getPub(channel: string): Publication | undefined {

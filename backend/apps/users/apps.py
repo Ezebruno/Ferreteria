@@ -2,12 +2,12 @@ from django.apps import AppConfig
 from django.db.models.signals import post_migrate
 
 def crear_superusuario_automatico(sender, **kwargs):
+    import os
     from django.contrib.auth import get_user_model
     User = get_user_model()
     
-    # Datos para tu inicio de sesión en producción
-    email_admin = "admin@ferre.com"
-    password_admin = "FerreAdmin2026!"
+    email_admin = os.environ.get("DJANGO_ADMIN_EMAIL", "admin@ferre.com")
+    password_admin = os.environ.get("DJANGO_ADMIN_PASSWORD", "admin123")
     
     if not User.objects.filter(email=email_admin).exists():
         print("Creando superusuario personalizado por código...")

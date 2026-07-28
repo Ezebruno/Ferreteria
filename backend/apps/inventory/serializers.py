@@ -1,7 +1,7 @@
 # Serializadores para productos, categorías, kits y movimientos de inventario
 # Convierte modelos de inventario a JSON para endpoints REST
 from rest_framework import serializers
-from apps.inventory.models import Product, Category, Kit, KitItem, StockMovement
+from apps.inventory.models import Product, Category, Kit, KitItem, StockMovement, ProductImage
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,6 +23,23 @@ class ProductSerializer(serializers.ModelSerializer):
             'meli_listing_type', 'brand', 'material', 'weight', 'dimensions',
             'warranty', 'specifications'
         ]
+
+    def create(self, validated_data):
+        images_data = self.context['request'].FILES.getlist('images')
+        product = Product.objects.create(**validated_data)
+        for i, image in enumerate(images_data):
+            ProductImage.objects.create(product=product, image=image, display_order=i)
+        return product
+
+    def update(self, instance, validated_data):
+        images_data = self.context['request'].FILES.getlist('images')
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        if images_data:
+            for i, image in enumerate(images_data):
+                ProductImage.objects.create(product=instance, image=image, display_order=i)
+        return instance
 
 class ProductListSerializer(serializers.ModelSerializer):
     """ Slim version for lists with category """

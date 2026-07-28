@@ -247,14 +247,20 @@ export class ProductDetailComponent implements OnInit {
     this.addToCart();
   }
 
-  getOriginalPrice(product: ProductDetail | null): number {
+  getDiscountedPrice(product: ProductDetail | null): number {
     if (!product) return 0;
     const price = parseFloat(product.price_retail);
     const discount = product.discount_percentage || 0;
     if (discount > 0) {
-      return Math.round(price / (1 - discount / 100));
+      return Math.round(price * (1 - discount / 100));
     }
-    return Math.round(price * 1.25);
+    return price;
+  }
+
+  formatPrice(value: any): string {
+    const num = typeof value === 'number' ? value : parseFloat(value);
+    if (isNaN(num)) return '0';
+    return Math.round(num).toLocaleString('es-AR');
   }
 
   setRating(stars: number): void {

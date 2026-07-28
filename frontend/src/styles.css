@@ -1,21 +1,25 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.min.css";
 @import "primeicons/primeicons.css";
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  --ferre-primary: #d45e08;
-  --ferre-primary-dark: #b0440b;
-  --ferre-secondary: #374048;
-  --ferre-accent: #FFC107;
-  --ferre-bg: #13161c;
-  --ferre-text: #e2e4e9;
-  --ferre-muted: #8b92a0;
-  --ferre-border: #2a2f38;
-  --ferre-surface: #1a1f27;
+  --ferre-primary: #ffe600;
+  --ferre-primary-dark: #e6c200;
+  --ferre-primary-light: #fffbe6;
+  --ferre-accent: #f59e0b;
+  --ferre-bg: #faf8f5;
+  --ferre-text: #1e293b;
+  --ferre-muted: #64748b;
+  --ferre-border: #e2e4e0;
+  --ferre-surface: #ffffff;
+  --ferre-hover: #f5f2ed;
+  --ferre-success: #10b981;
+  --ferre-warning: #f59e0b;
+  --ferre-error: #ef4444;
 }
 
 * {
@@ -35,134 +39,147 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ===== BOTONES ===== */
 .btn-ferre {
-  @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-bold text-white rounded-lg transition-all duration-200;
+  @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 font-bold rounded-lg transition-all duration-200 text-sm;
   background: var(--ferre-primary);
-  box-shadow: 0 2px 8px rgba(212, 94, 8, 0.25);
+  color: #1e293b;
+  box-shadow: 0 1px 2px rgba(255, 230, 0, 0.3);
 }
 .btn-ferre:hover {
   background: var(--ferre-primary-dark);
-  box-shadow: 0 4px 16px rgba(212, 94, 8, 0.35);
-  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(255, 230, 0, 0.4);
 }
 .btn-ferre:active {
   transform: translateY(0);
 }
-
-.btn-steel {
-  @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-bold rounded-lg transition-all duration-200;
-  background: var(--ferre-secondary);
-  color: white;
-}
-.btn-steel:hover {
-  background: #2a3138;
-  transform: translateY(-1px);
+.btn-ferre:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .btn-outline {
-  @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-bold rounded-lg transition-all duration-200;
-  border: 2px solid var(--ferre-border);
-  color: var(--ferre-text);
+  @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 font-bold rounded-lg transition-all duration-200 text-sm;
+  border: 1.5px solid var(--ferre-border);
+  color: var(--ferre-muted);
   background: transparent;
 }
 .btn-outline:hover {
   border-color: var(--ferre-primary);
-  color: var(--ferre-primary);
-  background: rgba(212, 94, 8, 0.06);
+  color: #1e293b;
+  background: rgba(255, 230, 0, 0.06);
+}
+.btn-outline:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-/* ===== TARJETAS ===== */
+.btn-ghost {
+  @apply inline-flex items-center justify-center gap-2 px-4 py-2 font-medium rounded-lg transition-all duration-200 text-sm;
+  color: var(--ferre-muted);
+  background: transparent;
+}
+.btn-ghost:hover {
+  background: var(--ferre-hover);
+  color: var(--ferre-text);
+}
+.btn-ghost:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .card-ferre {
-  @apply rounded-lg transition-all duration-200;
+  @apply rounded-xl transition-all duration-200;
   background: var(--ferre-surface);
   border: 1px solid var(--ferre-border);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
 }
 .card-ferre:hover {
-  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-  border-color: #3a404a;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  border-color: #d1d5db;
 }
 
-/* ===== INPUTS ===== */
 .input-ferre {
-  @apply w-full px-4 py-3 rounded-lg font-medium transition-all duration-200;
-  background: #13161c;
+  @apply w-full px-4 py-2.5 rounded-lg font-medium transition-all duration-200 text-sm;
+  background: var(--ferre-surface);
   border: 1.5px solid var(--ferre-border);
   color: var(--ferre-text);
 }
 .input-ferre:focus {
   outline: none;
   border-color: var(--ferre-primary);
-  box-shadow: 0 0 0 3px rgba(212, 94, 8, 0.15);
+  box-shadow: 0 0 0 3px rgba(255, 230, 0, 0.15);
 }
 .input-ferre::placeholder {
-  color: #5a6070;
+  color: #94a3b8;
+}
+.input-ferre:disabled {
+  background: var(--ferre-hover);
+  cursor: not-allowed;
 }
 
-/* ===== BADGES ===== */
 .badge-ferre {
   @apply inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold uppercase tracking-wide;
-  background: rgba(212, 94, 8, 0.15);
-  color: var(--ferre-primary);
+  background: rgba(255, 230, 0, 0.12);
+  color: #92400e;
 }
 
-/* ===== SECCIONES ===== */
+.badge-success {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold uppercase tracking-wide;
+  background: rgba(16, 185, 129, 0.08);
+  color: var(--ferre-success);
+}
+
+.badge-warning {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold uppercase tracking-wide;
+  background: rgba(245, 158, 11, 0.08);
+  color: var(--ferre-warning);
+}
+
+.badge-error {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold uppercase tracking-wide;
+  background: rgba(239, 68, 68, 0.08);
+  color: var(--ferre-error);
+}
+
 .section-title {
   @apply text-2xl md:text-3xl font-extrabold tracking-tight;
   font-family: "Sora", sans-serif;
   color: var(--ferre-text);
 }
 
-/* ===== TARJETA INDUSTRIAL (stripe naranja superior) ===== */
+.section-subtitle {
+  @apply text-sm;
+  color: var(--ferre-muted);
+}
+
 .card-industrial {
-  background: #1a1f27;
-  border: 1px solid #2a2f38;
-  border-top: 3px solid #d45e08;
-  border-radius: 0.5rem;
+  background: var(--ferre-surface);
+  border: 1px solid var(--ferre-border);
+  border-top: 3px solid var(--ferre-primary);
+  border-radius: 0.75rem;
   transition: all 0.2s;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
 }
 .card-industrial:hover {
-  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-  border-color: #3a404a;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
 }
 
-/* ===== TORNILLOS DECORATIVOS ===== */
-.screw {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #3a404a 0%, #2a2f38 100%);
-  border: 1px solid #4a5060;
-  position: relative;
-}
-.screw::after {
-  content: '';
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%,-50%) rotate(45deg);
-  width: 5px; height: 0.8px;
-  background: #5a6070;
-}
-
-/* ===== LINEA DE ADVERTENCIA (rayas amarillas) ===== */
 .warning-stripe {
   background: repeating-linear-gradient(
     -45deg,
-    #FFC107,
-    #FFC107 8px,
-    #1a1f27 8px,
-    #1a1f27 16px
+    #f59e0b,
+    #f59e0b 8px,
+    #fef3c7 8px,
+    #fef3c7 16px
   );
   height: 4px;
 }
 
-/* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #3a404a; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #4a5060; }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
 
-/* ===== PRIMEGEN OVERRIDES ===== */
 .p-paginator {
   background: transparent !important;
   border: none !important;
@@ -176,9 +193,9 @@ body {
   gap: 0.25rem !important;
 }
 .p-paginator .p-paginator-pages .p-paginator-page {
-  background: #1a1f27 !important;
-  border: 1.5px solid #2a2f38 !important;
-  color: #8b92a0 !important;
+  background: var(--ferre-surface) !important;
+  border: 1.5px solid var(--ferre-border) !important;
+  color: var(--ferre-muted) !important;
   border-radius: 6px !important;
   min-width: 2.5rem !important;
   height: 2.5rem !important;
@@ -188,12 +205,12 @@ body {
 .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
   background: var(--ferre-primary) !important;
   border-color: var(--ferre-primary) !important;
-  color: white !important;
+  color: #1e293b !important;
 }
 .p-paginator .p-paginator-pages .p-paginator-page:not(.p-highlight):hover {
-  background: rgba(212, 94, 8, 0.1) !important;
+  background: rgba(255, 230, 0, 0.08) !important;
   border-color: var(--ferre-primary) !important;
-  color: var(--ferre-primary) !important;
+  color: #1e293b !important;
 }
 .p-paginator .p-paginator-first,
 .p-paginator .p-paginator-last,
@@ -201,23 +218,22 @@ body {
   display: none !important;
 }
 
-/* PrimeNG Dropdown */
 .p-dropdown-panel {
-  background: #1a1f27 !important;
-  border: 1.5px solid #2a2f38 !important;
+  background: var(--ferre-surface) !important;
+  border: 1.5px solid var(--ferre-border) !important;
   border-radius: 8px !important;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4) !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08) !important;
 }
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
-  color: #e2e4e9 !important;
+  color: var(--ferre-text) !important;
   padding: 0.6rem 0.75rem !important;
   border-radius: 6px !important;
 }
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item:hover {
-  background: rgba(212, 94, 8, 0.1) !important;
-  color: var(--ferre-primary) !important;
+  background: rgba(255, 230, 0, 0.08) !important;
+  color: #1e293b !important;
 }
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
   background: var(--ferre-primary) !important;
-  color: white !important;
+  color: #1e293b !important;
 }
