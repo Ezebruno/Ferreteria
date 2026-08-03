@@ -76,19 +76,19 @@ interface Category {
       <!-- Header -->
       <div class="flex items-center justify-between">
         <div>
-          <h1 class="text-2xl font-extrabold text-slate-900 uppercase tracking-wider" style="font-family: Sora, sans-serif;">
+          <h1 class="text-lg md:text-2xl font-extrabold text-slate-900 uppercase tracking-wider" style="font-family: Sora, sans-serif;">
             Categorias
           </h1>
-          <p class="text-slate-500 text-sm mt-1">
+          <p class="text-slate-500 text-xs md:text-sm mt-0.5">
             Gestioná las categorias de tu catalogo de productos.
           </p>
         </div>
         <button
           (click)="openNewForm()"
-          class="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-ferre-400 text-slate-800 font-bold text-sm hover:bg-ferre-500 transition-all shadow-sm"
+          class="flex items-center gap-1.5 px-3 md:px-5 py-1.5 md:py-2.5 rounded-lg bg-ferre-400 text-slate-800 font-bold text-xs md:text-sm hover:bg-ferre-500 transition-all shadow-sm"
         >
-          <lucide-icon [name]="Plus" size="18"></lucide-icon>
-          Nueva Categoria
+          <lucide-icon [name]="Plus" size="14"></lucide-icon>
+          <span class="hidden sm:inline">Nueva Categoria</span>
         </button>
       </div>
 

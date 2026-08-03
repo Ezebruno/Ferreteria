@@ -43,7 +43,7 @@ import {
     .sidebar-link.sidebar-active lucide-icon { color: #a67000; }
   `],
   template: `
-    <div class="flex h-screen bg-slate-50 text-slate-700 font-sans">
+    <div class="flex h-dvh bg-slate-50 text-slate-700 font-sans">
       <div
         *ngIf="sidebarOpen"
         class="fixed inset-0 bg-black/20 z-30 lg:hidden"
@@ -119,7 +119,7 @@ import {
         </div>
       </aside>
 
-      <main class="flex-1 flex flex-col h-screen overflow-hidden">
+      <main class="flex-1 flex flex-col h-dvh overflow-hidden">
         <div class="h-16 flex items-center justify-between px-4 lg:px-6 shrink-0 bg-[#f0ece5] border-b border-slate-200">
           <div class="flex items-center gap-3">
             <button (click)="sidebarOpen = true" class="lg:hidden p-2 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100 transition-all">
@@ -130,18 +130,13 @@ import {
             </h1>
           </div>
           <div class="flex items-center gap-3">
-            <div class="flex items-center gap-2 px-3 py-1.5 text-xs font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 rounded-lg">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-              Sistema en Linea
-            </div>
-            <a routerLink="/" class="flex items-center gap-2 px-4 py-2 rounded-lg text-slate-400 hover:bg-slate-100 hover:text-ferre-400 transition-all text-sm font-bold border border-slate-200">
-              <lucide-icon [name]="Home" size="16"></lucide-icon>
-              <span class="hidden sm:inline">Ver Tienda</span>
+            <a routerLink="/" class="flex items-center gap-2 px-4 py-2 rounded-lg text-slate-500 hover:bg-red-50 hover:text-red-500 transition-all text-sm font-bold border-2 border-slate-300">
+              Salir
             </a>
           </div>
         </div>
         <div class="flex-1 overflow-y-auto w-full bg-slate-50">
-          <div class="max-w-7xl mx-auto p-4 lg:p-6">
+          <div class="max-w-7xl mx-auto p-4 lg:p-6 overflow-x-hidden">
             <router-outlet></router-outlet>
           </div>
         </div>

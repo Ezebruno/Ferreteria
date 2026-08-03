@@ -1,4 +1,4 @@
-﻿<div class="relative overflow-hidden bg-slate-900" style="aspect-ratio: 3/1; max-height: 520px;" *ngIf="banners.length > 0">
+﻿<div class="relative overflow-hidden bg-slate-900 banner-carousel" *ngIf="banners.length > 0">
   <div
     class="relative h-full w-full"
     (touchstart)="onTouchStart($event)"
@@ -94,13 +94,13 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5" *ngIf="displayedProducts.length > 0">
+    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-5" *ngIf="displayedProducts.length > 0">
       <article
         *ngFor="let product of displayedProducts; trackBy: trackByProductId"
-        class="group bg-white rounded-2xl border border-slate-200 overflow-hidden hover:border-ferre-200 hover:shadow-md transition-all duration-200 cursor-pointer"
+        class="group bg-white rounded-2xl border border-slate-200 overflow-hidden hover:border-ferre-200 hover:shadow-md transition-all duration-200 cursor-pointer flex flex-col"
         [routerLink]="['/product', product.id]"
       >
-        <div class="relative bg-slate-50 p-6 h-52 flex items-center justify-center overflow-hidden">
+        <div class="relative bg-slate-50 p-2 md:p-6 h-28 md:h-52 flex items-center justify-center overflow-hidden">
           <img
             *ngIf="product.image"
             [src]="product.image"
@@ -109,36 +109,38 @@
           />
           <lucide-icon *ngIf="!product.image" [name]="Hammer" size="40" class="text-slate-300"></lucide-icon>
         </div>
-        <div class="p-4">
-          <span class="text-[10px] font-bold text-ferre-700 uppercase tracking-wider">{{ product.category_name }}</span>
-          <h3 class="font-semibold text-slate-900 text-sm mt-1 line-clamp-2 mb-2 leading-snug">{{ product.name }}</h3>
-          <div class="flex items-center gap-1.5 mb-3" *ngIf="product.rating">
+        <div class="p-2 md:p-4 flex flex-col flex-1">
+          <span class="text-[8px] md:text-[10px] font-bold text-ferre-700 uppercase tracking-wider">{{ product.category_name }}</span>
+          <h3 class="font-semibold text-slate-900 text-[11px] md:text-sm mt-0.5 md:mt-1 line-clamp-2 mb-1 md:mb-2 leading-snug">{{ product.name }}</h3>
+          <div class="flex items-center gap-1.5 mb-1 md:mb-3" *ngIf="product.rating">
             <div class="flex">
-              <span *ngFor="let s of [1,2,3,4,5]" class="text-xs" [ngClass]="s <= Math.round(product.rating || 0) ? 'text-amber-400' : 'text-slate-200'">&#9733;</span>
+              <span *ngFor="let s of [1,2,3,4,5]" class="text-[10px] md:text-xs" [ngClass]="s <= Math.round(product.rating || 0) ? 'text-amber-400' : 'text-slate-200'">&#9733;</span>
             </div>
-            <span class="text-[10px] text-slate-400">({{ product.reviews_count }})</span>
+            <span class="text-[8px] md:text-[10px] text-slate-400">({{ product.reviews_count }})</span>
           </div>
-          <div class="flex items-center gap-2 mb-3" *ngIf="product.discount_percentage && +product.discount_percentage > 0">
-            <span class="text-lg font-extrabold text-slate-900" style="font-family: Sora, sans-serif;">${{ formatPrice(getDiscountedPrice(product)) }}</span>
-            <span class="bg-emerald-500 text-white text-[10px] font-black px-1.5 py-0.5 rounded shrink-0">{{ product.discount_percentage }}% OFF</span>
-            <span class="text-xs text-slate-400 line-through shrink-0">${{ formatPrice(product.price_retail) }}</span>
+          <div class="min-h-[32px] md:min-h-[40px] mt-auto mb-1 md:mb-3" *ngIf="product.discount_percentage && +product.discount_percentage > 0">
+            <div class="flex items-center gap-1">
+              <span class="text-[10px] md:text-sm text-slate-400 line-through">${{ formatPrice(product.price_retail) }}</span>
+              <span class="bg-emerald-500 text-white text-[7px] md:text-[10px] font-black px-1 py-0.5 rounded shrink-0">{{ product.discount_percentage }}% OFF</span>
+            </div>
+            <span class="text-sm md:text-lg font-extrabold text-slate-900" style="font-family: Sora, sans-serif;">${{ formatPrice(getDiscountedPrice(product)) }}</span>
           </div>
-          <div *ngIf="!product.discount_percentage || +product.discount_percentage <= 0" class="mb-3">
-            <span class="text-lg font-extrabold text-slate-900" style="font-family: Sora, sans-serif;">${{ formatPrice(product.price_retail) }}</span>
+          <div *ngIf="!product.discount_percentage || +product.discount_percentage <= 0" class="min-h-[32px] md:min-h-[40px] mt-auto mb-1 md:mb-3">
+            <span class="text-sm md:text-lg font-extrabold text-slate-900" style="font-family: Sora, sans-serif;">${{ formatPrice(product.price_retail) }}</span>
           </div>
-          <header class="flex items-center justify-between">
+          <header class="flex items-center justify-between mt-1">
             <span
               *ngIf="product.stock_current !== undefined && product.stock_current !== null"
-              class="text-[10px] font-semibold"
+              class="text-[8px] md:text-[10px] font-semibold"
               [ngClass]="product.stock_current > 0 ? 'text-emerald-600' : 'text-red-500'"
             >
               {{ product.stock_current > 0 ? 'En stock' : 'Sin stock' }}
             </span>
             <button
               (click)="addToCart(product); $event.stopPropagation()"
-              class="w-full bg-ferre-400 hover:bg-ferre-500 text-slate-800 font-bold text-sm py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2"
+              class="w-full bg-ferre-400 hover:bg-ferre-500 text-slate-800 font-bold text-[10px] md:text-sm py-1.5 md:py-2.5 rounded-lg transition-colors flex items-center justify-center gap-1 md:gap-2"
             >
-              <lucide-icon [name]="ShoppingCart" size="16"></lucide-icon>
+              <lucide-icon [name]="ShoppingCart" size="14"></lucide-icon>
               Agregar
             </button>
           </header>

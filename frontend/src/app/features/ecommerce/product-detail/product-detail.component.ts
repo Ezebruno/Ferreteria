@@ -15,6 +15,8 @@ import {
   Minus,
   Heart,
   Hammer,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-angular";
 import { FormsModule } from "@angular/forms";
 import { MaterialCalculatorComponent } from "../../../shared/components/material-calculator/material-calculator.component";
@@ -86,6 +88,11 @@ export class ProductDetailComponent implements OnInit {
   Minus = Minus;
   Heart = Heart;
   Hammer = Hammer;
+  ChevronLeft = ChevronLeft;
+  ChevronRight = ChevronRight;
+
+  productImages: string[] = [];
+  currentImageIndex: number = 0;
 
   ngOnInit(): void {
     window.scrollTo({ top: 0, behavior: "instant" });
@@ -136,6 +143,9 @@ export class ProductDetailComponent implements OnInit {
                 : [],
             discount_percentage: response.discount_percentage || 0,
           };
+
+          this.productImages = response.images?.length ? response.images.map((img: string) => img.startsWith('http') ? img : `http://127.0.0.1:8000${img}`) : [imageUrl];
+          this.currentImageIndex = 0;
 
           this.seo.updateMetaTags({
             title: this.product.name,
@@ -209,6 +219,18 @@ export class ProductDetailComponent implements OnInit {
 
   updateQuantity(value: number): void {
     this.quantity = Math.max(1, Math.min(value, this.product?.stock || 1));
+  }
+
+  prevImage(): void {
+    this.currentImageIndex = this.currentImageIndex > 0 ? this.currentImageIndex - 1 : this.productImages.length - 1;
+  }
+
+  nextImage(): void {
+    this.currentImageIndex = this.currentImageIndex < this.productImages.length - 1 ? this.currentImageIndex + 1 : 0;
+  }
+
+  getCurrentImage(): string {
+    return this.productImages[this.currentImageIndex] || this.product?.image || '';
   }
 
   toggleFavorite(): void {

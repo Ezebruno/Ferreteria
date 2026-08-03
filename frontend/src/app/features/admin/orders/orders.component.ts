@@ -52,53 +52,54 @@ interface Sale {
   standalone: true,
   imports: [CommonModule, FormsModule, LucideAngularModule, DropdownModule],
   template: `
-    <div class="space-y-6">
+    <div class="space-y-4">
       <!-- Header -->
       <div class="flex items-center justify-between">
         <div>
-          <h2 class="text-2xl font-extrabold text-slate-900 uppercase tracking-wider flex items-center gap-3" style="font-family: Sora, sans-serif;">
-            <lucide-icon [name]="ClipboardList" size="28" class="text-ferre-700"></lucide-icon>
+          <h2 class="text-lg md:text-2xl font-extrabold text-slate-900 uppercase tracking-wider flex items-center gap-2 md:gap-3" style="font-family: Sora, sans-serif;">
+            <lucide-icon [name]="ClipboardList" size="20" class="text-ferre-700 md:hidden"></lucide-icon>
+            <lucide-icon [name]="ClipboardList" size="28" class="text-ferre-700 hidden md:block"></lucide-icon>
             Ordenes de Venta
           </h2>
-          <p class="text-slate-500 mt-1">Gestiona los pedidos de tu tienda online</p>
+          <p class="text-slate-500 mt-0.5 text-xs md:text-sm">Gestiona los pedidos de tu tienda online</p>
         </div>
-        <button (click)="loadOrders()" class="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-slate-500 hover:bg-slate-50 transition-all font-semibold text-sm">
-          <lucide-icon [name]="RefreshCw" size="16" [class.animate-spin]="loading"></lucide-icon>
-          Actualizar
+        <button (click)="loadOrders()" class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-slate-500 hover:bg-slate-50 transition-all font-semibold text-xs md:text-sm">
+          <lucide-icon [name]="RefreshCw" size="14" [class.animate-spin]="loading"></lucide-icon>
+          <span class="hidden sm:inline">Actualizar</span>
         </button>
       </div>
 
       <!-- Stats Cards -->
-      <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-        <div class="bg-white border border-slate-200 rounded-xl shadow-sm p-4 text-center">
-          <p class="text-2xl font-extrabold text-slate-900" style="font-family: Sora, sans-serif;">{{ orders.length }}</p>
-          <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Total</p>
+      <div class="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-4">
+        <div class="bg-white border border-slate-200 rounded-xl shadow-sm p-2 md:p-4 text-center">
+          <p class="text-lg md:text-2xl font-extrabold text-slate-900" style="font-family: Sora, sans-serif;">{{ orders.length }}</p>
+          <p class="text-[8px] md:text-[10px] text-slate-500 font-bold uppercase tracking-wider">Total</p>
         </div>
-        <div class="p-4 text-center bg-ferre-50 border border-ferre-200 rounded-lg">
-          <p class="text-2xl font-extrabold text-ferre-700" style="font-family: Sora, sans-serif;">{{ getCountByPaymentStatus('PENDING') }}</p>
-          <p class="text-[10px] text-ferre-700 font-bold uppercase tracking-wider">Pendientes</p>
+        <div class="p-2 md:p-4 text-center bg-ferre-50 border border-ferre-200 rounded-lg">
+          <p class="text-lg md:text-2xl font-extrabold text-ferre-700" style="font-family: Sora, sans-serif;">{{ getCountByPaymentStatus('PENDING') }}</p>
+          <p class="text-[8px] md:text-[10px] text-ferre-700 font-bold uppercase tracking-wider">Pendientes</p>
         </div>
-        <div class="p-4 text-center bg-emerald-50 border border-emerald-200 rounded-lg">
-          <p class="text-2xl font-extrabold text-emerald-700" style="font-family: Sora, sans-serif;">{{ getCountByPaymentStatus('PAID') }}</p>
-          <p class="text-[10px] text-emerald-700 font-bold uppercase tracking-wider">Pagados</p>
+        <div class="p-2 md:p-4 text-center bg-emerald-50 border border-emerald-200 rounded-lg">
+          <p class="text-lg md:text-2xl font-extrabold text-emerald-700" style="font-family: Sora, sans-serif;">{{ getCountByPaymentStatus('PAID') }}</p>
+          <p class="text-[8px] md:text-[10px] text-emerald-700 font-bold uppercase tracking-wider">Pagados</p>
         </div>
-        <div class="p-4 text-center bg-blue-50 border border-blue-200 rounded-lg">
-          <p class="text-2xl font-extrabold text-blue-700" style="font-family: Sora, sans-serif;">{{ getCountByShippingStatus('SHIPPED') }}</p>
-          <p class="text-[10px] text-blue-700 font-bold uppercase tracking-wider">Enviados</p>
+        <div class="p-2 md:p-4 text-center bg-blue-50 border border-blue-200 rounded-lg">
+          <p class="text-lg md:text-2xl font-extrabold text-blue-700" style="font-family: Sora, sans-serif;">{{ getCountByShippingStatus('SHIPPED') }}</p>
+          <p class="text-[8px] md:text-[10px] text-blue-700 font-bold uppercase tracking-wider">Enviados</p>
         </div>
-        <div class="p-4 text-center bg-red-50 border border-red-200 rounded-lg">
-          <p class="text-2xl font-extrabold text-red-600" style="font-family: Sora, sans-serif;">{{ getCountByPaymentStatus('REJECTED') }}</p>
-          <p class="text-[10px] text-red-600 font-bold uppercase tracking-wider">Rechazados</p>
+        <div class="p-2 md:p-4 text-center bg-red-50 border border-red-200 rounded-lg">
+          <p class="text-lg md:text-2xl font-extrabold text-red-600" style="font-family: Sora, sans-serif;">{{ getCountByPaymentStatus('REJECTED') }}</p>
+          <p class="text-[8px] md:text-[10px] text-red-600 font-bold uppercase tracking-wider">Rechazados</p>
         </div>
       </div>
 
       <!-- Filters -->
-      <div class="flex gap-4 flex-wrap">
-        <div class="flex items-center bg-white border border-slate-200 rounded-lg px-4 py-2 gap-2 flex-1 max-w-sm">
-          <lucide-icon [name]="Search" size="16" class="text-slate-500"></lucide-icon>
-          <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="filterOrders()" placeholder="Buscar por cliente, ID o direccion..." class="bg-transparent text-slate-900 text-sm focus:outline-none flex-1">
+      <div class="flex gap-2 md:gap-4 flex-wrap">
+        <div class="flex items-center bg-white border border-slate-200 rounded-lg px-3 py-1.5 gap-2 flex-1 max-w-sm">
+          <lucide-icon [name]="Search" size="14" class="text-slate-500"></lucide-icon>
+          <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="filterOrders()" placeholder="Buscar por cliente, ID o direccion..." class="bg-transparent text-slate-900 text-xs md:text-sm focus:outline-none flex-1">
         </div>
-        <select [(ngModel)]="statusFilter" (ngModelChange)="filterOrders()" class="bg-white border border-slate-200 rounded-lg px-4 py-2 text-slate-900 text-sm focus:outline-none focus:border-ferre-400 cursor-pointer">
+        <select [(ngModel)]="statusFilter" (ngModelChange)="filterOrders()" class="bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-slate-900 text-xs md:text-sm focus:outline-none focus:border-ferre-400 cursor-pointer">
           <option value="">Pago: Todos</option>
           <option value="PENDING">Pendiente</option>
           <option value="PAID">Pagado</option>
@@ -117,21 +118,21 @@ interface Sale {
         <table class="w-full text-sm">
           <thead>
             <tr class="bg-slate-50">
-              <th class="text-left px-6 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200">ID</th>
-              <th class="text-left px-6 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200">Cliente</th>
-              <th class="text-left px-6 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200">Total</th>
-              <th class="text-left px-6 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200">Pago</th>
-              <th class="text-left px-6 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200">Envio</th>
-              <th class="text-left px-6 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200">Fecha</th>
-              <th class="text-right px-6 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200">Acciones</th>
+              <th class="text-left px-3 md:px-6 py-2 md:py-3 text-[9px] md:text-[10px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200">ID</th>
+              <th class="text-left px-3 md:px-6 py-2 md:py-3 text-[9px] md:text-[10px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200">Cliente</th>
+              <th class="text-left px-3 md:px-6 py-2 md:py-3 text-[9px] md:text-[10px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200">Total</th>
+              <th class="text-left px-3 md:px-6 py-2 md:py-3 text-[9px] md:text-[10px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200 hide-mobile">Pago</th>
+              <th class="text-left px-3 md:px-6 py-2 md:py-3 text-[9px] md:text-[10px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200">Envio</th>
+              <th class="text-left px-3 md:px-6 py-2 md:py-3 text-[9px] md:text-[10px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200 hide-mobile">Fecha</th>
+              <th class="text-right px-3 md:px-6 py-2 md:py-3 text-[9px] md:text-[10px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200">Acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let order of filteredOrders" class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
-              <td class="px-6 py-4 font-extrabold text-ferre-700">#{{ order.id }}</td>
-              <td class="px-6 py-4 text-slate-900 font-semibold">{{ order.customer?.name || 'Consumidor Final' }}</td>
-              <td class="px-6 py-4 text-slate-900 font-extrabold">\${{ order.total }}</td>
-              <td class="px-6 py-4">
+              <td class="px-3 md:px-6 py-2 md:py-4 font-extrabold text-ferre-700 text-xs">#{{ order.id }}</td>
+              <td class="px-3 md:px-6 py-2 md:py-4 text-slate-900 font-semibold text-xs">{{ order.customer?.name || 'Consumidor Final' }}</td>
+              <td class="px-3 md:px-6 py-2 md:py-4 text-slate-900 font-extrabold text-xs">\${{ order.total }}</td>
+              <td class="px-3 md:px-6 py-2 md:py-4 hide-mobile">
                 <p-dropdown 
                   [(ngModel)]="order.payment_status" 
                   [options]="paymentStatusOptions"
@@ -151,7 +152,7 @@ interface Sale {
                   </ng-template>
                 </p-dropdown>
               </td>
-              <td class="px-6 py-4">
+              <td class="px-3 md:px-6 py-2 md:py-4">
                 <p-dropdown 
                   [(ngModel)]="order.shipping_status" 
                   [options]="shippingStatusOptions"
@@ -171,19 +172,10 @@ interface Sale {
                   </ng-template>
                 </p-dropdown>
               </td>
-              <td class="px-6 py-4 text-slate-400 text-xs">{{ order.created_at | date:'dd/MM/yyyy HH:mm' }}</td>
-              <td class="px-6 py-4 text-right space-x-2">
-                <button (click)="viewOrder(order)" class="px-3 py-1.5 bg-ferre-50 text-amber-800 rounded-lg text-xs font-bold hover:bg-ferre-100 border border-ferre-200 transition-colors" title="Ver detalle">
-                  <lucide-icon [name]="Eye" size="14"></lucide-icon>
-                </button>
-                <button *ngIf="order.payment_status === 'PAID' && order.shipping_status === 'SHIPPED'" 
-                        (click)="sendShippingEmail(order)" 
-                        class="px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg text-xs font-bold hover:bg-blue-100 border border-blue-200 transition-colors" 
-                        title="Enviar notificación de envío">
-                  <lucide-icon [name]="Mail" size="14"></lucide-icon>
-                </button>
-                <button (click)="deleteSale(order)" class="px-3 py-1.5 bg-red-50 text-red-600 rounded-lg text-xs font-bold hover:bg-red-100 border border-red-200 transition-colors" title="Eliminar venta">
-                  <lucide-icon [name]="Trash2" size="14"></lucide-icon>
+              <td class="px-3 md:px-6 py-2 md:py-4 text-slate-400 text-[10px] hide-mobile">{{ order.created_at | date:'dd/MM/yyyy HH:mm' }}</td>
+              <td class="px-3 md:px-6 py-2 md:py-4 text-right">
+                <button (click)="viewOrder(order)" class="px-2 py-1 bg-ferre-50 text-amber-800 rounded-lg text-[10px] md:text-xs font-bold hover:bg-ferre-100 border border-ferre-200 transition-colors" title="Ver detalle">
+                  <lucide-icon [name]="Eye" size="12"></lucide-icon>
                 </button>
               </td>
             </tr>

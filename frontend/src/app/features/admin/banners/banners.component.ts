@@ -59,21 +59,21 @@ interface Banner {
   template: `
     <div class="space-y-6">
       <!-- Header -->
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div class="flex items-center justify-between">
         <div>
-          <h1 class="text-2xl font-extrabold text-slate-900 uppercase tracking-wider" style="font-family: Sora, sans-serif;">
+          <h1 class="text-lg md:text-2xl font-extrabold text-slate-900 uppercase tracking-wider" style="font-family: Sora, sans-serif;">
             Banners
           </h1>
-          <p class="text-slate-500 text-sm mt-1">
+          <p class="text-slate-500 text-xs md:text-sm mt-0.5">
             Gestioná los banners del carrusel de tu tienda.
           </p>
         </div>
         <button
           (click)="openNewForm()"
-          class="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-ferre-400 text-slate-800 font-bold text-sm hover:bg-ferre-500 transition-all shadow-sm self-start"
+          class="flex items-center gap-1.5 px-3 md:px-5 py-1.5 md:py-2.5 rounded-lg bg-ferre-400 text-slate-800 font-bold text-xs md:text-sm hover:bg-ferre-500 transition-all shadow-sm self-start"
         >
-          <lucide-icon [name]="Plus" size="18"></lucide-icon>
-          Nuevo Banner
+          <lucide-icon [name]="Plus" size="14"></lucide-icon>
+          <span class="hidden sm:inline">Nuevo Banner</span>
         </button>
       </div>
 
@@ -156,16 +156,16 @@ interface Banner {
       </div>
 
       <!-- Banner Cards -->
-      <div *ngIf="!loading" class="grid gap-3">
+      <div *ngIf="!loading" class="grid gap-2 md:gap-3">
         <div
           *ngFor="let banner of banners; let i = index"
           class="bg-white border border-slate-200 rounded-xl shadow-sm hover:shadow-md transition-all group animate-fade-in"
           [style.animation-delay]="i * 40 + 'ms'"
         >
           <!-- View Mode -->
-          <div class="p-4 flex flex-col sm:flex-row sm:items-center gap-4" *ngIf="!banner.editing">
+          <div class="p-3 md:p-4 flex flex-col sm:flex-row sm:items-center gap-3 md:gap-4" *ngIf="!banner.editing">
             <!-- Banner Preview -->
-            <div class="w-full sm:w-40 h-24 rounded-lg overflow-hidden bg-slate-100 flex-shrink-0 border border-slate-200">
+            <div class="w-full sm:w-40 h-20 md:h-24 rounded-lg overflow-hidden bg-slate-100 flex-shrink-0 border border-slate-200">
               <img *ngIf="banner.image" [src]="banner.image" [alt]="banner.title" class="w-full h-full object-cover"/>
               <div *ngIf="!banner.image" class="w-full h-full flex items-center justify-center">
                 <lucide-icon [name]="Image" size="24" class="text-slate-400"></lucide-icon>
@@ -175,41 +175,38 @@ interface Banner {
             <!-- Info -->
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-2">
-                <p class="font-bold text-slate-900 truncate">{{ banner.title }}</p>
-                <span *ngIf="!banner.is_active" class="text-[10px] bg-red-50 text-red-600 px-2 py-0.5 rounded font-bold flex items-center gap-1">
+                <p class="font-bold text-slate-900 text-sm md:text-base truncate">{{ banner.title }}</p>
+                <span *ngIf="!banner.is_active" class="text-[9px] md:text-[10px] bg-red-50 text-red-600 px-1.5 py-0.5 rounded font-bold flex items-center gap-1">
                   <lucide-icon [name]="EyeOff" size="10"></lucide-icon> Inactivo
                 </span>
-                <span *ngIf="banner.is_active" class="text-[10px] bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded font-bold flex items-center gap-1">
+                <span *ngIf="banner.is_active" class="text-[9px] md:text-[10px] bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded font-bold flex items-center gap-1">
                   <lucide-icon [name]="Eye" size="10"></lucide-icon> Activo
                 </span>
               </div>
-              <p class="text-slate-500 text-sm truncate mt-0.5">{{ banner.subtitle || 'Sin subtitulo' }}</p>
+              <p class="text-slate-500 text-xs md:text-sm truncate mt-0.5">{{ banner.subtitle || 'Sin subtitulo' }}</p>
               <div class="flex items-center gap-2 mt-1">
-                <span class="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded font-bold">
+                <span class="text-[9px] md:text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded font-bold">
                   Pos: {{ banner.position }}
-                </span>
-                <span *ngIf="banner.link" class="text-[10px] bg-ferre-50 text-amber-800 px-2 py-0.5 rounded font-bold truncate max-w-[200px]">
-                  {{ banner.link }}
                 </span>
               </div>
             </div>
 
             <!-- Action Buttons -->
-            <div class="flex items-center gap-2 flex-shrink-0">
-              <div class="flex flex-col gap-1 mr-1 opacity-0 group-hover:opacity-100 transition-opacity">
+            <div class="flex items-center gap-1.5 md:gap-2 flex-shrink-0">
+              <div class="flex flex-col gap-0.5 md:gap-1 mr-0.5 md:mr-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
                 <button (click)="moveBanner(banner, -1)" class="p-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-700 transition-all disabled:opacity-30" [disabled]="i === 0">
-                  <lucide-icon [name]="ArrowUp" size="14"></lucide-icon>
+                  <lucide-icon [name]="ArrowUp" size="12"></lucide-icon>
                 </button>
                 <button (click)="moveBanner(banner, 1)" class="p-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-700 transition-all disabled:opacity-30" [disabled]="i === banners.length - 1">
-                  <lucide-icon [name]="ArrowDown" size="14"></lucide-icon>
+                  <lucide-icon [name]="ArrowDown" size="12"></lucide-icon>
                 </button>
               </div>
               <button
                 (click)="startEdit(banner)"
                 title="Editar banner"
-                class="p-2.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-700 transition-all opacity-0 group-hover:opacity-100"
+                class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-700 transition-all opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
               >
-                <lucide-icon [name]="Pencil" size="16"></lucide-icon>
+                <lucide-icon [name]="Pencil" size="14"></lucide-icon>
               </button>
               <button
                 (click)="confirmDelete(banner)"
