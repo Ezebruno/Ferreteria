@@ -15,6 +15,8 @@ import {
   Mail,
   ArrowLeft,
   Wrench,
+  Eye,
+  EyeOff,
 } from "lucide-angular";
 import { RouterModule } from "@angular/router";
 
@@ -44,7 +46,7 @@ import { RouterModule } from "@angular/router";
               class="text-2xl font-extrabold tracking-wider uppercase text-slate-900"
               style="font-family: Sora, sans-serif;"
             >
-              Ferre<span class="text-amber-700">Nexo</span>
+              Ferre<span class="text-ferre-400">Nexo</span>
             </span>
             <p class="text-slate-400 mt-1 text-sm font-medium uppercase tracking-[0.15em]">Panel de Administracion</p>
           </div>
@@ -56,27 +58,34 @@ import { RouterModule } from "@angular/router";
                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                   <lucide-icon [name]="Mail" size="18" class="text-slate-400"></lucide-icon>
                 </div>
-                  <input
-                    formControlName="email"
-                    type="email"
-                    class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 text-slate-900 rounded-xl focus:ring-2 focus:ring-ferre-400/20 focus:border-ferre-400 transition-all placeholder:text-slate-400 text-sm"
-                    placeholder="correo@ejemplo.com"
-                  />
-                </div>
-              </div>
-
-              <div class="space-y-1.5">
-                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Contrasena</label>
-                <div class="relative">
-                  <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <lucide-icon [name]="Lock" size="18" class="text-slate-400"></lucide-icon>
-                  </div>
-                  <input
-                    formControlName="password"
-                    type="password"
-                    class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 text-slate-900 rounded-xl focus:ring-2 focus:ring-ferre-400/20 focus:border-ferre-400 transition-all placeholder:text-slate-400 text-sm"
-                  placeholder=""
+                <input
+                  formControlName="email"
+                  type="email"
+                  class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 text-slate-900 rounded-xl focus:ring-2 focus:ring-ferre-400/20 focus:border-ferre-400 transition-all placeholder:text-slate-400 text-sm"
+                  placeholder="correo@ejemplo.com"
                 />
+              </div>
+            </div>
+
+            <div class="space-y-1.5">
+              <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Contraseña</label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <lucide-icon [name]="Lock" size="18" class="text-slate-400"></lucide-icon>
+                </div>
+                <input
+                  formControlName="password"
+                  [type]="showPassword ? 'text' : 'password'"
+                  class="w-full pl-11 pr-11 py-3 bg-white border border-slate-200 text-slate-900 rounded-xl focus:ring-2 focus:ring-ferre-400/20 focus:border-ferre-400 transition-all placeholder:text-slate-400 text-sm"
+                  placeholder="••••••••"
+                />
+                <button
+                  type="button"
+                  (click)="showPassword = !showPassword"
+                  class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-slate-600 transition-colors"
+                >
+                  <lucide-icon [name]="showPassword ? EyeOff : Eye" size="18"></lucide-icon>
+                </button>
               </div>
             </div>
 
@@ -113,6 +122,9 @@ export class LoginComponent {
   Mail = Mail;
   ArrowLeft = ArrowLeft;
   LockIcon = Wrench;
+  Eye = Eye;
+  EyeOff = EyeOff;
+  showPassword = false;
 
   loginForm: FormGroup = this.fb.group({
     email: ["", [Validators.required, Validators.email]],
@@ -124,7 +136,7 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.invalid) {
-      this.error = "Por favor ingresa un correo valido y tu contrasena.";
+      this.error = "Por favor ingresa un correo valido y tu contraseña.";
       return;
     }
 
@@ -148,7 +160,7 @@ export class LoginComponent {
       error: (err) => {
         this.loading = false;
         if (err.status === 401) {
-          this.error = "Correo o contrasena incorrectos.";
+          this.error = "Correo o contraseña incorrectos.";
         } else {
           this.error = "Error al conectar con el servidor. Intenta de nuevo.";
         }

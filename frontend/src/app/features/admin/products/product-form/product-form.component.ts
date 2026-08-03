@@ -58,8 +58,8 @@ import { CheckboxModule } from "primeng/checkbox";
         .custom-dark-input-number .p-inputnumber-input:focus,
         .custom-dark-dropdown.p-focus,
         .p-inputtext:focus {
-          border-color: #ffe600 !important;
-          box-shadow: 0 0 0 2px rgba(255, 230, 0, 0.2) !important;
+          border-color: #c2b69a !important;
+          box-shadow: 0 0 0 2px rgba(166,154,120, 0.2) !important;
           background: white !important;
         }
 
@@ -81,12 +81,12 @@ import { CheckboxModule } from "primeng/checkbox";
         }
 
         .p-dropdown-items .p-dropdown-item:hover {
-          background: rgba(255, 230, 0, 0.06) !important;
+          background: rgba(166,154,120, 0.06) !important;
           color: #a67000 !important;
         }
 
         .p-dropdown-items .p-dropdown-item.p-highlight {
-          background: rgba(255, 230, 0, 0.1) !important;
+          background: rgba(166,154,120, 0.1) !important;
           color: #a67000 !important;
         }
 
@@ -113,8 +113,8 @@ import { CheckboxModule } from "primeng/checkbox";
       }
       :host ::ng-deep .custom-ferre-dropdown .p-dropdown:focus,
       :host ::ng-deep .custom-ferre-dropdown .p-dropdown:focus-within {
-        border-color: #ffe600 !important;
-        box-shadow: 0 0 0 3px rgba(255, 230, 0, 0.15) !important;
+        border-color: #c2b69a !important;
+        box-shadow: 0 0 0 3px rgba(166,154,120, 0.15) !important;
       }
       :host ::ng-deep .custom-ferre-dropdown .p-dropdown .p-dropdown-label {
         color: #0f172a !important;

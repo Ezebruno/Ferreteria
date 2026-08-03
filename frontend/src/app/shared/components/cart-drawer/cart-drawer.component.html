@@ -18,7 +18,7 @@
       <div class="flex items-center justify-between px-6 py-6 border-b border-slate-200">
         <div class="flex items-center gap-3">
           <div class="p-2 bg-ferre-50 rounded-lg">
-            <lucide-icon [name]="ShoppingCart" size="20" class="text-amber-700"></lucide-icon>
+            <lucide-icon [name]="ShoppingCart" size="20" class="text-ferre-700"></lucide-icon>
           </div>
           <h2 class="text-xl font-bold text-slate-900" id="slide-over-title">
             Tu Carrito
@@ -47,7 +47,7 @@
                     <h3 class="font-semibold text-slate-900 line-clamp-1">
                       {{ item.product_name }}
                     </h3>
-                    <p class="ml-4 font-bold text-amber-700">${{ item.price }}</p>
+                    <p class="ml-4 font-bold text-ferre-700">${{ item.price | number:'1.0-0' }}</p>
                   </div>
                 </div>
 
@@ -82,7 +82,7 @@
                 ¡Empieza a agregar herramientas increíbles a tu proyecto!
               </p>
             </div>
-            <button (click)="exploreCatalog()" class="text-amber-700 font-semibold hover:text-amber-800 transition-colors flex items-center gap-2 group">
+            <button (click)="exploreCatalog()" class="text-ferre-700 font-semibold hover:text-ferre-800 transition-colors flex items-center gap-2 group">
               Explorar Catálogo
               <lucide-icon [name]="ArrowRight" size="16" class="group-hover:translate-x-1 transition-transform"></lucide-icon>
             </button>
@@ -135,8 +135,8 @@
                      <p class="text-[10px] font-medium text-slate-400">{{ method.time }}</p>
                    </div>
                 </div>
-                <span class="text-sm font-bold" [ngClass]="cart.selected_shipping_id === method.id ? 'text-amber-700' : 'text-slate-500'">
-                  {{ method.price === 0 ? 'GRATIS' : '$' + method.price }}
+                <span class="text-sm font-bold" [ngClass]="cart.selected_shipping_id === method.id ? 'text-ferre-700' : 'text-slate-500'">
+                  {{ method.price === 0 ? 'GRATIS' : '$' + (method.price | number:'1.0-0') }}
                 </span>
               </div>
             </div>
@@ -164,7 +164,7 @@
 
             <div class="flex justify-between items-center pt-5 border-t border-slate-200 mt-4">
               <span class="text-lg font-bold text-slate-900">Total</span>
-              <span class="tracking-tight text-2xl font-extrabold text-amber-700">${{ getFinalTotal(cart) | number:'1.0-0' }}</span>
+              <span class="tracking-tight text-2xl font-extrabold text-ferre-700">${{ getFinalTotal(cart) | number:'1.0-0' }}</span>
             </div>
 
             <button

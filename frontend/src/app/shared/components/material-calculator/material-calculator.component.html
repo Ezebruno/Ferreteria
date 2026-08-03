@@ -4,7 +4,7 @@
     class="w-full flex items-center justify-between p-4 bg-white border border-slate-200 rounded-2xl group hover:border-ferre-300 transition-all shadow-sm hover:shadow-md"
   >
     <div class="flex items-center gap-4">
-      <div class="bg-ferre-50 p-2.5 rounded-xl text-amber-700 group-hover:scale-110 transition-transform">
+      <div class="bg-ferre-50 p-2.5 rounded-xl text-ferre-700 group-hover:scale-110 transition-transform">
         <lucide-icon [name]="Calculator" size="24"></lucide-icon>
       </div>
       <div class="text-left">
@@ -12,7 +12,7 @@
         <p class="text-slate-500 text-xs font-medium">Usa nuestra calculadora inteligente</p>
       </div>
     </div>
-    <div class="text-amber-700 opacity-0 group-hover:opacity-100 transition-opacity">
+    <div class="text-ferre-700 opacity-0 group-hover:opacity-100 transition-opacity">
       <lucide-icon [name]="Plus" size="20"></lucide-icon>
     </div>
   </button>
@@ -99,9 +99,9 @@
               <div class="space-y-2">
                 <label class="text-slate-500 text-xs font-semibold uppercase tracking-widest">Manos</label>
                 <div class="flex items-center bg-slate-50 border border-slate-200 rounded-xl p-1 h-[50px]">
-                  <button (click)="paintLayers = Math.max(1, paintLayers - 1); calculatePaint()" class="w-10 h-10 text-amber-700 flex items-center justify-center"><lucide-icon [name]="Minus" size="16"></lucide-icon></button>
+                  <button (click)="paintLayers = Math.max(1, paintLayers - 1); calculatePaint()" class="w-10 h-10 text-ferre-700 flex items-center justify-center"><lucide-icon [name]="Minus" size="16"></lucide-icon></button>
                   <span class="flex-1 text-center text-slate-900 font-semibold">{{ paintLayers }}</span>
-                  <button (click)="paintLayers = paintLayers + 1; calculatePaint()" class="w-10 h-10 text-amber-700 flex items-center justify-center"><lucide-icon [name]="Plus" size="16"></lucide-icon></button>
+                  <button (click)="paintLayers = paintLayers + 1; calculatePaint()" class="w-10 h-10 text-ferre-700 flex items-center justify-center"><lucide-icon [name]="Plus" size="16"></lucide-icon></button>
                 </div>
               </div>
               <div class="space-y-2">
@@ -121,7 +121,7 @@
               <p class="text-slate-500 text-xs font-semibold uppercase tracking-widest mb-2">Necesitas aproximadamente</p>
               <div class="flex items-baseline justify-center gap-2">
                 <span class="text-5xl font-bold text-slate-900">{{ paintResult }}</span>
-                <span class="text-xl font-bold text-amber-700">Litros</span>
+                <span class="text-xl font-bold text-ferre-700">Litros</span>
               </div>
             </div>
 
@@ -176,7 +176,7 @@
               <p class="text-slate-500 text-xs font-semibold uppercase tracking-widest mb-2">Debes comprar</p>
               <div class="flex items-baseline justify-center gap-2">
                 <span class="text-5xl font-bold text-slate-900">{{ tilesResult }}</span>
-                <span class="text-xl font-bold text-amber-700">Cajas</span>
+                <span class="text-xl font-bold text-ferre-700">Cajas</span>
               </div>
             </div>
           </div>
@@ -199,9 +199,9 @@
             <div class="space-y-2">
               <label class="text-slate-500 text-xs font-semibold uppercase tracking-widest">Espesor (cm)</label>
               <div class="flex items-center bg-slate-50 border border-slate-200 rounded-xl p-1 h-[50px]">
-                <button (click)="mixThickness = Math.max(1, mixThickness - 1); calculateMix()" class="w-10 h-10 text-amber-700 flex items-center justify-center"><lucide-icon [name]="Minus" size="16"></lucide-icon></button>
+                <button (click)="mixThickness = Math.max(1, mixThickness - 1); calculateMix()" class="w-10 h-10 text-ferre-700 flex items-center justify-center"><lucide-icon [name]="Minus" size="16"></lucide-icon></button>
                 <span class="flex-1 text-center text-slate-900 font-semibold">{{ mixThickness }} cm</span>
-                <button (click)="mixThickness = mixThickness + 1; calculateMix()" class="w-10 h-10 text-amber-700 flex items-center justify-center"><lucide-icon [name]="Plus" size="16"></lucide-icon></button>
+                <button (click)="mixThickness = mixThickness + 1; calculateMix()" class="w-10 h-10 text-ferre-700 flex items-center justify-center"><lucide-icon [name]="Plus" size="16"></lucide-icon></button>
               </div>
             </div>
           </div>
@@ -211,7 +211,7 @@
               <p class="text-slate-500 text-xs font-semibold uppercase tracking-widest mb-2">Bolsas Cemento 50kg</p>
               <div class="flex items-baseline justify-center gap-2">
                 <span class="text-5xl font-bold text-slate-900">{{ mixResult }}</span>
-                <span class="text-xl font-bold text-amber-700">Unidades</span>
+                <span class="text-xl font-bold text-ferre-700">Unidades</span>
               </div>
             </div>
 

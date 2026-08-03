@@ -140,6 +140,8 @@ class StoreSettingsView(APIView):
             
         data = {
             'store_address': config.store_address or '',
+            'bank_titular': config.bank_titular or '',
+            'bank_cuit': config.bank_cuit or '',
             'bank_cvu': config.bank_cvu,
             'bank_alias': config.bank_alias,
             'whatsapp_number': config.whatsapp_number,
@@ -162,6 +164,10 @@ class StoreSettingsView(APIView):
         # Handle text fields
         if 'store_address' in request.data:
             config.store_address = request.data['store_address']
+        if 'bank_titular' in request.data:
+            config.bank_titular = request.data['bank_titular']
+        if 'bank_cuit' in request.data:
+            config.bank_cuit = request.data['bank_cuit']
         if 'bank_cvu' in request.data:
             config.bank_cvu = request.data['bank_cvu']
         if 'bank_alias' in request.data:
@@ -188,6 +194,10 @@ class StoreSettingsView(APIView):
             
         if 'store_address' in request.data:
             config.store_address = request.data['store_address']
+        if 'bank_titular' in request.data:
+            config.bank_titular = request.data['bank_titular']
+        if 'bank_cuit' in request.data:
+            config.bank_cuit = request.data['bank_cuit']
         if 'bank_cvu' in request.data:
             config.bank_cvu = request.data['bank_cvu']
         if 'bank_alias' in request.data:
@@ -213,6 +223,8 @@ class StoreInfoView(APIView):
         return Response({
             'name': config.name,
             'store_address': config.store_address or '',
+            'bank_titular': config.bank_titular or '',
+            'bank_cuit': config.bank_cuit or '',
             'bank_cvu': config.bank_cvu,
             'bank_alias': config.bank_alias,
             'whatsapp_number': config.whatsapp_number,

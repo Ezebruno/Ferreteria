@@ -24,7 +24,7 @@ import { LucideAngularModule, UserPlus, Mail, Lock, User, Phone, ArrowLeft, Chec
             <lucide-icon [name]="UserPlus" size="28" class="text-slate-800"></lucide-icon>
           </div>
           <span class="text-2xl font-extrabold tracking-wider uppercase text-slate-900" style="font-family: Sora, sans-serif;">
-            Ferre<span class="text-amber-700">Nexo</span>
+            Ferre<span class="text-ferre-400">Nexo</span>
           </span>
           <p class="text-slate-500 mt-1 text-sm font-medium">Crea tu cuenta</p>
         </div>
@@ -80,7 +80,7 @@ import { LucideAngularModule, UserPlus, Mail, Lock, User, Phone, ArrowLeft, Chec
           </div>
 
           <div class="space-y-1.5">
-            <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Contrasena</label>
+            <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Contraseña</label>
             <div class="relative">
               <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                 <lucide-icon [name]="Lock" size="18" class="text-slate-400"></lucide-icon>
@@ -105,7 +105,7 @@ import { LucideAngularModule, UserPlus, Mail, Lock, User, Phone, ArrowLeft, Chec
 
         <p *ngIf="!success" class="text-center text-slate-500 text-sm mt-6">
           Ya tenes cuenta?
-          <a routerLink="/auth/login" class="text-amber-700 hover:text-amber-800 font-medium transition-colors">Inicia sesion</a>
+          <a routerLink="/auth/login" class="text-ferre-700 hover:text-amber-800 font-medium transition-colors">Inicia sesion</a>
         </p>
       </div>
     </div>

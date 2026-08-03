@@ -9,6 +9,7 @@ import {
   ArrowRight,
 } from "lucide-angular";
 import { CartService } from "../../../core/services/cart.service";
+import { ApiService } from "../../../core/services/api.service";
 
 @Component({
   selector: "app-checkout-result",
@@ -85,7 +86,7 @@ import { CartService } from "../../../core/services/cart.service";
             <span class="text-slate-500 font-bold uppercase tracking-widest"
               >Referencia de Pedido</span
             >
-            <span class="text-amber-700 font-black"
+            <span class="text-ferre-700 font-black"
               >#{{ preferenceId?.split("-")?.[0] || "N/A" }}</span
             >
           </div>
@@ -110,19 +111,19 @@ import { CartService } from "../../../core/services/cart.service";
           <div class="text-slate-500">
             <div class="flex justify-between">
               <span>Titular</span
-              ><span class="text-slate-900 font-bold">FerreNexo (by VectraWeb)</span>
+              ><span class="text-slate-900 font-bold">{{ storeInfo?.bank_titular || storeInfo?.name || 'Mi Ferreteria' }}</span>
             </div>
             <div class="flex justify-between">
               <span>CUIT</span
-              ><span class="text-slate-900 font-bold">30-71932456-9</span>
+              ><span class="text-slate-900 font-bold">{{ storeInfo?.bank_cuit || '-' }}</span>
             </div>
             <div class="flex justify-between">
               <span>CBU</span
-              ><span class="text-slate-900 font-bold">0140000101234567890123</span>
+              ><span class="text-slate-900 font-bold">{{ storeInfo?.bank_cvu || '-' }}</span>
             </div>
             <div class="flex justify-between">
               <span>Alias</span
-              ><span class="text-amber-700 font-black">FERRE.PRO.PAGOS</span>
+              ><span class="text-ferre-700 font-black">{{ storeInfo?.bank_alias || '-' }}</span>
             </div>
           </div>
           <p class="mt-3 text-slate-500 text-xs">
@@ -150,11 +151,13 @@ import { CartService } from "../../../core/services/cart.service";
 export class CheckoutResultComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private cartService = inject(CartService);
+  private api = inject(ApiService);
 
   status: "success" | "failure" | "pending" = "success";
   preferenceId: string | null = null;
   mpStatus: string | null = null;
   paymentMethod: string | null = null;
+  storeInfo: any = null;
 
   CheckCircle = CheckCircle;
   XCircle = XCircle;
@@ -177,6 +180,11 @@ export class CheckoutResultComponent implements OnInit {
       if (this.status === "success") {
         this.cartService.clearCart().subscribe();
       }
+    });
+
+    this.api.get<any>("/tenant/info/").subscribe({
+      next: (res) => this.storeInfo = res,
+      error: () => {}
     });
   }
 }

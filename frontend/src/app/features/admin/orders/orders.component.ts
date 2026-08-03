@@ -57,7 +57,7 @@ interface Sale {
       <div class="flex items-center justify-between">
         <div>
           <h2 class="text-2xl font-extrabold text-slate-900 uppercase tracking-wider flex items-center gap-3" style="font-family: Sora, sans-serif;">
-            <lucide-icon [name]="ClipboardList" size="28" class="text-amber-700"></lucide-icon>
+            <lucide-icon [name]="ClipboardList" size="28" class="text-ferre-700"></lucide-icon>
             Ordenes de Venta
           </h2>
           <p class="text-slate-500 mt-1">Gestiona los pedidos de tu tienda online</p>
@@ -74,9 +74,9 @@ interface Sale {
           <p class="text-2xl font-extrabold text-slate-900" style="font-family: Sora, sans-serif;">{{ orders.length }}</p>
           <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Total</p>
         </div>
-        <div class="p-4 text-center bg-amber-50 border border-amber-200 rounded-lg">
-          <p class="text-2xl font-extrabold text-amber-700" style="font-family: Sora, sans-serif;">{{ getCountByPaymentStatus('PENDING') }}</p>
-          <p class="text-[10px] text-amber-700 font-bold uppercase tracking-wider">Pendientes</p>
+        <div class="p-4 text-center bg-ferre-50 border border-ferre-200 rounded-lg">
+          <p class="text-2xl font-extrabold text-ferre-700" style="font-family: Sora, sans-serif;">{{ getCountByPaymentStatus('PENDING') }}</p>
+          <p class="text-[10px] text-ferre-700 font-bold uppercase tracking-wider">Pendientes</p>
         </div>
         <div class="p-4 text-center bg-emerald-50 border border-emerald-200 rounded-lg">
           <p class="text-2xl font-extrabold text-emerald-700" style="font-family: Sora, sans-serif;">{{ getCountByPaymentStatus('PAID') }}</p>
@@ -108,7 +108,7 @@ interface Sale {
 
       <!-- Loading -->
       <div *ngIf="loading" class="text-center py-12">
-        <lucide-icon [name]="RefreshCw" size="32" class="text-amber-700 animate-spin mx-auto"></lucide-icon>
+        <lucide-icon [name]="RefreshCw" size="32" class="text-ferre-700 animate-spin mx-auto"></lucide-icon>
         <p class="text-slate-500 mt-4">Cargando ordenes...</p>
       </div>
 
@@ -128,7 +128,7 @@ interface Sale {
           </thead>
           <tbody>
             <tr *ngFor="let order of filteredOrders" class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
-              <td class="px-6 py-4 font-extrabold text-amber-700">#{{ order.id }}</td>
+              <td class="px-6 py-4 font-extrabold text-ferre-700">#{{ order.id }}</td>
               <td class="px-6 py-4 text-slate-900 font-semibold">{{ order.customer?.name || 'Consumidor Final' }}</td>
               <td class="px-6 py-4 text-slate-900 font-extrabold">\${{ order.total }}</td>
               <td class="px-6 py-4">
@@ -206,7 +206,7 @@ interface Sale {
           <div class="p-6 space-y-6">
             <!-- Customer Info -->
             <div class="bg-slate-50 rounded-lg p-4 space-y-2 border border-slate-200">
-              <h4 class="text-[10px] font-bold text-amber-700 uppercase tracking-wider mb-3">Datos del Cliente</h4>
+              <h4 class="text-[10px] font-bold text-ferre-700 uppercase tracking-wider mb-3">Datos del Cliente</h4>
               <div class="flex items-center gap-2 text-sm">
                 <lucide-icon [name]="User" size="14" class="text-slate-500"></lucide-icon>
                 <span class="text-slate-900 font-semibold">{{ selectedOrder.customer?.name || 'Consumidor Final' }}</span>
@@ -215,7 +215,7 @@ interface Sale {
             
             <!-- Shipping -->
             <div class="bg-slate-50 rounded-lg p-4 border border-slate-200">
-              <h4 class="text-[10px] font-bold text-amber-700 uppercase tracking-wider mb-3">Direccion de Envio</h4>
+              <h4 class="text-[10px] font-bold text-ferre-700 uppercase tracking-wider mb-3">Direccion de Envio</h4>
               <p class="text-sm text-slate-600 flex items-start gap-2">
                 <lucide-icon [name]="MapPin" size="14" class="text-slate-500 mt-0.5"></lucide-icon>
                 {{ selectedOrder.shipping_address || 'Sin direccion' }}
@@ -224,7 +224,7 @@ interface Sale {
 
             <!-- Items -->
             <div class="bg-slate-50 rounded-lg p-4 border border-slate-200">
-              <h4 class="text-[10px] font-bold text-amber-700 uppercase tracking-wider mb-3">Productos</h4>
+              <h4 class="text-[10px] font-bold text-ferre-700 uppercase tracking-wider mb-3">Productos</h4>
               <div *ngFor="let item of selectedOrder.items" class="flex justify-between items-center py-2 border-b border-slate-200 last:border-0">
                 <div>
                   <span class="text-slate-900 font-semibold text-sm">Producto #{{ item.product }}</span>
@@ -236,8 +236,8 @@ interface Sale {
 
             <!-- Total -->
             <div class="flex justify-between items-center p-4 bg-ferre-50 border border-ferre-200 rounded-lg">
-              <span class="text-amber-700 font-bold">Total del Pedido</span>
-              <span class="text-2xl font-extrabold text-amber-700" style="font-family: Sora, sans-serif;">\${{ selectedOrder.total }}</span>
+              <span class="text-ferre-700 font-bold">Total del Pedido</span>
+              <span class="text-2xl font-extrabold text-ferre-700" style="font-family: Sora, sans-serif;">\${{ selectedOrder.total }}</span>
             </div>
           </div>
         </div>
@@ -332,7 +332,7 @@ export class OrdersComponent implements OnInit {
 
   getPaymentStatusClasses(status: string): string {
     switch(status) {
-      case 'PENDING': return 'bg-amber-50 text-amber-700 border border-amber-200';
+      case 'PENDING': return 'bg-ferre-50 text-ferre-700 border border-ferre-200';
       case 'PAID': return 'bg-emerald-50 text-emerald-700 border border-emerald-200';
       case 'REJECTED': return 'bg-red-50 text-red-600 border border-red-200';
       default: return 'bg-slate-100 text-slate-500 border border-slate-200';

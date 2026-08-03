@@ -23,7 +23,7 @@ import {
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule, LucideAngularModule],
   template: `
-    <div class="min-h-screen bg-slate-50 pt-20 pb-16">
+    <div class="min-h-screen bg-slate-50 pt-28 pb-16">
       <div class="w-full max-w-5xl mx-auto px-4">
         <div class="mb-6">
           <button
@@ -45,7 +45,7 @@ import {
                   <lucide-icon *ngIf="currentStep > 1" [name]="Check" size="16" strokeWidth="3"></lucide-icon>
                   <span *ngIf="currentStep <= 1">1</span>
                 </div>
-                <span class="mt-2 text-xs font-semibold" [ngClass]="currentStep >= 1 ? 'text-amber-700' : 'text-slate-400'">Contacto</span>
+                <span class="mt-2 text-xs font-semibold" [ngClass]="currentStep >= 1 ? 'text-ferre-700' : 'text-slate-400'">Contacto</span>
               </div>
               <div class="flex-1 h-0.5 mx-4 rounded-full transition-all" [ngClass]="currentStep >= 2 ? 'bg-ferre-400' : 'bg-slate-200'"></div>
               <div class="relative flex flex-col items-center">
@@ -54,7 +54,7 @@ import {
                   <lucide-icon *ngIf="currentStep > 2" [name]="Check" size="16" strokeWidth="3"></lucide-icon>
                   <span *ngIf="currentStep <= 2">2</span>
                 </div>
-                <span class="mt-2 text-xs font-semibold" [ngClass]="currentStep >= 2 ? 'text-amber-700' : 'text-slate-400'">Envio</span>
+                <span class="mt-2 text-xs font-semibold" [ngClass]="currentStep >= 2 ? 'text-ferre-700' : 'text-slate-400'">Envio</span>
               </div>
               <div class="flex-1 h-0.5 mx-4 rounded-full transition-all" [ngClass]="currentStep >= 3 ? 'bg-ferre-400' : 'bg-slate-200'"></div>
               <div class="relative flex flex-col items-center">
@@ -62,14 +62,14 @@ import {
                   [ngClass]="currentStep === 3 ? 'bg-ferre-400 text-slate-800' : 'bg-slate-200 text-slate-500'">
                   3
                 </div>
-                <span class="mt-2 text-xs font-semibold" [ngClass]="currentStep >= 3 ? 'text-amber-700' : 'text-slate-400'">Pago</span>
+                <span class="mt-2 text-xs font-semibold" [ngClass]="currentStep >= 3 ? 'text-ferre-700' : 'text-slate-400'">Pago</span>
               </div>
             </div>
 
             <!-- Step 1: Contacto -->
             <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm" [class.hidden]="currentStep !== 1">
               <h2 class="text-lg font-bold text-slate-900 mb-5 flex items-center gap-2">
-                <lucide-icon [name]="Mail" class="text-amber-700" size="20"></lucide-icon>
+                <lucide-icon [name]="Mail" class="text-ferre-700" size="20"></lucide-icon>
                 Datos de Contacto
               </h2>
               <div class="space-y-4">
@@ -79,10 +79,11 @@ import {
                     class="w-full bg-white border border-slate-200 text-slate-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-ferre-400/20 focus:border-ferre-400 transition-all text-sm" />
                 </div>
                 <div class="bg-ferre-50 border border-ferre-200 rounded-xl p-3 flex gap-3 text-sm text-slate-600">
-                  <lucide-icon [name]="Check" size="18" class="text-amber-700 flex-shrink-0 mt-0.5" strokeWidth="3"></lucide-icon>
+                  <lucide-icon [name]="Check" size="18" class="text-ferre-700 flex-shrink-0 mt-0.5" strokeWidth="3"></lucide-icon>
                   <p>Puedes comprar sin cuenta. Usaremos tu email solo para enviarte el comprobante y seguimiento del pedido.</p>
                 </div>
-                <button (click)="nextStep()" [disabled]="!formData.email"
+                <p *ngIf="formData.email && !isValidEmail(formData.email)" class="text-red-500 text-xs font-medium">Ingresa un email valido (gmail.com, hotmail.com, outlook.com, yahoo.com)</p>
+                <button (click)="nextStep()" [disabled]="!formData.email || !isValidEmail(formData.email)"
                   class="w-full bg-ferre-400 hover:bg-ferre-500 text-slate-800 font-bold py-3 rounded-lg shadow-sm transition-all disabled:opacity-50 text-sm">
                   Continuar
                 </button>
@@ -93,7 +94,7 @@ import {
             <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm" [class.hidden]="currentStep !== 2">
               <div class="flex items-center justify-between mb-5">
                 <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-                  <lucide-icon [name]="User" class="text-amber-700" size="20"></lucide-icon>
+                  <lucide-icon [name]="User" class="text-ferre-700" size="20"></lucide-icon>
                   Datos de Facturacion
                 </h2>
                 <button (click)="setStep(1)" class="text-xs font-semibold text-slate-500 hover:text-ferre-400 transition-colors">Cambiar Email</button>
@@ -101,27 +102,33 @@ import {
 
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide block mb-1.5">Nombre / Razon Social</label>
-                  <input type="text" [(ngModel)]="formData.name" class="w-full bg-white border border-slate-200 text-slate-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-ferre-400/20 focus:border-ferre-400 transition-all text-sm" />
+                  <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide block mb-1.5">Nombre</label>
+                  <input type="text" [(ngModel)]="formData.firstName" placeholder="Nombre" class="w-full bg-white border border-slate-200 text-slate-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-ferre-400/20 focus:border-ferre-400 transition-all text-sm" />
                 </div>
                 <div>
-                  <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide block mb-1.5">DNI o CUIT</label>
-                  <input type="text" [(ngModel)]="formData.cuit" class="w-full bg-white border border-slate-200 text-slate-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-ferre-400/20 focus:border-ferre-400 transition-all text-sm" />
+                  <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide block mb-1.5">Apellido</label>
+                  <input type="text" [(ngModel)]="formData.lastName" placeholder="Apellido" class="w-full bg-white border border-slate-200 text-slate-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-ferre-400/20 focus:border-ferre-400 transition-all text-sm" />
                 </div>
-                <div class="md:col-span-2">
-                  <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide block mb-1.5">Telefono de contacto</label>
-                  <input type="tel" [(ngModel)]="formData.phone" class="w-full bg-white border border-slate-200 text-slate-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-ferre-400/20 focus:border-ferre-400 transition-all text-sm" />
+                <div>
+                  <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide block mb-1.5">DNI</label>
+                  <input type="text" [(ngModel)]="formData.cuit" placeholder="Sin puntos ni guiones" maxlength="8" class="w-full bg-white border border-slate-200 text-slate-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-ferre-400/20 focus:border-ferre-400 transition-all text-sm" />
+                  <p *ngIf="formData.cuit && !isValidDNI(formData.cuit)" class="text-red-500 text-xs font-medium mt-1">El DNI debe tener 8 digitos</p>
+                </div>
+                <div>
+                  <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide block mb-1.5">Telefono</label>
+                  <input type="tel" [(ngModel)]="formData.phone" placeholder="Ej: 1122334455" maxlength="10" class="w-full bg-white border border-slate-200 text-slate-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-ferre-400/20 focus:border-ferre-400 transition-all text-sm" />
+                  <p *ngIf="formData.phone && !isValidPhone(formData.phone)" class="text-red-500 text-xs font-medium mt-1">El telefono debe tener entre 8 y 10 digitos</p>
                 </div>
 
                 <div class="md:col-span-2 mt-2 pt-4 border-t border-slate-200">
                   <h3 class="text-sm font-bold text-slate-700 mb-3 flex items-center gap-2">
-                    <lucide-icon [name]="MapPin" size="16" class="text-amber-700"></lucide-icon>
+                    <lucide-icon [name]="MapPin" size="16" class="text-ferre-700"></lucide-icon>
                     Donde enviamos
                   </h3>
                   <div class="grid grid-cols-2 gap-3">
                     <div class="col-span-2 relative">
                       <div class="relative">
-                        <input type="text" [(ngModel)]="formData.address" (input)="onAddressInput()" placeholder="Calle y numero" class="w-full bg-white border border-slate-200 text-slate-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-ferre-400/20 focus:border-ferre-400 transition-all text-sm pr-10" />
+                        <input type="text" [(ngModel)]="formData.address" (input)="onAddressInput()" placeholder="Busca tu calle, luego agrega el numero" class="w-full bg-white border border-slate-200 text-slate-900 rounded-xl px-4 py-3 focus:ring-2 focus:ring-ferre-400/20 focus:border-ferre-400 transition-all text-sm pr-10" />
                         <div *ngIf="isSearchingAddress" class="absolute right-3 top-1/2 -translate-y-1/2">
                           <lucide-icon [name]="Loader2" size="16" class="animate-spin text-ferre-400"></lucide-icon>
                         </div>
@@ -157,7 +164,7 @@ import {
                 <div class="relative flex items-center justify-center mt-0.5 w-5 h-5">
                   <input type="checkbox" [(ngModel)]="formData.saveData" class="absolute inset-0 w-full h-full opacity-0 z-20 cursor-pointer" />
                   <div *ngIf="!formData.saveData" class="w-4.5 h-4.5 border-2 border-slate-300 rounded transition-colors pointer-events-none relative z-10" style="width:18px;height:18px;"></div>
-                  <lucide-icon *ngIf="formData.saveData" [name]="CheckCircle2" size="20" class="text-amber-700 pointer-events-none relative z-10" strokeWidth="2"></lucide-icon>
+                  <lucide-icon *ngIf="formData.saveData" [name]="CheckCircle2" size="20" class="text-ferre-700 pointer-events-none relative z-10" strokeWidth="2"></lucide-icon>
                 </div>
                 <div>
                   <span class="block text-sm font-semibold text-slate-700 mb-0.5">Guardar mis datos y crear una cuenta</span>
@@ -165,7 +172,7 @@ import {
                 </div>
               </label>
 
-              <button (click)="nextStep()" [disabled]="!formData.name || !formData.address || !formData.phone"
+              <button (click)="nextStep()" [disabled]="!formData.firstName || !formData.lastName || !isValidDNI(formData.cuit) || !isValidPhone(formData.phone) || !formData.address"
                 class="w-full bg-ferre-400 hover:bg-ferre-500 text-slate-800 font-bold py-3 rounded-lg shadow-sm transition-all mt-5 disabled:opacity-50 text-sm">
                 Continuar al Pago
               </button>
@@ -175,7 +182,7 @@ import {
             <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm" [class.hidden]="currentStep !== 3">
               <div class="flex items-center justify-between mb-5">
                 <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-                  <lucide-icon [name]="CreditCard" class="text-amber-700" size="20"></lucide-icon>
+                  <lucide-icon [name]="CreditCard" class="text-ferre-700" size="20"></lucide-icon>
                   Medio de Pago
                 </h2>
                 <button (click)="setStep(2)" class="text-xs font-semibold text-slate-500 hover:text-ferre-400 transition-colors">Cambiar Datos</button>
@@ -202,7 +209,7 @@ import {
                     <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-700 text-lg font-bold">B</div>
                     <div class="flex-1">
                       <h3 class="font-semibold text-slate-900 text-sm">Transferencia Bancaria</h3>
-                      <p class="text-xs text-slate-500">5% de Descuento (Pago manual)</p>
+
                     </div>
                     <div class="w-5 h-5 rounded-full border-2 flex items-center justify-center" [ngClass]="paymentMethod === 'transferencia' ? 'border-ferre-400' : 'border-slate-300'">
                       <div class="w-2.5 h-2.5 rounded-full bg-ferre-400 transition-all scale-0" [class.scale-100]="paymentMethod === 'transferencia'"></div>
@@ -213,7 +220,11 @@ import {
                     <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
                       <div class="flex justify-between items-center">
                         <span class="text-slate-500 text-xs">Titular</span>
-                        <span class="text-slate-900 font-semibold text-sm">{{ tenantInfo?.name || 'FerreNexo' }}</span>
+                        <span class="text-slate-900 font-semibold text-sm">{{ tenantInfo?.bank_titular || tenantInfo?.name || '...' }}</span>
+                      </div>
+                      <div class="flex justify-between items-center">
+                        <span class="text-slate-500 text-xs">CUIT</span>
+                        <span class="text-slate-900 font-semibold text-sm">{{ tenantInfo?.bank_cuit || '...' }}</span>
                       </div>
                       <div class="flex justify-between items-center">
                         <span class="text-slate-500 text-xs">CBU / CVU</span>
@@ -221,11 +232,11 @@ import {
                       </div>
                       <div class="flex justify-between items-center">
                         <span class="text-slate-500 text-xs">Alias</span>
-                        <span class="text-amber-700 font-bold text-sm">{{ tenantInfo?.bank_alias || '...' }}</span>
+                        <span class="text-ferre-700 font-bold text-sm">{{ tenantInfo?.bank_alias || '...' }}</span>
                       </div>
                     </div>
                     <p class="mt-3 text-xs text-slate-500">
-                      Una vez finalizado, <span class="text-amber-700 font-semibold">envia el comprobante</span> por WhatsApp indicando tu codigo de pedido.
+                      Una vez finalizado, <span class="text-ferre-700 font-semibold">envia el comprobante</span> por WhatsApp indicando tu codigo de pedido.
                     </p>
                   </div>
                 </div>
@@ -236,7 +247,7 @@ import {
                   class="w-full bg-ferre-400 hover:bg-ferre-500 text-slate-800 font-bold py-3.5 rounded-lg shadow-sm flex items-center justify-center gap-2 disabled:opacity-50 text-sm">
                   <lucide-icon *ngIf="isProcessing" [name]="Loader2" size="20" class="animate-spin"></lucide-icon>
                   <span *ngIf="paymentMethod === 'transferencia'">{{ isProcessing ? 'Procesando...' : 'YA REALICE LA TRANSFERENCIA' }}</span>
-                  <span *ngIf="paymentMethod !== 'transferencia' && paymentMethod !== ''">{{ isProcessing ? 'Procesando...' : 'PAGAR $' + getFinalTotal() }}</span>
+                  <span *ngIf="paymentMethod !== 'transferencia' && paymentMethod !== ''">{{ isProcessing ? 'Procesando...' : 'PAGAR $' + (getFinalTotal() | number:'1.0-0') }}</span>
                   <span *ngIf="paymentMethod === '' && (tenantInfo?.has_mp || tenantInfo?.bank_cvu)">SELECCIONAR PAGO</span>
                   <span *ngIf="!tenantInfo?.has_mp && !tenantInfo?.bank_cvu && !tenantInfo?.bank_alias" class="text-sm">NINGUN MEDIO DE PAGO DISPONIBLE</span>
                 </button>
@@ -259,18 +270,18 @@ import {
                   </div>
                   <div class="flex-1 min-w-0">
                     <p class="text-xs font-semibold text-slate-700 truncate">{{ item.product_name }}</p>
-                    <p class="text-[11px] text-slate-500">{{ item.quantity }} x \${{ item.price }}</p>
+                    <p class="text-[11px] text-slate-500">{{ item.quantity }} x \${{ item.price | number:'1.0-0' }}</p>
                   </div>
                 </div>
               </div>
               <div class="border-t border-slate-200 pt-3 space-y-2 mt-3">
                 <div class="flex justify-between text-xs text-slate-500 font-medium">
                   <span>Subtotal</span>
-                  <span>\${{ total }}</span>
+                  <span>\${{ total | number:'1.0-0' }}</span>
                 </div>
                 <div class="flex justify-between text-base text-slate-900 font-bold pt-2 border-t border-slate-200 mt-2">
                   <span>Total</span>
-                  <span class="text-amber-700">\${{ getFinalTotal() }}</span>
+                  <span class="text-ferre-700">\${{ getFinalTotal() | number:'1.0-0' }}</span>
                 </div>
               </div>
             </div>
@@ -293,7 +304,8 @@ export class CheckoutComponent implements OnInit {
 
   formData = {
     email: "",
-    name: "",
+    firstName: "",
+    lastName: "",
     cuit: "",
     phone: "",
     address: "",
@@ -357,11 +369,13 @@ export class CheckoutComponent implements OnInit {
   }
 
   getFinalTotal(): number {
-    return this.total + this.getTax();
+    return this.total;
   }
 
   goBack() {
-    this.router.navigate(["/cart"]);
+    this.router.navigate(["/"]).then(() => {
+      setTimeout(() => this.cartService.openDrawer(), 300);
+    });
   }
 
   goHome() {
@@ -374,6 +388,21 @@ export class CheckoutComponent implements OnInit {
 
   nextStep() {
     if (this.currentStep < 3) this.currentStep++;
+  }
+
+  isValidEmail(email: string): boolean {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return false;
+    const allowed = ['gmail.com','hotmail.com','outlook.com','yahoo.com','live.com.ar','live.com','icloud.com','protonmail.com','proton.me','aol.com','mail.com','zoho.com'];
+    const domain = email.split('@')[1]?.toLowerCase();
+    return allowed.includes(domain);
+  }
+
+  isValidDNI(dni: string): boolean {
+    return /^\d{7,8}$/.test(dni);
+  }
+
+  isValidPhone(phone: string): boolean {
+    return /^\d{8,10}$/.test(phone);
   }
 
   selectPayment(method: string) {
@@ -486,6 +515,7 @@ export class CheckoutComponent implements OnInit {
     const addr = suggestion.address;
 
     this.formData.address = this.getSmartTitle(suggestion);
+
     this.formData.city =
       addr.city ||
       addr.town ||

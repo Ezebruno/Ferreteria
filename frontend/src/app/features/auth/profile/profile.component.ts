@@ -30,12 +30,12 @@ import { LucideAngularModule, User, Mail, Phone, Lock, Save, ArrowLeft, LogOut, 
         </div>
 
         <!-- Password change banner -->
-        <div *ngIf="showPasswordBanner" class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
+        <div *ngIf="showPasswordBanner" class="bg-ferre-50 border border-ferre-200 rounded-lg p-4 mb-6">
           <div class="flex items-start gap-3">
             <lucide-icon [name]="KeyRound" size="20" class="text-amber-600 mt-0.5 flex-shrink-0"></lucide-icon>
             <div>
-              <p class="text-sm font-bold text-amber-800">Debes cambiar tu contrasena</p>
-              <p class="text-xs text-slate-500 mt-1">Por seguridad, cambia la contrasena temporal que te asignaron.</p>
+              <p class="text-sm font-bold text-amber-800">Debes cambiar tu contraseña</p>
+              <p class="text-xs text-slate-500 mt-1">Por seguridad, cambia la contraseña temporal que te asignaron.</p>
             </div>
           </div>
         </div>
@@ -97,18 +97,18 @@ import { LucideAngularModule, User, Mail, Phone, Lock, Save, ArrowLeft, LogOut, 
         <!-- Password change section -->
         <div class="mt-6 pt-6 border-t border-slate-200">
           <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 flex items-center gap-2">
-            <lucide-icon [name]="KeyRound" size="16" class="text-amber-700"></lucide-icon>
-            Cambiar contrasena
+            <lucide-icon [name]="KeyRound" size="16" class="text-ferre-700"></lucide-icon>
+            Cambiar contraseña
           </h3>
           <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()" class="space-y-3">
             <div class="space-y-1.5">
-              <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Contrasena actual</label>
+              <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Contraseña actual</label>
               <input formControlName="current_password" type="password"
                 class="w-full bg-white border border-slate-200 text-slate-900 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-ferre-400/20 focus:border-ferre-400 transition-all text-sm"
-                placeholder="Tu contrasena actual" />
+                placeholder="Tu contraseña actual" />
             </div>
             <div class="space-y-1.5">
-              <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Nueva contrasena</label>
+              <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Nueva contraseña</label>
               <input formControlName="new_password" type="password"
                 class="w-full bg-white border border-slate-200 text-slate-900 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-ferre-400/20 focus:border-ferre-400 transition-all text-sm"
                 placeholder="Minimo 6 caracteres" />
@@ -117,12 +117,12 @@ import { LucideAngularModule, User, Mail, Phone, Lock, Save, ArrowLeft, LogOut, 
               {{ pwError }}
             </div>
             <div *ngIf="pwSuccess" class="bg-emerald-50 border border-emerald-200 text-emerald-700 p-2 rounded-lg text-xs text-center">
-              Contrasena cambiada exitosamente
+              Contraseña cambiada exitosamente
             </div>
             <button type="submit" [disabled]="pwLoading"
               class="w-full bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 font-bold py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-50 text-sm">
               <lucide-icon [name]="Lock" size="16"></lucide-icon>
-              {{ pwLoading ? "Cambiando..." : "Cambiar contrasena" }}
+              {{ pwLoading ? "Cambiando..." : "Cambiar contraseña" }}
             </button>
           </form>
         </div>
@@ -217,7 +217,7 @@ export class ProfileComponent implements OnInit {
         setTimeout(() => (this.pwSuccess = false), 3000);
       },
       error: (err) => {
-        this.pwError = err.error?.error || "Error al cambiar contrasena";
+        this.pwError = err.error?.error || "Error al cambiar contraseña";
         this.pwLoading = false;
       },
     });

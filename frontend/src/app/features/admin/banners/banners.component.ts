@@ -129,7 +129,7 @@ interface Banner {
 
         <div class="flex items-center justify-between mt-4">
           <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" [(ngModel)]="newBanner.is_active" class="w-4 h-4 rounded border-slate-300 text-amber-700 focus:ring-ferre-400"/>
+            <input type="checkbox" [(ngModel)]="newBanner.is_active" class="w-4 h-4 rounded border-slate-300 text-ferre-700 focus:ring-ferre-400"/>
             <span class="text-sm text-slate-600 font-medium">Activo</span>
           </label>
           <div class="flex items-center gap-3">
@@ -247,7 +247,7 @@ interface Banner {
             </div>
             <div class="flex items-center justify-between mt-4">
               <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" [(ngModel)]="banner.editIsActive" class="w-4 h-4 rounded border-slate-300 text-amber-700 focus:ring-ferre-400"/>
+                <input type="checkbox" [(ngModel)]="banner.editIsActive" class="w-4 h-4 rounded border-slate-300 text-ferre-700 focus:ring-ferre-400"/>
                 <span class="text-sm text-slate-600 font-medium">Activo</span>
               </label>
               <div class="flex items-center gap-3">

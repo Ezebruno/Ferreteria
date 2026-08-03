@@ -14,7 +14,7 @@ import { LucideAngularModule, Zap, CheckCircle2, AlertCircle, RefreshCw, Externa
         <div class="relative z-10 space-y-8">
 
           <div class="flex items-center gap-4">
-            <div class="w-14 h-14 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center flex-shrink-0">
+            <div class="w-14 h-14 rounded-lg bg-ferre-50 border border-ferre-200 flex items-center justify-center flex-shrink-0">
               <lucide-icon [name]="Zap" size="28" class="text-amber-600"></lucide-icon>
             </div>
             <div>
@@ -64,7 +64,7 @@ import { LucideAngularModule, Zap, CheckCircle2, AlertCircle, RefreshCw, Externa
                 <lucide-icon [name]="RefreshCw" size="16"></lucide-icon>
                 Reconectar cuenta
               </button>
-              <a href="https://www.mercadolibre.com.ar/ventas" target="_blank" class="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-700 text-sm font-bold transition-all">
+              <a href="https://www.mercadolibre.com.ar/ventas" target="_blank" class="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-ferre-50 hover:bg-ferre-100 border border-ferre-200 text-ferre-700 text-sm font-bold transition-all">
                 <lucide-icon [name]="ExternalLink" size="16"></lucide-icon>
                 Ver mis ventas en MeLi
               </a>
@@ -76,21 +76,21 @@ import { LucideAngularModule, Zap, CheckCircle2, AlertCircle, RefreshCw, Externa
               <h3 class="text-base font-bold text-slate-900 mb-4 uppercase tracking-wider" style="font-family: Sora, sans-serif;">Que podes hacer al conectar?</h3>
               <ul class="space-y-3">
                 <li class="flex items-center gap-3 text-sm text-slate-600">
-                  <span class="w-5 h-5 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700 text-[10px] font-bold flex-shrink-0">1</span>
+                  <span class="w-5 h-5 rounded-full bg-ferre-50 border border-ferre-200 flex items-center justify-center text-ferre-700 text-[10px] font-bold flex-shrink-0">1</span>
                   Publicar productos automaticamente en Mercado Libre desde el formulario del producto
                 </li>
                 <li class="flex items-center gap-3 text-sm text-slate-600">
-                  <span class="w-5 h-5 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700 text-[10px] font-bold flex-shrink-0">2</span>
+                  <span class="w-5 h-5 rounded-full bg-ferre-50 border border-ferre-200 flex items-center justify-center text-ferre-700 text-[10px] font-bold flex-shrink-0">2</span>
                   Sincronizar precios y stock en tiempo real sin entrar a Mercado Libre
                 </li>
                 <li class="flex items-center gap-3 text-sm text-slate-600">
-                  <span class="w-5 h-5 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700 text-[10px] font-bold flex-shrink-0">3</span>
+                  <span class="w-5 h-5 rounded-full bg-ferre-50 border border-ferre-200 flex items-center justify-center text-ferre-700 text-[10px] font-bold flex-shrink-0">3</span>
                   Recibir notificaciones de nuevos pedidos directamente en el panel
                 </li>
               </ul>
             </div>
 
-            <div class="p-5 space-y-3 bg-amber-50 border border-amber-200 rounded-lg">
+            <div class="p-5 space-y-3 bg-ferre-50 border border-ferre-200 rounded-lg">
               <div class="flex items-start gap-3">
                 <lucide-icon [name]="AlertCircle" size="20" class="text-amber-600 shrink-0 mt-0.5"></lucide-icon>
                 <div>
@@ -110,7 +110,7 @@ import { LucideAngularModule, Zap, CheckCircle2, AlertCircle, RefreshCw, Externa
             <button
               (click)="linkAccount()"
               [disabled]="isExchanging"
-              class="w-full bg-amber-500 hover:bg-amber-400 text-white py-3.5 rounded-lg font-bold text-sm shadow-sm transition-all flex items-center justify-center gap-3 group disabled:opacity-50 uppercase tracking-wider"
+              class="w-full bg-ferre-500 hover:bg-amber-400 text-white py-3.5 rounded-lg font-bold text-sm shadow-sm transition-all flex items-center justify-center gap-3 group disabled:opacity-50 uppercase tracking-wider"
             >
               <lucide-icon [name]="Zap" size="20" class="group-hover:rotate-12 transition-transform"></lucide-icon>
               Conectar con Mercado Libre

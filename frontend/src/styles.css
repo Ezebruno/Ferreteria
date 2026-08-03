@@ -7,10 +7,10 @@
 @tailwind utilities;
 
 :root {
-  --ferre-primary: #ffe600;
-  --ferre-primary-dark: #e6c200;
-  --ferre-primary-light: #fffbe6;
-  --ferre-accent: #f59e0b;
+  --ferre-primary: #c2b69a;
+  --ferre-primary-dark: #a69a78;
+  --ferre-primary-light: #faf8f5;
+  --ferre-accent: #a69a78;
   --ferre-bg: #faf8f5;
   --ferre-text: #1e293b;
   --ferre-muted: #64748b;
@@ -43,11 +43,11 @@ body {
   @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 font-bold rounded-lg transition-all duration-200 text-sm;
   background: var(--ferre-primary);
   color: #1e293b;
-  box-shadow: 0 1px 2px rgba(255, 230, 0, 0.3);
+  box-shadow: 0 1px 2px rgba(166, 154, 120, 0.3);
 }
 .btn-ferre:hover {
   background: var(--ferre-primary-dark);
-  box-shadow: 0 2px 6px rgba(255, 230, 0, 0.4);
+  box-shadow: 0 2px 6px rgba(166, 154, 120, 0.4);
 }
 .btn-ferre:active {
   transform: translateY(0);
@@ -66,7 +66,7 @@ body {
 .btn-outline:hover {
   border-color: var(--ferre-primary);
   color: #1e293b;
-  background: rgba(255, 230, 0, 0.06);
+  background: rgba(166, 154, 120, 0.06);
 }
 .btn-outline:disabled {
   opacity: 0.5;
@@ -107,7 +107,7 @@ body {
 .input-ferre:focus {
   outline: none;
   border-color: var(--ferre-primary);
-  box-shadow: 0 0 0 3px rgba(255, 230, 0, 0.15);
+  box-shadow: 0 0 0 3px rgba(166, 154, 120, 0.15);
 }
 .input-ferre::placeholder {
   color: #94a3b8;
@@ -119,7 +119,7 @@ body {
 
 .badge-ferre {
   @apply inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold uppercase tracking-wide;
-  background: rgba(255, 230, 0, 0.12);
+  background: rgba(166, 154, 120, 0.12);
   color: #92400e;
 }
 
@@ -208,7 +208,7 @@ body {
   color: #1e293b !important;
 }
 .p-paginator .p-paginator-pages .p-paginator-page:not(.p-highlight):hover {
-  background: rgba(255, 230, 0, 0.08) !important;
+  background: rgba(166, 154, 120, 0.08) !important;
   border-color: var(--ferre-primary) !important;
   color: #1e293b !important;
 }
@@ -230,7 +230,7 @@ body {
   border-radius: 6px !important;
 }
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item:hover {
-  background: rgba(255, 230, 0, 0.08) !important;
+  background: rgba(166, 154, 120, 0.08) !important;
   color: #1e293b !important;
 }
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {

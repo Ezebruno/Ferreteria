@@ -43,7 +43,7 @@
       </div>
 
       <div class="flex flex-col gap-6">
-        <span class="inline-flex items-center bg-ferre-50 text-amber-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide w-fit">
+        <span class="inline-flex items-center bg-ferre-50 text-ferre-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide w-fit">
           {{ product.category_name }}
         </span>
 
@@ -151,7 +151,7 @@
           <div *ngIf="shippingResult" class="mt-4 space-y-2">
             <p class="text-slate-500 text-xs font-medium bg-slate-50 py-2 px-3 rounded-lg text-center">
               Opciones para CP <span class="font-bold text-slate-700">{{ zipCode }}</span>
-              <span *ngIf="shippingResult.destination_name" class="text-amber-700"> ({{ shippingResult.destination_name }})</span>
+              <span *ngIf="shippingResult.destination_name" class="text-ferre-700"> ({{ shippingResult.destination_name }})</span>
             </p>
 
             <div class="flex items-center justify-between bg-ferre-50 border border-ferre-200 p-3 rounded-xl">
@@ -159,7 +159,7 @@
                 <p class="text-slate-900 font-semibold text-sm">Retiro en Sucursal Central</p>
                 <p class="text-emerald-600 text-xs font-medium mt-0.5">Acordar en local</p>
               </div>
-              <p class="text-amber-700 font-bold text-sm">Gratis</p>
+              <p class="text-ferre-700 font-bold text-sm">Gratis</p>
             </div>
 
             <div *ngFor="let rate of shippingResult.rates" class="flex items-center justify-between bg-white border border-slate-200 p-3 rounded-xl hover:border-ferre-200 transition-colors shadow-sm">
@@ -169,7 +169,7 @@
                   {{ rate.deliveredType === 'D' ? 'Entrega a domicilio' : 'Retiro en sucursal' }}
                 </p>
               </div>
-              <p class="text-slate-700 font-bold text-sm">${{ rate.price }}</p>
+              <p class="text-slate-700 font-bold text-sm">${{ rate.price | number:'1.0-0' }}</p>
             </div>
           </div>
 

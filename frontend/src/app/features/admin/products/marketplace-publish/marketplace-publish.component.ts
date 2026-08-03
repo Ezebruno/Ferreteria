@@ -72,7 +72,7 @@ interface FacebookContent {
       font-size: 0.7rem; font-weight: 700; cursor: pointer;
       transition: all 0.15s; border: none;
     }
-    .action-publish { background: #ffe600; color: #1e293b; }
+    .action-publish { background: #c2b69a; color: #1e293b; }
     .action-publish:hover { background: #f0d800; }
     .action-update { background: rgba(59,130,246,0.1); color: #3b82f6; }
     .action-update:hover { background: rgba(59,130,246,0.18); }

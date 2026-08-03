@@ -2,8 +2,7 @@
   <div class="max-w-7xl mx-auto">
     <div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
       <div>
-        <h1 class="section-title">POS <span class="text-amber-700">FERRENEXO</span></h1>
-        <p class="section-subtitle">Terminal de Venta y Gestion de Remitos</p>
+        <h1 class="section-title">Terminal de Venta y Gestion de Remitos</h1>
       </div>
     </div>
 
@@ -102,7 +101,7 @@
               <div class="flex flex-col min-w-0">
                 <div class="flex items-center justify-between mb-3">
                   <h2 class="text-sm font-black text-slate-900 flex items-center gap-1.5 uppercase tracking-wider" style="font-family: Sora, sans-serif;">
-                    <lucide-icon [name]="ShoppingCart" size="14" class="text-amber-700"></lucide-icon>
+                    <lucide-icon [name]="ShoppingCart" size="14" class="text-ferre-700"></lucide-icon>
                     Carrito
                   </h2>
                   <span class="bg-ferre-400 text-slate-800 px-2 py-0.5 rounded text-[10px] font-black">{{ currentReceipt.items.length }}</span>
@@ -124,7 +123,7 @@
                     <div class="flex-1 min-w-0">
                       <p class="font-bold text-slate-800 text-xs line-clamp-1 leading-none mb-0.5">{{ item.name }}</p>
                       <div class="flex items-center gap-1">
-                        <span class="text-[10px] text-amber-700 font-black">${{ item.price | number:'1.0-0' }}</span>
+                        <span class="text-[10px] text-ferre-700 font-black">${{ item.price | number:'1.0-0' }}</span>
                         <span class="text-[9px] text-slate-400">x{{ item.quantity }}</span>
                       </div>
                     </div>
@@ -147,7 +146,7 @@
                   </div>
                   <div class="pt-1 mt-1 border-t-2 border-slate-200 flex justify-between items-center">
                     <span class="text-slate-900 font-black text-sm">TOTAL</span>
-                    <span class="text-amber-700 font-black text-lg tracking-tighter">{{ calculateSubtotal() | currency }}</span>
+                    <span class="text-ferre-700 font-black text-lg tracking-tighter">{{ calculateSubtotal() | currency }}</span>
                   </div>
                 </div>
 
@@ -172,7 +171,7 @@
               <div class="flex flex-col min-w-0 border-l border-slate-200 pl-4">
                 <div class="flex items-center justify-between mb-3">
                   <h2 class="text-sm font-black text-slate-900 flex items-center gap-1.5 uppercase tracking-wider">
-                     <lucide-icon [name]="Download" size="14" class="text-amber-700"></lucide-icon>
+                     <lucide-icon [name]="Download" size="14" class="text-ferre-700"></lucide-icon>
                      Historico
                   </h2>
                   <button
@@ -200,7 +199,7 @@
                       <p class="text-[10px] text-slate-500 truncate">{{ receipt.date }} - {{ receipt.customer }}</p>
                     </div>
                     <div class="flex items-center gap-1.5 shrink-0">
-                      <p class="font-black text-amber-700 text-xs">${{ receipt.total | number:'1.0-0' }}</p>
+                      <p class="font-black text-ferre-700 text-xs">${{ receipt.total | number:'1.0-0' }}</p>
                       <lucide-icon [name]="Download" size="11" class="text-slate-400 group-hover:text-ferre-400 transition-colors"></lucide-icon>
                     </div>
                   </div>

@@ -46,7 +46,7 @@ import { ApiService } from "src/app/core/services/api.service";
           <!-- Scanning Animation -->
           <div class="absolute inset-0 pointer-events-none">
             <div
-              class="w-full h-1 bg-ferre-400 shadow-[0_0_30px_rgba(255,230,0,0.8)] absolute top-0 animate-scan z-20"
+              class="w-full h-1 bg-ferre-400 shadow-[0_0_30px_rgba(166,154,120,0.8)] absolute top-0 animate-scan z-20"
             ></div>
             <div class="absolute inset-0 bg-gradient-to-b from-ferre-400/5 to-transparent opacity-30"></div>
           </div>
@@ -93,7 +93,7 @@ import { ApiService } from "src/app/core/services/api.service";
               {{ lastResult.name }}
             </h2>
             <div class="flex items-center gap-6 mt-4">
-              <span class="text-4xl font-black text-amber-700"
+              <span class="text-4xl font-black text-ferre-700"
                 >$ {{ lastResult.price }}</span
               >
               <div class="flex flex-col">

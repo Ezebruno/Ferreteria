@@ -24,14 +24,14 @@ import { LucideAngularModule, Mail, ArrowLeft, Send, Wrench } from "lucide-angul
             <lucide-icon [name]="Mail" size="28" class="text-slate-800"></lucide-icon>
           </div>
           <span class="text-2xl font-extrabold tracking-wider uppercase text-slate-900" style="font-family: Sora, sans-serif;">
-            Ferre<span class="text-amber-700">Nexo</span>
+            Ferre<span class="text-ferre-400">Nexo</span>
           </span>
-          <p class="text-slate-500 mt-1 text-sm font-medium">Recupera tu contrasena</p>
+          <p class="text-slate-500 mt-1 text-sm font-medium">Recupera tu contraseña</p>
         </div>
 
         <div *ngIf="sent" class="text-center space-y-4">
           <div class="bg-emerald-50 border border-emerald-200 text-emerald-700 p-4 rounded-lg text-sm">
-            Si el correo esta registrado, recibiras un enlace para restablecer tu contrasena.
+            Si el correo esta registrado, recibiras un enlace para restablecer tu contraseña.
           </div>
           <button (click)="goBack()" class="w-full bg-ferre-400 hover:bg-ferre-500 text-slate-800 font-bold py-3 rounded-lg transition-all text-sm">
             Volver al login

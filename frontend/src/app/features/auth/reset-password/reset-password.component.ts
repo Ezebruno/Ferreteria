@@ -19,15 +19,15 @@ import { LucideAngularModule, Lock, ArrowLeft, CheckCircle, Wrench } from "lucid
             <lucide-icon [name]="LockIcon" size="28" class="text-slate-800"></lucide-icon>
           </div>
           <span class="text-2xl font-extrabold tracking-wider uppercase text-slate-900" style="font-family: Sora, sans-serif;">
-            Ferre<span class="text-amber-700">Nexo</span>
+            Ferre<span class="text-ferre-400">Nexo</span>
           </span>
-          <p class="text-slate-500 mt-1 text-sm font-medium">Nueva contrasena</p>
+          <p class="text-slate-500 mt-1 text-sm font-medium">Nueva contraseña</p>
         </div>
 
         <div *ngIf="success" class="text-center space-y-4">
           <div class="bg-emerald-50 border border-emerald-200 text-emerald-700 p-4 rounded-lg text-sm flex items-center gap-2 justify-center">
             <lucide-icon [name]="CheckCircle" size="18"></lucide-icon>
-            Contrasena restablecida exitosamente
+            Contraseña restablecida exitosamente
           </div>
           <button (click)="goLogin()" class="w-full bg-ferre-400 hover:bg-ferre-500 text-slate-800 font-bold py-3 rounded-lg transition-all text-sm">
             Ir al login
@@ -45,7 +45,7 @@ import { LucideAngularModule, Lock, ArrowLeft, CheckCircle, Wrench } from "lucid
 
         <form *ngIf="!success && !invalid" [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-5">
           <div class="space-y-1.5">
-            <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Nueva Contrasena</label>
+            <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Nueva Contraseña</label>
             <div class="relative">
               <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                 <lucide-icon [name]="Lock" size="18" class="text-slate-400"></lucide-icon>
@@ -57,14 +57,14 @@ import { LucideAngularModule, Lock, ArrowLeft, CheckCircle, Wrench } from "lucid
           </div>
 
           <div class="space-y-1.5">
-            <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Confirmar Contrasena</label>
+            <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Confirmar Contraseña</label>
             <div class="relative">
               <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                 <lucide-icon [name]="Lock" size="18" class="text-slate-400"></lucide-icon>
               </div>
               <input formControlName="confirm_password" type="password"
                 class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 text-slate-900 rounded-xl focus:ring-2 focus:ring-ferre-400/20 focus:border-ferre-400 transition-all placeholder:text-slate-400 text-sm"
-                placeholder="Repite la contrasena" />
+                placeholder="Repite la contraseña" />
             </div>
           </div>
 
@@ -75,7 +75,7 @@ import { LucideAngularModule, Lock, ArrowLeft, CheckCircle, Wrench } from "lucid
           <button type="submit" [disabled]="loading"
             class="w-full bg-ferre-400 hover:bg-ferre-500 text-slate-800 font-bold py-3 rounded-lg shadow-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50 text-sm uppercase tracking-wider">
             <div *ngIf="loading" class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-            {{ loading ? "Guardando..." : "Restablecer contrasena" }}
+            {{ loading ? "Guardando..." : "Restablecer contraseña" }}
           </button>
         </form>
       </div>
@@ -116,7 +116,7 @@ export class ResetPasswordComponent implements OnInit {
     if (this.form.invalid) return;
     const { new_password, confirm_password } = this.form.value;
     if (new_password !== confirm_password) {
-      this.error = "Las contrasenas no coinciden";
+      this.error = "Las contraseñas no coinciden";
       return;
     }
     this.loading = true;

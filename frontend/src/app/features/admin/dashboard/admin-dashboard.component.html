@@ -18,7 +18,7 @@
         <div class="text-xs text-amber-600">Revisa los productos que requieren reposicion.</div>
       </div>
     </div>
-    <button (click)="viewAlerts()" class="text-amber-700 hover:text-amber-900 text-sm font-bold whitespace-nowrap">Ver alertas</button>
+    <button (click)="viewAlerts()" class="text-ferre-700 hover:text-ferre-900 text-sm font-bold whitespace-nowrap">Ver alertas</button>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -33,7 +33,7 @@
           </div>
         </div>
         <div class="w-10 h-10 rounded-lg bg-ferre-50 flex items-center justify-center shrink-0 border border-ferre-200">
-          <lucide-icon [name]="metric.icon" size="18" class="text-amber-700"></lucide-icon>
+          <lucide-icon [name]="metric.icon" size="18" class="text-ferre-700"></lucide-icon>
         </div>
       </div>
     </div>
@@ -75,7 +75,7 @@
             <div class="w-7 h-7 rounded-md bg-ferre-50 flex items-center justify-center text-[10px] font-bold text-amber-800 border border-ferre-200">{{ i + 1 }}</div>
             <span class="font-semibold text-slate-700 text-sm truncate max-w-[120px]">{{ product.name }}</span>
           </div>
-          <span class="text-amber-700 font-bold text-sm">{{ product.sales }}u.</span>
+          <span class="text-ferre-700 font-bold text-sm">{{ product.sales }}u.</span>
         </div>
       </div>
     </div>
@@ -104,7 +104,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let order of recentOrders" class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
-            <td class="px-6 py-4 font-bold text-amber-700 text-sm">#{{ order.id.toString().substring(0, 8) }}</td>
+            <td class="px-6 py-4 font-bold text-ferre-700 text-sm">#{{ order.id.toString().substring(0, 8) }}</td>
             <td class="px-6 py-4">
               <div class="flex items-center gap-2">
                 <div class="w-7 h-7 rounded-full bg-slate-200 flex items-center justify-center text-[10px] font-bold text-slate-500">{{ order.customer.substring(0, 1) }}</div>

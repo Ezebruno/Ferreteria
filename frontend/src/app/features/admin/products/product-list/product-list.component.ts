@@ -107,15 +107,15 @@ import { MarketplacePublishComponent } from "../marketplace-publish/marketplace-
     }
 
     :host ::ng-deep .p-datatable-dark .p-paginator .p-paginator-pages .p-paginator-page:hover {
-      background: rgba(255, 230, 0, 0.06) !important;
-      border-color: #ffe600 !important;
+      background: rgba(166, 154, 120, 0.06) !important;
+      border-color: #c2b69a !important;
       color: #a67000 !important;
     }
 
     :host ::ng-deep .p-datatable-dark .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
-      background: #ffe600 !important;
+      background: #c2b69a !important;
       color: #1e293b !important;
-      border-color: #ffe600 !important;
+      border-color: #c2b69a !important;
       font-weight: 800 !important;
     }
 
@@ -141,7 +141,7 @@ import { MarketplacePublishComponent } from "../marketplace-publish/marketplace-
             <div class="w-14 h-14 rounded-2xl bg-ferre-50 flex items-center justify-center border border-slate-200 shrink-0">
               <lucide-icon
                 [name]="PackageSearch"
-                class="text-amber-700"
+                class="text-ferre-700"
                 size="32"
               ></lucide-icon>
             </div>
@@ -241,7 +241,7 @@ import { MarketplacePublishComponent } from "../marketplace-publish/marketplace-
                 {{ product.sku }}
               </td>
               <td class="px-6 py-4">
-                <span class="font-extrabold text-amber-700 text-lg" style="font-family: Sora, sans-serif;">$ {{ product.price_retail | number: "1.0-0" }}</span>
+                <span class="font-extrabold text-ferre-700 text-lg" style="font-family: Sora, sans-serif;">$ {{ product.price_retail | number: "1.0-0" }}</span>
               </td>
               <td class="px-6 py-4">
                 <div class="flex items-center gap-2">

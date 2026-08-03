@@ -61,7 +61,7 @@ import {
           </div>
           <div class="flex flex-col">
             <span class="text-sm font-extrabold tracking-wider text-slate-900 uppercase" style="font-family: Sora, sans-serif;">
-              Ferre<span class="text-amber-700">Nexo</span>
+              Ferre<span class="text-ferre-400">Nexo</span>
             </span>
             <span class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.15em]">Admin Panel</span>
           </div>

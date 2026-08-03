@@ -281,9 +281,10 @@ export class CartService {
       quantity: item.quantity,
       price: item.price
     }));
+    const payload = { ...formData, name: `${formData.firstName} ${formData.lastName}`.trim() };
     return this.api.post("/ecommerce/checkout/", { 
       items, 
-      formData, 
+      formData: payload, 
       paymentMethod,
       shippingCost: this.shippingCost 
     });

@@ -85,6 +85,8 @@ export class SettingsComponent implements OnInit {
   constructor() {
     this.settingsForm = this.fb.group({
       store_address: [""],
+      bank_titular: [""],
+      bank_cuit: [""],
       bank_cvu: [""],
       bank_alias: [""],
       whatsapp_number: [""],
@@ -172,6 +174,8 @@ export class SettingsComponent implements OnInit {
       next: (data) => {
         this.settingsForm.patchValue({
           store_address: data.store_address || "",
+          bank_titular: data.bank_titular || "",
+          bank_cuit: data.bank_cuit || "",
           bank_cvu: data.bank_cvu || "",
           bank_alias: data.bank_alias || "",
           whatsapp_number: data.whatsapp_number || "",
@@ -195,6 +199,8 @@ export class SettingsComponent implements OnInit {
     // Create FormData to support file uploads
     const formData = new FormData();
     formData.append("store_address", formValues.store_address);
+    formData.append("bank_titular", formValues.bank_titular);
+    formData.append("bank_cuit", formValues.bank_cuit);
     formData.append("bank_cvu", formValues.bank_cvu);
     formData.append("bank_alias", formValues.bank_alias);
     formData.append("whatsapp_number", formValues.whatsapp_number);
