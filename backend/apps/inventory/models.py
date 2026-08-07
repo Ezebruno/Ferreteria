@@ -83,24 +83,24 @@ class Product(models.Model):
 
     def save(self, *args, **kwargs):
         if self.image:
-            # Resize image
-            img = Image.open(self.image)
-            if img.height > 1200 or img.width > 1200:
-                output_size = (1200, 1200)
-                img.thumbnail(output_size)
-                
-                # Convert to RGB if necessary (e.g. for WebP/JPEG)
-                if img.mode in ("RGBA", "P"):
-                    img = img.convert("RGB")
-                
-                output = io.BytesIO()
-                img.save(output, format='WebP', quality=85)
-                output.seek(0)
-                
-                # Replace the image with the optimized version
-                name = self.image.name.split('.')[0] + '.webp'
-                self.image = ContentFile(output.read(), name=name)
-                
+            try:
+                img = Image.open(self.image)
+                if img.height > 1200 or img.width > 1200:
+                    output_size = (1200, 1200)
+                    img.thumbnail(output_size)
+                    
+                    if img.mode in ("RGBA", "P"):
+                        img = img.convert("RGB")
+                    
+                    output = io.BytesIO()
+                    img.save(output, format='WebP', quality=85)
+                    output.seek(0)
+                    
+                    name = self.image.name.split('.')[0] + '.webp'
+                    self.image = ContentFile(output.read(), name=name)
+            except Exception:
+                pass
+
         super().save(*args, **kwargs)
 
     def __str__(self):
