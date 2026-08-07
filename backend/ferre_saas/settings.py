@@ -121,9 +121,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Cloudinary for production media storage
 CLOUDINARY_URL = env("CLOUDINARY_URL", default="")
 if CLOUDINARY_URL and not DEBUG:
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-else:
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    STORAGES = {
+        "default": {
+            "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        },
+    }
 
 LOGIN_URL = '/admin-secure-ferre/login/'
 LOGIN_REDIRECT_URL = '/admin-secure-ferre/'
