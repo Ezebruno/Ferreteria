@@ -117,19 +117,14 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Storage config
 STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
-
-# Cloudinary for production media storage
-CLOUDINARY_URL = env("CLOUDINARY_URL", default="")
-if CLOUDINARY_URL and not DEBUG:
-    STORAGES["default"] = {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    }
 
 LOGIN_URL = '/admin-secure-ferre/login/'
 LOGIN_REDIRECT_URL = '/admin-secure-ferre/'
