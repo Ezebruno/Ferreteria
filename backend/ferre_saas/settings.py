@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'axes',
     'simple_history',
     'django_otp',
+    'cloudinary_storage',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -116,6 +118,13 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# Cloudinary for production media storage
+CLOUDINARY_URL = env("CLOUDINARY_URL", default="")
+if CLOUDINARY_URL and not DEBUG:
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+else:
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 LOGIN_URL = '/admin-secure-ferre/login/'
 LOGIN_REDIRECT_URL = '/admin-secure-ferre/'
 TWO_FACTOR_PATCH_ADMIN = False
@@ -152,7 +161,7 @@ SECURE_CONTENT_SECURITY_POLICY = {
     "script-src": ("'self'", "'unsafe-inline'", "https://sdk.mercadopago.com", "https://maps.googleapis.com"),
     "style-src": ("'self'", "'unsafe-inline'", "https://fonts.googleapis.com"),
     "font-src": ("'self'", "https://fonts.gstatic.com"),
-    "img-src": ("'self'", "data:", "https://*.mercadolibre.com", "https://*.mlstatic.com", "https://maps.gstatic.com", "https://maps.googleapis.com"),
+    "img-src": ("'self'", "data:", "https://*.mercadolibre.com", "https://*.mlstatic.com", "https://maps.gstatic.com", "https://maps.googleapis.com", "https://res.cloudinary.com"),
 }
 
 LOGGING = {
