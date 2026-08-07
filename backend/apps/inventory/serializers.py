@@ -26,6 +26,8 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         images_data = self.context['request'].FILES.getlist('images')
+        if 'image' in validated_data and not validated_data['image']:
+            del validated_data['image']
         product = Product.objects.create(**validated_data)
         for i, image in enumerate(images_data):
             ProductImage.objects.create(product=product, image=image, display_order=i)
@@ -33,6 +35,8 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         images_data = self.context['request'].FILES.getlist('images')
+        if 'image' in validated_data and not validated_data['image']:
+            del validated_data['image']
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
