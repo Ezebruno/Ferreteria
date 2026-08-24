@@ -1,0 +1,65 @@
+import os
+import urllib.request
+from django.core.management.base import BaseCommand
+from django.core.files.base import ContentFile
+from apps.inventory.models import Product
+
+PRODUCT_IMAGES = {
+    "HE-TAL-001": "https://images.unsplash.com/photo-1504148455328-c376907d081c?w=800&q=80",
+    "HE-AMO-002": "https://images.unsplash.com/photo-1615811361523-6bd03d7748e7?w=800&q=80",
+    "HE-SIE-003": "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&q=80",
+    "HE-LIJ-004": "https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=800&q=80",
+    "HE-ROT-005": "https://images.unsplash.com/photo-1504148455328-c376907d081c?w=800&q=80",
+    "HE-CAL-006": "https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=800&q=80",
+    "PL-LLV-001": "https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=800&q=80",
+    "PL-CTF-002": "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=800&q=80",
+    "PL-GRF-003": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80",
+    "PL-TUB-004": "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=800&q=80",
+    "PL-ING-005": "https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=800&q=80",
+    "PL-SIF-006": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80",
+    "PT-SIN-001": "https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?w=800&q=80",
+    "PT-ROL-002": "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&q=80",
+    "PT-BRC-003": "https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?w=800&q=80",
+    "PT-MAS-004": "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&q=80",
+    "PT-SLD-005": "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=800&q=80",
+    "PT-IMR-006": "https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?w=800&q=80",
+    "MC-CPT-001": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80",
+    "MC-LAD-002": "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?w=800&q=80",
+    "MC-ARE-003": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80",
+    "MC-DUR-004": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80",
+    "MC-HRR-005": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80",
+    "MC-CTP-006": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80",
+    "EL-CBL-001": "https://images.unsplash.com/photo-1555664424-778a1e5e1b48?w=800&q=80",
+    "EL-LTH-002": "https://images.unsplash.com/photo-1555664424-778a1e5e1b48?w=800&q=80",
+    "EL-PAN-003": "https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?w=800&q=80",
+    "EL-CNO-004": "https://images.unsplash.com/photo-1555664424-778a1e5e1b48?w=800&q=80",
+    "EL-GAB-005": "https://images.unsplash.com/photo-1555664424-778a1e5e1b48?w=800&q=80",
+    "EL-FIC-006": "https://images.unsplash.com/photo-1555664424-778a1e5e1b48?w=800&q=80",
+}
+
+
+class Command(BaseCommand):
+    help = "Descarga y asigna fotos a los productos"
+
+    def handle(self, *args, **options):
+        for sku, url in PRODUCT_IMAGES.items():
+            try:
+                product = Product.objects.get(sku=sku)
+                if product.image:
+                    self.stdout.write(f"  SKIP {sku} (ya tiene imagen)")
+                    continue
+
+                self.stdout.write(f"  Descargando {sku}...")
+                req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+                with urllib.request.urlopen(req, timeout=15) as response:
+                    data = response.read()
+                    ext = "jpg"
+                    fname = f"products/{sku}.{ext}"
+                    product.image.save(fname, ContentFile(data), save=True)
+                    self.stdout.write(f"    OK {sku}")
+            except Product.DoesNotExist:
+                self.stdout.write(f"  MISS {sku} no encontrado")
+            except Exception as e:
+                self.stdout.write(f"  ERR  {sku}: {e}")
+
+        self.stdout.write(self.style.SUCCESS("Listo"))

@@ -4,23 +4,14 @@
 
 .banner-carousel {
   width: 100%;
-  aspect-ratio: 2/1;
-  max-height: 520px;
-}
-
-.banner-carousel .bg-cover {
-  background-size: cover !important;
-  background-position: center center !important;
+  aspect-ratio: 3/1.6;
+  max-height: 600px;
 }
 
 @media (max-width: 768px) {
   .banner-carousel {
-    aspect-ratio: 4/3 !important;
-    max-height: 420px !important;
-  }
-  .banner-carousel .bg-cover {
-    background-size: cover !important;
-    background-position: center center !important;
+    aspect-ratio: 2/1 !important;
+    max-height: 440px !important;
   }
 }
 

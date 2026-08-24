@@ -182,6 +182,12 @@ export class HomeComponent implements OnInit, OnDestroy {
         "Explora nuestro catálogo premium de herramientas y materiales de construcción.",
     });
 
+    const savedY = sessionStorage.getItem('homeScrollY');
+    if (savedY) {
+      sessionStorage.removeItem('homeScrollY');
+      setTimeout(() => window.scrollTo({ top: +savedY, behavior: 'instant' }), 0);
+    }
+
     // Fetch tenant dynamic info for Whatsapp links and address
     this.api.get<any>('/tenant/info/').subscribe({
       next: (data) => {
@@ -531,6 +537,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    sessionStorage.setItem('homeScrollY', String(window.scrollY));
     if (this.carouselInterval) {
       clearInterval(this.carouselInterval);
     }

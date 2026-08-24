@@ -89,25 +89,7 @@ interface Banner {
           <h2 class="text-lg font-extrabold text-slate-900 uppercase tracking-wider" style="font-family: Sora, sans-serif;">Crear Nuevo Banner</h2>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Titulo</label>
-            <input
-              type="text"
-              [(ngModel)]="newBanner.title"
-              placeholder="Ej. Herramientas Profesionales"
-              class="w-full bg-white border border-slate-200 text-slate-900 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-ferre-400/20 focus:border-ferre-400 transition-all placeholder:text-slate-400 text-sm"
-            />
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Subtitulo</label>
-            <input
-              type="text"
-              [(ngModel)]="newBanner.subtitle"
-              placeholder="Descripcion corta del banner"
-              class="w-full bg-white border border-slate-200 text-slate-900 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-ferre-400/20 focus:border-ferre-400 transition-all placeholder:text-slate-400 text-sm"
-            />
-          </div>
+        <div class="grid grid-cols-1 gap-4">
           <div>
             <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Imagen</label>
             <label class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-dashed border-slate-300 text-slate-500 hover:border-ferre-400 hover:text-ferre-400 transition-all cursor-pointer text-sm">
@@ -115,15 +97,6 @@ interface Banner {
               {{ newBanner.imageFile ? newBanner.imageFile.name : 'Seleccionar imagen...' }}
               <input type="file" accept="image/*" class="hidden" (change)="onNewImageSelected($event)"/>
             </label>
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Link (opcional)</label>
-            <input
-              type="url"
-              [(ngModel)]="newBanner.link"
-              placeholder="https://ejemplo.com/promo"
-              class="w-full bg-white border border-slate-200 text-slate-900 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-ferre-400/20 focus:border-ferre-400 transition-all placeholder:text-slate-400 text-sm"
-            />
           </div>
         </div>
 
@@ -138,7 +111,7 @@ interface Banner {
             </button>
             <button
               (click)="createBanner()"
-              [disabled]="!newBanner.title.trim() || !newBanner.imageFile || creatingBanner"
+              [disabled]="!newBanner.imageFile || creatingBanner"
               class="px-5 py-2.5 rounded-lg bg-ferre-400 text-slate-800 font-bold text-sm hover:bg-ferre-500 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
             >
               <div *ngIf="creatingBanner" class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
@@ -175,18 +148,12 @@ interface Banner {
             <!-- Info -->
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-2">
-                <p class="font-bold text-slate-900 text-sm md:text-base truncate">{{ banner.title }}</p>
+                <p class="font-bold text-slate-900 text-sm md:text-base truncate">Banner #{{ i + 1 }}</p>
                 <span *ngIf="!banner.is_active" class="text-[9px] md:text-[10px] bg-red-50 text-red-600 px-1.5 py-0.5 rounded font-bold flex items-center gap-1">
                   <lucide-icon [name]="EyeOff" size="10"></lucide-icon> Inactivo
                 </span>
                 <span *ngIf="banner.is_active" class="text-[9px] md:text-[10px] bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded font-bold flex items-center gap-1">
                   <lucide-icon [name]="Eye" size="10"></lucide-icon> Activo
-                </span>
-              </div>
-              <p class="text-slate-500 text-xs md:text-sm truncate mt-0.5">{{ banner.subtitle || 'Sin subtitulo' }}</p>
-              <div class="flex items-center gap-2 mt-1">
-                <span class="text-[9px] md:text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded font-bold">
-                  Pos: {{ banner.position }}
                 </span>
               </div>
             </div>
@@ -220,21 +187,9 @@ interface Banner {
 
           <!-- Edit Mode -->
           <div class="p-4 animate-scale-in" *ngIf="banner.editing">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 gap-4">
               <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Titulo</label>
-                <input type="text" [(ngModel)]="banner.editTitle" class="w-full bg-white border border-slate-200 text-slate-900 rounded-xl px-4 py-2 focus:ring-2 focus:ring-ferre-400/20 focus:border-ferre-400 transition-all text-sm"/>
-              </div>
-              <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Subtitulo</label>
-                <input type="text" [(ngModel)]="banner.editSubtitle" class="w-full bg-white border border-slate-200 text-slate-900 rounded-xl px-4 py-2 focus:ring-2 focus:ring-ferre-400/20 focus:border-ferre-400 transition-all text-sm"/>
-              </div>
-              <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Link (opcional)</label>
-                <input type="url" [(ngModel)]="banner.editLink" class="w-full bg-white border border-slate-200 text-slate-900 rounded-xl px-4 py-2 focus:ring-2 focus:ring-ferre-400/20 focus:border-ferre-400 transition-all text-sm"/>
-              </div>
-              <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Nueva imagen (opcional)</label>
+                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Nueva imagen</label>
                 <label class="flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-dashed border-slate-300 text-slate-500 hover:border-ferre-400 hover:text-ferre-400 transition-all cursor-pointer text-sm">
                   <lucide-icon [name]="Upload" size="16"></lucide-icon>
                   {{ banner.imageFile ? banner.imageFile.name : 'Cambiar imagen...' }}
@@ -286,7 +241,7 @@ interface Banner {
           </div>
           <p class="text-slate-500 text-sm mb-6">
             Estas por eliminar el banner
-            <strong class="text-slate-900">"{{ deletingBanner?.title }}"</strong>.
+            <strong class="text-slate-900">#{{ banners.indexOf(deletingBanner!) + 1 }}</strong>.
             Esta accion no se puede deshacer.
           </p>
           <div class="flex justify-end gap-3">
@@ -513,16 +468,14 @@ export class BannersComponent implements OnInit {
   }
 
   createBanner() {
-    if (!this.newBanner.title.trim() || !this.newBanner.imageFile) return;
-
-    const cap = (s: string) => s.trim() ? s.trim().charAt(0).toUpperCase() + s.trim().slice(1) : '';
+    if (!this.newBanner.imageFile) return;
 
     this.creatingBanner = true;
     const formData = new FormData();
-    formData.append("title", cap(this.newBanner.title));
-    formData.append("subtitle", cap(this.newBanner.subtitle));
+    formData.append("title", `Banner ${this.banners.length + 1}`);
+    formData.append("subtitle", "");
     formData.append("image", this.newBanner.imageFile);
-    formData.append("link", this.newBanner.link.trim());
+    formData.append("link", "");
     formData.append("is_active", String(this.newBanner.is_active));
     formData.append("position", String(this.banners.length));
 
@@ -542,9 +495,6 @@ export class BannersComponent implements OnInit {
   startEdit(banner: Banner) {
     this.banners.forEach((b) => (b.editing = false));
     banner.editing = true;
-    banner.editTitle = banner.title;
-    banner.editSubtitle = banner.subtitle;
-    banner.editLink = banner.link;
     banner.editIsActive = banner.is_active;
   }
 
@@ -555,11 +505,7 @@ export class BannersComponent implements OnInit {
 
   saveEdit(banner: Banner) {
     this.savingEdit = true;
-    const cap = (s?: string) => s?.trim() ? s.trim().charAt(0).toUpperCase() + s.trim().slice(1) : '';
     const formData = new FormData();
-    formData.append("title", cap(banner.editTitle || "") || banner.title);
-    formData.append("subtitle", cap(banner.editSubtitle || "") || "");
-    formData.append("link", banner.editLink || "");
     formData.append("is_active", String(banner.editIsActive));
     formData.append("position", String(banner.position));
     if (banner.imageFile) {

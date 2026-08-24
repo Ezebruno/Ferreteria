@@ -1,6 +1,6 @@
-﻿<div class="relative overflow-hidden bg-slate-900 banner-carousel" *ngIf="banners.length > 0">
+﻿<div class="relative overflow-hidden bg-white banner-carousel" *ngIf="banners.length > 0">
   <div
-    class="relative h-full w-full"
+    class="relative h-full w-full overflow-hidden"
     (touchstart)="onTouchStart($event)"
     (touchend)="onTouchEnd($event)"
   >
@@ -10,61 +10,38 @@
       [style.opacity]="i === currentSlide ? 1 : 0"
       [style.z-index]="i === currentSlide ? 10 : 0"
     >
-      <div class="absolute inset-0 bg-cover bg-center" [style.backgroundImage]="'url(' + banner.image + ')'"></div>
-      <div class="absolute inset-0 bg-slate-900/60"></div>
-      <div class="relative z-10 h-full flex items-center">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div class="max-w-xl">
-            <h1 class="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-4" style="font-family: Sora, sans-serif;">
-              {{ banner.title }}
-            </h1>
-            <p *ngIf="banner.subtitle" class="text-slate-300 text-sm md:text-base mb-8 leading-relaxed max-w-md">
-              {{ banner.subtitle }}
-            </p>
-            <a
-              *ngIf="banner.link"
-              [href]="banner.link"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="btn-ferre px-8 py-3 inline-flex items-center gap-2"
-            >
-              Ver mas
-              <lucide-icon [name]="ArrowRight" size="16"></lucide-icon>
-            </a>
-            <button
-              *ngIf="!banner.link"
-              (click)="scrollToCatalog()"
-              class="btn-ferre px-8 py-3 inline-flex items-center gap-2"
-            >
-              Ver productos
-              <lucide-icon [name]="ArrowRight" size="16"></lucide-icon>
-            </button>
-          </div>
-        </div>
+      <div class="w-full h-full flex items-center justify-center p-4 md:p-8">
+        <img
+          *ngIf="banner.image"
+          [src]="banner.image"
+          [alt]="'Banner ' + (i + 1)"
+          class="max-w-full max-h-full object-contain"
+          (error)="banner.image = ''"
+        />
       </div>
     </div>
   </div>
 
-  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3" *ngIf="banners.length > 1">
+  <div class="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2" *ngIf="banners.length > 1">
     <button
       (click)="userPrevSlide()"
-      class="w-9 h-9 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white hover:bg-ferre-400 transition-colors border border-white/20"
+      class="w-8 h-8 rounded-full bg-black/20 backdrop-blur-sm flex items-center justify-center text-slate-700 hover:bg-ferre-400 hover:text-white transition-colors"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
     </button>
     <div class="flex gap-1.5">
       <button
         *ngFor="let banner of banners; let i = index"
         (click)="setSlide(i)"
         class="h-1.5 rounded-full transition-all duration-300"
-        [ngClass]="i === currentSlide ? 'w-6 bg-ferre-400' : 'w-1.5 bg-white/30 hover:bg-white/50'"
+        [ngClass]="i === currentSlide ? 'w-5 bg-ferre-400' : 'w-1.5 bg-slate-300 hover:bg-slate-400'"
       ></button>
     </div>
     <button
       (click)="userNextSlide()"
-      class="w-9 h-9 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white hover:bg-ferre-400 transition-colors border border-white/20"
+      class="w-8 h-8 rounded-full bg-black/20 backdrop-blur-sm flex items-center justify-center text-slate-700 hover:bg-ferre-400 hover:text-white transition-colors"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
     </button>
   </div>
 </div>
@@ -110,40 +87,42 @@
           <lucide-icon *ngIf="!product.image" [name]="Hammer" size="40" class="text-slate-300"></lucide-icon>
         </div>
         <div class="p-2 md:p-4 flex flex-col flex-1">
-          <span class="text-[8px] md:text-[10px] font-bold text-ferre-700 uppercase tracking-wider">{{ product.category_name }}</span>
+          <span class="text-[8px] md:text-[10px] font-bold text-ferre-700 uppercase tracking-wider truncate">{{ product.category_name }}</span>
           <h3 class="font-semibold text-slate-900 text-[11px] md:text-sm mt-0.5 md:mt-1 line-clamp-2 mb-1 md:mb-2 leading-snug">{{ product.name }}</h3>
-          <div class="flex items-center gap-1.5 mb-1 md:mb-3" *ngIf="product.rating">
+          <div class="flex items-center gap-1.5 mb-1 md:mb-2" *ngIf="product.rating">
             <div class="flex">
               <span *ngFor="let s of [1,2,3,4,5]" class="text-[10px] md:text-xs" [ngClass]="s <= Math.round(product.rating || 0) ? 'text-amber-400' : 'text-slate-200'">&#9733;</span>
             </div>
             <span class="text-[8px] md:text-[10px] text-slate-400">({{ product.reviews_count }})</span>
           </div>
-          <div class="min-h-[32px] md:min-h-[40px] mt-auto mb-1 md:mb-3" *ngIf="product.discount_percentage && +product.discount_percentage > 0">
-            <div class="flex items-center gap-1">
-              <span class="text-[10px] md:text-sm text-slate-400 line-through">${{ formatPrice(product.price_retail) }}</span>
-              <span class="bg-emerald-500 text-white text-[7px] md:text-[10px] font-black px-1 py-0.5 rounded shrink-0">{{ product.discount_percentage }}% OFF</span>
+          <div class="mt-auto">
+            <div *ngIf="product.discount_percentage && +product.discount_percentage > 0">
+              <div class="flex items-center gap-1.5">
+                <span class="text-[10px] md:text-sm text-slate-400 line-through">${{ formatPrice(product.price_retail) }}</span>
+                <span class="bg-emerald-500 text-white text-[7px] md:text-[10px] font-black px-1.5 py-0.5 rounded">{{ +product.discount_percentage }}% OFF</span>
+              </div>
+              <span class="text-sm md:text-lg font-extrabold text-slate-900 block mt-0.5" style="font-family: Sora, sans-serif;">${{ formatPrice(getDiscountedPrice(product)) }}</span>
             </div>
-            <span class="text-sm md:text-lg font-extrabold text-slate-900" style="font-family: Sora, sans-serif;">${{ formatPrice(getDiscountedPrice(product)) }}</span>
+            <div *ngIf="!product.discount_percentage || +product.discount_percentage <= 0">
+              <span class="text-sm md:text-lg font-extrabold text-slate-900" style="font-family: Sora, sans-serif;">${{ formatPrice(product.price_retail) }}</span>
+            </div>
           </div>
-          <div *ngIf="!product.discount_percentage || +product.discount_percentage <= 0" class="min-h-[32px] md:min-h-[40px] mt-auto mb-1 md:mb-3">
-            <span class="text-sm md:text-lg font-extrabold text-slate-900" style="font-family: Sora, sans-serif;">${{ formatPrice(product.price_retail) }}</span>
-          </div>
-          <header class="flex items-center justify-between mt-1">
+          <div class="flex items-center gap-2 mt-2 md:mt-3">
             <span
               *ngIf="product.stock_current !== undefined && product.stock_current !== null"
-              class="text-[8px] md:text-[10px] font-semibold"
+              class="text-[8px] md:text-[10px] font-semibold shrink-0"
               [ngClass]="product.stock_current > 0 ? 'text-emerald-600' : 'text-red-500'"
             >
               {{ product.stock_current > 0 ? 'En stock' : 'Sin stock' }}
             </span>
             <button
               (click)="addToCart(product); $event.stopPropagation()"
-              class="w-full bg-ferre-400 hover:bg-ferre-500 text-slate-800 font-bold text-[10px] md:text-sm py-1.5 md:py-2.5 rounded-lg transition-colors flex items-center justify-center gap-1 md:gap-2"
+              class="flex-1 bg-ferre-400 hover:bg-ferre-500 text-slate-800 font-bold text-[10px] md:text-sm py-1.5 md:py-2 rounded-lg transition-colors flex items-center justify-center gap-1 md:gap-2"
             >
               <lucide-icon [name]="ShoppingCart" size="14"></lucide-icon>
               Agregar
             </button>
-          </header>
+          </div>
         </div>
       </article>
     </div>
@@ -178,24 +157,21 @@
 </div>
 
 <!-- CTA Section -->
-<div *ngIf="whatsappHrefConsult" class="py-16 bg-white border-y border-slate-200">
+<div *ngIf="whatsappHrefConsult" class="py-6 md:py-10 bg-white border-y border-slate-200">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <div class="inline-flex p-3 bg-ferre-50 rounded-2xl mb-5">
-      <lucide-icon [name]="MessageCircle" size="28" class="text-ferre-700"></lucide-icon>
-    </div>
-    <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-3" style="font-family: Sora, sans-serif;">
+    <h2 class="text-lg md:text-xl font-extrabold text-slate-900 mb-1 md:mb-2" style="font-family: Sora, sans-serif;">
       Necesitas asesoria profesional?
     </h2>
-    <p class="text-slate-500 text-sm mb-8 max-w-xl mx-auto">
+    <p class="text-slate-500 text-xs md:text-sm mb-4 md:mb-6 max-w-lg mx-auto">
       Nuestro equipo de expertos te ayuda a encontrar las herramientas y materiales exactos para tu proyecto.
     </p>
     <a
       [href]="whatsappHrefConsult"
       target="_blank"
       rel="noopener noreferrer"
-      class="inline-flex items-center gap-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-3.5 rounded-lg transition-colors shadow-sm hover:shadow-md"
+      class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-5 md:px-6 py-2 md:py-2.5 rounded-lg transition-colors shadow-sm hover:shadow-md text-xs md:text-sm"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
       </svg>
       Consultar Asesor
@@ -204,15 +180,12 @@
 </div>
 
 <!-- Material Calculator Section -->
-<div id="material-calculator-section" class="py-16 bg-slate-50 border-t border-slate-200">
+<div id="material-calculator-section" class="py-6 md:py-10 bg-slate-50 border-t border-slate-200">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <div class="inline-flex p-3 bg-ferre-50 rounded-2xl mb-5">
-      <lucide-icon [name]="Hammer" size="28" class="text-ferre-700"></lucide-icon>
-    </div>
-    <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-3" style="font-family: Sora, sans-serif;">
+    <h2 class="text-lg md:text-xl font-extrabold text-slate-900 mb-1 md:mb-2" style="font-family: Sora, sans-serif;">
       Calculadora de Materiales
     </h2>
-    <p class="text-slate-500 text-sm mb-8 max-w-xl mx-auto">
+    <p class="text-slate-500 text-xs md:text-sm mb-4 md:mb-6 max-w-lg mx-auto">
       Calcula al instante las cantidades que necesitas para pintar, revestir o hacer un contrapiso.
     </p>
     <div class="max-w-md mx-auto">
