@@ -316,12 +316,11 @@ class MercadoPagoAuthUrlView(APIView):
         if not app_id:
             return Response({'error': 'MP_APP_ID no configurado'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
-        # CAMBIO: Esta URL debe ser idéntica a la que registraste en el panel de Mercado Pago
-        # Debe apuntar al endpoint que procesa el código (MercadoPagoAuthorizeView)
-        redirect_uri = f"{request.scheme}://{request.get_host()}/api/integrations/mercadopago/authorize/"
+        redirect_uri = getattr(settings, 'MP_REDIRECT_URI', '')
+        if not redirect_uri:
+            return Response({'error': 'MP_REDIRECT_URI no configurado'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
         tenant_schema = 'default'
-        # Construimos la URL de autorización de Mercado Pago
         url = f"https://auth.mercadopago.com/authorization?client_id={app_id}&response_type=code&platform_id=mp&redirect_uri={redirect_uri}&state={tenant_schema}"
         
         has_mp = bool(StoreConfig.objects.first().mp_access_token if StoreConfig.objects.first() else None)
@@ -332,12 +331,12 @@ class MercadoPagoAuthorizeView(APIView):
 
     def post(self, request):
         code = request.data.get('code')
-        redirect_uri = request.data.get('redirect_uri')
         if not code:
             return Response({'error': 'Code no fue proporcionado'}, status=status.HTTP_400_BAD_REQUEST)
 
         client_id = getattr(settings, 'MP_APP_ID', '')
         client_secret = getattr(settings, 'MP_CLIENT_SECRET', '')
+        redirect_uri = getattr(settings, 'MP_REDIRECT_URI', '')
         
         if not client_id or not client_secret:
             return Response({'error': 'Credenciales maestras de MP faltantes'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

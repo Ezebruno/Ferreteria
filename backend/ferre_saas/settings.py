@@ -31,6 +31,7 @@ MELI_REDIRECT_URI = env("MELI_REDIRECT_URI", default="http://localhost:4200/admi
 # Mercado Pago
 MP_APP_ID = env("MP_APP_ID", default="")
 MP_CLIENT_SECRET = env("MP_CLIENT_SECRET", default="")
+MP_REDIRECT_URI = env("MP_REDIRECT_URI", default="http://localhost:4200/admin/settings")
 
 INSTALLED_APPS = [
     'django.contrib.admin',

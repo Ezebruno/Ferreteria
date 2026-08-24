@@ -123,16 +123,9 @@ export class SettingsComponent implements OnInit {
   }
 
   finishMpAuth(code: string) {
-    // El puerto 4200 local (es el redirect URI que pasamos)
-    let currentRedirectUrl = window.location.origin + "/admin/settings";
-    if (currentRedirectUrl.includes(":4200")) {
-      currentRedirectUrl = "http://localhost:4200/admin/settings";
-    }
-
     this.api
       .post<any>("/integrations/mercadopago/authorize/", {
         code,
-        redirect_uri: currentRedirectUrl,
       })
       .subscribe({
         next: () => {
