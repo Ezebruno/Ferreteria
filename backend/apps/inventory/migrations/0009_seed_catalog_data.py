@@ -1,4 +1,5 @@
 from django.db import migrations
+from django.utils.text import slugify
 
 
 PRODUCTS = [
@@ -64,11 +65,18 @@ def seed_data(apps, schema_editor):
     Category = apps.get_model('inventory', 'Category')
     Product = apps.get_model('inventory', 'Product')
 
+    for cat in Category.objects.filter(slug=''):
+        cat.slug = slugify(cat.name) or f'cat-{cat.id}'
+        cat.save(update_fields=['slug'])
+
     for cat_data in PRODUCTS:
         cat_info = cat_data["category"]
-        category, _ = Category.objects.get_or_create(
+        category, created = Category.objects.get_or_create(
             name=cat_info["name"],
-            defaults={"display_order": cat_info["display_order"]},
+            defaults={
+                "display_order": cat_info["display_order"],
+                "slug": slugify(cat_info["name"]),
+            },
         )
         for prod_data in cat_data["products"]:
             Product.objects.get_or_create(
