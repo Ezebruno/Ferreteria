@@ -10,14 +10,20 @@
       [style.opacity]="i === currentSlide ? 1 : 0"
       [style.z-index]="i === currentSlide ? 10 : 0"
     >
+      <div class="absolute inset-0 overflow-hidden hidden md:block">
+        <img
+          *ngIf="banner.image"
+          [src]="banner.image"
+          class="w-full h-full object-cover blur-2xl scale-110"
+        />
+      </div>
       <img
         *ngIf="banner.image"
         [src]="banner.image"
         [alt]="'Banner ' + (i + 1)"
-        class="w-full h-full object-contain bg-[#f0ece5]"
+        class="relative w-full h-full object-cover md:object-contain"
         (error)="banner.image = ''"
       />
-      <div class="absolute inset-0 pointer-events-none" [style.background]="'linear-gradient(to right, #f0ece5 0%, transparent 15%, transparent 85%, #f0ece5 100%)'"></div>
     </div>
   </div>
 
