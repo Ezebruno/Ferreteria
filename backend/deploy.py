@@ -47,5 +47,8 @@ def run_deploy():
     else:
         print("DJANGO_ADMIN_EMAIL o DJANGO_ADMIN_PASSWORD no configurados, saltando creacion de superusuario.")
 
+    print("Cargando imagenes de productos y banners...")
+    execute_from_command_line(['manage.py', 'seed_images'])
+
 if __name__ == '__main__':
     run_deploy()
