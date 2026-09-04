@@ -14,7 +14,7 @@
         *ngIf="banner.image"
         [src]="banner.image"
         [alt]="'Banner ' + (i + 1)"
-        class="w-full h-full object-cover"
+        class="w-full h-full object-contain bg-[#f0ece5]"
         (error)="banner.image = ''"
       />
     </div>
