@@ -10,6 +10,7 @@ from apps.sales.models import Sale, SaleItem, Customer
 from django.db import transaction
 import mercadopago, json
 from django.conf import settings
+from django.http import HttpResponseRedirect
 
 from apps.integrations.models import IntegrationConfig
 from django.utils import timezone
@@ -100,6 +101,65 @@ class MeLiAuthorizeView(APIView):
             return Response({'status': 'success', 'message': 'Cuenta vinculada exitosamente'})
         else:
             return Response({'error': 'Error al intercambiar token', 'details': resp.text}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class MeLiCallbackView(APIView):
+    """Callback público que ML llama con ?code=... después de autorizar.
+    Intercambia el token y redirige al frontend."""
+
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request):
+        code = request.query_params.get('code')
+        error = request.query_params.get('error')
+
+        # Frontend URL for redirect
+        frontend_url = getattr(settings, 'FRONTEND_URL', 'https://ferreteria-six-lovat.vercel.app')
+
+        if error:
+            return HttpResponseRedirect(f'{frontend_url}/admin/integrations/meli?error={error}')
+
+        if not code:
+            return HttpResponseRedirect(f'{frontend_url}/admin/integrations/meli?error=no_code')
+
+        import requests as req
+        client_id = getattr(settings, 'MELI_CLIENT_ID', '')
+        client_secret = getattr(settings, 'MELI_CLIENT_SECRET', '')
+        redirect_uri = getattr(settings, 'MELI_REDIRECT_URI', '')
+
+        if not client_id or not client_secret:
+            return HttpResponseRedirect(f'{frontend_url}/admin/integrations/meli?error=server_config')
+
+        payload = {
+            'grant_type': 'authorization_code',
+            'client_id': client_id,
+            'client_secret': client_secret,
+            'code': code,
+            'redirect_uri': redirect_uri
+        }
+
+        resp = req.post("https://api.mercadolibre.com/oauth/token", data=payload)
+
+        if resp.status_code == 200:
+            data = resp.json()
+            config = IntegrationConfig.objects.filter(integration_type='MELI').first()
+            if not config:
+                config = IntegrationConfig(integration_type='MELI')
+
+            config.client_id = client_id
+            config.client_secret = client_secret
+            config.access_token = data.get('access_token')
+            config.refresh_token = data.get('refresh_token')
+
+            if 'expires_in' in data:
+                config.token_expires_at = timezone.now() + timezone.timedelta(seconds=data['expires_in'])
+
+            config.is_active = True
+            config.save()
+            return HttpResponseRedirect(f'{frontend_url}/admin/integrations/meli?meli=success')
+        else:
+            return HttpResponseRedirect(f'{frontend_url}/admin/integrations/meli?error=token_exchange_failed')
+
 
 class MeLiSyncView(APIView):
     permission_classes = [permissions.IsAdminUser]

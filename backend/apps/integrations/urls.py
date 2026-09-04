@@ -4,7 +4,8 @@ from django.urls import path
 from apps.integrations.views import (
     MeLiSyncView, MercadoPagoPreferenceView, MercadoPagoWebhookView,
     MeLiCategoryPredictorView, MeLiAuthUrlView, MeLiAuthorizeView, MeLiConfigView,
-    MeLiCategorySearchView, MercadoPagoAuthUrlView, MercadoPagoAuthorizeView
+    MeLiCategorySearchView, MercadoPagoAuthUrlView, MercadoPagoAuthorizeView,
+    MeLiCallbackView
 )
 from apps.integrations.marketplace_views import (
     MarketplacePublishView, MarketplaceUpdateView, MarketplaceDeleteView,
@@ -23,8 +24,8 @@ urlpatterns = [
     path('mercadopago/authorize/', MercadoPagoAuthorizeView.as_view(), name='mp_authorize'),
     path('mercadopago/preference/', MercadoPagoPreferenceView.as_view(), name='mp_preference'),
     
-    # RUTA CORREGIDA: Usando MeLiAuthorizeView para coincidir con la clase definida en views.py
-    path('meli/callback/', MeLiAuthorizeView.as_view(), name='meli_callback'),
+    # Callback público de ML (sin auth, redirige al frontend)
+    path('meli/callback/', MeLiCallbackView.as_view(), name='meli_callback'),
     
     path('mercadopago/webhook/', MercadoPagoWebhookView.as_view(), name='mp_webhook'),
 

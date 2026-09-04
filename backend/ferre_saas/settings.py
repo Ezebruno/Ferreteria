@@ -28,6 +28,9 @@ MELI_CLIENT_ID = env("MELI_CLIENT_ID", default="")
 MELI_CLIENT_SECRET = env("MELI_CLIENT_SECRET", default="")
 MELI_REDIRECT_URI = env("MELI_REDIRECT_URI", default="http://localhost:4200/admin/meli/")
 
+# Frontend URL para redirects del OAuth callback
+FRONTEND_URL = env("FRONTEND_URL", default="https://ferreteria-six-lovat.vercel.app")
+
 # Mercado Pago
 MP_APP_ID = env("MP_APP_ID", default="")
 MP_CLIENT_SECRET = env("MP_CLIENT_SECRET", default="")

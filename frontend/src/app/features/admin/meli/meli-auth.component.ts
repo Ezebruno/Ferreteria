@@ -28,6 +28,16 @@ import { LucideAngularModule, Zap, CheckCircle2, AlertCircle, RefreshCw, Externa
             <span class="text-slate-500 font-medium">Verificando estado...</span>
           </div>
 
+          <div *ngIf="successMessage" class="rounded-lg p-4 flex items-center gap-3 bg-emerald-50 border border-emerald-200">
+            <lucide-icon [name]="CheckCircle2" size="20" class="text-emerald-600"></lucide-icon>
+            <span class="text-emerald-700 text-sm font-medium">{{ successMessage }}</span>
+          </div>
+
+          <div *ngIf="errorMessage" class="rounded-lg p-4 flex items-center gap-3 bg-red-50 border border-red-200">
+            <lucide-icon [name]="AlertCircle" size="20" class="text-red-600"></lucide-icon>
+            <span class="text-red-700 text-sm font-medium">{{ errorMessage }}</span>
+          </div>
+
           <div *ngIf="isExchanging" class="flex items-center justify-center py-12 gap-3">
             <div class="w-5 h-5 border-2 border-slate-200 border-t-emerald-600 rounded-full animate-spin"></div>
             <span class="text-slate-500 font-medium">Vinculando tu cuenta...</span>
@@ -142,12 +152,22 @@ export class MeliAuthComponent implements OnInit {
   isExchanging = false;
   authUrl = '';
 
+  successMessage = '';
+  errorMessage = '';
+
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      if (params['code']) {
+      if (params['meli'] === 'success') {
         this.isLoading = false;
-        this.isExchanging = true;
-        this.exchangeCode(params['code']);
+        this.isLinked = true;
+        this.successMessage = 'Cuenta vinculada exitosamente';
+        this.router.navigate([], { queryParams: { meli: null }, queryParamsHandling: 'merge' });
+        setTimeout(() => this.successMessage = '', 5000);
+      } else if (params['error']) {
+        this.isLoading = false;
+        this.errorMessage = 'Error al vincular: ' + params['error'];
+        this.router.navigate([], { queryParams: { error: null }, queryParamsHandling: 'merge' });
+        setTimeout(() => this.errorMessage = '', 5000);
       } else {
         this.checkStatus();
       }
