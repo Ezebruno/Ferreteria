@@ -117,10 +117,10 @@ class MeLiCallbackView(APIView):
         frontend_url = getattr(settings, 'FRONTEND_URL', 'https://ferreteria-six-lovat.vercel.app')
 
         if error:
-            return HttpResponseRedirect(f'{frontend_url}/admin/integrations/meli?error={error}')
+            return HttpResponseRedirect(f'{frontend_url}/admin/meli?error={error}')
 
         if not code:
-            return HttpResponseRedirect(f'{frontend_url}/admin/integrations/meli?error=no_code')
+            return HttpResponseRedirect(f'{frontend_url}/admin/meli?error=no_code')
 
         import requests as req
         client_id = getattr(settings, 'MELI_CLIENT_ID', '')
@@ -128,7 +128,7 @@ class MeLiCallbackView(APIView):
         redirect_uri = getattr(settings, 'MELI_REDIRECT_URI', '')
 
         if not client_id or not client_secret:
-            return HttpResponseRedirect(f'{frontend_url}/admin/integrations/meli?error=server_config')
+            return HttpResponseRedirect(f'{frontend_url}/admin/meli?error=server_config')
 
         payload = {
             'grant_type': 'authorization_code',
@@ -156,9 +156,9 @@ class MeLiCallbackView(APIView):
 
             config.is_active = True
             config.save()
-            return HttpResponseRedirect(f'{frontend_url}/admin/integrations/meli?meli=success')
+            return HttpResponseRedirect(f'{frontend_url}/admin/meli?meli=success')
         else:
-            return HttpResponseRedirect(f'{frontend_url}/admin/integrations/meli?error=token_exchange_failed')
+            return HttpResponseRedirect(f'{frontend_url}/admin/meli?error=token_exchange_failed')
 
 
 class MeLiSyncView(APIView):
