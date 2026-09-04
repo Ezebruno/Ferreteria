@@ -21,6 +21,7 @@ class IntegrationConfig(models.Model):
     # Metadata
     is_active = models.BooleanField(default=True)
     last_sync = models.DateTimeField(auto_now=True)
+    metadata = models.JSONField(default=dict, blank=True)
 
     class Meta:
         unique_together = ('integration_type',) # One config per type per tenant

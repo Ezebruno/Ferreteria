@@ -51,6 +51,15 @@ import { LucideAngularModule, Zap, CheckCircle2, AlertCircle, RefreshCw, Externa
               <div class="flex-1">
                 <h3 class="text-lg font-bold text-slate-900 uppercase tracking-wider" style="font-family: Sora, sans-serif;">Cuenta conectada</h3>
                 <p class="text-emerald-700 text-sm mt-1">Tu cuenta de Mercado Libre esta vinculada y activa. Los productos marcados para sincronizar se publican automaticamente.</p>
+                <div *ngIf="account" class="mt-3 flex flex-wrap gap-3">
+                  <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 border border-emerald-200 text-emerald-800 text-xs font-bold">
+                    {{ account.nickname || account.email || 'Vinculada' }}
+                  </span>
+                  <a *ngIf="account.link" [href]="account.link" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-emerald-200 text-emerald-700 text-xs font-bold hover:bg-emerald-50 transition-colors">
+                    <lucide-icon [name]="ExternalLink" size="12"></lucide-icon>
+                    Ver perfil en MeLi
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -151,6 +160,7 @@ export class MeliAuthComponent implements OnInit {
   isLinked = false;
   isExchanging = false;
   authUrl = '';
+  account: any = null;
 
   successMessage = '';
   errorMessage = '';
@@ -158,11 +168,10 @@ export class MeliAuthComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       if (params['meli'] === 'success') {
-        this.isLoading = false;
-        this.isLinked = true;
         this.successMessage = 'Cuenta vinculada exitosamente';
         this.router.navigate([], { queryParams: { meli: null }, queryParamsHandling: 'merge' });
         setTimeout(() => this.successMessage = '', 5000);
+        this.checkStatus();
       } else if (params['error']) {
         this.isLoading = false;
         this.errorMessage = 'Error al vincular: ' + params['error'];
@@ -180,6 +189,7 @@ export class MeliAuthComponent implements OnInit {
       next: (res) => {
         this.isLinked = res.is_linked;
         this.authUrl = res.auth_url;
+        this.account = res.account || null;
         this.isLoading = false;
       },
       error: () => {

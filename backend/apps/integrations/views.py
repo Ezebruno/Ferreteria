@@ -50,7 +50,8 @@ class MeLiAuthUrlView(APIView):
         config = IntegrationConfig.objects.filter(integration_type='MELI', is_active=True).first()
         is_linked = config is not None and bool(config.access_token)
         auth_url = MeLiService.get_auth_url()
-        return Response({'auth_url': auth_url, 'is_linked': is_linked})
+        account_info = config.metadata if config and config.metadata else None
+        return Response({'auth_url': auth_url, 'is_linked': is_linked, 'account': account_info})
 
 class MeLiAuthorizeView(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -153,6 +154,24 @@ class MeLiCallbackView(APIView):
 
             if 'expires_in' in data:
                 config.token_expires_at = timezone.now() + timezone.timedelta(seconds=data['expires_in'])
+
+            # Fetch user info from ML
+            try:
+                user_resp = req.get(
+                    "https://api.mercadolibre.com/users/me",
+                    headers={"Authorization": f"Bearer {data.get('access_token')}"}
+                )
+                if user_resp.status_code == 200:
+                    user_data = user_resp.json()
+                    config.metadata = {
+                        "meli_user_id": user_data.get("id"),
+                        "nickname": user_data.get("nickname"),
+                        "email": user_data.get("email"),
+                        "name": user_data.get("first_name", "") + " " + user_data.get("last_name", ""),
+                        "link": user_data.get("link"),
+                    }
+            except Exception:
+                pass
 
             config.is_active = True
             config.save()
