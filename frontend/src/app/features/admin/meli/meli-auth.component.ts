@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "src/app/core/services/api.service";
-import { LucideAngularModule, Zap, CheckCircle2, AlertCircle, RefreshCw, ExternalLink } from "lucide-angular";
+import { LucideAngularModule, Zap, CheckCircle2, AlertCircle, RefreshCw, ExternalLink, Unplug } from "lucide-angular";
 
 @Component({
   selector: "app-meli-auth",
@@ -83,6 +83,10 @@ import { LucideAngularModule, Zap, CheckCircle2, AlertCircle, RefreshCw, Externa
                 <lucide-icon [name]="RefreshCw" size="16"></lucide-icon>
                 Reconectar cuenta
               </button>
+              <button (click)="disconnect()" class="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white border border-red-200 text-red-600 hover:bg-red-50 text-sm font-bold transition-all">
+                <lucide-icon [name]="Unplug" size="16"></lucide-icon>
+                Desconectar
+              </button>
               <a href="https://www.mercadolibre.com.ar/ventas" target="_blank" class="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-ferre-50 hover:bg-ferre-100 border border-ferre-200 text-ferre-700 text-sm font-bold transition-all">
                 <lucide-icon [name]="ExternalLink" size="16"></lucide-icon>
                 Ver mis ventas en MeLi
@@ -155,6 +159,7 @@ export class MeliAuthComponent implements OnInit {
   AlertCircle = AlertCircle;
   RefreshCw = RefreshCw;
   ExternalLink = ExternalLink;
+  Unplug = Unplug;
 
   isLoading = true;
   isLinked = false;
@@ -231,6 +236,20 @@ export class MeliAuthComponent implements OnInit {
         this.isExchanging = false;
         alert('Error al vincular cuenta: ' + (err.error?.error || 'Intenta de nuevo'));
         this.router.navigate(['/admin/meli']);
+      }
+    });
+  }
+
+  disconnect() {
+    if (!confirm('Seguro que queres desconectar la cuenta de Mercado Libre?')) return;
+    this.api.post<any>('/integrations/meli/disconnect/', {}).subscribe({
+      next: () => {
+        this.isLinked = false;
+        this.account = null;
+        this.successMessage = '';
+      },
+      error: () => {
+        alert('Error al desconectar');
       }
     });
   }

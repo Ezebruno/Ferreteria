@@ -53,6 +53,21 @@ class MeLiAuthUrlView(APIView):
         account_info = config.metadata if config and config.metadata else None
         return Response({'auth_url': auth_url, 'is_linked': is_linked, 'account': account_info})
 
+
+class MeLiDisconnectView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        config = IntegrationConfig.objects.filter(integration_type='MELI').first()
+        if config:
+            config.access_token = ''
+            config.refresh_token = ''
+            config.token_expires_at = None
+            config.metadata = {}
+            config.is_active = False
+            config.save()
+        return Response({'status': 'success', 'message': 'Cuenta desconectada'})
+
 class MeLiAuthorizeView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 

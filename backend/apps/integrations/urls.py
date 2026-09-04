@@ -5,7 +5,7 @@ from apps.integrations.views import (
     MeLiSyncView, MercadoPagoPreferenceView, MercadoPagoWebhookView,
     MeLiCategoryPredictorView, MeLiAuthUrlView, MeLiAuthorizeView, MeLiConfigView,
     MeLiCategorySearchView, MercadoPagoAuthUrlView, MercadoPagoAuthorizeView,
-    MeLiCallbackView
+    MeLiCallbackView, MeLiDisconnectView
 )
 from apps.integrations.marketplace_views import (
     MarketplacePublishView, MarketplaceUpdateView, MarketplaceDeleteView,
@@ -26,6 +26,7 @@ urlpatterns = [
     
     # Callback público de ML (sin auth, redirige al frontend)
     path('meli/callback/', MeLiCallbackView.as_view(), name='meli_callback'),
+    path('meli/disconnect/', MeLiDisconnectView.as_view(), name='meli_disconnect'),
     
     path('mercadopago/webhook/', MercadoPagoWebhookView.as_view(), name='mp_webhook'),
 
