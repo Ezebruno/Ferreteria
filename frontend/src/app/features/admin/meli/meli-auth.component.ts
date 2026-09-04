@@ -248,8 +248,8 @@ export class MeliAuthComponent implements OnInit {
         this.account = null;
         this.successMessage = '';
       },
-      error: () => {
-        alert('Error al desconectar');
+      error: (err) => {
+        alert('Error al desconectar: ' + (err.status || 'desconocido'));
       }
     });
   }
